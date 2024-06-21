@@ -1,0 +1,12 @@
+/node_modules
+/lib
+/builds
+/dump
+
+/**Versions.json
+
+# IDE files
+/.idea
+
+.env
+.yarn.lock

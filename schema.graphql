@@ -1,0 +1,6 @@
+type Notification @entity {
+  id: ID!
+  timestamp: DateTime! @index
+  blockNumber: Int! @index
+  message: String!
+}

@@ -1,0 +1,26 @@
+manifestVersion: subsquid.io/v0.1
+name: origin-squid
+version: 999
+description: 'Origin Protocol 🦑 - Notifications'
+build:
+deploy:
+  addons:
+    postgres:
+    rpc:
+      - arbitrum-one.http
+  secrets:
+    - RPC_ENDPOINT
+    - RPC_ENDPOINT_ARBITRUM
+  processor:
+    name: processor
+    cmd: [ "sqd", "process:prod" ]
+    env:
+      RPC_ENV: RPC_ENDPOINT_RETH
+      TS_NODE_BASEURL: './lib'
+scale:
+  dedicated: true
+  addons:
+    postgres:
+      storage: 5G
+      profile: medium
+
