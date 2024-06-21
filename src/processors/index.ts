@@ -1,4 +1,4 @@
 // Import your processor here
-import './example'
+import './governance'
 
 export { processors } from './processors'

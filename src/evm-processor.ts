@@ -95,7 +95,9 @@ export const run = async ({
   const latestBlock = await client.getBlock()
 
   const processor = createSquidProcessor(config.archive, rpcEnv)
-  processor.setBlockRange({ from: Number(latestBlock.number) })
+  processor.setBlockRange({
+    from: processors.reduce((min, p) => (p.from && p.from < min ? p.from : min), Number(latestBlock.number)),
+  })
   processors.forEach((p) => p.setup?.(processor, config.chain))
   postProcessors?.forEach((p) => p.setup?.(processor, config.chain))
 

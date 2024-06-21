@@ -16,6 +16,8 @@ export type Trace = Context['blocks']['0']['traces']['0']
 
 export interface EvmProcessor {
   name?: string
+  from?: number
+  chainId: number
   initialize?: (ctx: Context) => Promise<void> // To only be run once per `sqd process`.
   setup?: (p: ReturnType<typeof createSquidProcessor>, chain: Chain) => void
   process: (ctx: Context) => Promise<void>
