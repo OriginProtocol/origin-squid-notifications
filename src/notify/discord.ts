@@ -31,7 +31,7 @@ const topicThumbnails: Record<Topic, string> = {
   OUSD: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-dollar-ousd-logo.png',
 }
 
-export const notify = async ({
+export const notifyDiscord = async ({
   title,
   description,
   footer,

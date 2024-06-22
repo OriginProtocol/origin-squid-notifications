@@ -3,7 +3,7 @@ import { AbiEvent } from '@subsquid/evm-abi'
 import { Log } from '../types'
 import { formatJson } from '../utils/formatJson'
 import { md } from '../utils/md'
-import { Topic, notify } from './discord'
+import { Topic, notifyDiscord } from './discord'
 
 export const notifyForEvent = async ({
   topic,
@@ -17,7 +17,7 @@ export const notifyForEvent = async ({
   log: Log
 }) => {
   const data = event.decode(log)
-  return notify({
+  return notifyDiscord({
     topic,
     title: `OGN - ${name}`,
     description: md.construct(
