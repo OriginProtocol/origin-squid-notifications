@@ -1,0 +1,39 @@
+import { EvmBatchProcessor } from '@subsquid/evm-processor'
+
+import * as erc20 from '../abi/erc20'
+import { notifyForEvent } from '../notify/event'
+import { Block, Context, Log } from '../types'
+import { OGN_ADDRESS } from '../utils/addresses'
+import { logFilter } from '../utils/logFilter'
+import { createProcessor } from './processors'
+
+// This filter will listen to all ERC20 events on the OGN contract.
+const filter = logFilter({
+  address: [OGN_ADDRESS],
+  topic0: Object.values(erc20.events).map((e) => e.topic),
+})
+
+createProcessor({
+  name: 'Template',
+  chainId: 1,
+  setup: (processor: EvmBatchProcessor) => {
+    processor.addLog(filter.value)
+  },
+  process: async (ctx: Context) => {
+    for (const block of ctx.blocks) {
+      for (const log of block.logs) {
+        if (filter.matches(log)) {
+          await processLog(block, log)
+        }
+      }
+    }
+  },
+})
+
+const processLog = async (block: Block, log: Log) => {
+  const entry = Object.entries(erc20.events).find(([n, e]) => e.topic === log.topics[0])
+  if (entry) {
+    const [name, event] = entry
+    await notifyForEvent({ topic: 'OGN', name, log, event })
+  }
+}

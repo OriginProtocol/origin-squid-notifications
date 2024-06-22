@@ -173,17 +173,3 @@ export const run = async ({
     }
   })
 }
-
-const createMockDatabase = (block: { number: bigint; hash: string }) => {
-  return {
-    supportsHotBlocks: true,
-    transactHot: async () => {},
-    transactHot2: async () => {},
-    connect: async () => ({
-      top: [],
-      height: Number(block.number),
-      hash: block.hash,
-    }),
-    transact: async () => {},
-  } as const
-}
