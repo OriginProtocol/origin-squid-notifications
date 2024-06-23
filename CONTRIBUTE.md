@@ -26,7 +26,7 @@ yarn process
 
 Notifications are triggered through `processors` located at: [src/processors](src/processors)
 
-1. Copy the [src/processors/template.ts](src/processors/template.ts) processor with a new name.
+1. Copy the [src/processors/template.ts](src/processors/example.ts) processor with a new name.
 2. Update the `filter` (see [examples](#filtering-examples))
 3. Update the `process` function
     - It is important to understand that this function will receive all blocks and logs from all the other processors.

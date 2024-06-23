@@ -13,6 +13,7 @@ export const LUSD_ADDRESS = '0x5f98805a4e8be255a32880fdec7f6728c6568ba0'
 export const OUSD_VAULT_ADDRESS = '0xe75d77b1865ae93c7eaa3040b038d7aa7bc02f70'
 export const OUSD_HARVESTER_ADDRESS = '0x21fb5812d70b3396880d30e90d9e5c1202266c89'
 export const OUSD_DRIPPER_ADDRESS = '0x80c898ae5e56f888365e235ceb8cea3eb726cb58'
+export const OUSD_BUYBACK = '0xd7b28d06365b85933c64e11e639ea0d3bc0e3bab'
 
 export const OUSD_STABLE_OTOKENS = [OUSD_ADDRESS]
 
@@ -21,6 +22,7 @@ export const OETH_VAULT_ADDRESS = '0x39254033945aa2e4809cc2977e7087bee48bd7ab'
 export const OETH_HARVESTER_ADDRESS = `0x0d017afa83eace9f10a8ec5b6e13941664a6785c`
 export const OETH_ZAPPER_ADDRESS = '0x9858e47bcbbe6fbac040519b02d7cd4b2c470c66'
 export const OETH_DRIPPER_ADDRESS = '0xc0f42f73b8f01849a2dd99753524d4ba14317eb3'
+export const OETH_BUYBACK = '0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2'
 export const WOETH_ADDRESS = '0xdcee70654261af21c44c093c300ed3bb97b78192'
 export const WOETH_ARBITRUM_ADDRESS = '0xd8724322f44e5c58d7a815f542036fb17dbbf839'
 
@@ -40,14 +42,8 @@ export const OETH_VAULT_ERC20_ADDRESSES = [WETH_ADDRESS, STETH_ADDRESS, RETH_ADD
 export const OETH_CONVEX_ADDRESS = '0x1827f9ea98e0bf96550b2fc20f7233277fcd7e63'
 export const OETH_CURVE_REWARD_LP_ADDRESS = '0x24b65dc1cf053a8d96872c323d29e86ec43eb33a'
 export const OETH_CURVE_LP_ADDRESS = '0x94b17476a93b3262d87b9a326965d1e91f9c13e7'
-
-// export const OETH_CURVE_LP_OWNER_ADDRESS = '0xd03be91b1932715709e18021734fcb91bb431715'
-// export const CONVEX_DEPOSIT = '0xf403c135812408bfbe8713b5a23a04b3d48aae31'
-
 export const OETH_FRAX_STAKING_ADDRESS = '0x3ff8654d633d4ea0fae24c52aec73b4a20d0d0e5'
-
 export const OETH_MORPHO_AAVE_ADDRESS = '0xc1fc9e5ec3058921ea5025d703cbe31764756319'
-
 export const OETH_STRATEGY_BALANCER_ADDRESS = '0x49109629ac1deb03f2e9b2fe2ac4a623e0e7dfdc'
 
 export const BALANCER_VAULT = '0xba12222222228d8ba445958a75a0704d566bf2c8'
@@ -150,10 +146,30 @@ export const ogv = {
   governance: OGV_GOVERNANCE_ADDRESS,
 }
 
+export const ogn = {
+  address: OGN_ADDRESS,
+  governance: OGN_GOVERNANCE_ADDRESS,
+}
+
+export const COMPOUND_GOVERNANCE_ALPHA = '0xc0da01a04c3f3e0be433606045bb7017a7323e38'
+export const COMPOUND_GOVERNANCE_BRAVO = '0xc0da02939e1441f497fd74f78ce7decb17b66529'
+export const COMPOUND_TIMELOCK = '0x6d903f6003cca6255d85cca4d3b5e5146dc33925'
+export const COMPOUND_COMPTROLLER = '0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b'
+export const COMPOUND_COMPTROLLER_G7 = '0xbe7616b06f71e363a310aa8ce8ad99654401ead7'
+export const compound = {
+  governanceAlpha: COMPOUND_GOVERNANCE_ALPHA,
+  governanceBravo: COMPOUND_GOVERNANCE_BRAVO,
+  timelock: COMPOUND_TIMELOCK,
+  comptroller: COMPOUND_COMPTROLLER,
+  comptroller_g7: COMPOUND_COMPTROLLER_G7,
+}
+
 export const addresses = {
   tokens,
   strategies,
   oeth,
   ousd,
   ogv,
+  ogn,
+  compound,
 }

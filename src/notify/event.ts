@@ -8,23 +8,25 @@ import { Topic, notifyDiscord } from './discord'
 export const notifyForEvent = async ({
   topic,
   name,
+  eventName,
   event,
   log,
 }: {
   topic: Topic
-  name: string
+  name?: string
+  eventName: string
   event: AbiEvent<any>
   log: Log
 }) => {
   const data = event.decode(log)
   return notifyDiscord({
     topic,
-    title: `OGN - ${name}`,
+    title: `${name ?? topic} - ${eventName}`,
     description: md.construct(
       md.code(
         md.blockTable([
           ['Transaction', log.transactionHash],
-          ['Event', name],
+          ['Event', eventName],
         ]),
         'Event Data:',
         md.indent(formatJson(data)),
