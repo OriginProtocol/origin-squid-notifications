@@ -9,10 +9,9 @@ This squid is strictly for creating notifications which will feed into Discord o
 
 - [x] There is only processing. 🫢
 
-> [!INFO]
+> [!NOTE]
 > Alerts which are based on metric thresholds should likely be created in Grafana using data from `origin-squid`.
-
-> [!INFO]
+>
 > Ideal notifications for this project:
 > - Governance Proposal Activity
 > - Mints & Burns
