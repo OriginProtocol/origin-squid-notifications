@@ -1,18 +1,7 @@
-import {
-  ComponentType,
-  EmbedType,
-  MessagePayload,
-  RawFile,
-  WebhookClient,
-  WebhookMessageCreateOptions,
-} from 'discord.js'
+import { WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
 
-const url = process.env.DISCORD_WEBHOOK_URL ?? ''
+const url = process.env[process.env.DISCORD_WEBHOOK_URL_ENV ?? 'DISCORD_WEBHOOK_URL'] ?? ''
 const username = process.env.DISCORD_USERNAME ?? 'McFly'
-const avatarURL =
-  process.env.DISCORD_AVATAR_URL ??
-  'https://files.oaiusercontent.com/file-UgvaKYuPD2VXj1e1qu5eMB56?se=2024-06-21T19%3A14%3A09Z&sp=r&sv=2023-11-03&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D8646ef88-da99-48b1-a318-44c23beccfb1.webp&sig=xOvbmIU4Is1xrn1xCltCD0YIzXofNsr5SwhHQKosXFg%3D'
-
 const client = new WebhookClient({ url })
 
 export type Severity = 'info' | 'warning' | 'error' | 'success'

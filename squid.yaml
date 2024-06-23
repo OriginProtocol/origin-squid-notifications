@@ -11,16 +11,16 @@ deploy:
   secrets:
     - RPC_ENDPOINT
     - RPC_ENDPOINT_ARBITRUM
+    - DISCORD_WEBHOOK_URL_TEST
   processor:
     name: processor
     cmd: [ "sqd", "process:prod" ]
     env:
-      RPC_ENV: RPC_ENDPOINT_RETH
-      TS_NODE_BASEURL: './lib'
+      DISCORD_WEBHOOK_URL_ENV: 'DISCORD_WEBHOOK_URL_TEST'
 scale:
   dedicated: true
   addons:
     postgres:
       storage: 5G
-      profile: medium
+      profile: small
 
