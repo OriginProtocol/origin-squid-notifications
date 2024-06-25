@@ -1,5 +1,5 @@
 // Import your processor here
-import './governance-compound'
-import './governance-origin'
+import './compound'
+import './origin'
 
 export { processors } from './processors'

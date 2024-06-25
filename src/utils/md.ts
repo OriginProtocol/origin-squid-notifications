@@ -35,7 +35,7 @@ export const md = {
   /**
    * Create a json code block
    */
-  json: (object: unknown) => '```json\n' + jsonify(object, 2) + '\n```',
+  json: (object: unknown) => '```json\n' + jsonify(object, null, 2) + '\n```',
   /**
    * Indent `content` by `amount`
    */

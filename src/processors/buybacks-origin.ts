@@ -1,4 +1,4 @@
-import { OETH_BUYBACK, OUSD_BUYBACK } from '../utils/addresses'
+import { OETH_BUYBACK, OUSD_BUYBACK } from '../utils/addresses/addresses'
 import { createOTokenBuybackProcessor } from './templates/otoken-buyback'
 
 createOTokenBuybackProcessor({

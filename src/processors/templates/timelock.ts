@@ -1,15 +1,13 @@
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
 
-import * as governanceAbi from '../../abi/governance'
+import * as timelockAbi from '../../abi/timelock'
 import { Topic } from '../../notify/discord'
 import { notifyForEvent } from '../../notify/event'
 import { Context } from '../../types'
 import { logFilter } from '../../utils/logFilter'
 import { createProcessor } from '../processors'
 
-const events = Object.entries(governanceAbi.events).filter(([n]) => !n.startsWith('VoteCast'))
-
-export const createGovernanceProcessor = ({
+export const createTimelockProcessor = ({
   name,
   chainId,
   address,
@@ -22,12 +20,12 @@ export const createGovernanceProcessor = ({
 }) => {
   const filter = logFilter({
     address: [address],
-    topic0: events.map(([n, e]) => e.topic),
+    topic0: Object.values(timelockAbi.events).map((e) => e.topic),
   })
 
   createProcessor({
     name,
-    description: `Notify governance events for ${address}. (excludes VoteCast* events)`,
+    description: `Notify timelock events from ${address}.`,
     chainId,
     setup: (processor: EvmBatchProcessor) => {
       processor.addLog(filter.value)
@@ -36,7 +34,7 @@ export const createGovernanceProcessor = ({
       for (const block of ctx.blocks) {
         for (const log of block.logs) {
           if (filter.matches(log)) {
-            const entry = events.find(([n, e]) => e.topic === log.topics[0])
+            const entry = Object.entries(timelockAbi.events).find(([n, e]) => e.topic === log.topics[0])
             if (entry) {
               const [eventName, event] = entry
               await notifyForEvent({ topic, name, eventName, log, event })

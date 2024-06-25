@@ -25,8 +25,8 @@ export const createOTokenBuybackProcessor = ({
 
   createProcessor({
     name,
+    description: `Notify for OToken Buyback events from ${address}`,
     chainId,
-    // from: filter.value.range?.from,
     setup: (processor: EvmBatchProcessor) => {
       processor.addLog(filter.value)
     },

@@ -14,7 +14,8 @@ const filter = logFilter({
 })
 
 createProcessor({
-  name: 'Template',
+  name: 'OGN ERC20 Events',
+  description: 'Notify for ERC20 events emitted by OGN.',
   chainId: 1,
   setup: (processor: EvmBatchProcessor) => {
     processor.addLog(filter.value)

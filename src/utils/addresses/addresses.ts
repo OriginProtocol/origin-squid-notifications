@@ -1,4 +1,6 @@
 // Lowercase Addresses
+import { uniq } from 'lodash'
+
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 export const ETH_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 
@@ -112,7 +114,7 @@ export const strategies = {
     Generalized4626Strategy: '0x6b69b755c629590ed59618a2712d8a2957ca98fc',
     CompoundStrategy: '0x9c459eeb3fa179a40329b81c1635525e9a0ef094', // Deprecated
     ConvexStrategy: '0xea2ef2e2e5a749d4a66b41db9ad85a38aa264cb3', // Deprecated
-    LUSDMetaStrategy: '0x7A192DD9Cc4Ea9bdEdeC9992df74F1DA55e60a19', // Deprecated
+    LUSDMetaStrategy: '0x7a192dd9cc4ea9bdedec9992df74f1da55e60a19', // Deprecated
   },
 } as const
 
@@ -141,13 +143,14 @@ export const ousd = {
 }
 
 export const ogv = {
-  ogv: OGV_ADDRESS,
-  veOGV: VEOGV_ADDRESS,
+  address: OGV_ADDRESS,
+  stakedAddress: VEOGV_ADDRESS,
   governance: OGV_GOVERNANCE_ADDRESS,
 }
 
 export const ogn = {
   address: OGN_ADDRESS,
+  stakedAddress: XOGN_ADDRESS,
   governance: OGN_GOVERNANCE_ADDRESS,
 }
 
@@ -172,4 +175,16 @@ export const addresses = {
   ogv,
   ogn,
   compound,
+  origin: uniq(
+    [
+      ...Object.values(ogn),
+      ...Object.values(oeth),
+      ...Object.values(strategies.oeth),
+      ...Object.values(ousd),
+      ...Object.values(strategies.ousd),
+      ...Object.values(ogv),
+    ]
+      .flat()
+      .map((a) => a.toLowerCase()),
+  ),
 }

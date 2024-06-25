@@ -1,8 +1,13 @@
-export const jsonify = (json: unknown, indentation = 0) =>
+export const jsonify = (
+  json: unknown,
+  replacer?: null | ((this: any, key: string, value: any) => any),
+  indentation = 0,
+) =>
   JSON.stringify(
     json,
     (key, value) => {
-      return typeof value === 'bigint' ? value.toString() : value
+      value = typeof value === 'bigint' ? value.toString() : value
+      return replacer?.(key, value) ?? value
     },
     indentation,
   )

@@ -1,8 +1,7 @@
 import { WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
 
 const url = process.env[process.env.DISCORD_WEBHOOK_URL_ENV ?? 'DISCORD_WEBHOOK_URL'] ?? ''
-const username = process.env.DISCORD_USERNAME ?? 'McFly'
-const client = new WebhookClient({ url })
+const client = url ? new WebhookClient({ url }) : undefined
 
 export type Severity = 'info' | 'warning' | 'error' | 'success'
 const severityColors: Record<Severity, number> = {
@@ -10,6 +9,12 @@ const severityColors: Record<Severity, number> = {
   warning: 0xff9800,
   error: 0xf44336,
   success: 0x4caf50,
+}
+const severityEmojis: Record<Severity, string> = {
+  info: ':information_source:',
+  warning: ':warning:',
+  error: ':bangbang:',
+  success: ':white_check_mark:',
 }
 
 export type Topic = 'OGN' | 'xOGN' | 'OETH' | 'OUSD'
@@ -33,16 +38,18 @@ export const notifyDiscord = async ({
   files?: WebhookMessageCreateOptions['files']
   footer?: string
   severity?: 'info' | 'warning' | 'error' | 'success'
-  topic?: 'OGN' | 'xOGN' | 'OETH' | 'OUSD'
+  topic?: Topic
 }) => {
   const payload: WebhookMessageCreateOptions = {
-    username,
+    username: topic,
     avatarURL: topic ? topicThumbnails[topic] : undefined,
     content: `
-**${title}**
+**${title}** ${severityEmojis[severity]}
 ${description}
-    `.trim(),
+    `
+      .trim()
+      .slice(0, 2000),
     files,
   }
-  await client.send(payload)
+  await client?.send(payload)
 }
