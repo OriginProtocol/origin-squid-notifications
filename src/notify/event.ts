@@ -6,6 +6,8 @@ import { formatJson } from '../utils/formatJson'
 import { md } from '../utils/md'
 import { Topic, notifyDiscord } from './discord'
 
+let notificationCount = 0
+
 export const notifyForEvent = async ({
   topic,
   severity = 'info',
@@ -24,8 +26,13 @@ export const notifyForEvent = async ({
   const data = event.decode(log)
   let addressName = getAddressesPyName(log.address)
   if (addressName) addressName = `(${addressName})`
+
+  notificationCount += 1
+  if (notificationCount > 5 && process.env.BLOCK_FROM) process.exit(1)
+
   return notifyDiscord({
     topic,
+    severity,
     title: `${name ?? topic} - ${eventName}`,
     description: md.construct(
       md.code(
