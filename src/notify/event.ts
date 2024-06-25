@@ -6,7 +6,7 @@ import { formatJson } from '../utils/formatJson'
 import { md } from '../utils/md'
 import { Topic, notifyDiscord } from './discord'
 
-let notificationCount = 0
+const uniqueEventsFired = new Set<string>()
 
 export const notifyForEvent = async ({
   topic,
@@ -27,8 +27,12 @@ export const notifyForEvent = async ({
   let addressName = getAddressesPyName(log.address)
   if (addressName) addressName = `(${addressName})`
 
-  notificationCount += 1
-  if (notificationCount > 5 && process.env.BLOCK_FROM) process.exit(1)
+  if (process.env.BLOCK_FROM) {
+    if (uniqueEventsFired.has(log.topics[0])) return
+    else uniqueEventsFired.add(log.topics[0])
+  }
+
+  console.log('Sending notification', { topic, severity, name, eventName, event, log })
 
   return notifyDiscord({
     topic,
@@ -37,6 +41,7 @@ export const notifyForEvent = async ({
     description: md.construct(
       md.code(
         md.blockTable([
+          ['Block - Time', `${log.block.height} - ${new Date(log.block.timestamp).toISOString()}`],
           ['Address', `${log.address} ${addressName}`],
           ['Transaction', log.transactionHash],
           ['Event', eventName],

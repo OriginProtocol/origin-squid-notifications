@@ -1,0 +1,1 @@
+The best examples can be discovered by looking through [../templates](../templates)

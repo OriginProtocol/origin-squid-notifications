@@ -1,8 +1,8 @@
-import * as governanceAbi from '../../abi/governance'
+import * as otokenAbi from '../../abi/otoken'
 import { Topic } from '../../notify/discord'
 import { createEventProcessor } from './events'
 
-export const createGovernanceProcessor = ({
+export const createOTokenProcessor = ({
   name,
   chainId,
   address,
@@ -15,11 +15,11 @@ export const createGovernanceProcessor = ({
 }) => {
   return createEventProcessor({
     name,
-    description: `Notify governance events for ${address}. (excludes VoteCast* events)`,
+    description: `Notify OToken events for ${address}.`,
     chainId,
     address,
     topic,
-    events: governanceAbi.events,
-    excludedEvents: ['VoteCast', 'VoteCastWithParams'],
+    events: otokenAbi.events,
+    includedEvents: ['AccountRebasingDisabled', 'AccountRebasingEnabled', 'TotalSupplyUpdatedHighres'],
   })
 }

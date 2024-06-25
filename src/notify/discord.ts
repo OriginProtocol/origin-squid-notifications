@@ -1,6 +1,7 @@
 import { WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
 
 const url = process.env[process.env.DISCORD_WEBHOOK_URL_ENV ?? 'DISCORD_WEBHOOK_URL'] ?? ''
+
 const client = url ? new WebhookClient({ url }) : undefined
 
 export type Severity = 'info' | 'warning' | 'error' | 'success'
@@ -44,7 +45,7 @@ export const notifyDiscord = async ({
     username: topic,
     avatarURL: topic ? topicThumbnails[topic] : undefined,
     content: `
-**${title}** ${severityEmojis[severity]}
+## ${title}  ${severityEmojis[severity]}
 ${description}
     `
       .trim()

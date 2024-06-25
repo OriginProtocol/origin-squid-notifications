@@ -5,20 +5,20 @@ import { createTimelockProcessor } from './templates/timelock'
 createGovernanceProcessor({
   name: 'Compound Governance Alpha',
   chainId: 1,
-  address: COMPOUND_GOVERNANCE_ALPHA,
+  address: [COMPOUND_GOVERNANCE_ALPHA],
   topic: 'OUSD',
 })
 
 createGovernanceProcessor({
   name: 'Compound Governance Bravo',
   chainId: 1,
-  address: COMPOUND_GOVERNANCE_BRAVO,
+  address: [COMPOUND_GOVERNANCE_BRAVO],
   topic: 'OUSD',
 })
 
 createTimelockProcessor({
   name: 'Compound Timelock',
   chainId: 1,
-  address: COMPOUND_TIMELOCK,
+  address: [COMPOUND_TIMELOCK],
   topic: 'OUSD',
 })

@@ -1,9 +1,9 @@
 import * as governedUpgradeabilityProxy from '../../abi/governed-upgradeability-proxy'
-import * as otokenBuybackAbi from '../../abi/otoken-buyback'
+import * as otokenVaultAbi from '../../abi/otoken-vault'
 import { Topic } from '../../notify/discord'
 import { createEventProcessor } from './events'
 
-export const createOTokenBuybackProcessor = ({
+export const createOTokenVaultProcessor = ({
   name,
   chainId,
   address,
@@ -16,11 +16,11 @@ export const createOTokenBuybackProcessor = ({
 }) => {
   return createEventProcessor({
     name,
-    description: `Notify for OToken Buyback events from ${address}`,
+    description: `Notify OToken vault events for ${address}.`,
     chainId,
     address,
     topic,
-    events: otokenBuybackAbi.events,
+    events: otokenVaultAbi.events,
     excludedEvents: Object.keys(governedUpgradeabilityProxy.events),
   })
 }

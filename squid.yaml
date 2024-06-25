@@ -11,16 +11,13 @@ deploy:
   secrets:
     - RPC_ENDPOINT
     - RPC_ENDPOINT_ARBITRUM
-    - DISCORD_WEBHOOK_URL_TEST
+    - DISCORD_WEBHOOK_URL
   processor:
     name: processor
     cmd: [ "sqd", "process:prod" ]
-    env:
-      DISCORD_WEBHOOK_URL_ENV: 'DISCORD_WEBHOOK_URL_TEST'
 scale:
   dedicated: true
   addons:
     postgres:
       storage: 5G
       profile: small
-
