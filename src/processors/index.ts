@@ -1,5 +1,5 @@
 // Import your processor here
-import './compound'
+// import './compound'
 import './curve'
 import './origin'
 
