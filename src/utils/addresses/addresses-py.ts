@@ -227,4 +227,5 @@ const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [OETH_CURVE_AMO_STRATEGY]: 'OETH/ETH Curve AMO Strategy',
 }
 
-export const getAddressesPyName = (address: string): string | undefined => CONTRACT_ADDR_TO_NAME[address]
+export const getAddressesPyName = (address?: string): string | undefined =>
+  address ? CONTRACT_ADDR_TO_NAME[address] : undefined

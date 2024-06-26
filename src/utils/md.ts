@@ -1,4 +1,4 @@
-import { padEnd, padStart } from 'lodash'
+import { compact, padEnd, padStart } from 'lodash'
 
 import { jsonify } from './jsonify'
 
@@ -17,21 +17,29 @@ export const md = {
   /**
    * Create a nice looking table for placement within a code block.
    */
-  blockTable: (data: any[][]) => {
+  blockTable: (data: Array<undefined | Array<any>>) => {
     // Find the maximum length of each column
-    const colWidths = data[0].map((_, colIndex) => Math.max(...data.map((row) => String(row[colIndex]).length)))
+    const colWidths = compact(data[0]).map((_, colIndex) =>
+      Math.max(...compact(data).map((row) => String(row[colIndex]).length)),
+    )
 
     // Generate the table rows with proper padding
-    return data.map((row) => row.map((cell, i) => padEnd(String(cell), colWidths[i], ' ')).join(' | ')).join('\n')
+    return data
+      .map((row) =>
+        compact(row)
+          .map((cell, i) => padEnd(String(cell), colWidths[i], ' '))
+          .join(' | '),
+      )
+      .join('\n')
   },
   /**
    * Create a code block
    */
-  code: (...content: string[]) => '```\n' + content.join('\n') + '\n```',
+  code: (...content: string[]) => '```\n' + compact(content).join('\n') + '\n```',
   /**
    * Create a typescript code block
    */
-  ts: (...content: string[]) => '```ts\n' + content.join('\n') + '\n```',
+  ts: (...content: string[]) => '```ts\n' + compact(content).join('\n') + '\n```',
   /**
    * Create a json code block
    */

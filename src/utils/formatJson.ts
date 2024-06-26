@@ -1,4 +1,5 @@
 import prettyjson from 'prettyjson'
+import { formatEther } from 'viem'
 
 import { getAddressesPyName } from './addresses/addresses-py'
 import { jsonify } from './jsonify'
@@ -22,6 +23,13 @@ export function formatJson(json: unknown) {
       const n = Number(v)
       if (n > 1514764800 && n < 7258118400000) {
         return new Date(n * 1000).toJSON()
+      }
+
+      if (
+        typeof v === 'bigint' &&
+        (k.includes('value') || k.includes('amount') || k.includes('points') || k.includes('alance'))
+      ) {
+        return `${v.toString()} | ${formatEther(v)}`
       }
 
       return v

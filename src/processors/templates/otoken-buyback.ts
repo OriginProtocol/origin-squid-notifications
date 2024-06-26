@@ -1,7 +1,7 @@
 import * as governedUpgradeabilityProxy from '../../abi/governed-upgradeability-proxy'
 import * as otokenBuybackAbi from '../../abi/otoken-buyback'
 import { Topic } from '../../notify/discord'
-import { createEventProcessor } from './events'
+import { createEventProcessor } from './event'
 
 export const createOTokenBuybackProcessor = ({
   name,

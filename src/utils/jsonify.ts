@@ -6,8 +6,9 @@ export const jsonify = (
   JSON.stringify(
     json,
     (key, value) => {
+      value = replacer?.(key, value) ?? value
       value = typeof value === 'bigint' ? value.toString() : value
-      return replacer?.(key, value) ?? value
+      return value
     },
     indentation,
   )

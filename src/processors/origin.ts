@@ -1,3 +1,4 @@
+import * as otokenAbi from '../abi/otoken'
 import {
   OETH_ADDRESS,
   OETH_BUYBACK,
@@ -15,6 +16,7 @@ import { createOTokenProcessor } from './templates/otoken'
 import { createOTokenBuybackProcessor } from './templates/otoken-buyback'
 import { createOTokenVaultProcessor } from './templates/otoken-vaults'
 import { createGovernedUpgradeabilityProxyProcessor } from './templates/proxy'
+import { createTraceProcessor } from './templates/trace'
 
 // OTokens
 createOTokenProcessor({ name: 'OETH Contract', chainId: 1, address: [OETH_ADDRESS], topic: 'OETH' })
@@ -39,3 +41,12 @@ createOTokenBuybackProcessor({ name: 'OUSD Buyback', chainId: 1, address: [OUSD_
 
 // Staking
 createExponentialStakingProcessor({ name: 'OGN Staking', chainId: 1, address: [XOGN_ADDRESS], topic: 'xOGN' })
+
+createTraceProcessor({
+  name: 'OETH Trace',
+  description: 'Testing OETH trace',
+  chainId: 1,
+  traceParams: { type: ['call'], callTo: [OETH_ADDRESS], error: true },
+  abi: [otokenAbi],
+  topic: 'OETH',
+})

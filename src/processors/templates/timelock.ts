@@ -1,6 +1,6 @@
 import * as timelockAbi from '../../abi/timelock'
 import { Topic } from '../../notify/discord'
-import { createEventProcessor } from './events'
+import { createEventProcessor } from './event'
 
 export const createTimelockProcessor = ({
   name,

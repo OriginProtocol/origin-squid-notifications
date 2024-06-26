@@ -1,6 +1,6 @@
 import * as governanceAbi from '../../abi/governance'
 import { Topic } from '../../notify/discord'
-import { createEventProcessor } from './events'
+import { createEventProcessor } from './event'
 
 export const createGovernanceProcessor = ({
   name,

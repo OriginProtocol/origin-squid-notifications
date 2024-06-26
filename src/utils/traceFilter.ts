@@ -1,10 +1,7 @@
-import { pad as viemPad } from 'viem'
-
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
 
 import { Trace } from '../types'
 
-const pad = (hex: string) => viemPad(hex as `0x${string}`)
 const lower = (hex: string) => hex.toLowerCase()
 
 /**
@@ -14,13 +11,14 @@ export const traceFilter = (
   filter: Pick<
     Parameters<EvmBatchProcessor['addTrace']>[0] & { type: ['call'] },
     'type' | 'callTo' | 'callSighash' | 'transaction' | 'range'
-  >,
+  > & { error?: boolean },
 ) => {
+  const error = filter.error
   filter = {
     type: filter.type,
     callTo: filter.callTo?.map(lower),
     callSighash: filter.callSighash?.map(lower),
-    transaction: filter.transaction,
+    transaction: filter.transaction ?? true,
     range: filter.range,
   }
   return {
@@ -35,6 +33,9 @@ export const traceFilter = (
         filter.range &&
         (trace.block.height < filter.range.from || (filter.range.to && trace.block.height > filter.range.to))
       ) {
+        return false
+      }
+      if (!!error !== !!trace.error) {
         return false
       }
       return true
