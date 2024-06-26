@@ -25,7 +25,6 @@ export const notifyForEvent = async ({
 }) => {
   const data = event.decode(log)
   let addressName = getAddressesPyName(log.address)
-  if (addressName) addressName = `(${addressName})`
 
   if (process.env.BLOCK_FROM) {
     if (uniqueEventsFired.has(log.topics[0])) return
@@ -42,7 +41,7 @@ export const notifyForEvent = async ({
       md.code(
         md.blockTable([
           ['Block - Time', `${log.block.height} - ${new Date(log.block.timestamp).toISOString()}`],
-          ['Address', `${log.address} ${addressName}`],
+          ['Address', `${log.address}${addressName ? ` (${addressName})` : ''}`],
           ['Transaction', log.transactionHash],
           ['Event', eventName],
         ]),
