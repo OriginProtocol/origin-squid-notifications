@@ -9,14 +9,16 @@ import {
   OUSD_VAULT_ADDRESS,
   XOGN_ADDRESS,
   addresses,
+  ousd,
 } from '../utils/addresses'
+import { oethABIs, ousdABIs } from '../utils/addresses/address-abis'
 import { createExponentialStakingProcessor } from './templates/exponential-staking'
 import { createGovernanceProcessor } from './templates/governance'
 import { createOTokenProcessor } from './templates/otoken'
 import { createOTokenBuybackProcessor } from './templates/otoken-buyback'
 import { createOTokenVaultProcessor } from './templates/otoken-vaults'
 import { createGovernedUpgradeabilityProxyProcessor } from './templates/proxy'
-import { createTraceProcessor } from './templates/trace'
+import { createTraceErrorProcessor } from './templates/trace-errors'
 
 // OTokens
 createOTokenProcessor({ name: 'OETH Contract', chainId: 1, address: [OETH_ADDRESS], topic: 'OETH' })
@@ -42,11 +44,18 @@ createOTokenBuybackProcessor({ name: 'OUSD Buyback', chainId: 1, address: [OUSD_
 // Staking
 createExponentialStakingProcessor({ name: 'OGN Staking', chainId: 1, address: [XOGN_ADDRESS], topic: 'xOGN' })
 
-createTraceProcessor({
-  name: 'OETH Trace',
-  description: 'Testing OETH trace',
+createTraceErrorProcessor({
+  name: 'OETH Error Trace',
   chainId: 1,
-  traceParams: { type: ['call'], callTo: [OETH_ADDRESS], error: true },
-  abi: [otokenAbi],
+  address: Object.keys(oethABIs),
+  abi: Object.values(oethABIs),
   topic: 'OETH',
+})
+
+createTraceErrorProcessor({
+  name: 'OUSD Error Trace',
+  chainId: 1,
+  address: Object.keys(ousdABIs),
+  abi: Object.values(ousdABIs),
+  topic: 'OUSD',
 })
