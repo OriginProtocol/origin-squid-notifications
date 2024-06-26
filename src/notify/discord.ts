@@ -29,23 +29,28 @@ const topicThumbnails: Record<Topic, string> = {
 export const notifyDiscord = async ({
   title,
   description,
-  footer,
   files,
   severity = 'info',
   topic,
+  links,
 }: {
   title: string
   description: string
   files?: WebhookMessageCreateOptions['files']
-  footer?: string
   severity?: 'info' | 'warning' | 'error' | 'success'
   topic?: Topic
+  links?: Record<string, string>
 }) => {
+  const linkString = links
+    ? Object.entries(links)
+        .map(([title, link]) => `[${title}](<${link}>)`)
+        .join('   |   ')
+    : ''
   const payload: WebhookMessageCreateOptions = {
     username: topic,
     avatarURL: topic ? topicThumbnails[topic] : undefined,
     content: `
-## ${title}  ${severityEmojis[severity]}
+### ${severityEmojis[severity]}   ${title}   |   ${linkString}
 ${description}
     `
       .trim()

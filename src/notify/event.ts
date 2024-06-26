@@ -49,5 +49,8 @@ export const notifyForEvent = async ({
         md.indent(formatJson(data)),
       ),
     ),
+    links: {
+      tx: `https://etherscan.io/tx/${log.transactionHash}`,
+    },
   })
 }
