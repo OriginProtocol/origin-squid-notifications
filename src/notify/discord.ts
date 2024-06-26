@@ -21,7 +21,7 @@ const severityEmojis: Record<Severity, string> = {
 export type Topic = 'OGN' | 'xOGN' | 'OETH' | 'OUSD'
 const topicThumbnails: Record<Topic, string> = {
   OGN: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-ogn-logo.png',
-  xOGN: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-xogn-logo.webp',
+  xOGN: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-xogn-logo.png',
   OETH: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-ether-oeth-logo.png',
   OUSD: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-dollar-ousd-logo.png',
 }

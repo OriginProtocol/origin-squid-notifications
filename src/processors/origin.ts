@@ -6,8 +6,10 @@ import {
   OUSD_ADDRESS,
   OUSD_BUYBACK,
   OUSD_VAULT_ADDRESS,
+  XOGN_ADDRESS,
   addresses,
 } from '../utils/addresses'
+import { createExponentialStakingProcessor } from './templates/exponential-staking'
 import { createGovernanceProcessor } from './templates/governance'
 import { createOTokenProcessor } from './templates/otoken'
 import { createOTokenBuybackProcessor } from './templates/otoken-buyback'
@@ -34,3 +36,6 @@ createGovernedUpgradeabilityProxyProcessor({
 // Buybacks
 createOTokenBuybackProcessor({ name: 'OETH Buyback', chainId: 1, address: [OETH_BUYBACK], topic: 'OETH' })
 createOTokenBuybackProcessor({ name: 'OUSD Buyback', chainId: 1, address: [OUSD_BUYBACK], topic: 'OUSD' })
+
+// Staking
+createExponentialStakingProcessor({ name: 'OGN Staking', chainId: 1, address: [XOGN_ADDRESS], topic: 'xOGN' })

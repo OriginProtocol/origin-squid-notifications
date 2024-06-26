@@ -1,3 +1,4 @@
+import { XOGN_ADDRESS } from './addresses'
 import {
   FRAX_ETH_STRATEGY,
   OETH_CURVE_AMO_STRATEGY,
@@ -164,6 +165,7 @@ const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [MIX_ORACLE]: 'MixOracle',
   [CHAINLINK_ORACLE]: 'ChainlinkOracle',
   [OGN_STAKING]: 'OGN Staking',
+  [XOGN_ADDRESS]: 'xOGN',
   [STORY_STAKING_SERIES]: 'Story Staking Series',
   [STORY_STAKING_SEASON_ONE]: 'Season One',
   [STORY_STAKING_SEASON_TWO]: 'Season Two',
