@@ -20,7 +20,10 @@ export const createTraceErrorProcessor = ({
     name,
     description: `Detect errors occurring in ${address.join(', ')}`,
     chainId,
-    traceParams: { type: ['call'], callTo: address, error: true },
+    traceParams: [
+      { type: ['call'], callFrom: address, error: true },
+      { type: ['call'], callTo: address, error: true },
+    ],
     abi,
     topic,
   })

@@ -10,12 +10,13 @@ const lower = (hex: string) => hex.toLowerCase()
 export const traceFilter = (
   filter: Pick<
     Parameters<EvmBatchProcessor['addTrace']>[0] & { type: ['call'] },
-    'type' | 'callTo' | 'callSighash' | 'transaction' | 'range'
+    'type' | 'callFrom' | 'callTo' | 'callSighash' | 'transaction' | 'range'
   > & { error?: boolean },
 ) => {
   const error = filter.error
   filter = {
     type: filter.type,
+    callFrom: filter.callFrom?.map(lower),
     callTo: filter.callTo?.map(lower),
     callSighash: filter.callSighash?.map(lower),
     transaction: filter.transaction ?? true,
@@ -25,6 +26,7 @@ export const traceFilter = (
     value: filter,
     matches(trace: Trace) {
       if (filter.type && !filter.type.includes(trace.type)) return false
+      if (filter.callFrom && trace.type === 'call' && !filter.callFrom.includes(trace.action.from)) return false
       if (filter.callTo && trace.type === 'call' && !filter.callTo.includes(trace.action.to)) return false
       if (filter.callSighash && trace.type === 'call' && !filter.callSighash.includes(trace.action.sighash))
         return false
