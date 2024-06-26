@@ -28,11 +28,11 @@ export const notifyForTrace = async ({
   let fromName = getAddressesPyName(from)
   let toName = getAddressesPyName(to)
 
-  // if (process.env.BLOCK_FROM) {
-  //   const id = trace.type === 'call' ? trace.action.sighash : trace.transaction?.hash ?? trace.block.hash
-  //   if (uniqueTracesFired.has(id) || uniqueTracesFired.size > 5) return
-  //   else uniqueTracesFired.add(id)
-  // }
+  if (process.env.BLOCK_FROM) {
+    const id = trace.type === 'call' ? trace.action.sighash : trace.transaction?.hash ?? trace.block.hash
+    if (uniqueTracesFired.has(id) || uniqueTracesFired.size > 5) return
+    else uniqueTracesFired.add(id)
+  }
 
   console.log('Sending notification', { topic, severity, name, functionName, functionData, trace })
 
