@@ -1,8 +1,11 @@
-import * as otokenAbi from '../abi/otoken'
+import * as governedUpgradeabilityProxy from '../abi/governed-upgradeability-proxy'
+import * as strategyMorphoAaveAbi from '../abi/strategy-morpho-aave'
+import * as strategyNativeStakingAbi from '../abi/strategy-native-staking'
 import { discordMentions } from '../notify/discord'
 import {
   OETH_ADDRESS,
   OETH_BUYBACK,
+  OETH_NATIVE_STRATEGY_ADDRESS,
   OETH_VAULT_ADDRESS,
   OGN_ADDRESS,
   OGN_GOVERNANCE_ADDRESS,
@@ -13,10 +16,12 @@ import {
   XOGN_ADDRESS,
   addresses,
   ousd,
+  strategies,
 } from '../utils/addresses'
 import { oethABIs, ognABIs, ousdABIs } from '../utils/addresses/address-abis'
 import { GOVERNANCE_TIMELOCK } from '../utils/addresses/addresses-py'
 import { createBurnProcessor } from './templates/burn'
+import { createEventProcessor } from './templates/event'
 import { createExponentialStakingProcessor } from './templates/exponential-staking'
 import { createFixedRateRewardsSourceProcessor } from './templates/fixed-rate-rewards-source'
 import { createGovernanceProcessor } from './templates/governance'
@@ -30,6 +35,26 @@ import { createTraceErrorProcessor } from './templates/trace-errors'
 // OTokens
 createOTokenProcessor({ name: 'OETH Contract', chainId: 1, address: [OETH_ADDRESS], topic: 'OETH' })
 createOTokenProcessor({ name: 'OUSD Contract', chainId: 1, address: [OUSD_ADDRESS], topic: 'OUSD' })
+
+// OToken Strategies
+createEventProcessor({
+  name: 'OETH Native Staking Strategy',
+  description: 'Notify for events on the OETH native staking strategy.',
+  chainId: 1,
+  address: [OETH_NATIVE_STRATEGY_ADDRESS],
+  topic: 'OETH',
+  events: strategyNativeStakingAbi.events,
+  excludedEvents: Object.keys(governedUpgradeabilityProxy.events),
+})
+createEventProcessor({
+  name: 'OUSD Morpho Aave Strategy',
+  description: 'Notify for events on the OUSD morpho aave strategy.',
+  chainId: 1,
+  address: [strategies.ousd.MorphoAaveStrategy],
+  topic: 'OUSD',
+  events: strategyMorphoAaveAbi.events,
+  excludedEvents: Object.keys(governedUpgradeabilityProxy.events),
+})
 
 // OTokenVaults
 createOTokenVaultProcessor({ name: 'OETH Vault', chainId: 1, address: [OETH_VAULT_ADDRESS], topic: 'OETH' })
