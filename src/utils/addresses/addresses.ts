@@ -47,11 +47,12 @@ export const OETH_CURVE_LP_ADDRESS = '0x94b17476a93b3262d87b9a326965d1e91f9c13e7
 export const OETH_FRAX_STAKING_ADDRESS = '0x3ff8654d633d4ea0fae24c52aec73b4a20d0d0e5'
 export const OETH_MORPHO_AAVE_ADDRESS = '0xc1fc9e5ec3058921ea5025d703cbe31764756319'
 export const OETH_STRATEGY_BALANCER_ADDRESS = '0x49109629ac1deb03f2e9b2fe2ac4a623e0e7dfdc'
+export const OETH_NATIVE_STRATEGY_ADDRESS = '0x34edb2ee25751ee67f68a45813b22811687c0238'
 
 export const BALANCER_VAULT = '0xba12222222228d8ba445958a75a0704d566bf2c8'
 export const AURA_REWARDS_POOL_ADDRESS = '0xdd1fe5ad401d4777ce89959b7fa587e569bf125d'
 
-export const OGV_GOVERNANCE_ADDRESS = '0x3cdd07c16614059e66344a7b579dab4f9516c0b6'
+export const OGV_GOVERNANCE_ADDRESS = '0x3cdd07c16614059e66344a7b579dab4f9516c0b6' // Old Governance
 export const OGN_GOVERNANCE_ADDRESS = '0x1d3fbd4d129ddd2372ea85c5fa00b2682081c9ec'
 
 export const OGN_ADDRESS = '0x8207c1ffc5b6804f6024322ccf34f29c3541ae26'
@@ -100,6 +101,7 @@ export type TokenAddress = (typeof tokens)[TokenSymbol]
 // Strategy Helper Objects & Types
 export const strategies = {
   oeth: {
+    NativeStrategy: OETH_NATIVE_STRATEGY_ADDRESS,
     ConvexEthMetaStrategy: '0x1827f9ea98e0bf96550b2fc20f7233277fcd7e63',
     FraxETHStrategy: '0x3ff8654d633d4ea0fae24c52aec73b4a20d0d0e5',
     MorphoAaveStrategy: '0xc1fc9e5ec3058921ea5025d703cbe31764756319',
@@ -112,9 +114,9 @@ export const strategies = {
     MorphoAaveStrategy: '0x79f2188ef9350a1dc11a062cca0abe90684b0197',
     FluxStrategy: '0x76bf500b6305dc4ea851384d3d5502f1c7a0ed44',
     Generalized4626Strategy: '0x6b69b755c629590ed59618a2712d8a2957ca98fc',
-    CompoundStrategy: '0x9c459eeb3fa179a40329b81c1635525e9a0ef094', // Deprecated
-    ConvexStrategy: '0xea2ef2e2e5a749d4a66b41db9ad85a38aa264cb3', // Deprecated
-    LUSDMetaStrategy: '0x7a192dd9cc4ea9bdedec9992df74f1da55e60a19', // Deprecated
+    // CompoundStrategy: '0x9c459eeb3fa179a40329b81c1635525e9a0ef094', // Deprecated
+    // ConvexStrategy: '0xea2ef2e2e5a749d4a66b41db9ad85a38aa264cb3', // Deprecated
+    // LUSDMetaStrategy: '0x7a192dd9cc4ea9bdedec9992df74f1da55e60a19', // Deprecated
   },
 } as const
 

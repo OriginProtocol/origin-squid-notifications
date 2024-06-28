@@ -7,11 +7,14 @@ import * as otokenBuybackAbi from '../../abi/otoken-buyback'
 import * as otokenDripperAbi from '../../abi/otoken-dripper'
 import * as otokenHarvesterAbi from '../../abi/otoken-harvester'
 import * as otokenVaultAbi from '../../abi/otoken-vault'
+import * as strategyMorphoAaveAbi from '../../abi/strategy-morpho-aave'
+import * as strategyNativeStakingAbi from '../../abi/strategy-native-staking'
 import {
   OETH_ADDRESS,
   OETH_BUYBACK,
   OETH_DRIPPER_ADDRESS,
   OETH_HARVESTER_ADDRESS,
+  OETH_NATIVE_STRATEGY_ADDRESS,
   OETH_VAULT_ADDRESS,
   OGN_ADDRESS,
   OGN_GOVERNANCE_ADDRESS,
@@ -22,6 +25,7 @@ import {
   OUSD_HARVESTER_ADDRESS,
   OUSD_VAULT_ADDRESS,
   XOGN_ADDRESS,
+  strategies,
 } from './addresses'
 
 export const ognABIs: Record<string, any> = {
@@ -31,12 +35,21 @@ export const ognABIs: Record<string, any> = {
   [XOGN_ADDRESS]: exponentialStakingAbi,
 }
 
+export const oethStrategyABIs: Record<string, any> = {
+  [OETH_NATIVE_STRATEGY_ADDRESS]: strategyNativeStakingAbi,
+}
+
 export const oethABIs: Record<string, any> = {
   [OETH_ADDRESS]: otokenAbi,
   [OETH_VAULT_ADDRESS]: otokenVaultAbi,
   [OETH_HARVESTER_ADDRESS]: otokenHarvesterAbi,
   [OETH_DRIPPER_ADDRESS]: otokenDripperAbi,
   [OETH_BUYBACK]: otokenBuybackAbi,
+  ...oethStrategyABIs,
+}
+
+export const ousdStrategyABIs: Record<string, any> = {
+  [strategies.ousd.MorphoAaveStrategy]: strategyMorphoAaveAbi,
 }
 
 export const ousdABIs: Record<string, any> = {
@@ -45,6 +58,7 @@ export const ousdABIs: Record<string, any> = {
   [OUSD_HARVESTER_ADDRESS]: otokenHarvesterAbi,
   [OUSD_DRIPPER_ADDRESS]: otokenDripperAbi,
   [OUSD_BUYBACK]: otokenBuybackAbi,
+  ...ousdStrategyABIs,
 }
 
 export const addressABIs: Record<string, unknown> = {
