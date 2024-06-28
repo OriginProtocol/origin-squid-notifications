@@ -1,7 +1,7 @@
 import { event } from '@subsquid/evm-abi'
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
 
-import { Topic } from '../../notify/discord'
+import { DiscordOptions, Topic } from '../../notify/discord'
 import { notifyForEvent } from '../../notify/event'
 import { Context } from '../../types'
 import { logFilter } from '../../utils/logFilter'
@@ -19,6 +19,7 @@ export const createEventProcessor = <EventName extends string>({
   topic1,
   topic2,
   topic3,
+  discordOptions,
 }: {
   name: string
   description: string
@@ -31,6 +32,7 @@ export const createEventProcessor = <EventName extends string>({
   topic1?: string[]
   topic2?: string[]
   topic3?: string[]
+  discordOptions?: Partial<DiscordOptions>
 }) => {
   const eventEntries = (Object.entries(events) as [EventName, ReturnType<typeof event>][]).filter(
     ([eventName]) =>
@@ -60,7 +62,7 @@ export const createEventProcessor = <EventName extends string>({
             const entry = eventEntries.find(([n, e]) => e.topic === log.topics[0])
             if (entry) {
               const [eventName, event] = entry
-              await notifyForEvent({ topic, name, eventName, log, event })
+              await notifyForEvent({ topic, name, eventName, log, event, discordOptions })
             }
           }
         }

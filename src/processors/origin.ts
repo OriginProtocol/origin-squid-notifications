@@ -1,4 +1,5 @@
 import * as otokenAbi from '../abi/otoken'
+import { discordMentions } from '../notify/discord'
 import {
   OETH_ADDRESS,
   OETH_BUYBACK,
@@ -13,7 +14,7 @@ import {
   addresses,
   ousd,
 } from '../utils/addresses'
-import { oethABIs, ousdABIs } from '../utils/addresses/address-abis'
+import { oethABIs, ognABIs, ousdABIs } from '../utils/addresses/address-abis'
 import { GOVERNANCE_TIMELOCK } from '../utils/addresses/addresses-py'
 import { createBurnProcessor } from './templates/burn'
 import { createExponentialStakingProcessor } from './templates/exponential-staking'
@@ -66,11 +67,20 @@ createExponentialStakingProcessor({ name: 'OGN Staking', chainId: 1, address: [X
 
 // Error Tracing
 createTraceErrorProcessor({
+  name: 'OGN Error Trace',
+  chainId: 1,
+  address: Object.keys(ognABIs),
+  abi: Object.values(ognABIs),
+  topic: 'OGN',
+  discordOptions: { mentions: [discordMentions.Engineering] },
+})
+createTraceErrorProcessor({
   name: 'OETH Error Trace',
   chainId: 1,
   address: Object.keys(oethABIs),
   abi: Object.values(oethABIs),
   topic: 'OETH',
+  discordOptions: { mentions: [discordMentions.Engineering] },
 })
 createTraceErrorProcessor({
   name: 'OUSD Error Trace',
@@ -78,4 +88,5 @@ createTraceErrorProcessor({
   address: Object.keys(ousdABIs),
   abi: Object.values(ousdABIs),
   topic: 'OUSD',
+  discordOptions: { mentions: [discordMentions.Engineering] },
 })

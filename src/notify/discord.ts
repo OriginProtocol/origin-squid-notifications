@@ -28,6 +28,21 @@ const topicThumbnails: Record<Topic, string> = {
   OUSD: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-dollar-ousd-logo.png',
 }
 
+export interface DiscordOptions {
+  title: string
+  description: string
+  files?: WebhookMessageCreateOptions['files']
+  severity?: 'info' | 'warning' | 'error' | 'success' | 'broken'
+  topic?: Topic
+  links?: Record<string, string>
+  mentions?: string[]
+}
+
+export const discordMentions = {
+  apexearth: '<@222598812399697921>', // Chris
+  Engineering: '<@&997340701551513762>',
+}
+
 export const notifyDiscord = async ({
   title,
   description,
@@ -35,30 +50,31 @@ export const notifyDiscord = async ({
   severity = 'info',
   topic,
   links,
-}: {
-  title: string
-  description: string
-  files?: WebhookMessageCreateOptions['files']
-  severity?: 'info' | 'warning' | 'error' | 'success' | 'broken'
-  topic?: Topic
-  links?: Record<string, string>
-}) => {
+  mentions,
+}: DiscordOptions) => {
   const linkString = links
     ? '   |   ' +
       Object.entries(links)
         .map(([title, link]) => `[${title}](<${link}>)`)
         .join('   |   ')
     : ''
+  let mentionString = mentions ? '   |   ' + mentions.join(' ') : ''
+  if (process.env.DISCORD_MENTION_OVERRIDE) {
+    mentionString = `   |   ${discordMentions[process.env.DISCORD_MENTION_OVERRIDE as keyof typeof discordMentions]}`
+  }
   const payload: WebhookMessageCreateOptions = {
     username: topic,
     avatarURL: topic ? topicThumbnails[topic] : undefined,
     content: `
-### ${severityEmojis[severity]}   ${title}${linkString}
+### ${severityEmojis[severity]}   ${title}${linkString}${mentionString}
 ${description}
     `
       .trim()
       .slice(0, 2000),
     files,
+    allowedMentions: {
+      parse: ['users', 'roles'],
+    },
   }
   await client?.send(payload)
 }

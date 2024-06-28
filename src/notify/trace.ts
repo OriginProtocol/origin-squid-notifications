@@ -1,10 +1,8 @@
-import { AbiEvent } from '@subsquid/evm-abi'
-
-import { Log, Trace } from '../types'
+import { Trace } from '../types'
 import { getAddressesPyName } from '../utils/addresses/addresses-py'
 import { formatJson } from '../utils/formatJson'
 import { md } from '../utils/md'
-import { Severity, Topic, notifyDiscord } from './discord'
+import { DiscordOptions, Severity, Topic, notifyDiscord } from './discord'
 
 const uniqueTracesFired = new Set<string>()
 
@@ -15,6 +13,7 @@ export const notifyForTrace = async ({
   functionName,
   functionData,
   trace,
+  discordOptions,
 }: {
   topic: Topic
   severity?: Severity
@@ -22,6 +21,7 @@ export const notifyForTrace = async ({
   functionName?: string
   functionData?: unknown
   trace: Trace
+  discordOptions?: Partial<DiscordOptions>
 }) => {
   let from = trace.type === 'call' ? trace.action.from : undefined
   let to = trace.type === 'call' ? trace.action.to : undefined
@@ -58,5 +58,6 @@ export const notifyForTrace = async ({
           tx: `https://etherscan.io/tx/${trace.transaction?.hash}`,
         }
       : undefined,
+    ...discordOptions,
   })
 }

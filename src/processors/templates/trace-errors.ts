@@ -1,6 +1,6 @@
 import { fun, viewFun } from '@subsquid/evm-abi'
 
-import { Topic } from '../../notify/discord'
+import { DiscordOptions, Topic } from '../../notify/discord'
 import { createTraceProcessor } from './trace'
 
 export const createTraceErrorProcessor = ({
@@ -9,12 +9,14 @@ export const createTraceErrorProcessor = ({
   address,
   abi,
   topic,
+  discordOptions,
 }: {
   name: string
   chainId: number
   address: string[]
   abi: { functions: Record<string, ReturnType<typeof viewFun | typeof fun>> }[]
   topic: Topic
+  discordOptions?: Partial<DiscordOptions>
 }) => {
   return createTraceProcessor({
     name,
@@ -26,5 +28,6 @@ export const createTraceErrorProcessor = ({
     ],
     abi,
     topic,
+    discordOptions,
   })
 }

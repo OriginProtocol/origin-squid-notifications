@@ -4,7 +4,7 @@ import { Log } from '../types'
 import { getAddressesPyName } from '../utils/addresses/addresses-py'
 import { formatJson } from '../utils/formatJson'
 import { md } from '../utils/md'
-import { Topic, notifyDiscord } from './discord'
+import { DiscordOptions, Topic, notifyDiscord } from './discord'
 
 const uniqueEventsFired = new Set<string>()
 
@@ -15,6 +15,7 @@ export const notifyForEvent = async ({
   eventName,
   event,
   log,
+  discordOptions,
 }: {
   topic: Topic
   severity?: 'info' | 'warning' | 'error' | 'success'
@@ -22,6 +23,7 @@ export const notifyForEvent = async ({
   eventName: string
   event: AbiEvent<any>
   log: Log
+  discordOptions?: Partial<DiscordOptions>
 }) => {
   const data = event.decode(log)
   let addressName = getAddressesPyName(log.address)
@@ -52,5 +54,6 @@ export const notifyForEvent = async ({
     links: {
       tx: `https://etherscan.io/tx/${log.transactionHash}`,
     },
+    ...discordOptions,
   })
 }

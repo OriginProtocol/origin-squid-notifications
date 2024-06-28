@@ -1,7 +1,7 @@
 import { fun, viewFun } from '@subsquid/evm-abi'
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
 
-import { Topic } from '../../notify/discord'
+import { DiscordOptions, Topic } from '../../notify/discord'
 import { notifyForTrace } from '../../notify/trace'
 import { Context } from '../../types'
 import { traceFilter } from '../../utils/traceFilter'
@@ -14,6 +14,7 @@ export const createTraceProcessor = ({
   traceParams,
   abi,
   topic,
+  discordOptions,
 }: {
   name: string
   description: string
@@ -21,6 +22,7 @@ export const createTraceProcessor = ({
   traceParams: Parameters<typeof traceFilter>[0][]
   abi: { functions: Record<string, ReturnType<typeof viewFun | typeof fun>> }[]
   topic: Topic
+  discordOptions?: Partial<DiscordOptions>
 }) => {
   const filter = traceParams.map((tp) => traceFilter(tp))
   const abiEntries = abi.flatMap((a) => Object.entries(a.functions))
@@ -40,6 +42,7 @@ export const createTraceProcessor = ({
               name,
               trace,
               topic,
+              discordOptions,
             }
             if (trace.type === 'call') {
               const fn = abiEntries.find(([n, f]) => f.sighash === trace.action.sighash)
