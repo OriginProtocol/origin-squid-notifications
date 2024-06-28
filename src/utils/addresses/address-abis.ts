@@ -1,3 +1,4 @@
+import * as strategyCurveMetapoolAbi from '../../abi/curve-metapool'
 import * as erc20Abi from '../../abi/erc20'
 import * as exponentialStakingAbi from '../../abi/exponential-staking'
 import * as fixedRateRewardsSourceAbi from '../../abi/fixed-rate-rewards-source'
@@ -13,6 +14,7 @@ import {
   OETH_ADDRESS,
   OETH_BUYBACK,
   OETH_DRIPPER_ADDRESS,
+  OETH_ETH_AMO_METAPOOL,
   OETH_HARVESTER_ADDRESS,
   OETH_NATIVE_STRATEGY_ADDRESS,
   OETH_VAULT_ADDRESS,
@@ -37,6 +39,7 @@ export const ognABIs: Record<string, any> = {
 
 export const oethStrategyABIs: Record<string, any> = {
   [OETH_NATIVE_STRATEGY_ADDRESS]: strategyNativeStakingAbi,
+  [OETH_ETH_AMO_METAPOOL]: strategyCurveMetapoolAbi,
 }
 
 export const oethABIs: Record<string, any> = {

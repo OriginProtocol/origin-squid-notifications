@@ -1,3 +1,4 @@
+import * as strategyCurveMetapoolAbi from '../abi/curve-metapool'
 import * as governedUpgradeabilityProxy from '../abi/governed-upgradeability-proxy'
 import * as strategyMorphoAaveAbi from '../abi/strategy-morpho-aave'
 import * as strategyNativeStakingAbi from '../abi/strategy-native-staking'
@@ -5,6 +6,7 @@ import { discordMentions } from '../notify/discord'
 import {
   OETH_ADDRESS,
   OETH_BUYBACK,
+  OETH_ETH_AMO_METAPOOL,
   OETH_NATIVE_STRATEGY_ADDRESS,
   OETH_VAULT_ADDRESS,
   OGN_ADDRESS,
@@ -15,7 +17,6 @@ import {
   OUSD_VAULT_ADDRESS,
   XOGN_ADDRESS,
   addresses,
-  ousd,
   strategies,
 } from '../utils/addresses'
 import { oethABIs, ognABIs, ousdABIs } from '../utils/addresses/address-abis'
@@ -45,6 +46,15 @@ createEventProcessor({
   topic: 'OETH',
   events: strategyNativeStakingAbi.events,
   excludedEvents: Object.keys(governedUpgradeabilityProxy.events),
+})
+createEventProcessor({
+  name: 'OETH Curve AMO Strategy',
+  description: 'Notify for events on the OETH curve AMO strategy.',
+  chainId: 1,
+  address: [OETH_ETH_AMO_METAPOOL],
+  topic: 'OETH',
+  events: strategyCurveMetapoolAbi.events,
+  excludedEvents: [...Object.keys(governedUpgradeabilityProxy.events), 'Transfer', 'Approval', 'TokenExchange'],
 })
 createEventProcessor({
   name: 'OUSD Morpho Aave Strategy',
