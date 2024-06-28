@@ -16,6 +16,9 @@ export const createEventProcessor = <EventName extends string>({
   events,
   includedEvents,
   excludedEvents,
+  topic1,
+  topic2,
+  topic3,
 }: {
   name: string
   description: string
@@ -25,6 +28,9 @@ export const createEventProcessor = <EventName extends string>({
   events: Record<EventName, ReturnType<typeof event>>
   includedEvents?: EventName[]
   excludedEvents?: EventName[]
+  topic1?: string[]
+  topic2?: string[]
+  topic3?: string[]
 }) => {
   const eventEntries = (Object.entries(events) as [EventName, ReturnType<typeof event>][]).filter(
     ([eventName]) =>
@@ -35,6 +41,9 @@ export const createEventProcessor = <EventName extends string>({
   const filter = logFilter({
     address,
     topic0: eventEntries.map(([n, e]) => e.topic),
+    topic1,
+    topic2,
+    topic3,
   })
 
   createProcessor({

@@ -7,7 +7,8 @@
     "prettier-check": "prettier --check src",
     "prettier-fix": "prettier --write src",
     "setup": "sqd down && sqd up && sleep 2 && sqd migration:apply",
-    "process": "sqd process"
+    "process": "sqd process",
+    "digest": "ts-node src/digest"
   },
   "dependencies": {
     "@subsquid/archive-registry": "^3.3.0",

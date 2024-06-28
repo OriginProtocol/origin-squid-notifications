@@ -27,7 +27,14 @@ export function formatJson(json: unknown) {
 
       if (
         typeof v === 'bigint' &&
-        (k.includes('value') || k.includes('amount') || k.includes('points') || k.includes('alance'))
+        (k.includes('value') ||
+          k.includes('amount') ||
+          k.includes('points') ||
+          k.includes('alance') ||
+          k.includes('upply') ||
+          k.includes('redits') ||
+          k.includes('yield') ||
+          k.includes('fee'))
       ) {
         return `${v.toString()} | ${formatEther(v)}`
       }

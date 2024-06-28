@@ -24,12 +24,8 @@ export const md = {
     )
 
     // Generate the table rows with proper padding
-    return data
-      .map((row) =>
-        compact(row)
-          .map((cell, i) => padEnd(String(cell), colWidths[i], ' '))
-          .join(' | '),
-      )
+    return compact(data)
+      .map((row) => row.map((cell, i) => padEnd(String(cell), colWidths[i], ' ')).join(' | '))
       .join('\n')
   },
   /**
