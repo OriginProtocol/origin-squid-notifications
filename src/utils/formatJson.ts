@@ -19,12 +19,6 @@ export function formatJson(json: unknown) {
         }
       }
 
-      // Convert to date if criteria met
-      const n = Number(v)
-      if (n > 1514764800 && n < 7258118400000) {
-        return new Date(n * 1000).toJSON()
-      }
-
       if (
         typeof v === 'bigint' &&
         (k.includes('value') ||
@@ -37,6 +31,12 @@ export function formatJson(json: unknown) {
           k.includes('fee'))
       ) {
         return `${v.toString()} | ${formatEther(v)}`
+      }
+
+      // Convert to date if criteria met
+      const n = Number(v)
+      if (n > 1514764800 && n < 7258118400000) {
+        return new Date(n * 1000).toJSON()
       }
 
       return v
