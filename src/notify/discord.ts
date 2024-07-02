@@ -1,8 +1,9 @@
-import { WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
+import { APIMessage, Message, WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
 
 const url = process.env[process.env.DISCORD_WEBHOOK_URL_ENV ?? 'DISCORD_WEBHOOK_URL'] ?? ''
 
-const client = url ? new WebhookClient({ url }) : undefined
+export const discordClient = url ? new WebhookClient({ url }) : undefined
+let messageQueue: WebhookMessageCreateOptions[] = []
 
 export type Severity = 'info' | 'warning' | 'error' | 'success' | 'broken'
 const severityColors: Record<Severity, number> = {
@@ -43,6 +44,24 @@ export const discordMentions = {
   Engineering: '<@&997340701551513762>',
 }
 
+export const processDiscordQueue = async () => {
+  for (const message of messageQueue) {
+    await sendMessage(message)
+  }
+  messageQueue = []
+}
+
+export const sendMessage = async (message: WebhookMessageCreateOptions, retries = 3) => {
+  try {
+    await discordClient?.send(message)
+  } catch (err) {
+    if (retries > 0) {
+      await sendMessage(message, retries - 1)
+    }
+    throw err
+  }
+}
+
 export const notifyDiscord = async ({
   title,
   description,
@@ -76,5 +95,5 @@ ${description}
       parse: ['users', 'roles'],
     },
   }
-  await client?.send(payload)
+  messageQueue.push(payload)
 }

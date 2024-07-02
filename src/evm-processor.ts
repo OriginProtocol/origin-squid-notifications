@@ -9,6 +9,7 @@ import { KnownArchives } from '@subsquid/archive-registry/lib/chains'
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
 import { TypeormDatabase } from '@subsquid/typeorm-store'
 
+import { processDiscordQueue } from './notify/discord'
 import { Context, EvmProcessor } from './types'
 import { env } from './utils/env'
 
@@ -160,6 +161,8 @@ export const run = async ({
           validatorTimes.forEach((t) => t())
         }
       }
+
+      await processDiscordQueue()
     } catch (err) {
       ctx.log.info({
         blocks: ctx.blocks.length,
