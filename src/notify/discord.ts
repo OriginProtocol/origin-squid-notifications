@@ -62,7 +62,7 @@ export const sendMessage = async (message: WebhookMessageCreateOptions, retries 
   }
 }
 
-export const notifyDiscord = async ({
+export const notifyDiscord = ({
   title,
   description,
   files,

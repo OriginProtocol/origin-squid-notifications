@@ -10,6 +10,7 @@ import { EvmBatchProcessor } from '@subsquid/evm-processor'
 import { TypeormDatabase } from '@subsquid/typeorm-store'
 
 import { processDiscordQueue } from './notify/discord'
+import './rpc-issues'
 import { Context, EvmProcessor } from './types'
 import { env } from './utils/env'
 
