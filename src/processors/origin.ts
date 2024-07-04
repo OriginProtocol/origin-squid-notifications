@@ -2,7 +2,7 @@ import * as strategyCurveMetapoolAbi from '../abi/curve-metapool'
 import * as governedUpgradeabilityProxy from '../abi/governed-upgradeability-proxy'
 import * as strategyMorphoAaveAbi from '../abi/strategy-morpho-aave'
 import * as strategyNativeStakingAbi from '../abi/strategy-native-staking'
-import { discordMentions } from '../notify/discord'
+import { notifyTargets } from '../notify/const'
 import {
   OETH_ADDRESS,
   OETH_BUYBACK,
@@ -40,30 +40,39 @@ createOTokenProcessor({ name: 'OUSD Contract', chainId: 1, address: [OUSD_ADDRES
 // OToken Strategies
 createEventProcessor({
   name: 'OETH Native Staking Strategy',
-  description: 'Notify for events on the OETH native staking strategy.',
   chainId: 1,
-  address: [OETH_NATIVE_STRATEGY_ADDRESS],
   topic: 'OETH',
-  events: strategyNativeStakingAbi.events,
-  excludedEvents: Object.keys(governedUpgradeabilityProxy.events),
+  tracks: [
+    {
+      address: [OETH_NATIVE_STRATEGY_ADDRESS],
+      events: strategyNativeStakingAbi.events,
+      excludedEvents: Object.keys(governedUpgradeabilityProxy.events),
+    },
+  ],
 })
 createEventProcessor({
   name: 'OETH Curve AMO Strategy',
-  description: 'Notify for events on the OETH curve AMO strategy.',
   chainId: 1,
-  address: [OETH_ETH_AMO_METAPOOL],
   topic: 'OETH',
-  events: strategyCurveMetapoolAbi.events,
-  excludedEvents: [...Object.keys(governedUpgradeabilityProxy.events), 'Transfer', 'Approval', 'TokenExchange'],
+  tracks: [
+    {
+      address: [OETH_ETH_AMO_METAPOOL],
+      events: strategyCurveMetapoolAbi.events,
+      excludedEvents: [...Object.keys(governedUpgradeabilityProxy.events), 'Transfer', 'Approval', 'TokenExchange'],
+    },
+  ],
 })
 createEventProcessor({
   name: 'OUSD Morpho Aave Strategy',
-  description: 'Notify for events on the OUSD morpho aave strategy.',
   chainId: 1,
-  address: [strategies.ousd.MorphoAaveStrategy],
   topic: 'OUSD',
-  events: strategyMorphoAaveAbi.events,
-  excludedEvents: Object.keys(governedUpgradeabilityProxy.events),
+  tracks: [
+    {
+      address: [strategies.ousd.MorphoAaveStrategy],
+      events: strategyMorphoAaveAbi.events,
+      excludedEvents: Object.keys(governedUpgradeabilityProxy.events),
+    },
+  ],
 })
 
 // OTokenVaults
@@ -91,6 +100,8 @@ createGovernedUpgradeabilityProxyProcessor({
   chainId: 1,
   address: addresses.origin,
   topic: 'OGN',
+  severity: 'high',
+  notifyTarget: notifyTargets.Engineering,
 })
 
 // Buybacks
@@ -107,7 +118,8 @@ createTraceErrorProcessor({
   address: Object.keys(ognABIs),
   abi: Object.values(ognABIs),
   topic: 'OGN',
-  discordOptions: { mentions: [discordMentions.Engineering] },
+  severity: 'high',
+  notifyTarget: notifyTargets.Engineering,
 })
 createTraceErrorProcessor({
   name: 'OETH Error Trace',
@@ -115,7 +127,8 @@ createTraceErrorProcessor({
   address: Object.keys(oethABIs),
   abi: Object.values(oethABIs),
   topic: 'OETH',
-  discordOptions: { mentions: [discordMentions.Engineering] },
+  severity: 'high',
+  notifyTarget: notifyTargets.Engineering,
 })
 createTraceErrorProcessor({
   name: 'OUSD Error Trace',
@@ -123,5 +136,6 @@ createTraceErrorProcessor({
   address: Object.keys(ousdABIs),
   abi: Object.values(ousdABIs),
   topic: 'OUSD',
-  discordOptions: { mentions: [discordMentions.Engineering] },
+  severity: 'high',
+  notifyTarget: notifyTargets.Engineering,
 })

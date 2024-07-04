@@ -1,47 +1,20 @@
-import { APIMessage, Message, WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
+import { WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
+
+import { Severity, Topic, severityEmojis, topicThumbnails } from './const'
 
 const url = process.env[process.env.DISCORD_WEBHOOK_URL_ENV ?? 'DISCORD_WEBHOOK_URL'] ?? ''
 
 export const discordClient = url ? new WebhookClient({ url }) : undefined
 let messageQueue: WebhookMessageCreateOptions[] = []
 
-export type Severity = 'info' | 'warning' | 'error' | 'success' | 'broken'
-const severityColors: Record<Severity, number> = {
-  info: 0x2196f3,
-  warning: 0xff9800,
-  error: 0xf44336,
-  success: 0x4caf50,
-  broken: 0xf44356,
-}
-const severityEmojis: Record<Severity, string> = {
-  info: ':information_source:',
-  warning: ':warning:',
-  error: ':bangbang:',
-  success: ':white_check_mark:',
-  broken: ':broken_heart:',
-}
-
-export type Topic = 'OGN' | 'xOGN' | 'OETH' | 'OUSD'
-const topicThumbnails: Record<Topic, string> = {
-  OGN: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-ogn-logo.png',
-  xOGN: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-xogn-logo.png',
-  OETH: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-ether-oeth-logo.png',
-  OUSD: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-dollar-ousd-logo.png',
-}
-
 export interface DiscordOptions {
   title: string
   description: string
   files?: WebhookMessageCreateOptions['files']
-  severity?: 'info' | 'warning' | 'error' | 'success' | 'broken'
+  severity?: Severity
   topic?: Topic
   links?: Record<string, string>
   mentions?: string[]
-}
-
-export const discordMentions = {
-  apexearth: '<@222598812399697921>', // Chris
-  Engineering: '<@&997340701551513762>',
 }
 
 export const processDiscordQueue = async () => {
@@ -66,7 +39,7 @@ export const notifyDiscord = ({
   title,
   description,
   files,
-  severity = 'info',
+  severity = 'low',
   topic,
   links,
   mentions,
@@ -79,17 +52,19 @@ export const notifyDiscord = ({
     : ''
   let mentionString = mentions ? '   |   ' + mentions.join(' ') : ''
   if (process.env.DISCORD_MENTION_OVERRIDE) {
-    mentionString = `   |   ${discordMentions[process.env.DISCORD_MENTION_OVERRIDE as keyof typeof discordMentions]}`
+    mentionString = `   |   ${process.env.DISCORD_MENTION_OVERRIDE}`
   }
-  const payload: WebhookMessageCreateOptions = {
-    username: topic,
-    avatarURL: topic ? topicThumbnails[topic] : undefined,
-    content: `
+  const content = `
 ### ${severityEmojis[severity]}   ${title}${linkString}${mentionString}
 ${description}
     `
-      .trim()
-      .slice(0, 2000),
+    .trim()
+    .slice(0, 2000)
+
+  const payload: WebhookMessageCreateOptions = {
+    username: topic,
+    avatarURL: topic ? topicThumbnails[topic] : undefined,
+    content,
     files,
     allowedMentions: {
       parse: ['users', 'roles'],

@@ -1,33 +1,15 @@
-import { fun, viewFun } from '@subsquid/evm-abi'
+import { TraceProcessorParams, createTraceProcessor } from './trace'
 
-import { DiscordOptions, Topic } from '../../notify/discord'
-import { createTraceProcessor } from './trace'
-
-export const createTraceErrorProcessor = ({
-  name,
-  chainId,
-  address,
-  abi,
-  topic,
-  discordOptions,
-}: {
-  name: string
-  chainId: number
-  address: string[]
-  abi: { functions: Record<string, ReturnType<typeof viewFun | typeof fun>> }[]
-  topic: Topic
-  discordOptions?: Partial<DiscordOptions>
-}) => {
+export const createTraceErrorProcessor = (
+  params: {
+    address: string[]
+  } & Omit<TraceProcessorParams, 'description' | 'traceParams'>,
+) => {
   return createTraceProcessor({
-    name,
-    description: `Detect errors occurring in ${address.join(', ')}`,
-    chainId,
+    ...params,
     traceParams: [
-      { type: ['call'], callFrom: address, error: true },
-      { type: ['call'], callTo: address, error: true },
+      { type: ['call'], callFrom: params.address, error: true },
+      { type: ['call'], callTo: params.address, error: true },
     ],
-    abi,
-    topic,
-    discordOptions,
   })
 }

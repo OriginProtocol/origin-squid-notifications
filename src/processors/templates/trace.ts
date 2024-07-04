@@ -1,35 +1,36 @@
 import { fun, viewFun } from '@subsquid/evm-abi'
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
 
-import { DiscordOptions, Topic } from '../../notify/discord'
+import { NotifyTarget, Severity, Topic } from '../../notify/const'
 import { notifyForTrace } from '../../notify/trace'
 import { Context } from '../../types'
 import { traceFilter } from '../../utils/traceFilter'
 import { createProcessor } from '../processors'
 
+export type TraceProcessorParams = Parameters<typeof createTraceProcessor>[0]
 export const createTraceProcessor = ({
   name,
-  description,
   chainId,
   traceParams,
   abi,
   topic,
-  discordOptions,
+  severity,
+  notifyTarget,
 }: {
   name: string
-  description: string
   chainId: number
   traceParams: Parameters<typeof traceFilter>[0][]
   abi: { functions: Record<string, ReturnType<typeof viewFun | typeof fun>> }[]
   topic: Topic
-  discordOptions?: Partial<DiscordOptions>
+  severity?: Severity
+  notifyTarget?: NotifyTarget
 }) => {
   const filter = traceParams.map((tp) => traceFilter(tp))
   const abiEntries = abi.flatMap((a) => Object.entries(a.functions))
 
   createProcessor({
     name,
-    description,
+    topic,
     chainId,
     setup: (processor: EvmBatchProcessor) => {
       filter.forEach((f) => processor.addTrace(f.value))
@@ -42,7 +43,8 @@ export const createTraceProcessor = ({
               name,
               trace,
               topic,
-              discordOptions,
+              severity,
+              notifyTarget,
             }
             if (trace.type === 'call') {
               const fn = abiEntries.find(([n, f]) => f.sighash === trace.action.sighash)

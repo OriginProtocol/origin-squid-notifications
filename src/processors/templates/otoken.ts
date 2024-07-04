@@ -1,25 +1,15 @@
 import * as otokenAbi from '../../abi/otoken'
-import { Topic } from '../../notify/discord'
-import { createEventProcessor } from './event'
+import { EventProcessorParams, createEventProcessor } from './event'
 
-export const createOTokenProcessor = ({
-  name,
-  chainId,
-  address,
-  topic,
-}: {
-  name: string
-  chainId: number
-  address: string[]
-  topic: Topic
-}) => {
+export const createOTokenProcessor = (params: { address: string[] } & Omit<EventProcessorParams, 'tracks'>) => {
   return createEventProcessor({
-    name,
-    description: `Notify OToken events for ${address}.`,
-    chainId,
-    address,
-    topic,
-    events: otokenAbi.events,
-    includedEvents: ['AccountRebasingDisabled', 'AccountRebasingEnabled', 'TotalSupplyUpdatedHighres'],
+    ...params,
+    tracks: [
+      {
+        address: params.address,
+        events: otokenAbi.events,
+        includedEvents: ['AccountRebasingDisabled', 'AccountRebasingEnabled', 'TotalSupplyUpdatedHighres'],
+      },
+    ],
   })
 }

@@ -1,10 +1,11 @@
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
 
-import { Topic } from '../../notify/discord'
+import { Topic } from '../../notify/const'
 import { Context } from '../../types'
 import { transactionFilter } from '../../utils/transactionFilter'
 import { createProcessor } from '../processors'
 
+export type TransactionProcessorParams = Parameters<typeof createTransactionProcessor>[0]
 export const createTransactionProcessor = ({
   name,
   description,
@@ -30,8 +31,8 @@ export const createTransactionProcessor = ({
 
   createProcessor({
     name,
-    description,
     chainId,
+    topic,
     setup: (processor: EvmBatchProcessor) => {
       processor.addTransaction(filter.value)
     },

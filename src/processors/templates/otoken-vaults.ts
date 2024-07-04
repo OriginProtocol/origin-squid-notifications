@@ -1,26 +1,17 @@
 import * as governedUpgradeabilityProxy from '../../abi/governed-upgradeability-proxy'
 import * as otokenVaultAbi from '../../abi/otoken-vault'
-import { Topic } from '../../notify/discord'
-import { createEventProcessor } from './event'
+import { Topic } from '../../notify/const'
+import { EventProcessorParams, createEventProcessor } from './event'
 
-export const createOTokenVaultProcessor = ({
-  name,
-  chainId,
-  address,
-  topic,
-}: {
-  name: string
-  chainId: number
-  address: string[]
-  topic: Topic
-}) => {
+export const createOTokenVaultProcessor = (params: { address: string[] } & Omit<EventProcessorParams, 'tracks'>) => {
   return createEventProcessor({
-    name,
-    description: `Notify OToken vault events for ${address}.`,
-    chainId,
-    address,
-    topic,
-    events: otokenVaultAbi.events,
-    excludedEvents: Object.keys(governedUpgradeabilityProxy.events),
+    ...params,
+    tracks: [
+      {
+        address: params.address,
+        events: otokenVaultAbi.events,
+        excludedEvents: Object.keys(governedUpgradeabilityProxy.events),
+      },
+    ],
   })
 }

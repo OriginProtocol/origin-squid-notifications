@@ -1,12 +1,4 @@
 import { processors } from './processors'
-import { md } from './utils/md'
+import { formatJson } from './utils/formatJson'
 
-const tableString = md.blockTable([
-  ['Chain', 'Name', 'Description'],
-  ...processors.map((p) => [
-    p.chainId,
-    p.name,
-    p.description.length > 100 ? p.description.slice(0, 100) + '...' : p.description,
-  ]),
-])
-console.log(tableString)
+console.log(formatJson(processors))

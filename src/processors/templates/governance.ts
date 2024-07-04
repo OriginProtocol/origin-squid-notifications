@@ -1,25 +1,18 @@
 import * as governanceAbi from '../../abi/governance'
-import { Topic } from '../../notify/discord'
-import { createEventProcessor } from './event'
+import { notifyTargets } from '../../notify/const'
+import { EventProcessorParams, createEventProcessor } from './event'
 
-export const createGovernanceProcessor = ({
-  name,
-  chainId,
-  address,
-  topic,
-}: {
-  name: string
-  chainId: number
-  address: string[]
-  topic: Topic
-}) => {
+export const createGovernanceProcessor = (params: { address: string[] } & Omit<EventProcessorParams, 'tracks'>) => {
   return createEventProcessor({
-    name,
-    description: `Notify governance events for ${address}. (excludes VoteCast* events)`,
-    chainId,
-    address,
-    topic,
-    events: governanceAbi.events,
-    excludedEvents: ['VoteCast', 'VoteCastWithParams'],
+    ...params,
+    tracks: [
+      {
+        address: params.address,
+        events: governanceAbi.events,
+        excludedEvents: ['VoteCast', 'VoteCastWithParams'],
+        severity: 'high',
+        notifyTarget: notifyTargets.Engineering,
+      },
+    ],
   })
 }

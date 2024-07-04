@@ -2,18 +2,19 @@ import { Trace } from '../types'
 import { getAddressesPyName } from '../utils/addresses/addresses-py'
 import { formatJson } from '../utils/formatJson'
 import { md } from '../utils/md'
-import { DiscordOptions, Severity, Topic, notifyDiscord } from './discord'
+import { NotifyTarget, Severity, Topic } from './const'
+import { DiscordOptions, notifyDiscord } from './discord'
 
 const uniqueTracesFired = new Set<string>()
 
 export const notifyForTrace = async ({
   topic,
-  severity = 'info',
+  severity = 'low',
   name,
   functionName,
   functionData,
   trace,
-  discordOptions,
+  notifyTarget,
 }: {
   topic: Topic
   severity?: Severity
@@ -21,7 +22,7 @@ export const notifyForTrace = async ({
   functionName?: string
   functionData?: unknown
   trace: Trace
-  discordOptions?: Partial<DiscordOptions>
+  notifyTarget?: NotifyTarget
 }) => {
   let from = trace.type === 'call' ? trace.action.from : undefined
   let to = trace.type === 'call' ? trace.action.to : undefined
@@ -58,6 +59,6 @@ export const notifyForTrace = async ({
           tx: `https://etherscan.io/tx/${trace.transaction?.hash}`,
         }
       : undefined,
-    ...discordOptions,
+    mentions: notifyTarget?.discordMentions,
   })
 }

@@ -1,25 +1,18 @@
 import * as curveAragonVotingAbi from '../../abi/curve-aragon-voting'
-import { Topic } from '../../notify/discord'
-import { createEventProcessor } from './event'
+import { Topic } from '../../notify/const'
+import { EventProcessorParams, createEventProcessor } from './event'
 
-export const createCurveAragonVotingProcessor = ({
-  name,
-  chainId,
-  address,
-  topic,
-}: {
-  name: string
-  chainId: number
-  address: string[]
-  topic: Topic
-}) => {
+export const createCurveAragonVotingProcessor = (
+  params: { address: string[] } & Omit<EventProcessorParams, 'tracks'>,
+) => {
   return createEventProcessor({
-    name,
-    description: `Notify Curve Aragon Voting events for ${address}.`,
-    chainId,
-    address,
-    topic,
-    events: curveAragonVotingAbi.events,
-    excludedEvents: ['CastVote'],
+    ...params,
+    tracks: [
+      {
+        address: params.address,
+        events: curveAragonVotingAbi.events,
+        excludedEvents: ['CastVote'],
+      },
+    ],
   })
 }

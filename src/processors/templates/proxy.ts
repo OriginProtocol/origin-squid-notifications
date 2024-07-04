@@ -1,24 +1,23 @@
 import * as governedUpgradeabilityProxyAbi from '../../abi/governed-upgradeability-proxy'
-import { Topic } from '../../notify/discord'
-import { createEventProcessor } from './event'
+import { NotifyTarget, Severity, notifyTargets } from '../../notify/const'
+import { EventProcessorParams, createEventProcessor } from './event'
 
-export const createGovernedUpgradeabilityProxyProcessor = ({
-  name,
-  chainId,
-  address,
-  topic,
-}: {
-  name: string
-  chainId: number
-  address: string[]
-  topic: Topic
-}) => {
+export const createGovernedUpgradeabilityProxyProcessor = (
+  params: {
+    address: string[]
+    severity?: Severity
+    notifyTarget?: NotifyTarget
+  } & Omit<EventProcessorParams, 'tracks'>,
+) => {
   return createEventProcessor({
-    name,
-    description: `Notify InitializeGovernedUpgradeabilityProxy events from ${address.join(', ')}.`,
-    chainId,
-    address,
-    topic,
-    events: governedUpgradeabilityProxyAbi.events,
+    ...params,
+    tracks: [
+      {
+        address: params.address,
+        events: governedUpgradeabilityProxyAbi.events,
+        severity: params.severity,
+        notifyTarget: params.notifyTarget,
+      },
+    ],
   })
 }
