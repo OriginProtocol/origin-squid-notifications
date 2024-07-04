@@ -2,8 +2,8 @@ export type Severity = 'low' | 'medium' | 'high' | 'critical' | 'broken'
 export type Topic = 'OGN' | 'xOGN' | 'OETH' | 'OUSD'
 
 export const severityEmojis: Record<Severity, string> = {
-  low: '🟨',
-  medium: '🟧',
+  low: 'ℹ️',
+  medium: '🟨',
   high: '🟥',
   critical: '🟪',
   broken: '💔',
