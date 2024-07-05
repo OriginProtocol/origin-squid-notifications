@@ -23,7 +23,7 @@ npm run process
 
 Notifications are triggered through `processors` located at: [src/processors](src/processors)
 
-1. Copy the [src/processors/template.ts](src/processors/examples/example.ts) processor with a new name.
+1. Copy the [src/processors/template.ts](src/processors/examples/example.ts) processor with a new name and update the import paths.
 2. Update the `filter` (see [examples](#filtering-examples))
 3. Update the `process` function
     - It is important to understand that this function will receive all blocks and logs from all the other processors.
@@ -78,4 +78,12 @@ const filter = logFilter({
     '0x0DD34c397384DE8f21F463096A360a0419D476E1'
   ],
 })
+```
+
+## Tips
+
+If you are trying to debug something, you can ask the processor to start at a specific block
+
+```sh
+BLOCK_FROM={number} npm run process
 ```
