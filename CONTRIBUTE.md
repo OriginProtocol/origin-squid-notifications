@@ -10,15 +10,8 @@
 ## Local execution
 
 ```shell
-# Spin down docker, spin up docker, apply db migration
-npm run setup
-
-# Build the code and start processing
+# Build the code, spin-up docker-compose, and start processing
 npm run process
-
-# Set starting block number and refresh sqd
-export BLOCK_FROM=#######
-npm run reprocess
 ```
 
 > [!WARNING]  
@@ -40,7 +33,7 @@ Notifications are triggered through `processors` located at: [src/processors](sr
 If the ABI you require does not exist:
 
 1. Add ABI JSON to `abi/` *(not `src/abi`)*
-2. Run `sqd typegen`
+2. Run `npm run generate-abis`
     - The ABI will be created within `src/abi/`
 
 ## Filtering examples
@@ -92,5 +85,5 @@ const filter = logFilter({
 If you are trying to debug something, you can ask the processor to start at a specific block
 
 ```sh
-export BLOCK_FROM={number}
+BLOCK_FROM={number} npm run process
 ```

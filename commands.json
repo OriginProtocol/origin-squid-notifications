@@ -34,6 +34,22 @@
         "down"
       ]
     },
+    "sleep": {
+      "description": "Sleep 1 second",
+      "cmd": [
+        "sleep",
+        "1"
+      ]
+    },
+    "setup": {
+      "description": "Setup DB for fresh processing",
+      "deps": [
+        "down",
+        "up",
+        "sleep",
+        "migration:apply"
+      ]
+    },
     "migration:apply": {
       "description": "Apply the DB migrations",
       "cmd": [
@@ -45,7 +61,8 @@
       "description": "Generate a DB migration matching the TypeORM entities",
       "deps": [
         "build",
-        "migration:clean"
+        "migration:clean",
+        "setup"
       ],
       "cmd": [
         "squid-typeorm-migration",

@@ -3,6 +3,7 @@ import { AbiEvent } from '@subsquid/evm-abi'
 import { Log } from '../types'
 import { getAddressesPyName } from '../utils/addresses/addresses-py'
 import { formatJson } from '../utils/formatJson'
+import { transactionLink } from '../utils/links'
 import { md } from '../utils/md'
 import { NotifyTarget, Severity, Topic } from './const'
 import { notifyDiscord } from './discord'
@@ -53,7 +54,7 @@ export const notifyForEvent = async ({
       ),
     ),
     links: {
-      tx: `https://etherscan.io/tx/${log.transactionHash}`,
+      tx: transactionLink(log.transactionHash),
     },
     mentions: notifyTarget?.discordMentions,
   })
