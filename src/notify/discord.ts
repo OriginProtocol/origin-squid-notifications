@@ -1,4 +1,4 @@
-import { WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
+import { EmbedBuilder, EmbedData, WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
 
 import { Severity, Topic, severityEmojis, topicThumbnails } from './const'
 
@@ -9,7 +9,8 @@ let messageQueue: WebhookMessageCreateOptions[] = []
 
 export interface DiscordOptions {
   title: string
-  description: string
+  description?: string
+  embeds?: EmbedBuilder[]
   files?: WebhookMessageCreateOptions['files']
   severity?: Severity
   topic?: Topic
@@ -38,12 +39,14 @@ export const sendMessage = async (message: WebhookMessageCreateOptions, retries 
 export const notifyDiscord = ({
   title,
   description,
+  embeds,
   files,
   severity = 'low',
   topic,
   links,
   mentions,
 }: DiscordOptions) => {
+  let content
   const linkString = links
     ? '   |   ' +
       Object.entries(links)
@@ -54,12 +57,15 @@ export const notifyDiscord = ({
   if (process.env.DISCORD_MENTION_OVERRIDE) {
     mentionString = `   |   ${process.env.DISCORD_MENTION_OVERRIDE}`
   }
-  const content = `
+
+  if (description) {
+    content = `
 ### ${severityEmojis[severity]}   ${title}${linkString}${mentionString}
 ${description}
     `
-    .trim()
-    .slice(0, 2000)
+      .trim()
+      .slice(0, 2000)
+  }
 
   const payload: WebhookMessageCreateOptions = {
     username: topic,
@@ -69,6 +75,7 @@ ${description}
     allowedMentions: {
       parse: ['users', 'roles'],
     },
+    embeds,
   }
   messageQueue.push(payload)
 }
