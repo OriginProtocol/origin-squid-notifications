@@ -28,7 +28,8 @@ export function formatJson(json: unknown) {
           k.includes('upply') ||
           k.includes('redits') ||
           k.includes('yield') ||
-          k.includes('fee'))
+          k.includes('fee') ||
+          k.includes('weth'))
       ) {
         return `${v.toString()} | ${formatEther(v)}`
       }
