@@ -46,7 +46,13 @@ createEventProcessor({
     {
       address: [OETH_NATIVE_STRATEGY_ADDRESS],
       events: strategyNativeStakingAbi.events,
-      excludedEvents: Object.keys(governedUpgradeabilityProxy.events),
+      excludedEvents: [...Object.keys(governedUpgradeabilityProxy.events), 'PTokenRemoved'],
+    },
+    {
+      address: [OETH_NATIVE_STRATEGY_ADDRESS],
+      events: strategyNativeStakingAbi.events,
+      includedEvents: ['PTokenRemoved'],
+      severity: 'high',
     },
   ],
 })
@@ -60,6 +66,12 @@ createEventProcessor({
       events: strategyCurveMetapoolAbi.events,
       excludedEvents: [...Object.keys(governedUpgradeabilityProxy.events), 'Transfer', 'Approval', 'TokenExchange'],
     },
+    {
+      address: [strategies.ousd.MorphoAaveStrategy],
+      events: strategyMorphoAaveAbi.events,
+      includedEvents: ['PTokenRemoved'],
+      severity: 'high',
+    },
   ],
 })
 createEventProcessor({
@@ -70,7 +82,13 @@ createEventProcessor({
     {
       address: [strategies.ousd.MorphoAaveStrategy],
       events: strategyMorphoAaveAbi.events,
-      excludedEvents: Object.keys(governedUpgradeabilityProxy.events),
+      excludedEvents: [...Object.keys(governedUpgradeabilityProxy.events), 'PTokenRemoved'],
+    },
+    {
+      address: [strategies.ousd.MorphoAaveStrategy],
+      events: strategyMorphoAaveAbi.events,
+      includedEvents: ['PTokenRemoved'],
+      severity: 'high',
     },
   ],
 })

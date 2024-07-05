@@ -20,8 +20,8 @@ export const createEventProcessor = <EventName extends string>({
   tracks: {
     address: string[]
     events: Record<EventName, ReturnType<typeof event>>
-    includedEvents?: EventName[]
-    excludedEvents?: EventName[]
+    includedEvents?: (keyof (typeof tracks)[number]['events'])[]
+    excludedEvents?: (keyof (typeof tracks)[number]['events'])[]
     topic1?: string[]
     topic2?: string[]
     topic3?: string[]
