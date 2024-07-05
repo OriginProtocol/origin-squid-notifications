@@ -2,12 +2,13 @@
   "name": "origin-squid",
   "private": true,
   "scripts": {
-    "generate": "sqd down && sqd up && sqd codegen && sqd migration:generate && git add db/migrations/*",
     "build": "rm -rf lib && tsc",
     "prettier-check": "prettier --check src",
     "prettier-fix": "prettier --write src",
-    "setup": "sqd down && sqd up && sleep 2 && sqd migration:apply",
-    "process": "sqd process",
+    "generate-abis": "sqd typegen",
+    "generate-schema": "sqd codegen && sqd migration:generate && git add db/migrations/*",
+    "process": "sqd setup && sqd process",
+    "resume": "sqd process",
     "digest": "ts-node src/digest"
   },
   "dependencies": {

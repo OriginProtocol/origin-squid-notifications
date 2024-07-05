@@ -10,11 +10,8 @@
 ## Local execution
 
 ```shell
-# Spin down docker, spin up docker, apply db migration
-yarn setup
-
-# Build the code and start processing
-yarn process
+# Build the code, spin-up docker-compose, and start processing
+npm run process
 ```
 
 > [!WARNING]  
@@ -36,7 +33,7 @@ Notifications are triggered through `processors` located at: [src/processors](sr
 If the ABI you require does not exist:
 
 1. Add ABI JSON to `abi/` *(not `src/abi`)*
-2. Run `sqd typegen`
+2. Run `npm run generate-abis`
     - The ABI will be created within `src/abi/`
 
 ## Filtering examples
