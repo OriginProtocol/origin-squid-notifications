@@ -1,5 +1,5 @@
 export type Severity = 'low' | 'medium' | 'high' | 'critical' | 'broken'
-export type Topic = 'OGN' | 'xOGN' | 'OETH' | 'OUSD'
+export type Topic = 'OGN' | 'xOGN' | 'OETH' | 'OUSD' | 'primeETH'
 
 export const severityEmojis: Record<Severity, string> = {
   low: 'ℹ️',
@@ -14,6 +14,7 @@ export const topicThumbnails: Record<Topic, string> = {
   xOGN: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-xogn-logo.png',
   OETH: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-ether-oeth-logo.png',
   OUSD: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-dollar-ousd-logo.png',
+  primeETH: 'https://origin-squid-notifications.s3.amazonaws.com/images/prime-eth-logo.png', // TODO: upload the image
 }
 
 export interface NotifyTarget {
