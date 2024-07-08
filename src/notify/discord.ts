@@ -3,9 +3,20 @@ import { EmbedBuilder, EmbedData, WebhookClient, WebhookMessageCreateOptions } f
 import { Severity, Topic, severityEmojis, topicThumbnails } from './const'
 
 const url = process.env[process.env.DISCORD_WEBHOOK_URL_ENV ?? 'DISCORD_WEBHOOK_URL'] ?? ''
+const primeURL = process.env['DISCORD_WEBHOOK_URL_PRIME_ETH'] ?? ''
 
-export const discordClient = url ? new WebhookClient({ url }) : undefined
-let messageQueue: WebhookMessageCreateOptions[] = []
+const discordClient = url ? new WebhookClient({ url }) : undefined
+const discordClientPrimeEth = primeURL ? new WebhookClient({ url: primeURL }) : undefined
+
+const clients: Record<Topic, WebhookClient | undefined> = {
+  OGN: discordClient,
+  OETH: discordClient,
+  OUSD: discordClient,
+  xOGN: discordClient,
+  primeETH: discordClientPrimeEth,
+}
+
+let messageQueue: { topic: Topic; data: WebhookMessageCreateOptions }[] = []
 
 export interface DiscordOptions {
   title: string
@@ -13,24 +24,24 @@ export interface DiscordOptions {
   embeds?: EmbedBuilder[]
   files?: WebhookMessageCreateOptions['files']
   severity?: Severity
-  topic?: Topic
+  topic: Topic
   links?: Record<string, string>
   mentions?: string[]
 }
 
 export const processDiscordQueue = async () => {
   for (const message of messageQueue) {
-    await sendMessage(message)
+    await sendMessage(message.topic, message.data)
   }
   messageQueue = []
 }
 
-export const sendMessage = async (message: WebhookMessageCreateOptions, retries = 3) => {
+export const sendMessage = async (topic: Topic, message: WebhookMessageCreateOptions, retries = 3) => {
   try {
-    await discordClient?.send(message)
+    await clients[topic]?.send(message)
   } catch (err) {
     if (retries > 0) {
-      await sendMessage(message, retries - 1)
+      await sendMessage(topic, message, retries - 1)
     }
     throw err
   }
@@ -77,5 +88,5 @@ ${description}
     },
     embeds,
   }
-  messageQueue.push(payload)
+  messageQueue.push({ topic, data: payload })
 }

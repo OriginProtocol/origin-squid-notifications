@@ -8,6 +8,9 @@ import { createSquidProcessor } from './evm-processor'
 export type Fields = EvmBatchProcessorFields<ReturnType<typeof createSquidProcessor>>
 export type Context = DataHandlerContext<Store, Fields> & {
   chain: Chain
+  eventsHandled: Set<string>
+  isEventHandled: (log: Log) => boolean
+  markEventHandled: (log: Log) => void
 }
 export type Block = Context['blocks']['0']
 export type Log = Context['blocks']['0']['logs']['0']

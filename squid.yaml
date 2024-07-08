@@ -12,6 +12,7 @@ deploy:
     - RPC_ENDPOINT
     - RPC_ENDPOINT_ARBITRUM
     - DISCORD_WEBHOOK_URL
+    - DISCORD_WEBHOOK_URL_PRIME_ETH
   processor:
     name: processor
     cmd: [ "sqd", "process:prod" ]

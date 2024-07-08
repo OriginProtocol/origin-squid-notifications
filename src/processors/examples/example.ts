@@ -24,17 +24,17 @@ createProcessor({
     for (const block of ctx.blocks) {
       for (const log of block.logs) {
         if (filter.matches(log)) {
-          await processLog(block, log)
+          await processLog(ctx, block, log)
         }
       }
     }
   },
 })
 
-const processLog = async (block: Block, log: Log) => {
+const processLog = async (ctx: Context, block: Block, log: Log) => {
   const entry = Object.entries(erc20.events).find(([n, e]) => e.topic === log.topics[0])
   if (entry) {
     const [name, event] = entry
-    await notifyForEvent({ topic: 'OGN', eventName: name, log, event })
+    await notifyForEvent({ ctx, topic: 'OGN', eventName: name, log, event })
   }
 }

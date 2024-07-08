@@ -78,6 +78,7 @@ export const createEventProcessor = <EventName extends string>({
               if (entry) {
                 const [eventName, event] = entry
                 await notifyForEvent({
+                  ctx,
                   name,
                   eventName,
                   log,

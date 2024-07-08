@@ -11,7 +11,7 @@ import { TypeormDatabase } from '@subsquid/typeorm-store'
 
 import { processDiscordQueue } from './notify/discord'
 import './rpc-issues'
-import { Context, EvmProcessor } from './types'
+import { Context, EvmProcessor, Log } from './types'
 import { env } from './utils/env'
 
 dayjs.extend(duration)
@@ -109,6 +109,9 @@ export const run = async ({
     const ctx = _ctx as Context
     try {
       ctx.chain = config.chain
+      ctx.eventsHandled = new Set<string>()
+      ctx.isEventHandled = (log: Log) => ctx.eventsHandled.has(log.id)
+      ctx.markEventHandled = (log: Log) => ctx.eventsHandled.add(log.id)
 
       let start: number
       const time = (name: string) => () => {

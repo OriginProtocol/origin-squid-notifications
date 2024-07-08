@@ -10,7 +10,6 @@ createEventProcessor({
     {
       address: [PRIMEETH_LRT_DEPOSIT_POOL],
       events: lrtDepositPoolAbi.events,
-      includedEvents: ['WithdrawalRequested', 'WithdrawalClaimed'],
     },
   ],
 })
