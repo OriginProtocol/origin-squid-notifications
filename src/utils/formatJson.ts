@@ -23,6 +23,7 @@ export function formatJson(json: unknown) {
         typeof v === 'bigint' &&
         (k.includes('value') ||
           k.includes('amount') ||
+          k.includes('Amount') ||
           k.includes('points') ||
           k.includes('alance') ||
           k.includes('upply') ||
