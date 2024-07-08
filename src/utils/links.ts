@@ -7,7 +7,7 @@ export const transactionLink = (
 ) => {
   if (chainId !== 1) throw new Error('transactionLink does not yet support other chains')
   return (
-    `https://dashboard.tenderly.co/origin-protocol/origin/tx/mainnet/${tx}` +
+    `https://dashboard.tenderly.co/tx/mainnet/${tx}` +
     `?utm_campaign=alert_notification` +
     `&utm_content=transaction_url` +
     `&utm_medium=${options?.utm_medium ?? 'discord'}` +
