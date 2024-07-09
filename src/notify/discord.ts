@@ -1,4 +1,4 @@
-import { EmbedBuilder, EmbedData, WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
+import { EmbedBuilder, WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
 
 import { Severity, Topic, severityEmojis, topicThumbnails } from './const'
 
@@ -16,9 +16,10 @@ const clients: Record<Topic, WebhookClient | undefined> = {
   primeETH: discordClientPrimeEth,
 }
 
-let messageQueue: { topic: Topic; data: WebhookMessageCreateOptions }[] = []
+let messageQueue: Map<string, { topic: Topic; data: WebhookMessageCreateOptions }> = new Map()
 
 export interface DiscordOptions {
+  id: string
   title: string
   description?: string
   embeds?: EmbedBuilder[]
@@ -30,10 +31,10 @@ export interface DiscordOptions {
 }
 
 export const processDiscordQueue = async () => {
-  for (const message of messageQueue) {
+  for (const message of messageQueue.values()) {
     await sendMessage(message.topic, message.data)
   }
-  messageQueue = []
+  messageQueue.clear()
 }
 
 export const sendMessage = async (topic: Topic, message: WebhookMessageCreateOptions, retries = 3) => {
@@ -48,6 +49,7 @@ export const sendMessage = async (topic: Topic, message: WebhookMessageCreateOpt
 }
 
 export const notifyDiscord = ({
+  id,
   title,
   description,
   embeds,
@@ -88,5 +90,5 @@ ${description}
     },
     embeds,
   }
-  messageQueue.push({ topic, data: payload })
+  messageQueue.set(id, { topic, data: payload })
 }

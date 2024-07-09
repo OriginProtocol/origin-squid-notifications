@@ -32,7 +32,12 @@ export function formatJson(json: unknown) {
           k.includes('fee') ||
           k.includes('weth'))
       ) {
+        if (v === 0n) return '0'
         return `${v.toString()} | ${formatEther(v)}`
+      }
+
+      if (typeof v === 'bigint' && v <= 31536000n && (k === 'newStakeDuration' || k === 'newDuration')) {
+        return `${v.toString()} | ${v / 60n / 60n / 24n} days`
       }
 
       // Convert to date if criteria met

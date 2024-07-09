@@ -2,6 +2,7 @@ import { omit, pick } from 'lodash'
 
 import * as strategyCurveMetapoolAbi from '../abi/curve-metapool'
 import * as governedUpgradeabilityProxy from '../abi/governed-upgradeability-proxy'
+import * as ogvOgnMigratorAbi from '../abi/ogv-ogn-migrator'
 import * as strategyMorphoAaveAbi from '../abi/strategy-morpho-aave'
 import * as strategyNativeStakingAbi from '../abi/strategy-native-staking'
 import { notifyTargets } from '../notify/const'
@@ -14,6 +15,7 @@ import {
   OGN_ADDRESS,
   OGN_GOVERNANCE_ADDRESS,
   OGN_REWARDS_SOURCE_ADDRESS,
+  OGV_OGN_MIGRATOR_ADDRESS,
   OUSD_ADDRESS,
   OUSD_BUYBACK,
   OUSD_VAULT_ADDRESS,
@@ -165,4 +167,24 @@ createTraceErrorProcessor({
   topic: 'OUSD',
   severity: 'high',
   notifyTarget: notifyTargets.Engineering,
+})
+
+// Trace OGV Migrations
+createEventProcessor({
+  name: 'OGV Migration',
+  chainId: 1,
+  topic: 'OGN',
+  tracks: [
+    {
+      severity: 'low',
+      address: [OGV_OGN_MIGRATOR_ADDRESS],
+      events: pick(ogvOgnMigratorAbi.events, 'LockupsMigrated', 'TokenExchanged'),
+    },
+    {
+      severity: 'high',
+      address: [OGV_OGN_MIGRATOR_ADDRESS],
+      events: pick(ogvOgnMigratorAbi.events, 'Decommissioned'),
+      notifyTarget: notifyTargets.Engineering,
+    },
+  ],
 })

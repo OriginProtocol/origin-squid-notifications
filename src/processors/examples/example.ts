@@ -35,6 +35,6 @@ const processLog = async (ctx: Context, block: Block, log: Log) => {
   const entry = Object.entries(erc20.events).find(([n, e]) => e.topic === log.topics[0])
   if (entry) {
     const [name, event] = entry
-    await notifyForEvent({ ctx, topic: 'OGN', eventName: name, log, event })
+    await notifyForEvent({ ctx, block, log, topic: 'OGN', eventName: name, event })
   }
 }

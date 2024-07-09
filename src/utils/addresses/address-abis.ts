@@ -3,6 +3,7 @@ import * as erc20Abi from '../../abi/erc20'
 import * as exponentialStakingAbi from '../../abi/exponential-staking'
 import * as fixedRateRewardsSourceAbi from '../../abi/fixed-rate-rewards-source'
 import * as governanceAbi from '../../abi/governance'
+import * as ogvOgnMigratorAbi from '../../abi/ogv-ogn-migrator'
 import * as otokenAbi from '../../abi/otoken'
 import * as otokenBuybackAbi from '../../abi/otoken-buyback'
 import * as otokenDripperAbi from '../../abi/otoken-dripper'
@@ -21,6 +22,7 @@ import {
   OGN_ADDRESS,
   OGN_GOVERNANCE_ADDRESS,
   OGN_REWARDS_SOURCE_ADDRESS,
+  OGV_OGN_MIGRATOR_ADDRESS,
   OUSD_ADDRESS,
   OUSD_BUYBACK,
   OUSD_DRIPPER_ADDRESS,
@@ -39,6 +41,7 @@ export const ognABIs: Record<string, any> = {
   [OGN_GOVERNANCE_ADDRESS]: governanceAbi,
   [OGN_REWARDS_SOURCE_ADDRESS]: fixedRateRewardsSourceAbi,
   [XOGN_ADDRESS]: exponentialStakingAbi,
+  [OGV_OGN_MIGRATOR_ADDRESS]: ogvOgnMigratorAbi,
 }
 
 /**

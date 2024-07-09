@@ -3,7 +3,7 @@ import { getAddressesPyName } from '../utils/addresses/names'
 import { formatJson } from '../utils/formatJson'
 import { md } from '../utils/md'
 import { NotifyTarget, Severity, Topic } from './const'
-import { DiscordOptions, notifyDiscord } from './discord'
+import { notifyDiscord } from './discord'
 
 const uniqueTracesFired = new Set<string>()
 
@@ -30,14 +30,16 @@ export const notifyForTrace = async ({
   let toName = getAddressesPyName(to)
 
   if (process.env.BLOCK_FROM) {
-    const id = trace.type === 'call' ? trace.action.sighash : trace.transaction?.hash ?? trace.block.hash
-    if (uniqueTracesFired.has(id) || uniqueTracesFired.size > 5) return
-    else uniqueTracesFired.add(id)
+    const uniqueTracesFiredId =
+      trace.type === 'call' ? trace.action.sighash : trace.transaction?.hash ?? trace.block.hash
+    if (uniqueTracesFired.has(uniqueTracesFiredId) || uniqueTracesFired.size > 5) return
+    else uniqueTracesFired.add(uniqueTracesFiredId)
   }
-
-  console.log('Sending notification', { topic, severity, name, functionName, functionData, trace })
+  const id = `${trace.transaction?.hash}:${JSON.stringify(trace.traceAddress)}`
+  console.log('Sending notification', { id, topic, severity, name, functionName, functionData, trace })
 
   return notifyDiscord({
+    id,
     topic,
     severity,
     title: `${name ?? topic} - ${functionName ?? trace.type}`,

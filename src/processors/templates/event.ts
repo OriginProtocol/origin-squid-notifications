@@ -75,6 +75,7 @@ export const createEventProcessor = ({
                   ctx,
                   name,
                   eventName,
+                  block,
                   log,
                   event,
                   topic,

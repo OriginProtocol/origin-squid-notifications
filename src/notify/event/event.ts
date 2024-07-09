@@ -1,6 +1,6 @@
 import { AbiEvent } from '@subsquid/evm-abi'
 
-import { Context, Log } from '../../types'
+import { Block, Context, Log } from '../../types'
 import { NotifyTarget, Severity, Topic } from '../const'
 
 const uniqueEventsFired = new Set<string>()
@@ -22,6 +22,7 @@ export const notifyForEvent = async (params: {
   name?: string
   eventName: string
   event: AbiEvent<any>
+  block: Block
   log: Log
   notifyTarget?: NotifyTarget
   renderer?: EventRenderer

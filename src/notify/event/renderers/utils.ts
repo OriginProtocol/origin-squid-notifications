@@ -4,6 +4,7 @@ import { Severity, Topic, severityColors } from '../../const'
 import { DiscordOptions, notifyDiscord } from '../../discord'
 
 export const renderDiscordEmbed = (params: {
+  id: string
   topic: Topic
   severity?: Severity
   title: string
@@ -19,6 +20,7 @@ export const renderDiscordEmbed = (params: {
     .setDescription(params.description)
     .addFields(...params.fields)
   const msg: DiscordOptions = {
+    id: params.id,
     title: params.title,
     embeds: [embeds],
     severity: params.severity,

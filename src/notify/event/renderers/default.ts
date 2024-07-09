@@ -18,6 +18,7 @@ export const defaultEventRenderer = registerEventRenderer(
       links.proposal = `https://originprotocol.eth.limo/#/more/1:${OGN_GOVERNANCE_ADDRESS}:${data.proposalId}`
     }
     return notifyDiscord({
+      id: log.id,
       topic,
       severity,
       title: `${name ?? topic} - ${eventName}`,

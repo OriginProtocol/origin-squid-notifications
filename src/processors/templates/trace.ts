@@ -16,6 +16,7 @@ export const createTraceProcessor = ({
   topic,
   severity,
   notifyTarget,
+  markEventsNotified,
 }: {
   name: string
   chainId: number
@@ -24,6 +25,7 @@ export const createTraceProcessor = ({
   topic: Topic
   severity?: Severity
   notifyTarget?: NotifyTarget
+  markEventsNotified?: boolean
 }) => {
   const filter = traceParams.map((tp) => traceFilter(tp))
   const abiEntries = abi.flatMap((a) => Object.entries(a.functions))
@@ -39,6 +41,10 @@ export const createTraceProcessor = ({
       for (const block of ctx.blocks) {
         for (const trace of block.traces) {
           if (filter.find((f) => f.matches(trace))) {
+            const relatedEvents = block.logs.filter((log) => log.transactionHash === trace.transaction?.hash)
+            if (markEventsNotified) {
+              relatedEvents.forEach((l) => ctx.markEventHandled(l))
+            }
             const input: Parameters<typeof notifyForTrace>[0] = {
               name,
               trace,
