@@ -47,7 +47,7 @@ createEventProcessor({
   tracks: [
     {
       address: [OETH_NATIVE_STRATEGY_ADDRESS],
-      events: omit(governedUpgradeabilityProxy.events, [
+      events: omit(strategyNativeStakingAbi.events, [
         ...Object.keys(governedUpgradeabilityProxy.events),
         'PTokenRemoved',
       ]),

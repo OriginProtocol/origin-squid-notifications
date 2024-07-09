@@ -1,5 +1,8 @@
 import { HexColorString } from 'discord.js'
 
+import { OETH_ADDRESS, OUSD_ADDRESS, PRIMEETH_ADDRESS } from '../utils/addresses'
+import { getAddressesPyName } from '../utils/addresses/names'
+
 export type Severity = 'low' | 'medium' | 'high' | 'critical' | 'broken'
 export type Topic = 'OGN' | 'xOGN' | 'OETH' | 'OUSD' | 'primeETH'
 
@@ -44,3 +47,12 @@ export const notifyTargets = {
     discordMentions: ['<@&997340701551513762>'],
   } as NotifyTarget,
 } as const
+
+export const assetIcons: Record<string, `<:${string}>`> = {
+  [PRIMEETH_ADDRESS]: '<:prime_staked_ETH:1202845677332463716>',
+  [OETH_ADDRESS]: '<:origin_ether_oeth:1091365232770814033>',
+  [OUSD_ADDRESS]: '<:origin_dollar_ousd:1052865068511014973>',
+}
+
+export const discordIconOrName = (address: string): string | undefined =>
+  assetIcons[address.toLowerCase()] ?? getAddressesPyName(address)

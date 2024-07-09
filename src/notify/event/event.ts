@@ -5,7 +5,7 @@ import { NotifyTarget, Severity, Topic } from '../const'
 
 const uniqueEventsFired = new Set<string>()
 export type EventRendererParams = Parameters<typeof notifyForEvent>[0]
-export type EventRenderer = (params: EventRendererParams) => Promise<void>
+export type EventRenderer = (params: EventRendererParams) => Promise<void> | void
 const eventRenderers = new Map<string, (params: Parameters<typeof notifyForEvent>[0]) => Promise<void>>()
 export const registerEventRenderer = (
   topic: string,

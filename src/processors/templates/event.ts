@@ -8,20 +8,6 @@ import { Context } from '../../types'
 import { logFilter } from '../../utils/logFilter'
 
 export type EventProcessorParams = Parameters<typeof createEventProcessor>[0]
-
-export interface EventProcessorTrack {
-  address: string[]
-  events: Record<string, ReturnType<typeof event>>
-  includedEvents?: Exclude<keyof EventProcessorTrack['events'], EventProcessorTrack['excludedEvents']>[]
-  excludedEvents?: keyof EventProcessorTrack['events'][]
-  topic1?: string[]
-  topic2?: string[]
-  topic3?: string[]
-  severity?: Severity
-  notifyTarget?: NotifyTarget
-  renderers?: Record<keyof EventProcessorTrack['events'], EventRenderer>
-}
-
 export const createEventProcessor = ({
   name,
   chainId,
@@ -39,7 +25,7 @@ export const createEventProcessor = ({
     topic3?: string[]
     severity?: Severity
     notifyTarget?: NotifyTarget
-    renderers?: Record<keyof EventProcessorTrack['events'], EventRenderer>
+    renderers?: Record<string, EventRenderer>
   }[]
 }) => {
   const trackData = tracks.map((track) => {

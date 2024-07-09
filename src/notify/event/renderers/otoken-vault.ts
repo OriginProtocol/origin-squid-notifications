@@ -23,7 +23,7 @@ registerEventRenderer(vaultAbi.events.Mint.topic, async (params) => {
   }
 
   const data = vaultAbi.events.Mint.decode(log)
-  const msg = renderDiscordEmbed({
+  renderDiscordEmbed({
     topic: params.topic,
     severity: params.severity,
     title: `${vault.topic} Minted`,
@@ -38,8 +38,6 @@ registerEventRenderer(vaultAbi.events.Mint.topic, async (params) => {
       },
     ],
   })
-
-  return notifyDiscord(msg)
 })
 
 registerEventRenderer(vaultAbi.events.YieldDistribution.topic, async (params) => {
@@ -51,7 +49,7 @@ registerEventRenderer(vaultAbi.events.YieldDistribution.topic, async (params) =>
   }
 
   const data = vaultAbi.events.YieldDistribution.decode(log)
-  const msg = renderDiscordEmbed({
+  renderDiscordEmbed({
     topic: params.topic,
     severity: params.severity,
     title: `${vault.topic} YieldDistribution`,
@@ -70,7 +68,6 @@ registerEventRenderer(vaultAbi.events.YieldDistribution.topic, async (params) =>
       },
     ],
   })
-  return notifyDiscord(msg)
 })
 
 registerEventRenderer(vaultAbi.events.Redeem.topic, async (params) => {
@@ -82,7 +79,7 @@ registerEventRenderer(vaultAbi.events.Redeem.topic, async (params) => {
   }
 
   const data = vaultAbi.events.Redeem.decode(log)
-  const msg = renderDiscordEmbed({
+  renderDiscordEmbed({
     topic: params.topic,
     severity: params.severity,
     title: `${vault.topic} Redeem`,
@@ -97,5 +94,4 @@ registerEventRenderer(vaultAbi.events.Redeem.topic, async (params) => {
       },
     ],
   })
-  return notifyDiscord(msg)
 })

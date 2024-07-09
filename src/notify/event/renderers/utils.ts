@@ -1,7 +1,7 @@
 import { EmbedBuilder } from 'discord.js'
 
 import { Severity, Topic, severityColors } from '../../const'
-import { DiscordOptions } from '../../discord'
+import { DiscordOptions, notifyDiscord } from '../../discord'
 
 export const renderDiscordEmbed = (params: {
   topic: Topic
@@ -24,5 +24,5 @@ export const renderDiscordEmbed = (params: {
     severity: params.severity,
     topic: params.topic,
   }
-  return msg
+  return notifyDiscord(msg)
 }

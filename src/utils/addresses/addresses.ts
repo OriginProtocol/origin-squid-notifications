@@ -64,6 +64,8 @@ export const VEOGV_ADDRESS = '0x0c4576ca1c365868e162554af8e385dc3e7c66d9'
 export const XOGN_ADDRESS = '0x63898b3b6ef3d39332082178656e9862bee45c57'
 export const OGN_REWARDS_SOURCE_ADDRESS = '0x7609c88e5880e934dd3a75bcfef44e31b1badb8b'
 
+export const PRIMEETH_ADDRESS = '0x6ef3d766dfe02dc4bf04aae9122eb9a0ded25615'
+
 // Token Helper Objects & Types
 export const tokens = {
   // Origin ERC20 Tokens
@@ -93,6 +95,7 @@ export const tokens = {
   rETH: RETH_ADDRESS,
   frxETH: FRXETH_ADDRESS,
   sfrxETH: SFRXETH_ADDRESS,
+  primeETH: PRIMEETH_ADDRESS,
 
   // Non-stable
   BAL: BAL_ADDRESS,

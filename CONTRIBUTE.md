@@ -14,27 +14,31 @@
 npm run process
 ```
 
-> [!WARNING]  
-> If you do not run `setup` prior to `process` then the database will remember where you stopped your
-> last execution. This means the next time you start `process` it may begin spamming for a lot of events which
-> have happened since then.
-
 ## Adding notifications
 
 Notifications are triggered through `processors` located at: [src/processors](src/processors)
 
-1. Copy the [src/processors/template.ts](src/processors/examples/example.ts) processor with a new name and update the import paths.
-2. Update the `filter` (see [examples](#filtering-examples))
-3. Update the `process` function
-    - It is important to understand that this function will receive all blocks and logs from all the other processors.
-      You *must* filter so that you only take action on what you care about within this processor.
-4. Ensure the new processor is imported at [src/processors/index.ts](src/processors/index.ts)
+1. View existing processors in [src/processors](src/processors)
+2. Follow the patterns shown within to create a processor of your own.
+3. If you need more raw control of things you can copy from [this example](src/processors/examples/example.ts)
 
 If the ABI you require does not exist:
 
-1. Add ABI JSON to `abi/` *(not `src/abi`)*
+1. Add ABI JSON to `abi/`
 2. Run `npm run generate-abis`
     - The ABI will be created within `src/abi/`
+
+## `npm run process` examples
+
+```shell
+# Start processing at a specific block
+BLOCK_FROM=12345678 npm run process
+```
+
+```shell
+# Start processors matching a certain name
+PROCESSOR=Burn npm run process
+```
 
 ## Filtering examples
 
@@ -78,12 +82,4 @@ const filter = logFilter({
     '0x0DD34c397384DE8f21F463096A360a0419D476E1'
   ],
 })
-```
-
-## Tips
-
-If you are trying to debug something, you can ask the processor to start at a specific block
-
-```sh
-BLOCK_FROM={number} npm run process
 ```
