@@ -1,6 +1,7 @@
 import { Trace } from '../types'
 import { getAddressesPyName } from '../utils/addresses/names'
 import { formatJson } from '../utils/formatJson'
+import { transactionLink } from '../utils/links'
 import { md } from '../utils/md'
 import { NotifyTarget, Severity, Topic } from './const'
 import { notifyDiscord } from './discord'
@@ -58,7 +59,7 @@ export const notifyForTrace = async ({
     ),
     links: trace.transaction?.hash
       ? {
-          tx: `https://etherscan.io/tx/${trace.transaction?.hash}`,
+          tx: transactionLink(trace.transaction?.hash),
         }
       : undefined,
     mentions: notifyTarget?.discordMentions,

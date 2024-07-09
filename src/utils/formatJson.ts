@@ -1,7 +1,7 @@
 import prettyjson from 'prettyjson'
-import { formatEther } from 'viem'
 
 import { getAddressesPyName } from './addresses/names'
+import { formatAmount } from './formatAmount'
 import { jsonify } from './jsonify'
 
 export function formatJson(json: unknown) {
@@ -33,7 +33,7 @@ export function formatJson(json: unknown) {
           k.includes('weth'))
       ) {
         if (v === 0n) return '0'
-        return `${v.toString()} | ${formatEther(v)}`
+        return `${v.toString()} | ${formatAmount(v)}`
       }
 
       if (typeof v === 'bigint' && v <= 31536000n && (k === 'newStakeDuration' || k === 'newDuration')) {
