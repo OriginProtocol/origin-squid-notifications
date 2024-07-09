@@ -1,4 +1,6 @@
-import { processors } from './processors'
+import { load } from './processors'
 import { formatJson } from './utils/formatJson'
 
-console.log(formatJson(processors))
+load().then((processors) => {
+  console.log(formatJson(processors))
+})

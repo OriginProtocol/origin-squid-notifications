@@ -1,11 +1,11 @@
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
 
+import { createProcessor } from '..'
 import * as erc20 from '../../abi/erc20'
 import { notifyForEvent } from '../../notify/event'
 import { Block, Context, Log } from '../../types'
 import { OGN_ADDRESS } from '../../utils/addresses'
 import { logFilter } from '../../utils/logFilter'
-import { createProcessor } from '../processors'
 
 // This filter will listen to all ERC20 events on the OGN contract.
 const filter = logFilter({

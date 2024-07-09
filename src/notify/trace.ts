@@ -1,5 +1,5 @@
 import { Trace } from '../types'
-import { getAddressesPyName } from '../utils/addresses/addresses-py'
+import { getAddressesPyName } from '../utils/addresses/names'
 import { formatJson } from '../utils/formatJson'
 import { md } from '../utils/md'
 import { NotifyTarget, Severity, Topic } from './const'

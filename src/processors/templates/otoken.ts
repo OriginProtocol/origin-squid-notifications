@@ -1,3 +1,5 @@
+import { pick } from 'lodash'
+
 import * as otokenAbi from '../../abi/otoken'
 import { EventProcessorParams, createEventProcessor } from './event'
 
@@ -7,8 +9,11 @@ export const createOTokenProcessor = (params: { address: string[] } & Omit<Event
     tracks: [
       {
         address: params.address,
-        events: otokenAbi.events,
-        includedEvents: ['AccountRebasingDisabled', 'AccountRebasingEnabled', 'TotalSupplyUpdatedHighres'],
+        events: pick(otokenAbi.events, [
+          'AccountRebasingDisabled',
+          'AccountRebasingEnabled',
+          'TotalSupplyUpdatedHighres',
+        ]),
       },
     ],
   })

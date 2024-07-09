@@ -1,5 +1,6 @@
+import { pick } from 'lodash'
+
 import * as chainlinkKeeperAbi from '../../abi/chainlink-keeper-registry'
-import { Topic } from '../../notify/const'
 import { EventProcessorParams, createEventProcessor } from './event'
 
 export const createChainlinkKeeperProcessor = (
@@ -10,8 +11,7 @@ export const createChainlinkKeeperProcessor = (
     tracks: [
       {
         address: params.address,
-        events: chainlinkKeeperAbi.events,
-        includedEvents: ['UpkeepPerformed', 'UpkeepCanceled', 'FundsAdded', 'FundsWithdrawn'],
+        events: pick(chainlinkKeeperAbi.events, ['UpkeepPerformed', 'UpkeepCanceled', 'FundsAdded', 'FundsWithdrawn']),
       },
     ],
   })

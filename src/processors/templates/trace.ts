@@ -1,11 +1,11 @@
 import { fun, viewFun } from '@subsquid/evm-abi'
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
 
+import { createProcessor } from '..'
 import { NotifyTarget, Severity, Topic } from '../../notify/const'
 import { notifyForTrace } from '../../notify/trace'
 import { Context } from '../../types'
 import { traceFilter } from '../../utils/traceFilter'
-import { createProcessor } from '../processors'
 
 export type TraceProcessorParams = Parameters<typeof createTraceProcessor>[0]
 export const createTraceProcessor = ({

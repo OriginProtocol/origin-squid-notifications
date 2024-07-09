@@ -1,4 +1,4 @@
-import { CHAINLINK_KEEPER_REGISTRY } from '../utils/addresses/addresses-py'
+import { CHAINLINK_KEEPER_REGISTRY } from '../utils/addresses/ousd-analytics'
 import { createChainlinkKeeperProcessor } from './templates/chainlink-keeper'
 
 createChainlinkKeeperProcessor({

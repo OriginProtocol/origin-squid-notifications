@@ -1,5 +1,5 @@
 import * as governedUpgradeabilityProxyAbi from '../../abi/governed-upgradeability-proxy'
-import { NotifyTarget, Severity, notifyTargets } from '../../notify/const'
+import { NotifyTarget, Severity } from '../../notify/const'
 import { EventProcessorParams, createEventProcessor } from './event'
 
 export const createGovernedUpgradeabilityProxyProcessor = (

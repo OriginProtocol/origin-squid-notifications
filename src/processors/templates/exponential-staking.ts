@@ -9,8 +9,12 @@ export const createExponentialStakingProcessor = (
     tracks: [
       {
         address: params.address,
-        events: exponentialStakingAbi.events,
-        excludedEvents: ['Approval', 'Transfer', 'Reward', 'Penalty'],
+        events: {
+          Approval: exponentialStakingAbi.events.Approval,
+          Transfer: exponentialStakingAbi.events.Transfer,
+          Reward: exponentialStakingAbi.events.Reward,
+          Penalty: exponentialStakingAbi.events.Penalty,
+        },
       },
     ],
   })

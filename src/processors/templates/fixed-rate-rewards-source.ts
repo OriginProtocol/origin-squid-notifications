@@ -1,3 +1,5 @@
+import { pick } from 'lodash'
+
 import * as fixedRateRewardsSource from '../../abi/fixed-rate-rewards-source'
 import { notifyTargets } from '../../notify/const'
 import { EventProcessorParams, createEventProcessor } from './event'
@@ -10,16 +12,14 @@ export const createFixedRateRewardsSourceProcessor = (
     tracks: [
       {
         address: params.address,
-        events: fixedRateRewardsSource.events,
+        events: pick(fixedRateRewardsSource.events, ['RewardsPerSecondChanged', 'RewardsTargetChange']),
         severity: 'high',
         notifyTarget: notifyTargets.Engineering,
-        includedEvents: ['RewardsPerSecondChanged', 'RewardsTargetChange'],
       },
       {
         address: params.address,
-        events: fixedRateRewardsSource.events,
+        events: pick(fixedRateRewardsSource.events, 'RewardCollected'),
         severity: 'low',
-        includedEvents: ['RewardCollected'],
       },
     ],
   })

@@ -1,3 +1,5 @@
+import { omit, pick } from 'lodash'
+
 import * as governedUpgradeabilityProxy from '../../abi/governed-upgradeability-proxy'
 import * as otokenVaultAbi from '../../abi/otoken-vault'
 import { EventProcessorParams, createEventProcessor } from './event'
@@ -17,14 +19,15 @@ export const createOTokenVaultProcessor = (params: { address: string[] } & Omit<
     tracks: [
       {
         address: params.address,
-        events: otokenVaultAbi.events,
-        includedEvents: highSeverityEvents,
+        events: pick(otokenVaultAbi.events, highSeverityEvents),
         severity: 'high',
       },
       {
         address: params.address,
-        events: otokenVaultAbi.events,
-        excludedEvents: [...Object.keys(governedUpgradeabilityProxy.events), ...highSeverityEvents],
+        events: omit(otokenVaultAbi.events, [
+          ...Object.keys(governedUpgradeabilityProxy.events),
+          ...highSeverityEvents,
+        ]),
       },
     ],
   })

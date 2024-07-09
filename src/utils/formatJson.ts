@@ -1,7 +1,7 @@
 import prettyjson from 'prettyjson'
 import { formatEther } from 'viem'
 
-import { getAddressesPyName } from './addresses/addresses-py'
+import { getAddressesPyName } from './addresses/names'
 import { jsonify } from './jsonify'
 
 export function formatJson(json: unknown) {

@@ -1,4 +1,4 @@
-import { CURVE_ARAGON_51, CURVE_ARAGON_60 } from '../utils/addresses/addresses-py'
+import { CURVE_ARAGON_51, CURVE_ARAGON_60 } from '../utils/addresses/ousd-analytics'
 import { createCurveAragonVotingProcessor } from './templates/curve-aragon-voting'
 
 createCurveAragonVotingProcessor({

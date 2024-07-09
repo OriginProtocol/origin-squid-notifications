@@ -30,6 +30,10 @@ import {
   strategies,
 } from './addresses'
 
+/**
+ * Active OGN ABIs
+ * - Including xOGN
+ */
 export const ognABIs: Record<string, any> = {
   [OGN_ADDRESS]: erc20Abi,
   [OGN_GOVERNANCE_ADDRESS]: governanceAbi,
@@ -37,11 +41,17 @@ export const ognABIs: Record<string, any> = {
   [XOGN_ADDRESS]: exponentialStakingAbi,
 }
 
+/**
+ * Active OETH Strategy ABIs
+ */
 export const oethStrategyABIs: Record<string, any> = {
   [OETH_NATIVE_STRATEGY_ADDRESS]: strategyNativeStakingAbi,
   [OETH_ETH_AMO_METAPOOL]: strategyCurveMetapoolAbi,
 }
-
+/**
+ * Active OETH ABIs
+ * - Including Strategies
+ */
 export const oethABIs: Record<string, any> = {
   [OETH_ADDRESS]: otokenAbi,
   [OETH_VAULT_ADDRESS]: otokenVaultAbi,
@@ -51,10 +61,17 @@ export const oethABIs: Record<string, any> = {
   ...oethStrategyABIs,
 }
 
+/**
+ * Active OUSD Strategy ABIs
+ */
 export const ousdStrategyABIs: Record<string, any> = {
   [strategies.ousd.MorphoAaveStrategy]: strategyMorphoAaveAbi,
 }
 
+/**
+ * Active OUSD ABIs
+ * - Including Strategies
+ */
 export const ousdABIs: Record<string, any> = {
   [OUSD_ADDRESS]: otokenAbi,
   [OUSD_VAULT_ADDRESS]: otokenVaultAbi,
@@ -64,7 +81,10 @@ export const ousdABIs: Record<string, any> = {
   ...ousdStrategyABIs,
 }
 
-export const addressABIs: Record<string, unknown> = {
+/**
+ * Active Origin ABIs
+ */
+export const originABIs: Record<string, unknown> = {
   ...ognABIs,
   ...oethABIs,
   ...ousdABIs,

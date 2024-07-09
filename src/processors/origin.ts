@@ -1,3 +1,5 @@
+import { omit, pick } from 'lodash'
+
 import * as strategyCurveMetapoolAbi from '../abi/curve-metapool'
 import * as governedUpgradeabilityProxy from '../abi/governed-upgradeability-proxy'
 import * as strategyMorphoAaveAbi from '../abi/strategy-morpho-aave'
@@ -20,7 +22,7 @@ import {
   strategies,
 } from '../utils/addresses'
 import { oethABIs, ognABIs, ousdABIs } from '../utils/addresses/address-abis'
-import { GOVERNANCE_TIMELOCK } from '../utils/addresses/addresses-py'
+import { GOVERNANCE_TIMELOCK } from '../utils/addresses/ousd-analytics'
 import { createBurnProcessor } from './templates/burn'
 import { createEventProcessor } from './templates/event'
 import { createExponentialStakingProcessor } from './templates/exponential-staking'
@@ -45,13 +47,14 @@ createEventProcessor({
   tracks: [
     {
       address: [OETH_NATIVE_STRATEGY_ADDRESS],
-      events: strategyNativeStakingAbi.events,
-      excludedEvents: [...Object.keys(governedUpgradeabilityProxy.events), 'PTokenRemoved'],
+      events: omit(governedUpgradeabilityProxy.events, [
+        ...Object.keys(governedUpgradeabilityProxy.events),
+        'PTokenRemoved',
+      ]),
     },
     {
       address: [OETH_NATIVE_STRATEGY_ADDRESS],
-      events: strategyNativeStakingAbi.events,
-      includedEvents: ['PTokenRemoved'],
+      events: pick(strategyNativeStakingAbi.events, 'PTokenRemoved'),
       severity: 'high',
     },
   ],
@@ -63,13 +66,16 @@ createEventProcessor({
   tracks: [
     {
       address: [OETH_ETH_AMO_METAPOOL],
-      events: strategyCurveMetapoolAbi.events,
-      excludedEvents: [...Object.keys(governedUpgradeabilityProxy.events), 'Transfer', 'Approval', 'TokenExchange'],
+      events: omit(strategyCurveMetapoolAbi.events, [
+        ...Object.keys(governedUpgradeabilityProxy.events),
+        'Transfer',
+        'Approval',
+        'TokenExchange',
+      ]),
     },
     {
-      address: [strategies.ousd.MorphoAaveStrategy],
-      events: strategyMorphoAaveAbi.events,
-      includedEvents: ['PTokenRemoved'],
+      address: [OETH_ETH_AMO_METAPOOL],
+      events: pick(strategyCurveMetapoolAbi.events, 'PTokenRemoved'),
       severity: 'high',
     },
   ],
@@ -81,13 +87,16 @@ createEventProcessor({
   tracks: [
     {
       address: [strategies.ousd.MorphoAaveStrategy],
-      events: strategyMorphoAaveAbi.events,
-      excludedEvents: [...Object.keys(governedUpgradeabilityProxy.events), 'PTokenRemoved'],
+      events: omit(strategyMorphoAaveAbi.events, [
+        ...Object.keys(governedUpgradeabilityProxy.events),
+        'Transfer',
+        'Approval',
+        'TokenExchange',
+      ]),
     },
     {
       address: [strategies.ousd.MorphoAaveStrategy],
-      events: strategyMorphoAaveAbi.events,
-      includedEvents: ['PTokenRemoved'],
+      events: pick(strategyMorphoAaveAbi.events, 'PTokenRemoved'),
       severity: 'high',
     },
   ],

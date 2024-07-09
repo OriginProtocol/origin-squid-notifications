@@ -1,14 +1,28 @@
 import { event } from '@subsquid/evm-abi'
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
 
+import { createProcessor } from '..'
 import { NotifyTarget, Severity, Topic } from '../../notify/const'
-import { notifyForEvent } from '../../notify/event'
+import { EventRenderer, notifyForEvent } from '../../notify/event'
 import { Context } from '../../types'
 import { logFilter } from '../../utils/logFilter'
-import { createProcessor } from '../processors'
 
 export type EventProcessorParams = Parameters<typeof createEventProcessor>[0]
-export const createEventProcessor = <EventName extends string>({
+
+export interface EventProcessorTrack {
+  address: string[]
+  events: Record<string, ReturnType<typeof event>>
+  includedEvents?: Exclude<keyof EventProcessorTrack['events'], EventProcessorTrack['excludedEvents']>[]
+  excludedEvents?: keyof EventProcessorTrack['events'][]
+  topic1?: string[]
+  topic2?: string[]
+  topic3?: string[]
+  severity?: Severity
+  notifyTarget?: NotifyTarget
+  renderers?: Record<keyof EventProcessorTrack['events'], EventRenderer>
+}
+
+export const createEventProcessor = ({
   name,
   chainId,
   topic,
@@ -19,27 +33,21 @@ export const createEventProcessor = <EventName extends string>({
   topic: Topic
   tracks: {
     address: string[]
-    events: Record<EventName, ReturnType<typeof event>>
-    includedEvents?: (keyof (typeof tracks)[number]['events'])[]
-    excludedEvents?: (keyof (typeof tracks)[number]['events'])[]
+    events: Record<string, ReturnType<typeof event>>
     topic1?: string[]
     topic2?: string[]
     topic3?: string[]
     severity?: Severity
     notifyTarget?: NotifyTarget
+    renderers?: Record<keyof EventProcessorTrack['events'], EventRenderer>
   }[]
 }) => {
   const trackData = tracks.map((track) => {
-    const { address, events, includedEvents, excludedEvents, topic1, topic2, topic3 } = track
-    const entries = (Object.entries(events) as [EventName, ReturnType<typeof event>][]).filter(
-      ([eventName]) =>
-        (!includedEvents || includedEvents.includes(eventName)) &&
-        (!excludedEvents || !excludedEvents.includes(eventName)),
-    )
-
+    const { address, events, topic1, topic2, topic3 } = track
+    const entries = Object.entries(events)
     const filter = logFilter({
       address,
-      topic0: entries.map(([n, e]) => e.topic),
+      topic0: entries.map(([, e]) => e.topic),
       topic1,
       topic2,
       topic3,
@@ -71,10 +79,10 @@ export const createEventProcessor = <EventName extends string>({
           for (const {
             filter,
             entries,
-            track: { severity, notifyTarget },
+            track: { severity, notifyTarget, renderers },
           } of trackData) {
             if (filter.matches(log)) {
-              const entry = entries.find(([n, e]) => e.topic === log.topics[0])
+              const entry = entries.find(([, e]) => e.topic === log.topics[0])
               if (entry) {
                 const [eventName, event] = entry
                 await notifyForEvent({
@@ -86,6 +94,7 @@ export const createEventProcessor = <EventName extends string>({
                   topic,
                   severity,
                   notifyTarget,
+                  renderer: renderers?.[eventName],
                 })
               }
             }

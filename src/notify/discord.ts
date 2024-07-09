@@ -65,7 +65,7 @@ export const notifyDiscord = ({
         .join('   |   ')
     : ''
   let mentionString = mentions ? '   |   ' + mentions.join(' ') : ''
-  if (process.env.DISCORD_MENTION_OVERRIDE) {
+  if (mentions?.length && process.env.DISCORD_MENTION_OVERRIDE) {
     mentionString = `   |   ${process.env.DISCORD_MENTION_OVERRIDE}`
   }
 

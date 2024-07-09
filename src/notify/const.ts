@@ -1,3 +1,5 @@
+import { HexColorString } from 'discord.js'
+
 export type Severity = 'low' | 'medium' | 'high' | 'critical' | 'broken'
 export type Topic = 'OGN' | 'xOGN' | 'OETH' | 'OUSD' | 'primeETH'
 
@@ -7,6 +9,14 @@ export const severityEmojis: Record<Severity, string> = {
   high: '🟥',
   critical: '🟪',
   broken: '💔',
+}
+
+export const severityColors: Record<Severity, HexColorString> = {
+  low: '#0099ff',
+  medium: '#edb50d',
+  high: '#d62c1d',
+  critical: '#bc3bff',
+  broken: '#ff4638',
 }
 
 export const topicThumbnails: Record<Topic, string> = {
