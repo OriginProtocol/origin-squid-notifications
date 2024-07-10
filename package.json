@@ -9,7 +9,7 @@
     "generate-schema": "sqd codegen && sqd migration:generate && git add db/migrations/*",
     "process": "sqd setup && sqd process",
     "resume": "sqd process",
-    "digest": "ts-node src/digest"
+    "digest": "ts-node src/digest > digest.log"
   },
   "dependencies": {
     "@subsquid/archive-registry": "^3.3.0",

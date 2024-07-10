@@ -44,11 +44,7 @@ export const load = async () => {
     if (processor === 'index.js') continue
     if (!processor.endsWith('.js') && !processor.endsWith('.ts')) continue
     console.log(`Loading processor: ${processor}`)
-    try {
-      await import(`./${processor}`)
-    } catch (err) {
-      console.log(`Error loading processor: ${processor}`)
-    }
+    await import(`./${processor}`)
   }
   return processors
 }
