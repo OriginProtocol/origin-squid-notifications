@@ -22,17 +22,14 @@ export const defaultEventRenderer = registerEventRenderer(
       topic,
       severity,
       title: `${name ?? topic} - ${eventName}`,
-      description: md.construct(
-        md.code(
-          md.blockTable([
-            ['Block - Time', `${log.block.height} - ${new Date(log.block.timestamp).toISOString()}`],
-            ['Address', `${log.address}${addressName ? ` (${addressName})` : ''}`],
-            ['Transaction', log.transactionHash],
-            ['Event', eventName],
-          ]),
-          'Event Data:',
-          md.indent(formatJson(data)),
-        ),
+      description: md.code(
+        formatJson({
+          'Block - Time': `${log.block.height} - ${new Date(log.block.timestamp).toISOString()}`,
+          Address: `${log.address}${addressName ? ` (${addressName})` : ''}`,
+          Transaction: log.transactionHash,
+          Event: eventName,
+          'Event Data': data,
+        }),
       ),
       links,
       mentions: notifyTarget?.discordMentions,

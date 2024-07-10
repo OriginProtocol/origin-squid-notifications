@@ -2,18 +2,20 @@ import { EmbedBuilder, WebhookClient, WebhookMessageCreateOptions } from 'discor
 
 import { Severity, Topic, severityEmojis, topicThumbnails } from './const'
 
-const url = process.env[process.env.DISCORD_WEBHOOK_URL_ENV ?? 'DISCORD_WEBHOOK_URL'] ?? ''
-const primeURL = process.env['DISCORD_WEBHOOK_URL_PRIME_ETH'] ?? ''
-
-const discordClient = url ? new WebhookClient({ url }) : undefined
-const discordClientPrimeEth = primeURL ? new WebhookClient({ url: primeURL }) : undefined
+const webhookUrls: Record<Topic, string> = {
+  OGN: process.env['DISCORD_WEBHOOK_URL_OGN'] ?? '',
+  OETH: process.env['DISCORD_WEBHOOK_URL_OETH'] ?? '',
+  OUSD: process.env['DISCORD_WEBHOOK_URL_OUSD'] ?? '',
+  xOGN: process.env['DISCORD_WEBHOOK_URL_XOGN'] ?? '',
+  primeETH: process.env['DISCORD_WEBHOOK_URL_PRIME_ETH'] ?? '',
+}
 
 const clients: Record<Topic, WebhookClient | undefined> = {
-  OGN: discordClient,
-  OETH: discordClient,
-  OUSD: discordClient,
-  xOGN: discordClient,
-  primeETH: discordClientPrimeEth,
+  OGN: new WebhookClient({ url: webhookUrls.OGN }),
+  OETH: new WebhookClient({ url: webhookUrls.OETH }),
+  OUSD: new WebhookClient({ url: webhookUrls.OUSD }),
+  xOGN: new WebhookClient({ url: webhookUrls.xOGN }),
+  primeETH: new WebhookClient({ url: webhookUrls.primeETH }),
 }
 
 let messageQueue: Map<string, { topic: Topic; data: WebhookMessageCreateOptions }> = new Map()
@@ -59,7 +61,7 @@ export const notifyDiscord = ({
   links,
   mentions,
 }: DiscordOptions) => {
-  let content
+  let content = ''
   const linkString = links
     ? '   |   ' +
       Object.entries(links)
@@ -71,14 +73,13 @@ export const notifyDiscord = ({
     mentionString = `   |   ${process.env.DISCORD_MENTION_OVERRIDE}`
   }
 
-  if (description) {
-    content = `
-### ${severityEmojis[severity]}   ${title}${linkString}${mentionString}
-${description}
-    `
-      .trim()
-      .slice(0, 2000)
+  if (title) {
+    content = `### ${severityEmojis[severity]}   ${title}${linkString}${mentionString}`
   }
+  if (description) {
+    content += `\n${description}`
+  }
+  content = content.trim().slice(0, 2000)
 
   const payload: WebhookMessageCreateOptions = {
     username: topic,

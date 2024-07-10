@@ -6,6 +6,7 @@ import * as ogvOgnMigratorAbi from '../abi/ogv-ogn-migrator'
 import * as strategyMorphoAaveAbi from '../abi/strategy-morpho-aave'
 import * as strategyNativeStakingAbi from '../abi/strategy-native-staking'
 import { notifyTargets } from '../notify/const'
+import { simpleEventRenderer } from '../notify/event/renderers/simple'
 import {
   OETH_ADDRESS,
   OETH_BUYBACK,
@@ -51,12 +52,20 @@ createEventProcessor({
       address: [OETH_NATIVE_STRATEGY_ADDRESS],
       events: omit(strategyNativeStakingAbi.events, [
         ...Object.keys(governedUpgradeabilityProxy.events),
+        'PTokenAdded',
         'PTokenRemoved',
       ]),
+      renderers: {
+        ETHStaked: simpleEventRenderer,
+        SSVValidatorExitCompleted: simpleEventRenderer,
+        SSVValidatorExitInitiated: simpleEventRenderer,
+        SSVValidatorRegistered: simpleEventRenderer,
+        StakeETHTallyReset: simpleEventRenderer,
+      },
     },
     {
       address: [OETH_NATIVE_STRATEGY_ADDRESS],
-      events: pick(strategyNativeStakingAbi.events, 'PTokenRemoved'),
+      events: pick(strategyNativeStakingAbi.events, 'PTokenAdded', 'PTokenRemoved'),
       severity: 'high',
     },
   ],

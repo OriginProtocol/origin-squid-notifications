@@ -1,6 +1,13 @@
 import { load } from './processors'
 import { formatJson } from './utils/formatJson'
 
+console.log('# Origin Squid Notifications - Digest')
+console.log(new Date().toLocaleString())
+console.log('=========================================')
+
 load().then((processors) => {
-  console.log(formatJson(processors))
+  for (const p of processors) {
+    console.log('=========================================')
+    console.log(formatJson(p))
+  }
 })

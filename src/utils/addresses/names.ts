@@ -1,4 +1,25 @@
-import { PRIMEETH_LRT_DEPOSIT_POOL, XOGN_ADDRESS } from './addresses'
+import { AAVE_GOVERNANCE_ADDRESS } from '../../processors/aave'
+import {
+  DAI_ADDRESS,
+  FRXETH_ADDRESS,
+  OETH_DRIPPER_ADDRESS,
+  OETH_ETH_AMO_METAPOOL,
+  OETH_HARVESTER_ADDRESS,
+  OETH_MORPHO_AAVE_ADDRESS,
+  OETH_NATIVE_STRATEGY_ADDRESS,
+  OETH_STRATEGY_BALANCER_ADDRESS,
+  OETH_ZAPPER_ADDRESS,
+  OGN_GOVERNANCE_ADDRESS,
+  OGV_OGN_MIGRATOR_ADDRESS,
+  OUSD_HARVESTER_ADDRESS,
+  PRIMEETH_LRT_DEPOSIT_POOL,
+  RETH_ADDRESS,
+  STETH_ADDRESS,
+  USDC_ADDRESS,
+  USDT_ADDRESS,
+  VEOGV_ADDRESS,
+  XOGN_ADDRESS,
+} from './addresses'
 import {
   CDAI,
   CHAINLINK_KEEPER_REGISTRY,
@@ -62,13 +83,23 @@ import {
   UNISWAP_V2,
   UNISWAP_V3_ROUTER,
 } from './ousd-analytics'
-import { FRAX_ETH_STRATEGY, OETH_CURVE_AMO_STRATEGY, OETH_VAULT, OUSD_VAULT } from './strategies-py'
+import {
+  FLUX_STRAT,
+  FRAX_ETH_STRATEGY,
+  MAKER_DSR_STRAT,
+  MORPHO,
+  MORPHO_AAVE,
+  OETH_CURVE_AMO_STRATEGY,
+  OETH_VAULT,
+  OUSD_METASTRAT,
+  OUSD_VAULT,
+} from './strategies-py'
 
 export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [OUSD]: 'OUSD Token',
   [COMP]: 'COMP Token',
   [OUSD_VAULT]: 'OUSD Vault',
-  [GOVERNANCE]: 'OUSD Governance',
+  [GOVERNANCE]: 'OUSD Governance (old)',
   [GOVERNANCE_TIMELOCK]: 'OUSD Timelock',
   [MIX_ORACLE]: 'MixOracle',
   [CHAINLINK_ORACLE]: 'ChainlinkOracle',
@@ -99,7 +130,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [CURVE_3POOL]: '3Pool Swap Contract',
   [CURVE_ARAGON_51]: 'Curve Aragon Voting (51%)',
   [CURVE_ARAGON_60]: 'Curve Aragon Voting (60%)',
-  [DRIPPER]: 'Dripper',
+  [DRIPPER]: 'OUSD Dripper',
   [GOVERNOR]: 'Origin Governor V1',
   [GOVERNORV2]: 'Origin Governor V2',
   [GOVERNORV3]: 'Origin Governor V3',
@@ -127,12 +158,38 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [FLUX_TIMELOCK]: 'Flux Timelock',
   [CVX]: 'CVX',
 
+  [VEOGV_ADDRESS]: 'veOGV',
+  [MAKER_DSR_STRAT]: 'Maker DSR Strategy',
+  [FLUX_STRAT]: 'Flux Strategy',
+  [MORPHO_AAVE]: 'Morpho Aave Strategy',
+  [MORPHO]: 'Morpho Strategy',
+  [OUSD_METASTRAT]: 'OUSD Metapool Strategy',
+  [USDT_ADDRESS]: 'USDT',
+  [USDC_ADDRESS]: 'USDC',
+  [DAI_ADDRESS]: 'DAI',
+  [FRXETH_ADDRESS]: 'frxETH',
+  [RETH_ADDRESS]: 'rETH',
+  [STETH_ADDRESS]: 'stETH',
+  [OETH_STRATEGY_BALANCER_ADDRESS]: 'OETH Balancer rETH Strategy',
+  [OETH_MORPHO_AAVE_ADDRESS]: 'OETH Morpho Aave Strategy',
+  [OETH_NATIVE_STRATEGY_ADDRESS]: 'OETH Native Staking Strategy',
+  [OGV_OGN_MIGRATOR_ADDRESS]: 'OGV Migrator',
+  [OGN_GOVERNANCE_ADDRESS]: 'OGN Governance',
+  [AAVE_GOVERNANCE_ADDRESS]: 'Aave Governance',
+  
+  // OUSD Contracts
+  [OUSD_HARVESTER_ADDRESS]: 'OUSD Harvester',
+
   // OETH Contracts
-  [OETH]: 'OETH Token',
+  [OETH]: 'OETH',
   [OETH_VAULT]: 'OETH Vault',
   [FRAX_ETH_STRATEGY]: 'FraxETH Strategy',
   [OETH_ZAPPER]: 'OETH Zapper',
   [OETH_CURVE_AMO_STRATEGY]: 'OETH/ETH Curve AMO Strategy',
+  [OETH_HARVESTER_ADDRESS]: 'OETH Harvester',
+  [OETH_ZAPPER_ADDRESS]: 'OETH Zapper',
+  [OETH_DRIPPER_ADDRESS]: 'OETH Dripper',
+  [OETH_ETH_AMO_METAPOOL]: 'OETH Curve AMO Metapool',
 
   // primeETH Contracts
   [PRIMEETH_LRT_DEPOSIT_POOL]: 'PrimeETH Deposit Pool',

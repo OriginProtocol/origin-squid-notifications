@@ -1,5 +1,5 @@
 // Lowercase Addresses
-import { uniq } from 'lodash'
+import { omit, uniq } from 'lodash'
 
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 export const ETH_ADDRESS = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
@@ -187,9 +187,9 @@ export const addresses = {
   origin: uniq(
     [
       ...Object.values(ogn),
-      ...Object.values(oeth),
+      ...Object.values(omit(oeth, 'vaultTokens')),
       ...Object.values(strategies.oeth),
-      ...Object.values(ousd),
+      ...Object.values(omit(ousd, 'vaultTokens')),
       ...Object.values(strategies.ousd),
       ...Object.values(ogv),
     ]

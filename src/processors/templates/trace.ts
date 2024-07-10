@@ -34,6 +34,7 @@ export const createTraceProcessor = ({
     name,
     topic,
     chainId,
+    traces: [{ traceParams, topic, severity, notifyTarget }],
     setup: (processor: EvmBatchProcessor) => {
       filter.forEach((f) => processor.addTrace(f.value))
     },

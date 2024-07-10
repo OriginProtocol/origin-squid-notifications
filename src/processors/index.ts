@@ -12,6 +12,7 @@ import { traceFilter } from '../utils/traceFilter'
 export interface NotificationProcessor extends EvmProcessor {
   topic: Topic
   events?: {
+    address?: string[]
     eventName?: string[]
     topic1?: string[]
     topic2?: string[]
@@ -21,7 +22,6 @@ export interface NotificationProcessor extends EvmProcessor {
   }[]
   traces?: {
     traceParams: Parameters<typeof traceFilter>[0][]
-    abi: { functions: Record<string, ReturnType<typeof viewFun | typeof fun>> }[]
     topic: Topic
     severity?: Severity
     notifyTarget?: NotifyTarget
@@ -37,12 +37,12 @@ export const createProcessor = (processor: NotificationProcessor) => {
 }
 
 export const load = async () => {
-  const processors = fs.readdirSync(`${__dirname}`)
-  for (const processor of processors) {
+  const processorList = fs.readdirSync(`${__dirname}`)
+  for (const processor of processorList) {
     if (processor === 'examples') continue
     if (processor === 'templates') continue
     if (processor === 'index.js') continue
-    if (!processor.endsWith('.js')) continue
+    if (!processor.endsWith('.js') && !processor.endsWith('.ts')) continue
     console.log(`Loading processor: ${processor}`)
     try {
       await import(`./${processor}`)

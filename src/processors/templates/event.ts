@@ -81,7 +81,7 @@ export const createEventProcessor = ({
                   topic,
                   severity,
                   notifyTarget,
-                  renderer: renderers?.[eventName],
+                  renderer: renderers?.[eventName] ?? renderers?.['default'],
                 })
               }
             }
