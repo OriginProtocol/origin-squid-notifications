@@ -37,17 +37,17 @@ export const createProcessor = (processor: NotificationProcessor) => {
 }
 
 export const load = async () => {
-  const renderers = fs.readdirSync(`${__dirname}`)
-  for (const renderer of renderers) {
-    if (renderer === 'examples') continue
-    if (renderer === 'templates') continue
-    if (renderer === 'index.js') continue
-    if (!renderer.endsWith('.js')) continue
-    console.log(`Loading processor: ${renderer}`)
+  const processors = fs.readdirSync(`${__dirname}`)
+  for (const processor of processors) {
+    if (processor === 'examples') continue
+    if (processor === 'templates') continue
+    if (processor === 'index.js') continue
+    if (!processor.endsWith('.js')) continue
+    console.log(`Loading processor: ${processor}`)
     try {
-      await import(`./${renderer}`)
+      await import(`./${processor}`)
     } catch (err) {
-      console.log(`Error loading processor: ${renderer}`)
+      console.log(`Error loading processor: ${processor}`)
     }
   }
   return processors
