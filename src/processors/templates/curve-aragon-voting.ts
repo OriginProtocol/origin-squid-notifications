@@ -1,4 +1,4 @@
-import { pick } from 'lodash'
+import { omit, pick } from 'lodash'
 
 import * as curveAragonVotingAbi from '../../abi/curve-aragon-voting'
 import { Topic } from '../../notify/const'
@@ -12,7 +12,7 @@ export const createCurveAragonVotingProcessor = (
     tracks: [
       {
         address: params.address,
-        events: pick(curveAragonVotingAbi.events, 'CastVote'),
+        events: omit(curveAragonVotingAbi.events, 'CastVote'),
       },
     ],
   })
