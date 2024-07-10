@@ -1,6 +1,13 @@
 import { HexColorString } from 'discord.js'
 
-import { OETH_ADDRESS, OUSD_ADDRESS, PRIMEETH_ADDRESS } from '../utils/addresses'
+import {
+  OETH_ADDRESS,
+  OGN_ADDRESS,
+  OGV_ADDRESS,
+  OUSD_ADDRESS,
+  PRIMEETH_ADDRESS,
+  XOGN_ADDRESS,
+} from '../utils/addresses'
 import { getAddressesPyName } from '../utils/addresses/names'
 
 export type Severity = 'low' | 'medium' | 'high' | 'critical' | 'broken'
@@ -52,6 +59,9 @@ export const assetIcons: Record<string, `<:${string}>`> = {
   [PRIMEETH_ADDRESS]: '<:prime_staked_ETH:1202845677332463716>',
   [OETH_ADDRESS]: '<:origin_ether_oeth:1091365232770814033>',
   [OUSD_ADDRESS]: '<:origin_dollar_ousd:1052865068511014973>',
+  [OGV_ADDRESS]: '<:origin_defi_governance_ogv:1052865020276514867>',
+  [OGN_ADDRESS]: '<:origin_token_ogn:1052864969420570656>',
+  [XOGN_ADDRESS]: '<:xogn_staked_origin_token:1245864423285850202>',
 }
 
 export const discordIconOrName = (address: string): string | undefined =>

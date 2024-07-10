@@ -22,7 +22,7 @@ let messageQueue: Map<string, { topic: Topic; data: WebhookMessageCreateOptions 
 
 export interface DiscordOptions {
   id: string
-  title: string
+  title?: string
   description?: string
   embeds?: EmbedBuilder[]
   files?: WebhookMessageCreateOptions['files']

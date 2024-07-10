@@ -9,20 +9,24 @@ export const renderDiscordEmbed = (params: {
   severity?: Severity
   title: string
   titleUrl: string
-  description: string
-  fields: { name: string; value: string; inline?: boolean }[]
+  description?: string
+  fields?: { name: string; value: string; inline?: boolean }[]
 }) => {
   params.severity = params.severity ?? 'low'
-  const embeds = new EmbedBuilder()
+  const embed = new EmbedBuilder()
     .setColor(severityColors[params.severity])
     .setTitle(params.title)
     .setURL(params.titleUrl)
-    .setDescription(params.description)
-    .addFields(...params.fields)
+
+  if (params.description) {
+    embed.setDescription(params.description)
+  }
+  if (params.fields && params.fields?.length > 0) {
+    embed.addFields(...params.fields)
+  }
   const msg: DiscordOptions = {
     id: params.id,
-    title: params.title,
-    embeds: [embeds],
+    embeds: [embed],
     severity: params.severity,
     topic: params.topic,
   }

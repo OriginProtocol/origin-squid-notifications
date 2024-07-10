@@ -5,8 +5,9 @@ import * as governedUpgradeabilityProxy from '../abi/governed-upgradeability-pro
 import * as ogvOgnMigratorAbi from '../abi/ogv-ogn-migrator'
 import * as strategyMorphoAaveAbi from '../abi/strategy-morpho-aave'
 import * as strategyNativeStakingAbi from '../abi/strategy-native-staking'
-import { notifyTargets } from '../notify/const'
+import { discordIconOrName, notifyTargets } from '../notify/const'
 import { simpleEventRenderer } from '../notify/event/renderers/simple'
+import { renderDiscordEmbed } from '../notify/event/renderers/utils'
 import {
   OETH_ADDRESS,
   OETH_BUYBACK,
@@ -16,6 +17,7 @@ import {
   OGN_ADDRESS,
   OGN_GOVERNANCE_ADDRESS,
   OGN_REWARDS_SOURCE_ADDRESS,
+  OGV_ADDRESS,
   OGV_OGN_MIGRATOR_ADDRESS,
   OUSD_ADDRESS,
   OUSD_BUYBACK,
@@ -26,6 +28,8 @@ import {
 } from '../utils/addresses'
 import { oethABIs, ognABIs, ousdABIs } from '../utils/addresses/address-abis'
 import { GOVERNANCE_TIMELOCK } from '../utils/addresses/ousd-analytics'
+import { formatAmount } from '../utils/formatAmount'
+import { transactionLink } from '../utils/links'
 import { createBurnProcessor } from './templates/burn'
 import { createEventProcessor } from './templates/event'
 import { createExponentialStakingProcessor } from './templates/exponential-staking'
@@ -188,6 +192,30 @@ createEventProcessor({
       severity: 'low',
       address: [OGV_OGN_MIGRATOR_ADDRESS],
       events: pick(ogvOgnMigratorAbi.events, 'LockupsMigrated', 'TokenExchanged'),
+      renderers: {
+        TokenExchanged: (params) => {
+          const data = ogvOgnMigratorAbi.events.TokenExchanged.decode(params.log)
+          return renderDiscordEmbed({
+            id: params.log.id,
+            topic: params.topic,
+            severity: params.severity,
+            title: 'OGV Migration - TokenExchanged',
+            titleUrl: transactionLink(params.log.transactionHash),
+            fields: [
+              {
+                name: formatAmount(data.ogvAmountIn),
+                value: `${discordIconOrName(OGV_ADDRESS)} Burned`,
+                inline: true,
+              },
+              {
+                name: formatAmount(data.ognAmountOut),
+                value: `${discordIconOrName(OGN_ADDRESS)} Received`,
+                inline: true,
+              },
+            ],
+          })
+        },
+      },
     },
     {
       severity: 'high',
