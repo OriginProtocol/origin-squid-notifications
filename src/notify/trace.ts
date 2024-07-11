@@ -5,6 +5,7 @@ import { transactionLink } from '../utils/links'
 import { md } from '../utils/md'
 import { NotifyTarget, Severity, Topic } from './const'
 import { notifyDiscord } from './discord'
+import { notifyOncall } from './oncall'
 
 const uniqueTracesFired = new Set<string>()
 
@@ -16,6 +17,7 @@ export const notifyForTrace = async ({
   functionData,
   trace,
   notifyTarget,
+  oncall,
 }: {
   topic: Topic
   severity?: Severity
@@ -24,6 +26,7 @@ export const notifyForTrace = async ({
   functionData?: unknown
   trace: Trace
   notifyTarget?: NotifyTarget
+  oncall?: boolean
 }) => {
   let from = trace.type === 'call' ? trace.action.from : undefined
   let to = trace.type === 'call' ? trace.action.to : undefined
@@ -39,23 +42,21 @@ export const notifyForTrace = async ({
   const id = `${trace.transaction?.hash}:${JSON.stringify(trace.traceAddress)}`
   console.log('Sending notification', { id, topic, severity, name, functionName, functionData, trace })
 
-  return notifyDiscord({
+  notifyDiscord({
     id,
     topic,
     severity,
     title: `${name ?? topic} - ${functionName ?? trace.type}`,
-    description: md.construct(
-      md.code(
-        md.blockTable([
-          ['Block - Time', `${trace.block.height} - ${new Date(trace.block.timestamp).toISOString()}`],
-          from ? ['From', `${from}${fromName ? ` (${fromName})` : ''}`] : undefined,
-          to ? ['To', `${to}${toName ? ` (${toName})` : ''}`] : undefined,
-          ['Transaction', trace.transaction?.hash],
-          trace.error ? ['Error', trace.error] : undefined,
-          functionName ? ['Function', functionName] : undefined,
-        ]),
-        ...(functionData ? ['Function Data:', md.indent(formatJson(functionData))] : []),
-      ),
+    description: md.code(
+      formatJson({
+        'Block - Time': `${trace.block.height} - ${new Date(trace.block.timestamp).toISOString()}`,
+        From: `${from}${fromName ? ` (${fromName})` : ''}`,
+        To: `${to}${toName ? ` (${toName})` : ''}`,
+        Transaction: trace.transaction?.hash,
+        Error: trace.error,
+        Function: functionName,
+        'Function Data': functionData,
+      }),
     ),
     links: trace.transaction?.hash
       ? {
@@ -64,4 +65,14 @@ export const notifyForTrace = async ({
       : undefined,
     mentions: notifyTarget?.discordMentions,
   })
+  if (oncall) {
+    notifyOncall(id, {
+      topic,
+      severity,
+      name,
+      trace,
+      functionName,
+      functionData,
+    })
+  }
 }

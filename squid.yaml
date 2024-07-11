@@ -16,6 +16,7 @@ deploy:
     - DISCORD_WEBHOOK_URL_OETH
     - DISCORD_WEBHOOK_URL_OUSD
     - DISCORD_WEBHOOK_URL_PRIME_ETH
+    - ONCALL_WEBHOOK_URL
   processor:
     name: processor
     cmd: [ "sqd", "process:prod" ]

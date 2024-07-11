@@ -10,6 +10,7 @@ import { EvmBatchProcessor } from '@subsquid/evm-processor'
 import { TypeormDatabase } from '@subsquid/typeorm-store'
 
 import { processDiscordQueue } from './notify/discord'
+import { processOncallQueue } from './notify/oncall'
 import './rpc-issues'
 import { Context, EvmProcessor, Log } from './types'
 import { env } from './utils/env'
@@ -167,6 +168,7 @@ export const run = async ({
       }
 
       await processDiscordQueue()
+      await processOncallQueue()
     } catch (err) {
       ctx.log.info({
         blocks: ctx.blocks.length,

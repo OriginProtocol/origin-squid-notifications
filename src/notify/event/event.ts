@@ -1,7 +1,10 @@
+import { pick } from 'lodash'
+
 import { AbiEvent } from '@subsquid/evm-abi'
 
 import { Block, Context, Log } from '../../types'
 import { NotifyTarget, Severity, Topic } from '../const'
+import { notifyOncall } from '../oncall'
 
 const uniqueEventsFired = new Set<string>()
 export type EventRendererParams = Parameters<typeof notifyForEvent>[0]
@@ -26,6 +29,7 @@ export const notifyForEvent = async (params: {
   log: Log
   notifyTarget?: NotifyTarget
   renderer?: EventRenderer
+  oncall?: boolean
 }) => {
   if (process.env.BLOCK_FROM) {
     if (uniqueEventsFired.has(params.log.topics[0])) return
@@ -35,6 +39,16 @@ export const notifyForEvent = async (params: {
     params.ctx.markEventHandled(params.log)
     console.log('Sending notification for event', params.eventName)
     const renderer = params.renderer ?? eventRenderers.get(params.event.topic) ?? eventRenderers.get('default')
-    return renderer?.(params)
+    renderer?.(params)
+    if (params.oncall) {
+      notifyOncall(params.log.id, {
+        topic: params.topic,
+        severity: params.severity,
+        name: params.name,
+        eventName: params.eventName,
+        log: params.log,
+        data: params.event.decode(params.log),
+      })
+    }
   }
 }
