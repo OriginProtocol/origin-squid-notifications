@@ -82,6 +82,7 @@ import {
   SUSHISWAP,
   UNISWAP_V2,
   UNISWAP_V3_ROUTER,
+  WETH,
 } from './ousd-analytics'
 import {
   FLUX_STRAT,
@@ -156,27 +157,31 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [OGN_REWARDS_SOURCE]: 'OGN RewardsSource',
   [FLUX_DAO]: 'Flux DAO',
   [FLUX_TIMELOCK]: 'Flux Timelock',
-  [CVX]: 'CVX',
 
-  [VEOGV_ADDRESS]: 'veOGV',
   [MAKER_DSR_STRAT]: 'Maker DSR Strategy',
   [FLUX_STRAT]: 'Flux Strategy',
   [MORPHO_AAVE]: 'Morpho Aave Strategy',
   [MORPHO]: 'Morpho Strategy',
   [OUSD_METASTRAT]: 'OUSD Metapool Strategy',
+
+  // Tokens
+  [WETH]: 'WETH',
+  [CVX]: 'CVX',
+  [VEOGV_ADDRESS]: 'veOGV',
   [USDT_ADDRESS]: 'USDT',
   [USDC_ADDRESS]: 'USDC',
   [DAI_ADDRESS]: 'DAI',
   [FRXETH_ADDRESS]: 'frxETH',
   [RETH_ADDRESS]: 'rETH',
   [STETH_ADDRESS]: 'stETH',
+
   [OETH_STRATEGY_BALANCER_ADDRESS]: 'OETH Balancer rETH Strategy',
   [OETH_MORPHO_AAVE_ADDRESS]: 'OETH Morpho Aave Strategy',
   [OETH_NATIVE_STRATEGY_ADDRESS]: 'OETH Native Staking Strategy',
   [OGV_OGN_MIGRATOR_ADDRESS]: 'OGV Migrator',
   [OGN_GOVERNANCE_ADDRESS]: 'OGN Governance',
   [AAVE_GOVERNANCE_ADDRESS]: 'Aave Governance',
-  
+
   // OUSD Contracts
   [OUSD_HARVESTER_ADDRESS]: 'OUSD Harvester',
 

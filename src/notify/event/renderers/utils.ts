@@ -1,7 +1,25 @@
 import { EmbedBuilder } from 'discord.js'
 
+import { transactionLink } from '../../../utils/links'
 import { Severity, Topic, severityColors } from '../../const'
 import { DiscordOptions, notifyDiscord } from '../../discord'
+import { EventRendererParams } from '../event'
+
+export const renderEventDiscordEmbed = (
+  eventRendererParams: EventRendererParams,
+  params: {
+    description?: string
+    fields?: { name: string; value: string; inline?: boolean }[]
+  },
+) =>
+  renderDiscordEmbed({
+    id: eventRendererParams.log.id,
+    topic: eventRendererParams.topic,
+    severity: eventRendererParams.severity,
+    title: `${eventRendererParams.name} - ${eventRendererParams.eventName}`,
+    titleUrl: transactionLink(eventRendererParams.log.transactionHash),
+    ...params,
+  })
 
 export const renderDiscordEmbed = (params: {
   id: string
