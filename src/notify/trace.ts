@@ -17,7 +17,6 @@ export const notifyForTrace = async ({
   functionData,
   trace,
   notifyTarget,
-  oncall,
 }: {
   topic: Topic
   severity?: Severity
@@ -26,7 +25,6 @@ export const notifyForTrace = async ({
   functionData?: unknown
   trace: Trace
   notifyTarget?: NotifyTarget
-  oncall?: boolean
 }) => {
   let from = trace.type === 'call' ? trace.action.from : undefined
   let to = trace.type === 'call' ? trace.action.to : undefined
@@ -65,7 +63,7 @@ export const notifyForTrace = async ({
       : undefined,
     mentions: notifyTarget?.discordMentions,
   })
-  if (oncall) {
+  if (severity === 'high' || severity === 'critical') {
     notifyOncall(id, {
       topic,
       severity,

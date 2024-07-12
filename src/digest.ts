@@ -1,9 +1,6 @@
-import dotenv from 'dotenv'
-
+import './env'
 import { load } from './processors'
 import { formatJson } from './utils/formatJson'
-
-dotenv.config()
 
 console.log('# Origin Squid Notifications - Digest')
 console.log(new Date().toLocaleString())

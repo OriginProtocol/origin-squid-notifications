@@ -29,7 +29,6 @@ export const notifyForEvent = async (params: {
   log: Log
   notifyTarget?: NotifyTarget
   renderer?: EventRenderer
-  oncall?: boolean
 }) => {
   if (process.env.BLOCK_FROM) {
     if (uniqueEventsFired.has(params.log.topics[0])) return
@@ -40,7 +39,7 @@ export const notifyForEvent = async (params: {
     console.log('Sending notification for event', params.eventName)
     const renderer = params.renderer ?? eventRenderers.get(params.event.topic) ?? eventRenderers.get('default')
     renderer?.(params)
-    if (params.oncall) {
+    if (params.severity === 'high' || params.severity === 'critical') {
       notifyOncall(params.log.id, {
         topic: params.topic,
         severity: params.severity,
