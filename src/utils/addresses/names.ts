@@ -198,6 +198,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
 
   // primeETH Contracts
   [PRIMEETH_LRT_DEPOSIT_POOL]: 'PrimeETH Deposit Pool',
+  '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee': 'ETH',
 }
 
 export const getAddressesPyName = (address?: string): string | undefined =>

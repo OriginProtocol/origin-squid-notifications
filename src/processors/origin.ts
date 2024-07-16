@@ -2,18 +2,20 @@ import { omit, pick } from 'lodash'
 
 import * as strategyCurveMetapoolAbi from '../abi/curve-metapool'
 import * as governedUpgradeabilityProxy from '../abi/governed-upgradeability-proxy'
+import * as oethZapperAbi from '../abi/oeth-zapper'
 import * as ogvOgnMigratorAbi from '../abi/ogv-ogn-migrator'
 import * as strategyMorphoAaveAbi from '../abi/strategy-morpho-aave'
 import * as strategyNativeStakingAbi from '../abi/strategy-native-staking'
 import { discordIconOrName, notifyTargets } from '../notify/const'
 import { simpleEventRenderer } from '../notify/event/renderers/simple'
-import { renderDiscordEmbed } from '../notify/event/renderers/utils'
+import { renderDiscordEmbed, renderEventDiscordEmbed } from '../notify/event/renderers/utils'
 import {
   OETH_ADDRESS,
   OETH_BUYBACK,
   OETH_ETH_AMO_METAPOOL,
   OETH_NATIVE_STRATEGY_ADDRESS,
   OETH_VAULT_ADDRESS,
+  OETH_ZAPPER_ADDRESS,
   OGN_ADDRESS,
   OGN_GOVERNANCE_ADDRESS,
   OGN_REWARDS_SOURCE_ADDRESS,
@@ -120,6 +122,35 @@ createEventProcessor({
 // OTokenVaults
 createOTokenVaultProcessor({ name: 'OETH Vault', chainId: 1, address: [OETH_VAULT_ADDRESS], topic: 'OETH' })
 createOTokenVaultProcessor({ name: 'OUSD Vault', chainId: 1, address: [OUSD_VAULT_ADDRESS], topic: 'OUSD' })
+
+// Zapper
+createEventProcessor({
+  name: 'OETH Zapper',
+  topic: 'OETH',
+  chainId: 1,
+  tracks: [
+    {
+      address: [OETH_ZAPPER_ADDRESS],
+      events: oethZapperAbi.events,
+      severity: 'low',
+      renderers: {
+        Zap: (params) => {
+          const data = oethZapperAbi.events.Zap.decode(params.log)
+          renderEventDiscordEmbed(params, {
+            description: `[${data.minter}](https://etherscan.io/address/${data.minter})`,
+            fields: [
+              {
+                name: formatAmount(data.amount),
+                value: discordIconOrName(data.asset) ?? data.asset,
+                inline: true,
+              },
+            ],
+          })
+        },
+      },
+    },
+  ],
+})
 
 // Rewards Source
 createFixedRateRewardsSourceProcessor({
