@@ -17,7 +17,7 @@ import {
   OETH_DRIPPER_ADDRESS,
   OETH_ETH_AMO_METAPOOL,
   OETH_HARVESTER_ADDRESS,
-  OETH_NATIVE_STRATEGY_ADDRESS,
+  OETH_NATIVE_STRATEGY_ADDRESSES,
   OETH_VAULT_ADDRESS,
   OGN_ADDRESS,
   OGN_GOVERNANCE_ADDRESS,
@@ -48,7 +48,13 @@ export const ognABIs: Record<string, any> = {
  * Active OETH Strategy ABIs
  */
 export const oethStrategyABIs: Record<string, any> = {
-  [OETH_NATIVE_STRATEGY_ADDRESS]: strategyNativeStakingAbi,
+  ...OETH_NATIVE_STRATEGY_ADDRESSES.reduce(
+    (map, address) => {
+      map[address] = strategyNativeStakingAbi
+      return map
+    },
+    {} as Record<string, any>,
+  ),
   [OETH_ETH_AMO_METAPOOL]: strategyCurveMetapoolAbi,
 }
 /**

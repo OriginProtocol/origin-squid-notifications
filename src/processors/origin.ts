@@ -13,7 +13,7 @@ import {
   OETH_ADDRESS,
   OETH_BUYBACK,
   OETH_ETH_AMO_METAPOOL,
-  OETH_NATIVE_STRATEGY_ADDRESS,
+  OETH_NATIVE_STRATEGY_ADDRESSES,
   OETH_VAULT_ADDRESS,
   OETH_ZAPPER_ADDRESS,
   OGN_ADDRESS,
@@ -55,7 +55,7 @@ createEventProcessor({
   topic: 'OETH',
   tracks: [
     {
-      address: [OETH_NATIVE_STRATEGY_ADDRESS],
+      address: OETH_NATIVE_STRATEGY_ADDRESSES,
       events: omit(strategyNativeStakingAbi.events, [
         ...Object.keys(governedUpgradeabilityProxy.events),
         'PTokenAdded',
@@ -70,7 +70,7 @@ createEventProcessor({
       },
     },
     {
-      address: [OETH_NATIVE_STRATEGY_ADDRESS],
+      address: OETH_NATIVE_STRATEGY_ADDRESSES,
       events: pick(strategyNativeStakingAbi.events, 'PTokenAdded', 'PTokenRemoved'),
       severity: 'high',
     },

@@ -6,7 +6,7 @@ import {
   OETH_ETH_AMO_METAPOOL,
   OETH_HARVESTER_ADDRESS,
   OETH_MORPHO_AAVE_ADDRESS,
-  OETH_NATIVE_STRATEGY_ADDRESS,
+  OETH_NATIVE_STRATEGY_ADDRESSES,
   OETH_STRATEGY_BALANCER_ADDRESS,
   OETH_ZAPPER_ADDRESS,
   OGN_GOVERNANCE_ADDRESS,
@@ -177,7 +177,13 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
 
   [OETH_STRATEGY_BALANCER_ADDRESS]: 'OETH Balancer rETH Strategy',
   [OETH_MORPHO_AAVE_ADDRESS]: 'OETH Morpho Aave Strategy',
-  [OETH_NATIVE_STRATEGY_ADDRESS]: 'OETH Native Staking Strategy',
+  ...OETH_NATIVE_STRATEGY_ADDRESSES.reduce(
+    (map, address, i) => {
+      map[address] = `OETH Native Staking Strategy ${i + 1}`
+      return map
+    },
+    {} as Record<string, string>,
+  ),
   [OGV_OGN_MIGRATOR_ADDRESS]: 'OGV Migrator',
   [OGN_GOVERNANCE_ADDRESS]: 'OGN Governance',
   [AAVE_GOVERNANCE_ADDRESS]: 'Aave Governance',

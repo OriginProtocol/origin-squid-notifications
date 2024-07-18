@@ -49,7 +49,10 @@ export const OETH_ETH_AMO_METAPOOL = '0x94b17476a93b3262d87b9a326965d1e91f9c13e7
 export const OETH_FRAX_STAKING_ADDRESS = '0x3ff8654d633d4ea0fae24c52aec73b4a20d0d0e5'
 export const OETH_MORPHO_AAVE_ADDRESS = '0xc1fc9e5ec3058921ea5025d703cbe31764756319'
 export const OETH_STRATEGY_BALANCER_ADDRESS = '0x49109629ac1deb03f2e9b2fe2ac4a623e0e7dfdc'
-export const OETH_NATIVE_STRATEGY_ADDRESS = '0x34edb2ee25751ee67f68a45813b22811687c0238'
+export const OETH_NATIVE_STRATEGY_ADDRESSES = [
+  '0x34edb2ee25751ee67f68a45813b22811687c0238',
+  '0x4685db8bf2df743c861d71e6cfb5347222992076',
+]
 
 export const BALANCER_VAULT = '0xba12222222228d8ba445958a75a0704d566bf2c8'
 export const AURA_REWARDS_POOL_ADDRESS = '0xdd1fe5ad401d4777ce89959b7fa587e569bf125d'
@@ -107,7 +110,7 @@ export type TokenAddress = (typeof tokens)[TokenSymbol]
 // Strategy Helper Objects & Types
 export const strategies = {
   oeth: {
-    NativeStrategy: OETH_NATIVE_STRATEGY_ADDRESS,
+    NativeStrategy: OETH_NATIVE_STRATEGY_ADDRESSES,
     ConvexEthMetaStrategy: '0x1827f9ea98e0bf96550b2fc20f7233277fcd7e63',
     FraxETHStrategy: '0x3ff8654d633d4ea0fae24c52aec73b4a20d0d0e5',
     MorphoAaveStrategy: '0xc1fc9e5ec3058921ea5025d703cbe31764756319',
