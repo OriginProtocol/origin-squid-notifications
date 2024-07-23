@@ -261,7 +261,7 @@ createEventProcessor({
 createTraceProcessor({
   name: 'OETH Native Staking - Suicide Refund Received',
   topic: 'OETH',
-  severity: 'critical',
+  severity: 'high',
   notifyTarget: notifyTargets.Engineering,
   chainId: 1,
   markEventsNotified: false,
