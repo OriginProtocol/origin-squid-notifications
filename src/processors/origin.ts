@@ -42,6 +42,7 @@ import { createOTokenBuybackProcessor } from './templates/otoken-buyback'
 import { createOTokenVaultProcessor } from './templates/otoken-vaults'
 import { createGovernedUpgradeabilityProxyProcessor } from './templates/proxy'
 import { createTimelockProcessor } from './templates/timelock'
+import { createTraceProcessor } from './templates/trace'
 import { createTraceErrorProcessor } from './templates/trace-errors'
 
 // OTokens
@@ -253,6 +254,22 @@ createEventProcessor({
       address: [OGV_OGN_MIGRATOR_ADDRESS],
       events: pick(ogvOgnMigratorAbi.events, 'Decommissioned'),
       notifyTarget: notifyTargets.Engineering,
+    },
+  ],
+})
+
+createTraceProcessor({
+  name: 'OETH Native Staking - Suicide Refund Received',
+  topic: 'OETH',
+  severity: 'critical',
+  notifyTarget: notifyTargets.Engineering,
+  chainId: 1,
+  markEventsNotified: false,
+  abi: [strategyNativeStakingAbi],
+  traceParams: [
+    {
+      type: ['suicide'],
+      suicideRefundAddress: OETH_NATIVE_STRATEGY_ADDRESSES,
     },
   ],
 })

@@ -60,6 +60,9 @@ export const createSquidProcessor = (
         callValue: true,
         callInput: true,
         createResultAddress: true,
+        suicideRefundAddress: true,
+        suicideAddress: true,
+        suicideBalance: true,
       },
     })
 }

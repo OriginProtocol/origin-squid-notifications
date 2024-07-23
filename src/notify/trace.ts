@@ -48,8 +48,16 @@ export const notifyForTrace = async ({
     description: md.code(
       formatJson({
         'Block - Time': `${trace.block.height} - ${new Date(trace.block.timestamp).toISOString()}`,
-        From: `${from}${fromName ? ` (${fromName})` : ''}`,
-        To: `${to}${toName ? ` (${toName})` : ''}`,
+        ...(trace.type !== 'suicide'
+          ? {
+              From: `${from}${fromName ? ` (${fromName})` : ''}`,
+              To: `${to}${toName ? ` (${toName})` : ''}`,
+            }
+          : {
+              Address: trace.action.address,
+              'Refund Address': trace.action.refundAddress,
+              Balance: trace.action.balance,
+            }),
         Transaction: trace.transaction?.hash,
         Error: trace.error,
         Function: functionName,

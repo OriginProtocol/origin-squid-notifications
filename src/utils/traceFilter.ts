@@ -9,8 +9,8 @@ const lower = (hex: string) => hex.toLowerCase()
  */
 export const traceFilter = (
   filter: Pick<
-    Parameters<EvmBatchProcessor['addTrace']>[0] & { type: ['call'] },
-    'type' | 'callFrom' | 'callTo' | 'callSighash' | 'transaction' | 'range'
+    Parameters<EvmBatchProcessor['addTrace']>[0],
+    'type' | 'callFrom' | 'callTo' | 'callSighash' | 'transaction' | 'range' | 'suicideRefundAddress'
   > & { error?: boolean },
 ) => {
   const error = filter.error
@@ -19,6 +19,7 @@ export const traceFilter = (
     callFrom: filter.callFrom?.map(lower),
     callTo: filter.callTo?.map(lower),
     callSighash: filter.callSighash?.map(lower),
+    suicideRefundAddress: filter.suicideRefundAddress?.map(lower),
     transaction: filter.transaction ?? true,
     range: filter.range,
   }
@@ -29,6 +30,12 @@ export const traceFilter = (
       if (filter.callFrom && trace.type === 'call' && !filter.callFrom.includes(trace.action.from)) return false
       if (filter.callTo && trace.type === 'call' && !filter.callTo.includes(trace.action.to)) return false
       if (filter.callSighash && trace.type === 'call' && !filter.callSighash.includes(trace.action.sighash))
+        return false
+      if (
+        filter.suicideRefundAddress &&
+        trace.type === 'suicide' &&
+        !filter.suicideRefundAddress.includes(trace.action.refundAddress)
+      )
         return false
 
       if (
