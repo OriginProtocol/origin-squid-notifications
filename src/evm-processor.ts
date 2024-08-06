@@ -101,7 +101,7 @@ export const run = async ({
   const config = chainConfigs[chainId]
   if (!config) throw new Error('No chain configuration found.')
 
-  const rpcEnv = process.env.RPC_ENV ?? 'RPC_ENDPOINT'
+  const rpcEnv = config.rpcEnv
   const client = createPublicClient({ chain: config.chain, transport: http(env[rpcEnv]) })
   const latestBlock = await client.getBlock()
 
