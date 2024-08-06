@@ -1,11 +1,11 @@
 # Origin Squid Notifications - Digest
-7/11/2024, 4:54:25 PM
+8/6/2024, 12:29:31 PM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
 Loading processor: curve.ts
 Loading processor: index.ts
-Loading processor: origin.ts
+Loading processor: origin
 Loading processor: prime-eth.ts
 =========================================
 name:    Aave Governance
@@ -113,7 +113,8 @@ chainId: 1
 events: 
   - 
     address: 
-      - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy)
+      - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
+      - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
     topic0: 
       - AccountingConsensusRewards | 0x7a745a2c
       - AccountingFullyWithdrawnValidator | 0xbe704003
@@ -137,7 +138,8 @@ events:
       - Withdrawal | 0x2717ead6
   - 
     address: 
-      - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy)
+      - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
+      - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
     topic0: 
       - PTokenAdded | 0xef6485b8
       - PTokenRemoved | 0x16b7600a
@@ -270,6 +272,17 @@ events:
       - VaultBufferUpdated | 0x41ecb23a
       - YieldDistribution | 0x09516ecf
 =========================================
+name:    OETH Zapper
+topic:   OETH
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x9858e47bcbbe6fbac040519b02d7cd4b2c470c66 (OETH Zapper)
+    topic0: 
+      - Zap | 0x9d0b99c2
+    severity: low
+=========================================
 name:    Origin Rewards
 topic:   OGN
 chainId: 1
@@ -321,6 +334,20 @@ events:
       - 0x0000000000000000000000000000000000000000000000000000000000000001
       - 0x000000000000000000000000000000000000000000000000000000000000dead
 =========================================
+name:    WOETH Burn
+topic:   OETH
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xdcee70654261af21c44c093c300ed3bb97b78192
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
 name:    OUSD Burn
 topic:   OUSD
 chainId: 1
@@ -328,6 +355,20 @@ events:
   - 
     address: 
       - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD Token)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    WOUSD Burn
+topic:   OUSD
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xd2af830e8cbdfed6cc11bab697bb25496ed6fa62
     topic0: 
       - Transfer | 0xddf252ad
     topic2: 
@@ -388,11 +429,13 @@ events:
       - 0x1d3fbd4d129ddd2372ea85c5fa00b2682081c9ec (OGN Governance)
       - 0x95c347d6214614a780847b8aaf4f96eb84f4da6d (OGV Migrator)
       - 0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3 (OETH)
+      - 0xdcee70654261af21c44c093c300ed3bb97b78192
       - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
       - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
       - 0x9858e47bcbbe6fbac040519b02d7cd4b2c470c66 (OETH Zapper)
       - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
-      - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy)
+      - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
+      - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
       - 0x1827f9ea98e0bf96550b2fc20f7233277fcd7e63 (OETH/ETH Curve AMO Strategy)
       - 0x3ff8654d633d4ea0fae24c52aec73b4a20d0d0e5 (FraxETH Strategy)
       - 0xc1fc9e5ec3058921ea5025d703cbe31764756319 (OETH Morpho Aave Strategy)
@@ -509,11 +552,13 @@ traces:
           - call
         callFrom: 
           - 0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3 (OETH)
+          - 0xdcee70654261af21c44c093c300ed3bb97b78192
           - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
           - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
           - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
           - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH BuyBack)
-          - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy)
+          - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
+          - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
           - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
         error:    true
       - 
@@ -521,11 +566,13 @@ traces:
           - call
         callTo: 
           - 0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3 (OETH)
+          - 0xdcee70654261af21c44c093c300ed3bb97b78192
           - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
           - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
           - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
           - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH BuyBack)
-          - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy)
+          - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
+          - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
           - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
         error:  true
     topic:        OETH
@@ -588,6 +635,160 @@ events:
       - 0x95c347d6214614a780847b8aaf4f96eb84f4da6d (OGV Migrator)
     topic0: 
       - Decommissioned | 0x4bd04f34
+    severity:     high
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
+name:    OETH Native Staking - Suicide Refund Received
+topic:   OETH
+chainId: 1
+traces: 
+  - 
+    traceParams: 
+      - 
+        type: 
+          - suicide
+        suicideRefundAddress: 
+          - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
+          - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
+    topic:        OETH
+    severity:     high
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
+name:    Super OETH Base Contract
+topic:   OETH
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (Super OETH Base)
+    topic0: 
+      - AccountRebasingDisabled | 0x201ace89
+      - AccountRebasingEnabled | 0x19a249fa
+      - TotalSupplyUpdatedHighres | 0x41645eb8
+=========================================
+name:    Super OETH Base Vault
+topic:   OETH
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
+    topic0: 
+      - CapitalPaused | 0x71f0e5b6
+      - CapitalUnpaused | 0x891ebab1
+      - RebasePaused | 0x8cff26a5
+      - RebaseUnpaused | 0xbc044409
+      - AssetSupported | 0x4f1ac485
+      - PriceProviderUpdated | 0xb266add5
+      - TrusteeAddressChanged | 0x1e4af5ac
+    severity: high
+  - 
+    address: 
+      - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
+    topic0: 
+      - AllocateThresholdUpdated | 0x2ec5fb5a
+      - AssetAllocated | 0x41b99659
+      - AssetDefaultStrategyUpdated | 0xba58ce12
+      - MaxSupplyDiffChanged | 0x95201f9c
+      - Mint | 0x0f6798a5
+      - NetOusdMintForStrategyThresholdChanged | 0xc29d6fed
+      - OusdMetaStrategyUpdated | 0xa12850fb
+      - RebaseThresholdUpdated | 0x39367850
+      - Redeem | 0x222838db
+      - RedeemFeeUpdated | 0xd6c7508d
+      - StrategistUpdated | 0x869e0abd
+      - StrategyApproved | 0x960dd94c
+      - StrategyRemoved | 0x09a1db4b
+      - SwapAllowedUndervalueChanged | 0xf12c0025
+      - SwapSlippageChanged | 0x8d22e9d2
+      - Swapped | 0xa078c419
+      - SwapperChanged | 0x7d771931
+      - TrusteeFeeBpsChanged | 0x56287a45
+      - VaultBufferUpdated | 0x41ecb23a
+      - YieldDistribution | 0x09516ecf
+=========================================
+name:    Super OETH Base Burn
+topic:   OETH
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (Super OETH Base)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    Wrapped Super OETH Base Burn
+topic:   OETH
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (Wrapped Super OETH Base)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    Origin Proxy Contracts Base
+topic:   OGN
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (Super OETH Base)
+      - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
+      - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (Wrapped Super OETH Base)
+      - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
+    topic0: 
+      - GovernorshipTransferred | 0xc7c0c772
+      - PendingGovernorshipTransfer | 0xa39cc5eb
+      - Upgraded | 0xbc7cd75a
+    severity:     high
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
+name:    Super OETH Base Error Trace
+topic:   OETH
+chainId: 8453
+traces: 
+  - 
+    traceParams: 
+      - 
+        type: 
+          - call
+        callFrom: 
+          - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (Super OETH Base)
+          - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (Wrapped Super OETH Base)
+          - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
+          - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
+        error:    true
+      - 
+        type: 
+          - call
+        callTo: 
+          - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (Super OETH Base)
+          - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (Wrapped Super OETH Base)
+          - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
+          - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
+        error:  true
+    topic:        OETH
     severity:     high
     notifyTarget: 
       email: 
