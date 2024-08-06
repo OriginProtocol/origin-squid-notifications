@@ -20,9 +20,9 @@ deploy:
     - DISCORD_WEBHOOK_URL_PRIME_ETH
     - ONCALL_WEBHOOK_URL
   processor:
-    - name: processor
+    - name: mainnet-processor
       cmd: [ "sqd", "process:prod" ]
-    - name: processor:base
+    - name: base-processor
       cmd: [ "sqd", "process:base:prod" ]
 scale:
   dedicated: true
