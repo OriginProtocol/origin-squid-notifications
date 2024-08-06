@@ -114,7 +114,8 @@ export const run = async ({
   processors.forEach((p) => p.setup?.(processor, config.chain))
   postProcessors?.forEach((p) => p.setup?.(processor, config.chain))
 
-  processor.run(new TypeormDatabase({ supportHotBlocks: true }), async (_ctx) => {
+  const stateSchema = chainId === 1 ? undefined : `chain-${chainId}`
+  processor.run(new TypeormDatabase({ supportHotBlocks: true, stateSchema }), async (_ctx) => {
     const ctx = _ctx as Context
     try {
       ctx.chain = config.chain
