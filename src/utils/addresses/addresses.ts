@@ -161,11 +161,19 @@ export const ousdStrategyArray = Object.values(strategies.ousd)
 
 export const oeth = {
   address: OETH_ADDRESS,
+  wrapped: WOETH_ADDRESS,
   vault: OETH_VAULT_ADDRESS,
   dripper: OETH_DRIPPER_ADDRESS,
   zapper: OETH_ZAPPER_ADDRESS,
   harvester: OETH_HARVESTER_ADDRESS,
   vaultTokens: OETH_VAULT_ERC20_ADDRESSES,
+}
+
+export const oeth_base = {
+  address: SUPER_OETH_BASE_ADDRESS,
+  vault: SUPER_OETH_VAULT_BASE_ADDRESS,
+  wrapped: SUPER_WOETH_BASE_ADDRESS,
+  oracleRouter: SUPER_OETH_BASE_ORACLE_ROUTER_ADDRESS,
 }
 
 export const ousd = {
@@ -222,4 +230,5 @@ export const addresses = {
       .flat()
       .map((a) => a.toLowerCase()),
   ),
+  originBase: uniq([...Object.values(oeth_base)]),
 }

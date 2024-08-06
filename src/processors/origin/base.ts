@@ -1,11 +1,17 @@
 import { base } from 'viem/chains'
 
 import { notifyTargets } from '../../notify/const'
-import { SUPER_OETH_BASE_ADDRESS, SUPER_OETH_VAULT_BASE_ADDRESS, SUPER_WOETH_BASE_ADDRESS } from '../../utils/addresses'
+import {
+  SUPER_OETH_BASE_ADDRESS,
+  SUPER_OETH_VAULT_BASE_ADDRESS,
+  SUPER_WOETH_BASE_ADDRESS,
+  addresses,
+} from '../../utils/addresses'
 import { oethBaseABIs } from '../../utils/addresses/address-abis'
 import { createBurnProcessor } from '../templates/burn'
 import { createOTokenProcessor } from '../templates/otoken'
 import { createOTokenVaultProcessor } from '../templates/otoken-vaults'
+import { createGovernedUpgradeabilityProxyProcessor } from '../templates/proxy'
 import { createTraceErrorProcessor } from '../templates/trace-errors'
 
 // OTokens
@@ -36,6 +42,16 @@ createBurnProcessor({
   chainId: base.id,
   address: [SUPER_WOETH_BASE_ADDRESS],
   topic: 'OETH',
+})
+
+// Governance
+createGovernedUpgradeabilityProxyProcessor({
+  name: 'Origin Proxy Contracts Base',
+  chainId: 1,
+  address: addresses.originBase,
+  topic: 'OGN',
+  severity: 'high',
+  notifyTarget: notifyTargets.Engineering,
 })
 
 // Error Tracing
