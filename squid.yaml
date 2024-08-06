@@ -8,9 +8,11 @@ deploy:
     postgres:
     rpc:
       - arbitrum-one.http
+      - base.http
   secrets:
     - RPC_ENDPOINT
     - RPC_ENDPOINT_ARBITRUM
+    - RPC_ENDPOINT_BASE
     - DISCORD_WEBHOOK_URL_OGN
     - DISCORD_WEBHOOK_URL_XOGN
     - DISCORD_WEBHOOK_URL_OETH
@@ -18,8 +20,10 @@ deploy:
     - DISCORD_WEBHOOK_URL_PRIME_ETH
     - ONCALL_WEBHOOK_URL
   processor:
-    name: processor
-    cmd: [ "sqd", "process:prod" ]
+    - name: processor
+      cmd: [ "sqd", "process:prod" ]
+    - name: processor:base
+      cmd: [ "sqd", "process:base:prod" ]
 scale:
   dedicated: true
   addons:

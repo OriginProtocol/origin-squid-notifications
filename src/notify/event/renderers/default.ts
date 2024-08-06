@@ -8,11 +8,11 @@ import { registerEventRenderer } from '../event'
 
 export const defaultEventRenderer = registerEventRenderer(
   'default',
-  async ({ topic, severity = 'low', name, eventName, event, log, notifyTarget }) => {
+  async ({ ctx, topic, severity = 'low', name, eventName, event, log, notifyTarget }) => {
     const data = event.decode(log)
     let addressName = getAddressesPyName(log.address)
     let links: Record<string, string> = {
-      tx: transactionLink(log.transactionHash),
+      tx: transactionLink(log.transactionHash, ctx.chain),
     }
     if ('proposalId' in data && log.address === OGN_GOVERNANCE_ADDRESS) {
       links.proposal = `https://originprotocol.eth.limo/#/more/1:${OGN_GOVERNANCE_ADDRESS}:${data.proposalId}`

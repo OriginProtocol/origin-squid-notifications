@@ -47,6 +47,7 @@ export const createTraceProcessor = ({
               relatedEvents.forEach((l) => ctx.markEventHandled(l))
             }
             const input: Parameters<typeof notifyForTrace>[0] = {
+              ctx,
               name,
               trace,
               topic,

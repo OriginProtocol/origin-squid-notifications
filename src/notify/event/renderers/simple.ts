@@ -4,9 +4,9 @@ import { registerEventRenderer } from '../event'
 
 export const simpleEventRenderer = registerEventRenderer(
   'simple',
-  async ({ topic, severity = 'low', name, eventName, log, notifyTarget }) => {
+  async ({ ctx, topic, severity = 'low', name, eventName, log, notifyTarget }) => {
     let links: Record<string, string> = {
-      tx: transactionLink(log.transactionHash),
+      tx: transactionLink(log.transactionHash, ctx.chain),
     }
     return notifyDiscord({
       id: log.id,

@@ -5,7 +5,7 @@ import {
   OGN_ADDRESS,
   OGV_ADDRESS,
   OUSD_ADDRESS,
-  PRIMEETH_ADDRESS,
+  PRIME_ETH_ADDRESS,
   XOGN_ADDRESS,
 } from '../utils/addresses'
 import { getAddressesPyName } from '../utils/addresses/names'
@@ -56,7 +56,7 @@ export const notifyTargets = {
 } as const
 
 export const assetIcons: Record<string, `<:${string}>`> = {
-  [PRIMEETH_ADDRESS]: '<:prime_staked_ETH:1202845677332463716>',
+  [PRIME_ETH_ADDRESS]: '<:prime_staked_ETH:1202845677332463716>',
   [OETH_ADDRESS]: '<:origin_ether_oeth:1091365232770814033>',
   [OUSD_ADDRESS]: '<:origin_dollar_ousd:1052865068511014973>',
   [OGV_ADDRESS]: '<:origin_defi_governance_ogv:1052865020276514867>',

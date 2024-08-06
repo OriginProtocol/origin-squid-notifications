@@ -1,7 +1,7 @@
 import * as lrtDepositPoolAbi from '../abi/lrt-deposit-pool'
 import { discordIconOrName } from '../notify/const'
 import { renderDiscordEmbed } from '../notify/event/renderers/utils'
-import { PRIMEETH_ADDRESS, PRIMEETH_LRT_DEPOSIT_POOL } from '../utils/addresses'
+import { PRIME_ETH_ADDRESS, PRIME_ETH_LRT_DEPOSIT_POOL } from '../utils/addresses'
 import { formatAmount } from '../utils/formatAmount'
 import { transactionLink } from '../utils/links'
 import { createEventProcessor } from './templates/event'
@@ -12,10 +12,10 @@ createEventProcessor({
   chainId: 1,
   tracks: [
     {
-      address: [PRIMEETH_LRT_DEPOSIT_POOL],
+      address: [PRIME_ETH_LRT_DEPOSIT_POOL],
       events: lrtDepositPoolAbi.events,
       renderers: {
-        AssetDeposit: ({ log, topic, severity }) => {
+        AssetDeposit: ({ ctx, log, topic, severity }) => {
           const { depositor, depositAmount, primeEthMintAmount, asset, referralId } =
             lrtDepositPoolAbi.events.AssetDeposit.decode(log)
           renderDiscordEmbed({
@@ -23,7 +23,7 @@ createEventProcessor({
             topic,
             severity,
             title: 'Asset Deposit',
-            titleUrl: transactionLink(log.transactionHash),
+            titleUrl: transactionLink(log.transactionHash, ctx.chain),
             description: `[${depositor}](https://etherscan.io/address/${depositor})`,
             fields: [
               {
@@ -33,7 +33,7 @@ createEventProcessor({
               },
               {
                 name: formatAmount(primeEthMintAmount),
-                value: `${discordIconOrName(PRIMEETH_ADDRESS)} Received`,
+                value: `${discordIconOrName(PRIME_ETH_ADDRESS)} Received`,
                 inline: true,
               },
               {
@@ -44,7 +44,7 @@ createEventProcessor({
             ],
           })
         },
-        WithdrawalRequested: ({ log, topic, severity }) => {
+        WithdrawalRequested: ({ ctx, log, topic, severity }) => {
           severity = severity ?? 'low'
           const { withdrawer, assetAmount, primeETHAmount, asset } =
             lrtDepositPoolAbi.events.WithdrawalRequested.decode(log)
@@ -53,12 +53,12 @@ createEventProcessor({
             topic,
             severity,
             title: 'Withdrawal Requested',
-            titleUrl: transactionLink(log.transactionHash),
+            titleUrl: transactionLink(log.transactionHash, ctx.chain),
             description: `[${withdrawer}](https://etherscan.io/address/${withdrawer})`,
             fields: [
               {
                 name: formatAmount(primeETHAmount),
-                value: `${discordIconOrName(PRIMEETH_ADDRESS)} Burn`,
+                value: `${discordIconOrName(PRIME_ETH_ADDRESS)} Burn`,
                 inline: true,
               },
               {
@@ -69,7 +69,7 @@ createEventProcessor({
             ],
           })
         },
-        WithdrawalClaimed: ({ log, topic, severity }) => {
+        WithdrawalClaimed: ({ ctx, log, topic, severity }) => {
           severity = severity ?? 'low'
           const { withdrawer, asset, assets } = lrtDepositPoolAbi.events.WithdrawalClaimed.decode(log)
           renderDiscordEmbed({
@@ -77,7 +77,7 @@ createEventProcessor({
             topic,
             severity,
             title: 'Withdrawal Claimed',
-            titleUrl: transactionLink(log.transactionHash),
+            titleUrl: transactionLink(log.transactionHash, ctx.chain),
             description: `[${withdrawer}](https://etherscan.io/address/${withdrawer})`,
             fields: [
               {

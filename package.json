@@ -8,7 +8,9 @@
     "generate-abis": "sqd typegen",
     "generate-schema": "sqd codegen && sqd migration:generate && git add db/migrations/*",
     "process": "sqd setup && sqd process",
+    "process:base": "sqd setup && sqd process:base",
     "resume": "sqd process",
+    "resume:base": "sqd process:base",
     "digest": "ts-node src/digest > digest.log"
   },
   "dependencies": {

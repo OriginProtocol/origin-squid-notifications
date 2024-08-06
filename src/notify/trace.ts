@@ -1,4 +1,4 @@
-import { Trace } from '../types'
+import { Context, Trace } from '../types'
 import { getAddressesPyName } from '../utils/addresses/names'
 import { formatJson } from '../utils/formatJson'
 import { transactionLink } from '../utils/links'
@@ -10,6 +10,7 @@ import { notifyOncall } from './oncall'
 const uniqueTracesFired = new Set<string>()
 
 export const notifyForTrace = async ({
+  ctx,
   topic,
   severity = 'low',
   name,
@@ -18,6 +19,7 @@ export const notifyForTrace = async ({
   trace,
   notifyTarget,
 }: {
+  ctx: Context
   topic: Topic
   severity?: Severity
   name?: string
@@ -66,7 +68,7 @@ export const notifyForTrace = async ({
     ),
     links: trace.transaction?.hash
       ? {
-          tx: transactionLink(trace.transaction?.hash),
+          tx: transactionLink(trace.transaction?.hash, ctx.chain),
         }
       : undefined,
     mentions: notifyTarget?.discordMentions,

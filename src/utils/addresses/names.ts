@@ -12,7 +12,7 @@ import {
   OGN_GOVERNANCE_ADDRESS,
   OGV_OGN_MIGRATOR_ADDRESS,
   OUSD_HARVESTER_ADDRESS,
-  PRIMEETH_LRT_DEPOSIT_POOL,
+  PRIME_ETH_LRT_DEPOSIT_POOL,
   RETH_ADDRESS,
   STETH_ADDRESS,
   USDC_ADDRESS,
@@ -203,7 +203,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [OETH_ETH_AMO_METAPOOL]: 'OETH Curve AMO Metapool',
 
   // primeETH Contracts
-  [PRIMEETH_LRT_DEPOSIT_POOL]: 'PrimeETH Deposit Pool',
+  [PRIME_ETH_LRT_DEPOSIT_POOL]: 'PrimeETH Deposit Pool',
   '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee': 'ETH',
 }
 

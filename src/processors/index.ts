@@ -42,7 +42,7 @@ export const load = async () => {
     if (processor === 'examples') continue
     if (processor === 'templates') continue
     if (processor === 'index.js') continue
-    if (!processor.endsWith('.js') && !processor.endsWith('.ts')) continue
+    if (!processor.endsWith('.js') && !processor.endsWith('.ts') && processor.includes('.')) continue
     console.log(`Loading processor: ${processor}`)
     await import(`./${processor}`)
   }

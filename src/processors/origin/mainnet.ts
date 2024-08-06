@@ -1,14 +1,14 @@
 import { omit, pick } from 'lodash'
 
-import * as strategyCurveMetapoolAbi from '../abi/curve-metapool'
-import * as governedUpgradeabilityProxy from '../abi/governed-upgradeability-proxy'
-import * as oethZapperAbi from '../abi/oeth-zapper'
-import * as ogvOgnMigratorAbi from '../abi/ogv-ogn-migrator'
-import * as strategyMorphoAaveAbi from '../abi/strategy-morpho-aave'
-import * as strategyNativeStakingAbi from '../abi/strategy-native-staking'
-import { discordIconOrName, notifyTargets } from '../notify/const'
-import { simpleEventRenderer } from '../notify/event/renderers/simple'
-import { renderDiscordEmbed, renderEventDiscordEmbed } from '../notify/event/renderers/utils'
+import * as strategyCurveMetapoolAbi from '../../abi/curve-metapool'
+import * as governedUpgradeabilityProxy from '../../abi/governed-upgradeability-proxy'
+import * as oethZapperAbi from '../../abi/oeth-zapper'
+import * as ogvOgnMigratorAbi from '../../abi/ogv-ogn-migrator'
+import * as strategyMorphoAaveAbi from '../../abi/strategy-morpho-aave'
+import * as strategyNativeStakingAbi from '../../abi/strategy-native-staking'
+import { discordIconOrName, notifyTargets } from '../../notify/const'
+import { simpleEventRenderer } from '../../notify/event/renderers/simple'
+import { renderDiscordEmbed, renderEventDiscordEmbed } from '../../notify/event/renderers/utils'
 import {
   OETH_ADDRESS,
   OETH_BUYBACK,
@@ -24,26 +24,27 @@ import {
   OUSD_ADDRESS,
   OUSD_BUYBACK,
   OUSD_VAULT_ADDRESS,
+  WOETH_ADDRESS,
   XOGN_ADDRESS,
   addresses,
   strategies,
-} from '../utils/addresses'
-import { oethABIs, ognABIs, ousdABIs } from '../utils/addresses/address-abis'
-import { GOVERNANCE_TIMELOCK } from '../utils/addresses/ousd-analytics'
-import { formatAmount } from '../utils/formatAmount'
-import { transactionLink } from '../utils/links'
-import { createBurnProcessor } from './templates/burn'
-import { createEventProcessor } from './templates/event'
-import { createExponentialStakingProcessor } from './templates/exponential-staking'
-import { createFixedRateRewardsSourceProcessor } from './templates/fixed-rate-rewards-source'
-import { createGovernanceProcessor } from './templates/governance'
-import { createOTokenProcessor } from './templates/otoken'
-import { createOTokenBuybackProcessor } from './templates/otoken-buyback'
-import { createOTokenVaultProcessor } from './templates/otoken-vaults'
-import { createGovernedUpgradeabilityProxyProcessor } from './templates/proxy'
-import { createTimelockProcessor } from './templates/timelock'
-import { createTraceProcessor } from './templates/trace'
-import { createTraceErrorProcessor } from './templates/trace-errors'
+} from '../../utils/addresses'
+import { oethABIs, ognABIs, ousdABIs } from '../../utils/addresses/address-abis'
+import { GOVERNANCE_TIMELOCK, WOUSD } from '../../utils/addresses/ousd-analytics'
+import { formatAmount } from '../../utils/formatAmount'
+import { transactionLink } from '../../utils/links'
+import { createBurnProcessor } from '../templates/burn'
+import { createEventProcessor } from '../templates/event'
+import { createExponentialStakingProcessor } from '../templates/exponential-staking'
+import { createFixedRateRewardsSourceProcessor } from '../templates/fixed-rate-rewards-source'
+import { createGovernanceProcessor } from '../templates/governance'
+import { createOTokenProcessor } from '../templates/otoken'
+import { createOTokenBuybackProcessor } from '../templates/otoken-buyback'
+import { createOTokenVaultProcessor } from '../templates/otoken-vaults'
+import { createGovernedUpgradeabilityProxyProcessor } from '../templates/proxy'
+import { createTimelockProcessor } from '../templates/timelock'
+import { createTraceProcessor } from '../templates/trace'
+import { createTraceErrorProcessor } from '../templates/trace-errors'
 
 // OTokens
 createOTokenProcessor({ name: 'OETH Contract', chainId: 1, address: [OETH_ADDRESS], topic: 'OETH' })
@@ -164,7 +165,9 @@ createFixedRateRewardsSourceProcessor({
 // Burns
 createBurnProcessor({ name: 'OGN Burn', chainId: 1, address: [OGN_ADDRESS], topic: 'OGN' })
 createBurnProcessor({ name: 'OETH Burn', chainId: 1, address: [OETH_ADDRESS], topic: 'OETH' })
+createBurnProcessor({ name: 'WOETH Burn', chainId: 1, address: [WOETH_ADDRESS], topic: 'OETH' })
 createBurnProcessor({ name: 'OUSD Burn', chainId: 1, address: [OUSD_ADDRESS], topic: 'OUSD' })
+createBurnProcessor({ name: 'WOUSD Burn', chainId: 1, address: [WOUSD], topic: 'OUSD' })
 
 // Governance Related
 createGovernanceProcessor({ name: 'Origin Governance', chainId: 1, address: [OGN_GOVERNANCE_ADDRESS], topic: 'OGN' })
@@ -232,7 +235,7 @@ createEventProcessor({
             topic: params.topic,
             severity: params.severity,
             title: 'OGV Migration - TokenExchanged',
-            titleUrl: transactionLink(params.log.transactionHash),
+            titleUrl: transactionLink(params.log.transactionHash, params.ctx.chain),
             fields: [
               {
                 name: formatAmount(data.ogvAmountIn),

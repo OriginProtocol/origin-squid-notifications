@@ -28,7 +28,7 @@ export const createOTokenProcessor = (params: { address: string[] } & Omit<Event
               topic: p.topic,
               severity: p.severity,
               title: `${params.name} - TotalSupplyUpdatedHighres`,
-              titleUrl: transactionLink(p.log.transactionHash),
+              titleUrl: transactionLink(p.log.transactionHash, p.ctx.chain),
               fields: [
                 { name: formatAmount(previousSupply), value: 'Previous', inline: true },
                 { name: formatAmount(data.totalSupply), value: 'Current', inline: true },

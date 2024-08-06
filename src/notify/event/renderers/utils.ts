@@ -17,7 +17,7 @@ export const renderEventDiscordEmbed = (
     topic: eventRendererParams.topic,
     severity: eventRendererParams.severity,
     title: `${eventRendererParams.name} - ${eventRendererParams.eventName}`,
-    titleUrl: transactionLink(eventRendererParams.log.transactionHash),
+    titleUrl: transactionLink(eventRendererParams.log.transactionHash, eventRendererParams.ctx.chain),
     ...params,
   })
 

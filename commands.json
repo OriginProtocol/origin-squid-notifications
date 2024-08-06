@@ -124,6 +124,25 @@
       ],
       "hidden": true
     },
+    "process:base": {
+      "description": "Load .env and start the squid base processor",
+      "deps": [
+        "build"
+      ],
+      "cmd": [
+        "node",
+        "--require=dotenv/config",
+        "lib/main-base.js"
+      ]
+    },
+    "process:base:prod": {
+      "description": "Start the squid base processor",
+      "cmd": [
+        "node",
+        "lib/main-base.js"
+      ],
+      "hidden": true
+    },
     "check-updates": {
       "cmd": [
         "npx",

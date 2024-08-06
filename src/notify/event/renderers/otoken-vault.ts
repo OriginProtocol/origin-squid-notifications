@@ -28,7 +28,7 @@ registerEventRenderer(vaultAbi.events.Mint.topic, async (params) => {
     topic: params.topic,
     severity: params.severity,
     title: `${vault.topic} Minted`,
-    titleUrl: transactionLink(log.transactionHash),
+    titleUrl: transactionLink(log.transactionHash, params.ctx.chain),
     description: `Wallet: [${getAddressesPyName(data._addr) ?? data._addr}](https://etherscan.io/address/${
       data._addr
     })`,
@@ -55,7 +55,7 @@ registerEventRenderer(vaultAbi.events.YieldDistribution.topic, async (params) =>
     topic: params.topic,
     severity: params.severity,
     title: `${vault.topic} YieldDistribution`,
-    titleUrl: transactionLink(log.transactionHash),
+    titleUrl: transactionLink(log.transactionHash, params.ctx.chain),
     description: `Wallet: [${getAddressesPyName(data._to) ?? data._to}](https://etherscan.io/address/${data._to})`,
     fields: [
       {
@@ -86,7 +86,7 @@ registerEventRenderer(vaultAbi.events.Redeem.topic, async (params) => {
     topic: params.topic,
     severity: params.severity,
     title: `${vault.topic} Redeem`,
-    titleUrl: transactionLink(log.transactionHash),
+    titleUrl: transactionLink(log.transactionHash, params.ctx.chain),
     description: `Wallet: [${getAddressesPyName(data._addr) ?? data._addr}](https://etherscan.io/address/${
       data._addr
     })`,
