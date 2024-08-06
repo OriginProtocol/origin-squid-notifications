@@ -24,6 +24,8 @@ deploy:
       cmd: [ "sqd", "process:prod" ]
     - name: base-processor
       cmd: [ "sqd", "process:base:prod" ]
+      env:
+        RPC_ENV_BASE: RPC_BASE_HTTP
 scale:
   dedicated: true
   addons:
