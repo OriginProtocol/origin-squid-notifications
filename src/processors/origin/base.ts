@@ -47,7 +47,7 @@ createBurnProcessor({
 // Governance
 createGovernedUpgradeabilityProxyProcessor({
   name: 'Origin Proxy Contracts Base',
-  chainId: 1,
+  chainId: base.id,
   address: addresses.originBase,
   topic: 'OGN',
   severity: 'high',
