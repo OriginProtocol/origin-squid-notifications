@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-8/6/2024, 12:29:31 PM
+8/12/2024, 10:43:17 AM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -213,6 +213,8 @@ events:
       - AllocateThresholdUpdated | 0x2ec5fb5a
       - AssetAllocated | 0x41b99659
       - AssetDefaultStrategyUpdated | 0xba58ce12
+      - AssetRemoved | 0x37803e21
+      - DripperChanged | 0xaf2910d9
       - MaxSupplyDiffChanged | 0x95201f9c
       - Mint | 0x0f6798a5
       - NetOusdMintForStrategyThresholdChanged | 0xc29d6fed
@@ -221,14 +223,19 @@ events:
       - Redeem | 0x222838db
       - RedeemFeeUpdated | 0xd6c7508d
       - StrategistUpdated | 0x869e0abd
+      - StrategyAddedToMintWhitelist | 0x47c8c96a
       - StrategyApproved | 0x960dd94c
       - StrategyRemoved | 0x09a1db4b
+      - StrategyRemovedFromMintWhitelist | 0x0ec40967
       - SwapAllowedUndervalueChanged | 0xf12c0025
       - SwapSlippageChanged | 0x8d22e9d2
       - Swapped | 0xa078c419
       - SwapperChanged | 0x7d771931
       - TrusteeFeeBpsChanged | 0x56287a45
       - VaultBufferUpdated | 0x41ecb23a
+      - WithdrawalClaimable | 0xee79a0c4
+      - WithdrawalClaimed | 0x2d43eb17
+      - WithdrawalRequested | 0x38e3d972
       - YieldDistribution | 0x09516ecf
 =========================================
 name:    OUSD Vault
@@ -254,6 +261,8 @@ events:
       - AllocateThresholdUpdated | 0x2ec5fb5a
       - AssetAllocated | 0x41b99659
       - AssetDefaultStrategyUpdated | 0xba58ce12
+      - AssetRemoved | 0x37803e21
+      - DripperChanged | 0xaf2910d9
       - MaxSupplyDiffChanged | 0x95201f9c
       - Mint | 0x0f6798a5
       - NetOusdMintForStrategyThresholdChanged | 0xc29d6fed
@@ -262,14 +271,19 @@ events:
       - Redeem | 0x222838db
       - RedeemFeeUpdated | 0xd6c7508d
       - StrategistUpdated | 0x869e0abd
+      - StrategyAddedToMintWhitelist | 0x47c8c96a
       - StrategyApproved | 0x960dd94c
       - StrategyRemoved | 0x09a1db4b
+      - StrategyRemovedFromMintWhitelist | 0x0ec40967
       - SwapAllowedUndervalueChanged | 0xf12c0025
       - SwapSlippageChanged | 0x8d22e9d2
       - Swapped | 0xa078c419
       - SwapperChanged | 0x7d771931
       - TrusteeFeeBpsChanged | 0x56287a45
       - VaultBufferUpdated | 0x41ecb23a
+      - WithdrawalClaimable | 0xee79a0c4
+      - WithdrawalClaimed | 0x2d43eb17
+      - WithdrawalRequested | 0x38e3d972
       - YieldDistribution | 0x09516ecf
 =========================================
 name:    OETH Zapper
@@ -697,6 +711,8 @@ events:
       - AllocateThresholdUpdated | 0x2ec5fb5a
       - AssetAllocated | 0x41b99659
       - AssetDefaultStrategyUpdated | 0xba58ce12
+      - AssetRemoved | 0x37803e21
+      - DripperChanged | 0xaf2910d9
       - MaxSupplyDiffChanged | 0x95201f9c
       - Mint | 0x0f6798a5
       - NetOusdMintForStrategyThresholdChanged | 0xc29d6fed
@@ -705,14 +721,19 @@ events:
       - Redeem | 0x222838db
       - RedeemFeeUpdated | 0xd6c7508d
       - StrategistUpdated | 0x869e0abd
+      - StrategyAddedToMintWhitelist | 0x47c8c96a
       - StrategyApproved | 0x960dd94c
       - StrategyRemoved | 0x09a1db4b
+      - StrategyRemovedFromMintWhitelist | 0x0ec40967
       - SwapAllowedUndervalueChanged | 0xf12c0025
       - SwapSlippageChanged | 0x8d22e9d2
       - Swapped | 0xa078c419
       - SwapperChanged | 0x7d771931
       - TrusteeFeeBpsChanged | 0x56287a45
       - VaultBufferUpdated | 0x41ecb23a
+      - WithdrawalClaimable | 0xee79a0c4
+      - WithdrawalClaimed | 0x2d43eb17
+      - WithdrawalRequested | 0x38e3d972
       - YieldDistribution | 0x09516ecf
 =========================================
 name:    Super OETH Base Burn
@@ -745,7 +766,7 @@ events:
 =========================================
 name:    Origin Proxy Contracts Base
 topic:   OGN
-chainId: 1
+chainId: 8453
 events: 
   - 
     address: 
