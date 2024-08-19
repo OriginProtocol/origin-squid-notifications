@@ -1,5 +1,8 @@
+import { pick } from 'lodash'
 import { base } from 'viem/chains'
 
+import * as aeroCLPoolABIs from '../../abi/aerodrome-cl-pool'
+import * as aeroPoolABIs from '../../abi/aerodrome-pool'
 import * as multisigABIs from '../../abi/multisig'
 import { notifyTargets } from '../../notify/const'
 import { oethBaseABIs } from '../../utils/addresses/address-abis'
@@ -75,4 +78,34 @@ createTraceErrorProcessor({
   topic: 'superOETHb',
   severity: 'high',
   notifyTarget: notifyTargets.Engineering,
+})
+
+// Aerodrome vAMM Pools
+createEventProcessor({
+  name: 'Aerodrome vAMM Pools',
+  chainId: base.id,
+  topic: 'superOETHb',
+  tracks: [
+    {
+      severity: 'low',
+      events: pick(aeroPoolABIs.events, ['Mint', 'Burn']),
+      address: [
+        baseAddresses.aerodrome['vAMM-WETH/OGN'].pool.address,
+        baseAddresses.aerodrome['vAMM-OGN/superOETHb'].pool.address,
+      ],
+    },
+  ],
+})
+// Aerodrome CL Pools
+createEventProcessor({
+  name: 'Aerodrome CL Pools',
+  chainId: base.id,
+  topic: 'superOETHb',
+  tracks: [
+    {
+      severity: 'low',
+      events: pick(aeroCLPoolABIs.events, ['Mint', 'Burn']),
+      address: [baseAddresses.aerodrome['CL1-WETH/superOETHb'].pool.address],
+    },
+  ],
 })

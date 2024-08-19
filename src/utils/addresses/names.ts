@@ -217,6 +217,11 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [SUPER_OETH_BASE_ORACLE_ROUTER_ADDRESS]: 'Super OETH Base Price Oracle',
   [baseAddresses.multisig['5/8']]: 'Base Multisig 5/8',
 
+  // Aerodrome Pools
+  [baseAddresses.aerodrome['vAMM-WETH/OGN'].pool.address]: 'Aerodrome: vAMM-WETH/OGN',
+  [baseAddresses.aerodrome['vAMM-OGN/superOETHb'].pool.address]: 'Aerodrome: vAMM-OGN/superOETHb',
+  [baseAddresses.aerodrome['CL1-WETH/superOETHb'].pool.address]: 'Aerodrome: CL1-WETH/superOETHb',
+
   // primeETH Contracts
   [PRIME_ETH_LRT_DEPOSIT_POOL]: 'PrimeETH Deposit Pool',
   '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee': 'ETH',
