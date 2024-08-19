@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-8/12/2024, 10:43:17 AM
+8/19/2024, 4:54:03 PM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -478,6 +478,39 @@ events:
       discordMentions: 
         - <@&997340701551513762>
 =========================================
+name:    Mainnet Multisig
+topic:   OGN
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
+      - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/9)
+    topic0: 
+      - AddedOwner | 0x9465fa0c
+      - ApproveHash | 0xf2a0eb15
+      - ChangedFallbackHandler | 0x5ac6c46c
+      - ChangedGuard | 0x11511169
+      - ChangedThreshold | 0x610f7ff2
+      - DisabledModule | 0xaab4fa2b
+      - EnabledModule | 0xecdf3a3e
+      - ExecutionFailure | 0x23428b18
+      - ExecutionFromModuleFailure | 0xacd2c870
+      - ExecutionFromModuleSuccess | 0x6895c136
+      - ExecutionSuccess | 0x442e715f
+      - RemovedOwner | 0xf8d49fc5
+      - SafeModuleTransaction | 0xb648d364
+      - SafeMultiSigTransaction | 0x66753cd2
+      - SafeReceived | 0x3d0ce9bf
+      - SafeSetup | 0x141df868
+      - SignMsg | 0xe7f46750
+    severity:     medium
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
 name:    OETH Buyback
 topic:   OETH
 chainId: 1
@@ -571,6 +604,8 @@ traces:
           - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
           - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
           - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH BuyBack)
+          - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
+          - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/9)
           - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
           - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
           - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
@@ -585,6 +620,8 @@ traces:
           - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
           - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
           - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH BuyBack)
+          - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
+          - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/9)
           - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
           - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
           - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
@@ -677,7 +714,7 @@ traces:
         - <@&997340701551513762>
 =========================================
 name:    Super OETH Base Contract
-topic:   OETH
+topic:   superOETHb
 chainId: 8453
 events: 
   - 
@@ -689,7 +726,7 @@ events:
       - TotalSupplyUpdatedHighres | 0x41645eb8
 =========================================
 name:    Super OETH Base Vault
-topic:   OETH
+topic:   superOETHb
 chainId: 8453
 events: 
   - 
@@ -737,7 +774,7 @@ events:
       - YieldDistribution | 0x09516ecf
 =========================================
 name:    Super OETH Base Burn
-topic:   OETH
+topic:   superOETHb
 chainId: 8453
 events: 
   - 
@@ -751,7 +788,7 @@ events:
       - 0x000000000000000000000000000000000000000000000000000000000000dead
 =========================================
 name:    Wrapped Super OETH Base Burn
-topic:   OETH
+topic:   superOETHb
 chainId: 8453
 events: 
   - 
@@ -771,8 +808,8 @@ events:
   - 
     address: 
       - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (Super OETH Base)
-      - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
       - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (Wrapped Super OETH Base)
+      - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
       - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
     topic0: 
       - GovernorshipTransferred | 0xc7c0c772
@@ -785,8 +822,41 @@ events:
       discordMentions: 
         - <@&997340701551513762>
 =========================================
+name:    Base Multisig
+topic:   OGN
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
+      - 0x0000000000000000000000000000000000000000
+    topic0: 
+      - AddedOwner | 0x9465fa0c
+      - ApproveHash | 0xf2a0eb15
+      - ChangedFallbackHandler | 0x5ac6c46c
+      - ChangedGuard | 0x11511169
+      - ChangedThreshold | 0x610f7ff2
+      - DisabledModule | 0xaab4fa2b
+      - EnabledModule | 0xecdf3a3e
+      - ExecutionFailure | 0x23428b18
+      - ExecutionFromModuleFailure | 0xacd2c870
+      - ExecutionFromModuleSuccess | 0x6895c136
+      - ExecutionSuccess | 0x442e715f
+      - RemovedOwner | 0xf8d49fc5
+      - SafeModuleTransaction | 0xb648d364
+      - SafeMultiSigTransaction | 0x66753cd2
+      - SafeReceived | 0x3d0ce9bf
+      - SafeSetup | 0x141df868
+      - SignMsg | 0xe7f46750
+    severity:     medium
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
 name:    Super OETH Base Error Trace
-topic:   OETH
+topic:   superOETHb
 chainId: 8453
 traces: 
   - 
@@ -799,6 +869,7 @@ traces:
           - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (Wrapped Super OETH Base)
           - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
           - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
+          - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
         error:    true
       - 
         type: 
@@ -808,14 +879,40 @@ traces:
           - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (Wrapped Super OETH Base)
           - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
           - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
+          - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
         error:  true
-    topic:        OETH
+    topic:        superOETHb
     severity:     high
     notifyTarget: 
       email: 
         - engineering@originprotocol.com
       discordMentions: 
         - <@&997340701551513762>
+=========================================
+name:    Aerodrome vAMM Pools
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x8ea4c49b712217fd6e29db920e3dd48287a0d50d (Aerodrome: vAMM-WETH/OGN)
+      - 0x6fb655476fdcfb9712dd200308d941a1c6d1119e (Aerodrome: vAMM-OGN/superOETHb)
+    topic0: 
+      - Mint | 0x4c209b5f
+      - Burn | 0x5d624aa9
+    severity: low
+=========================================
+name:    Aerodrome CL Pools
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x6446021f4e396da3df4235c62537431372195d38 (Aerodrome: CL1-WETH/superOETHb)
+    topic0: 
+      - Mint | 0x7a53080b
+      - Burn | 0x0c396cd9
+    severity: low
 =========================================
 name:    primeETH LRT Deposit Pool
 topic:   primeETH
