@@ -41,6 +41,8 @@ export const OGN_BASE_ADDRESS = '0x7002458b1df59eccb57387bc79ffc7c29e22e6f7'
 export const XOGN_ADDRESS = '0x63898b3b6ef3d39332082178656e9862bee45c57'
 export const OGN_GOVERNANCE_ADDRESS = '0x1d3fbd4d129ddd2372ea85c5fa00b2682081c9ec'
 export const OGN_REWARDS_SOURCE_ADDRESS = '0x7609c88e5880e934dd3a75bcfef44e31b1badb8b'
+export const GOVERNANCE_ADMIN_MULTISIG = '0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899'
+export const GOVERNANCE_GUARDIAN_MULTISIG = '0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc'
 
 export const LEGACY_OGN_STAKING = '0x501804b374ef06fa9c427476147ac09f1551b9a0'
 
@@ -210,7 +212,13 @@ export const compound = {
   comptroller_g7: COMPOUND_COMPTROLLER_G7,
 }
 
+export const multisig = {
+  '5/8': GOVERNANCE_ADMIN_MULTISIG,
+  '2/9': GOVERNANCE_GUARDIAN_MULTISIG,
+}
+
 export const addresses = {
+  multisig,
   tokens,
   strategies,
   oeth,

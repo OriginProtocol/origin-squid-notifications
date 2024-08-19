@@ -5,6 +5,7 @@ import { Severity, Topic, severityEmojis, topicThumbnails } from './const'
 const webhookUrls: Record<Topic, string> = {
   OGN: process.env['DISCORD_WEBHOOK_URL_OGN'] ?? '',
   OETH: process.env['DISCORD_WEBHOOK_URL_OETH'] ?? '',
+  superOETHb: process.env['DISCORD_WEBHOOK_URL_SUPER_OETH_B'] ?? '',
   OUSD: process.env['DISCORD_WEBHOOK_URL_OUSD'] ?? '',
   xOGN: process.env['DISCORD_WEBHOOK_URL_XOGN'] ?? '',
   primeETH: process.env['DISCORD_WEBHOOK_URL_PRIME_ETH'] ?? '',
@@ -13,6 +14,7 @@ const webhookUrls: Record<Topic, string> = {
 const clients: Record<Topic, WebhookClient | undefined> = {
   OGN: new WebhookClient({ url: webhookUrls.OGN }),
   OETH: new WebhookClient({ url: webhookUrls.OETH }),
+  superOETHb: new WebhookClient({ url: webhookUrls.superOETHb }),
   OUSD: new WebhookClient({ url: webhookUrls.OUSD }),
   xOGN: new WebhookClient({ url: webhookUrls.xOGN }),
   primeETH: new WebhookClient({ url: webhookUrls.primeETH }),

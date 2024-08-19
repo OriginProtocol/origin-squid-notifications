@@ -11,7 +11,7 @@ import {
 import { getAddressesPyName } from '../utils/addresses/names'
 
 export type Severity = 'low' | 'medium' | 'high' | 'critical' | 'broken'
-export type Topic = 'OGN' | 'xOGN' | 'OETH' | 'OUSD' | 'primeETH'
+export type Topic = 'OGN' | 'xOGN' | 'OETH' | 'superOETHb' | 'OUSD' | 'primeETH'
 
 export const severityEmojis: Record<Severity, string> = {
   low: 'ℹ️',
@@ -33,6 +33,7 @@ export const topicThumbnails: Record<Topic, string> = {
   OGN: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-ogn-logo.png',
   xOGN: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-xogn-logo.png',
   OETH: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-ether-oeth-logo.png',
+  superOETHb: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-super-oethb-logo.png',
   OUSD: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-dollar-ousd-logo.png',
   primeETH: 'https://origin-squid-notifications.s3.amazonaws.com/images/prime-eth-logo.png',
 }

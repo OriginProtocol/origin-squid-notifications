@@ -3,6 +3,7 @@ import * as erc20Abi from '../../abi/erc20'
 import * as exponentialStakingAbi from '../../abi/exponential-staking'
 import * as fixedRateRewardsSourceAbi from '../../abi/fixed-rate-rewards-source'
 import * as governanceAbi from '../../abi/governance'
+import * as multisigAbi from '../../abi/multisig'
 import * as ogvOgnMigratorAbi from '../../abi/ogv-ogn-migrator'
 import * as otokenAbi from '../../abi/otoken'
 import * as otokenBuybackAbi from '../../abi/otoken-buyback'
@@ -36,8 +37,10 @@ import {
   SUPER_WOETH_BASE_ADDRESS,
   WOETH_ADDRESS,
   XOGN_ADDRESS,
+  addresses,
   strategies,
 } from './addresses'
+import { baseAddresses } from './addresses-base'
 
 /**
  * Active OGN ABIs
@@ -75,6 +78,8 @@ export const oethABIs: Record<string, any> = {
   [OETH_HARVESTER_ADDRESS]: otokenHarvesterAbi,
   [OETH_DRIPPER_ADDRESS]: otokenDripperAbi,
   [OETH_BUYBACK]: otokenBuybackAbi,
+  [addresses.multisig['5/8']]: multisigAbi,
+  [addresses.multisig['2/9']]: multisigAbi,
   ...oethStrategyABIs,
 }
 export const oethBaseABIs: Record<string, any> = {
@@ -82,6 +87,7 @@ export const oethBaseABIs: Record<string, any> = {
   [SUPER_WOETH_BASE_ADDRESS]: wotokenAbi,
   [SUPER_OETH_VAULT_BASE_ADDRESS]: otokenVaultAbi,
   [SUPER_OETH_BASE_ORACLE_ROUTER_ADDRESS]: otokenPriceOracleAbi,
+  [baseAddresses.multisig['5/8']]: multisigAbi,
 }
 
 /**

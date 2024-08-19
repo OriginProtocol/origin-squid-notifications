@@ -2,6 +2,7 @@ import { omit, pick } from 'lodash'
 
 import * as strategyCurveMetapoolAbi from '../../abi/curve-metapool'
 import * as governedUpgradeabilityProxy from '../../abi/governed-upgradeability-proxy'
+import * as multisigABIs from '../../abi/multisig'
 import * as oethZapperAbi from '../../abi/oeth-zapper'
 import * as ogvOgnMigratorAbi from '../../abi/ogv-ogn-migrator'
 import * as strategyMorphoAaveAbi from '../../abi/strategy-morpho-aave'
@@ -27,6 +28,7 @@ import {
   WOETH_ADDRESS,
   XOGN_ADDRESS,
   addresses,
+  multisig,
   strategies,
 } from '../../utils/addresses'
 import { oethABIs, ognABIs, ousdABIs } from '../../utils/addresses/address-abis'
@@ -179,6 +181,21 @@ createGovernedUpgradeabilityProxyProcessor({
   topic: 'OGN',
   severity: 'high',
   notifyTarget: notifyTargets.Engineering,
+})
+
+// Multisig
+createEventProcessor({
+  name: 'Mainnet Multisig',
+  chainId: 1,
+  topic: 'OGN',
+  tracks: [
+    {
+      severity: 'medium',
+      events: multisigABIs.events,
+      address: Object.values(addresses.multisig),
+      notifyTarget: notifyTargets.Engineering,
+    },
+  ],
 })
 
 // Buybacks

@@ -23,7 +23,9 @@ import {
   USDT_ADDRESS,
   VEOGV_ADDRESS,
   XOGN_ADDRESS,
+  addresses,
 } from './addresses'
+import { baseAddresses } from './addresses-base'
 import {
   CDAI,
   CHAINLINK_KEEPER_REGISTRY,
@@ -139,6 +141,8 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [GOVERNOR]: 'Origin Governor V1',
   [GOVERNORV2]: 'Origin Governor V2',
   [GOVERNORV3]: 'Origin Governor V3',
+  [addresses.multisig['5/8']]: 'Mainnet Multisig 5/8',
+  [addresses.multisig['2/9']]: 'Mainnet Multisig 2/9',
   [METAMASK_SWAP_ROUTER]: 'Metamask Swap Router',
   [FLIPPER]: 'OUSD Swap',
   [UNISWAP_V3_ROUTER]: 'Uniswap V3 Router',
@@ -211,6 +215,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [SUPER_WOETH_BASE_ADDRESS]: 'Wrapped Super OETH Base',
   [SUPER_OETH_VAULT_BASE_ADDRESS]: 'Super OETH Base Vault',
   [SUPER_OETH_BASE_ORACLE_ROUTER_ADDRESS]: 'Super OETH Base Price Oracle',
+  [baseAddresses.multisig['5/8']]: 'Base Multisig 5/8',
 
   // primeETH Contracts
   [PRIME_ETH_LRT_DEPOSIT_POOL]: 'PrimeETH Deposit Pool',
