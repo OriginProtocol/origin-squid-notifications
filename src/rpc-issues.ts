@@ -1,8 +1,6 @@
 // import * as fs from 'node:fs'
 import { CallOptions, RpcClient } from '@subsquid/rpc-client'
-import { RpcCall } from '@subsquid/rpc-client/src/interfaces'
-
-// Fix RPC issues
+import { RpcCall } from '@subsquid/rpc-client/src/interfaces' // Fix RPC issues
 
 ;(RpcClient.prototype as any)._call = RpcClient.prototype.call
 ;(RpcClient.prototype as any)._batchCall = RpcClient.prototype.batchCall
@@ -34,7 +32,7 @@ RpcClient.prototype.batchCall = async function <T = any>(batch: RpcCall[], optio
 }
 
 const fixSelfDestructs = (input: any) => {
-  if (typeof input !== 'object') return
+  if (!input || typeof input !== 'object') return
   if (Array.isArray(input)) {
     input.forEach((v) => fixSelfDestructs(v))
   }
