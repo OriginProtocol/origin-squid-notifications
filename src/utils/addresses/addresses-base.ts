@@ -23,7 +23,7 @@ export const tokens = {
 export const baseAddresses = {
   multisig: {
     '5/8': '0x92a19381444a001d62ce67baff066fa1111d7202',
-    '2/8': '0x0000000000000000000000000000000000000000',
+    '2/9': '0x28bce2eE5775B652D92bB7c2891A89F036619703',
   },
   tokens,
   superOETHb,
