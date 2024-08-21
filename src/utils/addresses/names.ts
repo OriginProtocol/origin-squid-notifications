@@ -211,10 +211,12 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [OETH_ETH_AMO_METAPOOL]: 'OETH Curve AMO Metapool',
 
   // OETH Base Contracts
-  [SUPER_OETH_BASE_ADDRESS]: 'Super OETH Base',
-  [SUPER_WOETH_BASE_ADDRESS]: 'Wrapped Super OETH Base',
-  [SUPER_OETH_VAULT_BASE_ADDRESS]: 'Super OETH Base Vault',
-  [SUPER_OETH_BASE_ORACLE_ROUTER_ADDRESS]: 'Super OETH Base Price Oracle',
+  [baseAddresses.superOETHb.address]: 'Super OETH Base',
+  [baseAddresses.superOETHb.wrapped]: 'Wrapped Super OETH Base',
+  [baseAddresses.superOETHb.vault]: 'Super OETH Base Vault',
+  [baseAddresses.superOETHb.oracleRouter]: 'Super OETH Base Price Oracle',
+  [baseAddresses.superOETHb.dripper]: 'Super OETH Dripper',
+  [baseAddresses.superOETHb.strategies.bridgedWOETH]: 'Super OETH - Bridged WOETH Strategy',
   [baseAddresses.multisig['5/8']]: 'Base Multisig 5/8',
 
   // Aerodrome Pools

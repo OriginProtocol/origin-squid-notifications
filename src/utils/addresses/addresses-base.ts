@@ -5,7 +5,10 @@ const superOETHb = {
   wrapped: '0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6',
   vault: '0x98a0cbef61bd2d21435f433be4cd42b56b38cc93',
   oracleRouter: '0xc72bda59e382be10bb5d71abd01ecc65aa16fd83',
-  dripper: undefined,
+  dripper: '0x0030c7dc6cb7f449e9566f273342c3370ee6b16a',
+  strategies: {
+    bridgedWOETH: '0x80c864704DD06C3693ed5179190786EE38ACf835',
+  },
   zapper: undefined,
   harvester: undefined,
   vaultTokens: undefined,
@@ -27,7 +30,16 @@ export const baseAddresses = {
   },
   tokens,
   superOETHb,
-  origin: compact(uniq([...Object.values(omit(superOETHb, 'vaultTokens'))].flat().map((a) => a?.toLowerCase()))),
+  origin: compact(
+    uniq(
+      [
+        ...Object.values(omit(superOETHb, 'vaultTokens', 'strategies')),
+        ...Object.values(superOETHb.strategies).map((a) => a?.toLowerCase()),
+      ]
+        .flat()
+        .map((a) => a?.toLowerCase()),
+    ),
+  ),
   aerodrome: {
     voter: '0x16613524e02ad97edfef371bc883f2f5d6c480a5',
     basePrices: '0xee717411f6e44f9fee011835c8e6faac5deff166',

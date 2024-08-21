@@ -83,10 +83,11 @@ export const oethABIs: Record<string, any> = {
   ...oethStrategyABIs,
 }
 export const oethBaseABIs: Record<string, any> = {
-  [SUPER_OETH_BASE_ADDRESS]: otokenAbi,
-  [SUPER_WOETH_BASE_ADDRESS]: wotokenAbi,
-  [SUPER_OETH_VAULT_BASE_ADDRESS]: otokenVaultAbi,
-  [SUPER_OETH_BASE_ORACLE_ROUTER_ADDRESS]: otokenPriceOracleAbi,
+  [baseAddresses.superOETHb.address]: otokenAbi,
+  [baseAddresses.superOETHb.wrapped]: wotokenAbi,
+  [baseAddresses.superOETHb.vault]: otokenVaultAbi,
+  [baseAddresses.superOETHb.oracleRouter]: otokenPriceOracleAbi,
+  [baseAddresses.superOETHb.dripper]: otokenDripperAbi,
   [baseAddresses.multisig['5/8']]: multisigAbi,
 }
 

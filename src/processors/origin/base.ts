@@ -1,9 +1,10 @@
-import { pick } from 'lodash'
+import { omit, pick } from 'lodash'
 import { base } from 'viem/chains'
 
 import * as aeroCLPoolABIs from '../../abi/aerodrome-cl-pool'
 import * as aeroPoolABIs from '../../abi/aerodrome-pool'
 import * as multisigABIs from '../../abi/multisig'
+import * as strategyBridgedWOETHABI from '../../abi/strategy-bridged-woeth'
 import { notifyTargets } from '../../notify/const'
 import { oethBaseABIs } from '../../utils/addresses/address-abis'
 import { baseAddresses } from '../../utils/addresses/addresses-base'
@@ -30,6 +31,20 @@ createOTokenVaultProcessor({
   topic: 'superOETHb',
 })
 
+// Strategies
+createEventProcessor({
+  name: 'Super OETH Bridged WOETH Strategy',
+  chainId: base.id,
+  topic: 'superOETHb',
+  tracks: [
+    {
+      severity: 'low',
+      events: omit(strategyBridgedWOETHABI.events, 'GovernorshipTransferred', 'PendingGovernorshipTransfer'),
+      address: Object.values(baseAddresses.superOETHb.strategies.bridgedWOETH),
+    },
+  ],
+})
+
 // Burns
 createBurnProcessor({
   name: 'Super OETH Base Burn',
@@ -49,7 +64,7 @@ createGovernedUpgradeabilityProxyProcessor({
   name: 'Origin Proxy Contracts Base',
   chainId: base.id,
   address: baseAddresses.origin,
-  topic: 'OGN',
+  topic: 'superOETHb',
   severity: 'high',
   notifyTarget: notifyTargets.Engineering,
 })
@@ -58,7 +73,7 @@ createGovernedUpgradeabilityProxyProcessor({
 createEventProcessor({
   name: 'Base Multisig',
   chainId: base.id,
-  topic: 'OGN',
+  topic: 'superOETHb',
   tracks: [
     {
       severity: 'medium',

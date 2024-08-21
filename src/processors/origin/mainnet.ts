@@ -28,7 +28,6 @@ import {
   WOETH_ADDRESS,
   XOGN_ADDRESS,
   addresses,
-  multisig,
   strategies,
 } from '../../utils/addresses'
 import { oethABIs, ognABIs, ousdABIs } from '../../utils/addresses/address-abis'
