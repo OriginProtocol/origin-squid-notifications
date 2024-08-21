@@ -40,7 +40,7 @@ createEventProcessor({
     {
       severity: 'low',
       events: omit(strategyBridgedWOETHABI.events, 'GovernorshipTransferred', 'PendingGovernorshipTransfer'),
-      address: Object.values(baseAddresses.superOETHb.strategies.bridgedWOETH),
+      address: [baseAddresses.superOETHb.strategies.bridgedWOETH],
     },
   ],
 })

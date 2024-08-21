@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-8/19/2024, 4:54:03 PM
+8/20/2024, 5:09:12 PM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -773,6 +773,25 @@ events:
       - WithdrawalRequested | 0x38e3d972
       - YieldDistribution | 0x09516ecf
 =========================================
+name:    Super OETH Bridged WOETH Strategy
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x80c864704dd06c3693ed5179190786ee38acf835 (Super OETH - Bridged WOETH Strategy)
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - MaxPriceDiffBpsUpdated | 0x5066a7b9
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - WOETHPriceUpdated | 0x688768fc
+      - Withdrawal | 0x2717ead6
+    severity: low
+=========================================
 name:    Super OETH Base Burn
 topic:   superOETHb
 chainId: 8453
@@ -802,7 +821,7 @@ events:
       - 0x000000000000000000000000000000000000000000000000000000000000dead
 =========================================
 name:    Origin Proxy Contracts Base
-topic:   OGN
+topic:   superOETHb
 chainId: 8453
 events: 
   - 
@@ -811,6 +830,8 @@ events:
       - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (Wrapped Super OETH Base)
       - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
       - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
+      - 0x0030c7dc6cb7f449e9566f273342c3370ee6b16a (Super OETH Dripper)
+      - 0x80c864704dd06c3693ed5179190786ee38acf835 (Super OETH - Bridged WOETH Strategy)
     topic0: 
       - GovernorshipTransferred | 0xc7c0c772
       - PendingGovernorshipTransfer | 0xa39cc5eb
@@ -823,13 +844,13 @@ events:
         - <@&997340701551513762>
 =========================================
 name:    Base Multisig
-topic:   OGN
+topic:   superOETHb
 chainId: 8453
 events: 
   - 
     address: 
       - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
-      - 0x0000000000000000000000000000000000000000
+      - 0x28bce2ee5775b652d92bb7c2891a89f036619703 (Base Multisig 2/9)
     topic0: 
       - AddedOwner | 0x9465fa0c
       - ApproveHash | 0xf2a0eb15
@@ -869,6 +890,7 @@ traces:
           - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (Wrapped Super OETH Base)
           - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
           - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
+          - 0x0030c7dc6cb7f449e9566f273342c3370ee6b16a (Super OETH Dripper)
           - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
         error:    true
       - 
@@ -879,6 +901,7 @@ traces:
           - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (Wrapped Super OETH Base)
           - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
           - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
+          - 0x0030c7dc6cb7f449e9566f273342c3370ee6b16a (Super OETH Dripper)
           - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
         error:  true
     topic:        superOETHb

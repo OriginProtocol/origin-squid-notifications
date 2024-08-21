@@ -218,6 +218,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [baseAddresses.superOETHb.dripper]: 'Super OETH Dripper',
   [baseAddresses.superOETHb.strategies.bridgedWOETH]: 'Super OETH - Bridged WOETH Strategy',
   [baseAddresses.multisig['5/8']]: 'Base Multisig 5/8',
+  [baseAddresses.multisig['2/9']]: 'Base Multisig 2/9',
 
   // Aerodrome Pools
   [baseAddresses.aerodrome['vAMM-WETH/OGN'].pool.address]: 'Aerodrome: vAMM-WETH/OGN',

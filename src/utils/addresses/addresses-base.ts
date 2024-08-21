@@ -7,7 +7,7 @@ const superOETHb = {
   oracleRouter: '0xc72bda59e382be10bb5d71abd01ecc65aa16fd83',
   dripper: '0x0030c7dc6cb7f449e9566f273342c3370ee6b16a',
   strategies: {
-    bridgedWOETH: '0x80c864704DD06C3693ed5179190786EE38ACf835',
+    bridgedWOETH: '0x80c864704dd06c3693ed5179190786ee38acf835',
   },
   zapper: undefined,
   harvester: undefined,
@@ -26,7 +26,7 @@ export const tokens = {
 export const baseAddresses = {
   multisig: {
     '5/8': '0x92a19381444a001d62ce67baff066fa1111d7202',
-    '2/9': '0x28bce2eE5775B652D92bB7c2891A89F036619703',
+    '2/9': '0x28bce2ee5775b652d92bb7c2891a89f036619703',
   },
   tokens,
   superOETHb,
