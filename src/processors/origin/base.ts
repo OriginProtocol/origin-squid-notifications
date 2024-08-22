@@ -1,9 +1,10 @@
 import { omit, pick } from 'lodash'
 import { base } from 'viem/chains'
 
-import * as aeroCLPoolABIs from '../../abi/aerodrome-cl-pool'
-import * as aeroPoolABIs from '../../abi/aerodrome-pool'
-import * as multisigABIs from '../../abi/multisig'
+import * as aeroCLPoolABI from '../../abi/aerodrome-cl-pool'
+import * as aeroPoolABI from '../../abi/aerodrome-pool'
+import * as erc20ABI from '../../abi/erc20'
+import * as multisigABI from '../../abi/multisig'
 import * as strategyBridgedWOETHABI from '../../abi/strategy-bridged-woeth'
 import { notifyTargets } from '../../notify/const'
 import { oethBaseABIs } from '../../utils/addresses/address-abis'
@@ -45,6 +46,20 @@ createEventProcessor({
   ],
 })
 
+// Bridged WOETH Events
+createEventProcessor({
+  name: 'Bridged WOETH (Base)',
+  chainId: base.id,
+  topic: 'superOETHb',
+  tracks: [
+    {
+      severity: 'low',
+      events: erc20ABI.events,
+      address: [baseAddresses.tokens.bridgedWOETH],
+    },
+  ],
+})
+
 // Burns
 createBurnProcessor({
   name: 'Super OETH Base Burn',
@@ -77,7 +92,7 @@ createEventProcessor({
   tracks: [
     {
       severity: 'medium',
-      events: multisigABIs.events,
+      events: multisigABI.events,
       address: Object.values(baseAddresses.multisig),
       notifyTarget: notifyTargets.Engineering,
     },
@@ -103,7 +118,7 @@ createEventProcessor({
   tracks: [
     {
       severity: 'low',
-      events: pick(aeroPoolABIs.events, ['Mint', 'Burn']),
+      events: pick(aeroPoolABI.events, ['Mint', 'Burn']),
       address: [
         baseAddresses.aerodrome['vAMM-WETH/OGN'].pool.address,
         baseAddresses.aerodrome['vAMM-OGN/superOETHb'].pool.address,
@@ -119,7 +134,7 @@ createEventProcessor({
   tracks: [
     {
       severity: 'low',
-      events: pick(aeroCLPoolABIs.events, ['Mint', 'Burn']),
+      events: pick(aeroCLPoolABI.events, ['Mint', 'Burn']),
       address: [baseAddresses.aerodrome['CL1-WETH/superOETHb'].pool.address],
     },
   ],

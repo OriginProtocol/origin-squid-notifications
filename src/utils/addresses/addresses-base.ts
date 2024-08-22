@@ -19,6 +19,7 @@ export const tokens = {
   WETH: '0x4200000000000000000000000000000000000006',
   OGN: '0x7002458b1df59eccb57387bc79ffc7c29e22e6f7',
   cbETH: '0x2ae3f1ec7f1f5012cfeab0185bfc7aa3cf0dec22',
+  bridgedWOETH: '0xd8724322f44e5c58d7a815f542036fb17dbbf839',
   superOETHb: superOETHb.address,
   wsuperOETHb: superOETHb.wrapped,
 }
