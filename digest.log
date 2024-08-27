@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-8/20/2024, 5:09:12 PM
+8/27/2024, 1:07:12 PM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -773,6 +773,17 @@ events:
       - WithdrawalRequested | 0x38e3d972
       - YieldDistribution | 0x09516ecf
 =========================================
+name:    superOETHb Zapper
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
+    topic0: 
+      - Zap | 0x9d0b99c2
+    severity: low
+=========================================
 name:    Super OETH Bridged WOETH Strategy
 topic:   superOETHb
 chainId: 8453
@@ -790,6 +801,18 @@ events:
       - RewardTokenCollected | 0xf6c07a06
       - WOETHPriceUpdated | 0x688768fc
       - Withdrawal | 0x2717ead6
+    severity: low
+=========================================
+name:    Bridged WOETH (Base)
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0xd8724322f44e5c58d7a815f542036fb17dbbf839 (WOETH (Base))
+    topic0: 
+      - Approval | 0x8c5be1e5
+      - Transfer | 0xddf252ad
     severity: low
 =========================================
 name:    Super OETH Base Burn
@@ -831,6 +854,7 @@ events:
       - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
       - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
       - 0x0030c7dc6cb7f449e9566f273342c3370ee6b16a (Super OETH Dripper)
+      - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
       - 0x80c864704dd06c3693ed5179190786ee38acf835 (Super OETH - Bridged WOETH Strategy)
     topic0: 
       - GovernorshipTransferred | 0xc7c0c772

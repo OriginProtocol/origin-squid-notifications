@@ -5,10 +5,13 @@ import * as aeroCLPoolABI from '../../abi/aerodrome-cl-pool'
 import * as aeroPoolABI from '../../abi/aerodrome-pool'
 import * as erc20ABI from '../../abi/erc20'
 import * as multisigABI from '../../abi/multisig'
+import * as oethZapperAbi from '../../abi/oeth-zapper'
 import * as strategyBridgedWOETHABI from '../../abi/strategy-bridged-woeth'
-import { notifyTargets } from '../../notify/const'
+import { discordIconOrName, notifyTargets } from '../../notify/const'
+import { renderEventDiscordEmbed } from '../../notify/event/renderers/utils'
 import { oethBaseABIs } from '../../utils/addresses/address-abis'
 import { baseAddresses } from '../../utils/addresses/addresses-base'
+import { formatAmount } from '../../utils/formatAmount'
 import { createBurnProcessor } from '../templates/burn'
 import { createEventProcessor } from '../templates/event'
 import { createOTokenProcessor } from '../templates/otoken'
@@ -30,6 +33,35 @@ createOTokenVaultProcessor({
   chainId: base.id,
   address: [baseAddresses.superOETHb.vault],
   topic: 'superOETHb',
+})
+
+// Zapper
+createEventProcessor({
+  name: 'superOETHb Zapper',
+  topic: 'superOETHb',
+  chainId: base.id,
+  tracks: [
+    {
+      address: [baseAddresses.superOETHb.zapper],
+      events: oethZapperAbi.events,
+      severity: 'low',
+      renderers: {
+        Zap: (params) => {
+          const data = oethZapperAbi.events.Zap.decode(params.log)
+          renderEventDiscordEmbed(params, {
+            description: `[${data.minter}](https://basescan.org/address/${data.minter})`,
+            fields: [
+              {
+                name: formatAmount(data.amount),
+                value: discordIconOrName(data.asset) ?? data.asset,
+                inline: true,
+              },
+            ],
+          })
+        },
+      },
+    },
+  ],
 })
 
 // Strategies
@@ -120,8 +152,8 @@ createEventProcessor({
       severity: 'low',
       events: pick(aeroPoolABI.events, ['Mint', 'Burn']),
       address: [
-        baseAddresses.aerodrome['vAMM-WETH/OGN'].pool.address,
-        baseAddresses.aerodrome['vAMM-OGN/superOETHb'].pool.address,
+        baseAddresses.aerodrome.pools['vAMM-WETH/OGN'].address,
+        baseAddresses.aerodrome.pools['vAMM-OGN/superOETHb'].address,
       ],
     },
   ],
@@ -135,7 +167,7 @@ createEventProcessor({
     {
       severity: 'low',
       events: pick(aeroCLPoolABI.events, ['Mint', 'Burn']),
-      address: [baseAddresses.aerodrome['CL1-WETH/superOETHb'].pool.address],
+      address: [baseAddresses.aerodrome.pools['CL1-WETH/superOETHb'].address],
     },
   ],
 })

@@ -216,14 +216,22 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [baseAddresses.superOETHb.vault]: 'Super OETH Base Vault',
   [baseAddresses.superOETHb.oracleRouter]: 'Super OETH Base Price Oracle',
   [baseAddresses.superOETHb.dripper]: 'Super OETH Dripper',
+  [baseAddresses.superOETHb.zapper]: 'Super OETH Zapper',
   [baseAddresses.superOETHb.strategies.bridgedWOETH]: 'Super OETH - Bridged WOETH Strategy',
   [baseAddresses.multisig['5/8']]: 'Base Multisig 5/8',
   [baseAddresses.multisig['2/9']]: 'Base Multisig 2/9',
 
+  // Base Tokens
+  [baseAddresses.tokens.bridgedWOETH]: 'WOETH (Base)',
+  [baseAddresses.tokens.OGN]: 'OGN (Base)',
+  [baseAddresses.tokens.WETH]: 'WETH (Base)',
+  [baseAddresses.tokens.cbETH]: 'cbETH (Base)',
+  [baseAddresses.tokens.USDC]: 'USDC (Base)',
+
   // Aerodrome Pools
-  [baseAddresses.aerodrome['vAMM-WETH/OGN'].pool.address]: 'Aerodrome: vAMM-WETH/OGN',
-  [baseAddresses.aerodrome['vAMM-OGN/superOETHb'].pool.address]: 'Aerodrome: vAMM-OGN/superOETHb',
-  [baseAddresses.aerodrome['CL1-WETH/superOETHb'].pool.address]: 'Aerodrome: CL1-WETH/superOETHb',
+  [baseAddresses.aerodrome.pools['vAMM-WETH/OGN'].address]: 'Aerodrome: vAMM-WETH/OGN',
+  [baseAddresses.aerodrome.pools['vAMM-OGN/superOETHb'].address]: 'Aerodrome: vAMM-OGN/superOETHb',
+  [baseAddresses.aerodrome.pools['CL1-WETH/superOETHb'].address]: 'Aerodrome: CL1-WETH/superOETHb',
 
   // primeETH Contracts
   [PRIME_ETH_LRT_DEPOSIT_POOL]: 'PrimeETH Deposit Pool',
