@@ -1,5 +1,6 @@
 import * as vaultAbi from '../../../abi/otoken-vault'
 import { OETH_VAULT_ADDRESS, OUSD_VAULT_ADDRESS } from '../../../utils/addresses'
+import { baseAddresses } from '../../../utils/addresses/addresses-base'
 import { getAddressesPyName } from '../../../utils/addresses/names'
 import { formatAmount } from '../../../utils/formatAmount'
 import { transactionLink } from '../../../utils/links'
@@ -12,6 +13,7 @@ import { renderDiscordEmbed } from './utils'
 const vaults: Record<string, { emoji: string; topic: Topic }> = {
   [OETH_VAULT_ADDRESS]: { emoji: '<:origin_ether_oeth:1091365232770814033>', topic: 'OETH' },
   [OUSD_VAULT_ADDRESS]: { emoji: '<:origin_dollar_ousd:1052865068511014973>', topic: 'OUSD' },
+  [baseAddresses.superOETHb.address]: { emoji: '<:super_oeth:1273652568014454914>', topic: 'superOETHb' },
 }
 
 registerEventRenderer(vaultAbi.events.Mint.topic, async (params) => {
