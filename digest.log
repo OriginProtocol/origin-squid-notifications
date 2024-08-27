@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-8/27/2024, 1:07:12 PM
+8/27/2024, 1:10:51 PM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -947,6 +947,7 @@ events:
     topic0: 
       - Mint | 0x4c209b5f
       - Burn | 0x5d624aa9
+      - Swap | 0xb3e27736
     severity: low
 =========================================
 name:    Aerodrome CL Pools
@@ -959,6 +960,7 @@ events:
     topic0: 
       - Mint | 0x7a53080b
       - Burn | 0x0c396cd9
+      - Swap | 0xc42079f9
     severity: low
 =========================================
 name:    primeETH LRT Deposit Pool

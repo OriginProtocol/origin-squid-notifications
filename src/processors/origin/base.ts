@@ -150,7 +150,7 @@ createEventProcessor({
   tracks: [
     {
       severity: 'low',
-      events: pick(aeroPoolABI.events, ['Mint', 'Burn']),
+      events: pick(aeroPoolABI.events, ['Mint', 'Burn', 'Swap']),
       address: [
         baseAddresses.aerodrome.pools['vAMM-WETH/OGN'].address,
         baseAddresses.aerodrome.pools['vAMM-OGN/superOETHb'].address,
@@ -166,7 +166,7 @@ createEventProcessor({
   tracks: [
     {
       severity: 'low',
-      events: pick(aeroCLPoolABI.events, ['Mint', 'Burn']),
+      events: pick(aeroCLPoolABI.events, ['Mint', 'Burn', 'Swap']),
       address: [baseAddresses.aerodrome.pools['CL1-WETH/superOETHb'].address],
     },
   ],
