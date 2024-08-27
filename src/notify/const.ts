@@ -8,6 +8,7 @@ import {
   PRIME_ETH_ADDRESS,
   XOGN_ADDRESS,
 } from '../utils/addresses'
+import { baseAddresses } from '../utils/addresses/addresses-base'
 import { getAddressesPyName } from '../utils/addresses/names'
 
 export type Severity = 'low' | 'medium' | 'high' | 'critical' | 'broken'
@@ -63,6 +64,7 @@ export const assetIcons: Record<string, `<:${string}>`> = {
   [OGV_ADDRESS]: '<:origin_defi_governance_ogv:1052865020276514867>',
   [OGN_ADDRESS]: '<:origin_token_ogn:1052864969420570656>',
   [XOGN_ADDRESS]: '<:xogn_staked_origin_token:1245864423285850202>',
+  [baseAddresses.superOETHb.address]: '<:super_oeth:1273652568014454914>',
 }
 
 export const discordIconOrName = (address: string): string | undefined =>

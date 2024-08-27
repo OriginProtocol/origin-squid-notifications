@@ -15,10 +15,6 @@ import {
   PRIME_ETH_LRT_DEPOSIT_POOL,
   RETH_ADDRESS,
   STETH_ADDRESS,
-  SUPER_OETH_BASE_ADDRESS,
-  SUPER_OETH_BASE_ORACLE_ROUTER_ADDRESS,
-  SUPER_OETH_VAULT_BASE_ADDRESS,
-  SUPER_WOETH_BASE_ADDRESS,
   USDC_ADDRESS,
   USDT_ADDRESS,
   VEOGV_ADDRESS,
@@ -89,6 +85,7 @@ import {
   UNISWAP_V2,
   UNISWAP_V3_ROUTER,
   WETH,
+  WOETH,
 } from './ousd-analytics'
 import {
   FLUX_STRAT,
@@ -201,6 +198,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
 
   // OETH Contracts
   [OETH]: 'OETH',
+  [WOETH]: 'WOETH',
   [OETH_VAULT]: 'OETH Vault',
   [FRAX_ETH_STRATEGY]: 'FraxETH Strategy',
   [OETH_ZAPPER]: 'OETH Zapper',

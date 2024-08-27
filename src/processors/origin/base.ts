@@ -9,6 +9,7 @@ import * as oethZapperAbi from '../../abi/oeth-zapper'
 import * as strategyBridgedWOETHABI from '../../abi/strategy-bridged-woeth'
 import { discordIconOrName, notifyTargets } from '../../notify/const'
 import { renderEventDiscordEmbed } from '../../notify/event/renderers/utils'
+import { WOETH_ADDRESS } from '../../utils/addresses'
 import { oethBaseABIs } from '../../utils/addresses/address-abis'
 import { baseAddresses } from '../../utils/addresses/addresses-base'
 import { formatAmount } from '../../utils/formatAmount'
@@ -74,6 +75,27 @@ createEventProcessor({
       severity: 'low',
       events: omit(strategyBridgedWOETHABI.events, 'GovernorshipTransferred', 'PendingGovernorshipTransfer'),
       address: [baseAddresses.superOETHb.strategies.bridgedWOETH],
+      renderers: {
+        WOETHPriceUpdated: (params) => {
+          const data = strategyBridgedWOETHABI.events.WOETHPriceUpdated.decode(params.log)
+          const amountF = formatAmount(data.newValue, 18, {
+            minimumFractionDigits: 8,
+            maximumFractionDigits: 8,
+          })
+          const changeP = formatAmount(
+            ((data.newValue * 1_000000000_000000000n) / data.oldValue - 1_000000000_000000000n) * 100n,
+          )
+          renderEventDiscordEmbed(params, {
+            fields: [
+              {
+                name: `${amountF} (+${changeP}%)`,
+                value: discordIconOrName(WOETH_ADDRESS) ?? WOETH_ADDRESS,
+                inline: true,
+              },
+            ],
+          })
+        },
+      },
     },
   ],
 })
