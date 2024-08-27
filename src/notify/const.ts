@@ -6,6 +6,7 @@ import {
   OGV_ADDRESS,
   OUSD_ADDRESS,
   PRIME_ETH_ADDRESS,
+  WOETH_ADDRESS,
   XOGN_ADDRESS,
 } from '../utils/addresses'
 import { baseAddresses } from '../utils/addresses/addresses-base'
@@ -60,11 +61,13 @@ export const notifyTargets = {
 export const assetIcons: Record<string, `<:${string}>`> = {
   [PRIME_ETH_ADDRESS]: '<:prime_staked_ETH:1202845677332463716>',
   [OETH_ADDRESS]: '<:origin_ether_oeth:1091365232770814033>',
+  [WOETH_ADDRESS]: '<:wrapped_oeth:1278109190992171141>',
   [OUSD_ADDRESS]: '<:origin_dollar_ousd:1052865068511014973>',
   [OGV_ADDRESS]: '<:origin_defi_governance_ogv:1052865020276514867>',
   [OGN_ADDRESS]: '<:origin_token_ogn:1052864969420570656>',
   [XOGN_ADDRESS]: '<:xogn_staked_origin_token:1245864423285850202>',
   [baseAddresses.superOETHb.address]: '<:super_oeth:1273652568014454914>',
+  [baseAddresses.superOETHb.wrapped]: '<:wrapped_superoeth:1278095593025310800>',
 }
 
 export const discordIconOrName = (address: string): string | undefined =>
