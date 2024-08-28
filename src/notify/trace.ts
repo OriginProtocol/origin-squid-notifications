@@ -39,11 +39,11 @@ export const notifyForTrace = async ({
     if (uniqueTracesFired.has(uniqueTracesFiredId) || uniqueTracesFired.size > 5) return
     else uniqueTracesFired.add(uniqueTracesFiredId)
   }
-  const id = `${trace.transaction?.hash}:${JSON.stringify(trace.traceAddress)}`
+  const id = `${trace.block.height}:${trace.transactionIndex}:${JSON.stringify(trace.traceAddress)}`
   console.log('Sending notification', { id, topic, severity, name, functionName, functionData, trace })
 
   notifyDiscord({
-    id,
+    sortId: id,
     topic,
     severity,
     title: `${name ?? topic} - ${functionName ?? trace.type}`,

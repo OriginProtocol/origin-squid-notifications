@@ -13,7 +13,7 @@ export const renderEventDiscordEmbed = (
   },
 ) =>
   renderDiscordEmbed({
-    id: eventRendererParams.log.id,
+    sortId: `${eventRendererParams.log.block.height}:${eventRendererParams.log.transactionIndex}:${eventRendererParams.log.logIndex}`,
     topic: eventRendererParams.topic,
     severity: eventRendererParams.severity,
     title: `${eventRendererParams.name} - ${eventRendererParams.eventName}`,
@@ -22,7 +22,7 @@ export const renderEventDiscordEmbed = (
   })
 
 export const renderDiscordEmbed = (params: {
-  id: string
+  sortId: string
   topic: Topic
   severity?: Severity
   title: string
@@ -43,7 +43,7 @@ export const renderDiscordEmbed = (params: {
     embed.addFields(...params.fields)
   }
   const msg: DiscordOptions = {
-    id: params.id,
+    sortId: params.sortId,
     embeds: [embed],
     severity: params.severity,
     topic: params.topic,

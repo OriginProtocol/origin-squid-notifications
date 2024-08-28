@@ -26,11 +26,11 @@ export const notifyForTransaction = ({
   let fromName = getAddressesPyName(transaction.from)
   let toName = getAddressesPyName(transaction.to)
 
-  const id = `${transaction.hash}`
+  const id = `${transaction.block.height}:${transaction.transactionIndex}`
   console.log('Sending notification', { id, topic, severity, name, transaction })
 
   notifyDiscord({
-    id,
+    sortId: id,
     topic,
     severity,
     title: `${name ?? topic} - ${shortenHex(transaction.hash)}`,

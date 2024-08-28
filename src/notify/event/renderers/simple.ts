@@ -9,7 +9,7 @@ export const simpleEventRenderer = registerEventRenderer(
       tx: transactionLink(log.transactionHash, ctx.chain),
     }
     return notifyDiscord({
-      id: log.id,
+      sortId: `${log.block.height}:${log.transactionIndex}:${log.logIndex}`,
       topic,
       severity,
       title: `${name ?? topic} - ${eventName}`,

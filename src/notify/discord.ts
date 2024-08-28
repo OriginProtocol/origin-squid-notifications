@@ -1,4 +1,5 @@
 import { EmbedBuilder, WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
+import { sortBy } from 'lodash'
 
 import { Severity, Topic, severityEmojis, topicThumbnails } from './const'
 
@@ -23,7 +24,7 @@ const clients: Record<Topic, WebhookClient | undefined> = {
 let messageQueue: Map<string, { topic: Topic; data: WebhookMessageCreateOptions }> = new Map()
 
 export interface DiscordOptions {
-  id: string
+  sortId: string
   title?: string
   description?: string
   embeds?: EmbedBuilder[]
@@ -35,7 +36,9 @@ export interface DiscordOptions {
 }
 
 export const processDiscordQueue = async () => {
-  for (const message of messageQueue.values()) {
+  const sortedMessageEntries = sortBy([...messageQueue.entries()], (e) => e[0])
+  for (const [sortId, message] of sortedMessageEntries) {
+    console.log(`Sending message id: ${sortId}`)
     await sendMessage(message.topic, message.data)
   }
   messageQueue.clear()
@@ -53,7 +56,7 @@ export const sendMessage = async (topic: Topic, message: WebhookMessageCreateOpt
 }
 
 export const notifyDiscord = ({
-  id,
+  sortId,
   title,
   description,
   embeds,
@@ -93,5 +96,6 @@ export const notifyDiscord = ({
     },
     embeds,
   }
-  messageQueue.set(id, { topic, data: payload })
+  if (messageQueue.has(sortId)) throw new Error(`Duplicate message received: ${sortId}`)
+  messageQueue.set(sortId, { topic, data: payload })
 }

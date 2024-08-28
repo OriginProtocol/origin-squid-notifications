@@ -247,7 +247,7 @@ createEventProcessor({
         TokenExchanged: (params) => {
           const data = ogvOgnMigratorAbi.events.TokenExchanged.decode(params.log)
           return renderDiscordEmbed({
-            id: params.log.id,
+            sortId: `${params.log.block.height}:${params.log.transactionIndex}:${params.log.logIndex}`,
             topic: params.topic,
             severity: params.severity,
             title: 'OGV Migration - TokenExchanged',

@@ -19,7 +19,7 @@ createEventProcessor({
           const { depositor, depositAmount, primeEthMintAmount, asset, referralId } =
             lrtDepositPoolAbi.events.AssetDeposit.decode(log)
           renderDiscordEmbed({
-            id: log.id,
+            sortId: `${log.block.height}:${log.transactionIndex}:${log.logIndex}`,
             topic,
             severity,
             title: 'Asset Deposit',
@@ -49,7 +49,7 @@ createEventProcessor({
           const { withdrawer, assetAmount, primeETHAmount, asset } =
             lrtDepositPoolAbi.events.WithdrawalRequested.decode(log)
           renderDiscordEmbed({
-            id: log.id,
+            sortId: `${log.block.height}:${log.transactionIndex}:${log.logIndex}`,
             topic,
             severity,
             title: 'Withdrawal Requested',
@@ -73,7 +73,7 @@ createEventProcessor({
           severity = severity ?? 'low'
           const { withdrawer, asset, assets } = lrtDepositPoolAbi.events.WithdrawalClaimed.decode(log)
           renderDiscordEmbed({
-            id: log.id,
+            sortId: `${log.block.height}:${log.transactionIndex}:${log.logIndex}`,
             topic,
             severity,
             title: 'Withdrawal Claimed',

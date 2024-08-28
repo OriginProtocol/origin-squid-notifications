@@ -24,7 +24,7 @@ export const createOTokenProcessor = (params: { address: string[] } & Omit<Event
             const data = otokenAbi.events.TotalSupplyUpdatedHighres.decode(p.log)
             const diff = data.totalSupply - previousSupply
             renderDiscordEmbed({
-              id: p.log.id,
+              sortId: `${p.log.block.height}:${p.log.transactionIndex}:${p.log.logIndex}`,
               topic: p.topic,
               severity: p.severity,
               title: `${params.name} - TotalSupplyUpdatedHighres`,
