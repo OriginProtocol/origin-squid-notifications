@@ -3,7 +3,7 @@ import { EvmBatchProcessor } from '@subsquid/evm-processor'
 import { createProcessor } from '..'
 import { NotifyTarget, Severity, Topic } from '../../notify/const'
 import { notifyForTransaction } from '../../notify/transaction'
-import { Block, Context } from '../../types'
+import { Context } from '../../types'
 import { transactionFilter } from '../../utils/transactionFilter'
 
 export type TransactionProcessorParams = Parameters<typeof createTransactionProcessor>[0]
@@ -39,10 +39,12 @@ export const createTransactionProcessor = ({
     setup: (processor: EvmBatchProcessor) => {
       processor.addTransaction(filter.value)
     },
-    process: async (ctx: Context, block: Block) => {
-      for (const transaction of block.transactions) {
-        if (filter.matches(transaction)) {
-          await notifyForTransaction({ ctx, name, topic, severity, transaction, notifyTarget })
+    process: async (ctx: Context) => {
+      for (const block of ctx.blocks) {
+        for (const transaction of block.transactions) {
+          if (filter.matches(transaction)) {
+            await notifyForTransaction({ ctx, name, topic, severity, transaction, notifyTarget })
+          }
         }
       }
     },

@@ -23,5 +23,5 @@ export interface EvmProcessor {
   chainId: number
   initialize?: (ctx: Context) => Promise<void> // To only be run once per `sqd process`.
   setup?: (p: ReturnType<typeof createSquidProcessor>, chain: Chain) => void
-  process: (ctx: Context, block: Block) => Promise<void>
+  process: (ctx: Context) => Promise<void>
 }
