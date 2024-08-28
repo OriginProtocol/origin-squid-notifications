@@ -13,7 +13,7 @@ import { renderDiscordEmbed } from './utils'
 const vaults: Record<string, { emoji: string; topic: Topic }> = {
   [OETH_VAULT_ADDRESS]: { emoji: '<:origin_ether_oeth:1091365232770814033>', topic: 'OETH' },
   [OUSD_VAULT_ADDRESS]: { emoji: '<:origin_dollar_ousd:1052865068511014973>', topic: 'OUSD' },
-  [baseAddresses.superOETHb.address]: { emoji: '<:super_oeth:1273652568014454914>', topic: 'superOETHb' },
+  [baseAddresses.superOETHb.vault]: { emoji: '<:super_oeth:1273652568014454914>', topic: 'superOETHb' },
 }
 
 registerEventRenderer(vaultAbi.events.Mint.topic, async (params) => {
