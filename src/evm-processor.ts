@@ -91,12 +91,10 @@ export const run = async ({
   chainId = 1,
   processors,
   postProcessors,
-  validators,
 }: {
   chainId?: number
   processors: EvmProcessor[]
   postProcessors?: EvmProcessor[]
-  validators?: Pick<EvmProcessor, 'process' | 'name'>[]
 }) => {
   const config = chainConfigs[chainId]
   if (!config) throw new Error('No chain configuration found.')
@@ -133,46 +131,43 @@ export const run = async ({
       if (!initialized) {
         initialized = true
         ctx.log.info(`initializing`)
-        start = Date.now()
-        const times = await Promise.all([
-          ...processors
-            .filter((p) => p.initialize)
-            .map((p, index) => p.initialize!(ctx).then(time(p.name ?? `initializing processor-${index}`))),
-          ...(postProcessors ?? [])
-            .filter((p) => p.initialize)
-            .map((p, index) => p.initialize!(ctx).then(time(p.name ?? `initializing postProcessors-${index}`))),
-        ])
-        times.forEach((t) => t())
+        for (const p of processors) {
+          start = Date.now()
+          await p.initialize?.(ctx)
+          if (process.env.DEBUG_PERF === 'true') {
+            time(p.name)()
+          }
+        }
+        for (const p of postProcessors ?? []) {
+          start = Date.now()
+          await p.initialize?.(ctx)
+          if (process.env.DEBUG_PERF === 'true') {
+            time(p.name)()
+          }
+        }
       }
 
       // Main Processing Run
-      start = Date.now()
-      const times = await Promise.all(
-        processors.map((p, index) => p.process(ctx).then(time(p.name ?? `processor-${index}`))),
-      )
-      if (process.env.DEBUG_PERF === 'true') {
-        times.forEach((t) => t())
+      for (const p of processors) {
+        start = Date.now()
+        for (const block of ctx.blocks) {
+          await p.process(ctx, block)
+        }
+        if (process.env.DEBUG_PERF === 'true') {
+          time(p.name)()
+        }
       }
 
       if (postProcessors) {
         // Post Processing Run
-        start = Date.now()
-        const postTimes = await Promise.all(
-          postProcessors.map((p, index) => p.process(ctx).then(time(p.name ?? `postProcessor-${index}`))),
-        )
-        if (process.env.DEBUG_PERF === 'true') {
-          postTimes.forEach((t) => t())
-        }
-      }
-
-      if (validators) {
-        // Validation Run
-        start = Date.now()
-        const validatorTimes = await Promise.all(
-          validators.map((p, index) => p.process(ctx).then(time(p.name ?? `validator-${index}`))),
-        )
-        if (process.env.DEBUG_PERF === 'true') {
-          validatorTimes.forEach((t) => t())
+        for (const p of postProcessors) {
+          start = Date.now()
+          for (const block of ctx.blocks) {
+            await p.process(ctx, block)
+          }
+          if (process.env.DEBUG_PERF === 'true') {
+            time(p.name)()
+          }
         }
       }
 

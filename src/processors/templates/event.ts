@@ -4,7 +4,7 @@ import { EvmBatchProcessor } from '@subsquid/evm-processor'
 import { createProcessor } from '..'
 import { NotifyTarget, Severity, Topic } from '../../notify/const'
 import { EventRenderer, notifyForEvent } from '../../notify/event'
-import { Context } from '../../types'
+import { Block, Context } from '../../types'
 import { logFilter } from '../../utils/logFilter'
 
 export type EventProcessorParams = Parameters<typeof createEventProcessor>[0]
@@ -59,31 +59,29 @@ export const createEventProcessor = ({
         processor.addLog(filter.value)
       }
     },
-    process: async (ctx: Context) => {
-      for (const block of ctx.blocks) {
-        for (const log of block.logs) {
-          for (const {
-            filter,
-            entries,
-            track: { severity, notifyTarget, renderers },
-          } of trackData) {
-            if (filter.matches(log)) {
-              const entry = entries.find(([, e]) => e.topic === log.topics[0])
-              if (entry) {
-                const [eventName, event] = entry
-                await notifyForEvent({
-                  ctx,
-                  name,
-                  eventName,
-                  block,
-                  log,
-                  event,
-                  topic,
-                  severity,
-                  notifyTarget,
-                  renderer: renderers?.[eventName] ?? renderers?.['default'],
-                })
-              }
+    process: async (ctx: Context, block: Block) => {
+      for (const log of block.logs) {
+        for (const {
+          filter,
+          entries,
+          track: { severity, notifyTarget, renderers },
+        } of trackData) {
+          if (filter.matches(log)) {
+            const entry = entries.find(([, e]) => e.topic === log.topics[0])
+            if (entry) {
+              const [eventName, event] = entry
+              await notifyForEvent({
+                ctx,
+                name,
+                eventName,
+                block,
+                log,
+                event,
+                topic,
+                severity,
+                notifyTarget,
+                renderer: renderers?.[eventName] ?? renderers?.['default'],
+              })
             }
           }
         }
