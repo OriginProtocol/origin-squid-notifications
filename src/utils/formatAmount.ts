@@ -32,5 +32,14 @@ export function formatAmount(amount: string | bigint | number, decimals = 18, op
     }
   }
 
+  for (const [threshold, maxDigits] of mappings) {
+    if (amt <= -threshold) {
+      return amt.toLocaleString('en', {
+        maximumFractionDigits: maxDigits,
+        ...options,
+      })
+    }
+  }
+
   return `~0`
 }
