@@ -217,7 +217,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [baseAddresses.superOETHb.zapper]: 'Super OETH Zapper',
   [baseAddresses.superOETHb.strategies.bridgedWOETH]: 'Super OETH - Bridged WOETH Strategy',
   [baseAddresses.multisig['5/8']]: 'Base Multisig 5/8',
-  [baseAddresses.multisig['2/9']]: 'Base Multisig 2/9',
+  [baseAddresses.multisig['2/8']]: 'Base Multisig 2/8',
 
   // Base Tokens
   [baseAddresses.tokens.bridgedWOETH]: 'WOETH (Base)',

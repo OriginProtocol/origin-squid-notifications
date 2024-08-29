@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-8/27/2024, 1:10:51 PM
+8/28/2024, 6:04:31 PM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -354,7 +354,7 @@ chainId: 1
 events: 
   - 
     address: 
-      - 0xdcee70654261af21c44c093c300ed3bb97b78192
+      - 0xdcee70654261af21c44c093c300ed3bb97b78192 (WOETH)
     topic0: 
       - Transfer | 0xddf252ad
     topic2: 
@@ -443,7 +443,7 @@ events:
       - 0x1d3fbd4d129ddd2372ea85c5fa00b2682081c9ec (OGN Governance)
       - 0x95c347d6214614a780847b8aaf4f96eb84f4da6d (OGV Migrator)
       - 0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3 (OETH)
-      - 0xdcee70654261af21c44c093c300ed3bb97b78192
+      - 0xdcee70654261af21c44c093c300ed3bb97b78192 (WOETH)
       - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
       - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
       - 0x9858e47bcbbe6fbac040519b02d7cd4b2c470c66 (OETH Zapper)
@@ -599,7 +599,7 @@ traces:
           - call
         callFrom: 
           - 0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3 (OETH)
-          - 0xdcee70654261af21c44c093c300ed3bb97b78192
+          - 0xdcee70654261af21c44c093c300ed3bb97b78192 (WOETH)
           - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
           - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
           - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
@@ -615,7 +615,7 @@ traces:
           - call
         callTo: 
           - 0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3 (OETH)
-          - 0xdcee70654261af21c44c093c300ed3bb97b78192
+          - 0xdcee70654261af21c44c093c300ed3bb97b78192 (WOETH)
           - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
           - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
           - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
@@ -874,7 +874,7 @@ events:
   - 
     address: 
       - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
-      - 0x28bce2ee5775b652d92bb7c2891a89f036619703 (Base Multisig 2/9)
+      - 0x28bce2ee5775b652d92bb7c2891a89f036619703 (Base Multisig 2/8)
     topic0: 
       - AddedOwner | 0x9465fa0c
       - ApproveHash | 0xf2a0eb15
