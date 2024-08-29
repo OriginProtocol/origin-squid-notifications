@@ -6,6 +6,7 @@ import * as aeroPoolABI from '../../abi/aerodrome-pool'
 import * as erc20ABI from '../../abi/erc20'
 import * as multisigABI from '../../abi/multisig'
 import * as oethZapperAbi from '../../abi/oeth-zapper'
+import * as strategyAerodromeAMOABI from '../../abi/strategy-aerodrome-amo'
 import * as strategyBridgedWOETHABI from '../../abi/strategy-bridged-woeth'
 import { discordIconOrName, notifyTargets } from '../../notify/const'
 import { renderEventDiscordEmbed } from '../../notify/event/renderers/utils'
@@ -96,6 +97,18 @@ createEventProcessor({
           })
         },
       },
+    },
+  ],
+})
+createEventProcessor({
+  name: 'Super OETH Aerodrome AMO',
+  chainId: base.id,
+  topic: 'superOETHb',
+  tracks: [
+    {
+      severity: 'low',
+      events: omit(strategyAerodromeAMOABI.events, 'GovernorshipTransferred', 'PendingGovernorshipTransfer'),
+      address: [baseAddresses.superOETHb.strategies.amo],
     },
   ],
 })

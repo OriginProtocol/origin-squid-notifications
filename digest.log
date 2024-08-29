@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-8/28/2024, 6:04:31 PM
+8/29/2024, 9:28:21 AM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -803,6 +803,28 @@ events:
       - Withdrawal | 0x2717ead6
     severity: low
 =========================================
+name:    Super OETH Aerodrome AMO
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0xf611cc500eee7e4e4763a05fe623e2363c86d2af
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - LiquidityAdded | 0x1530ec74
+      - LiquidityRemoved | 0xede5d7a6
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - PoolRebalanced | 0x0d0d42e2
+      - PoolWethShareIntervalUpdated | 0xfb25072e
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - UnderlyingAssetsUpdated | 0xab1ece05
+      - Withdrawal | 0x2717ead6
+    severity: low
+=========================================
 name:    Bridged WOETH (Base)
 topic:   superOETHb
 chainId: 8453
@@ -856,6 +878,7 @@ events:
       - 0x0030c7dc6cb7f449e9566f273342c3370ee6b16a (Super OETH Dripper)
       - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
       - 0x80c864704dd06c3693ed5179190786ee38acf835 (Super OETH - Bridged WOETH Strategy)
+      - 0xf611cc500eee7e4e4763a05fe623e2363c86d2af
     topic0: 
       - GovernorshipTransferred | 0xc7c0c772
       - PendingGovernorshipTransfer | 0xa39cc5eb

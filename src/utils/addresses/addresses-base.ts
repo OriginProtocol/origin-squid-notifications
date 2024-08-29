@@ -8,6 +8,7 @@ const superOETHb = {
   dripper: '0x0030c7dc6cb7f449e9566f273342c3370ee6b16a',
   strategies: {
     bridgedWOETH: '0x80c864704dd06c3693ed5179190786ee38acf835',
+    amo: '0xf611cc500eee7e4e4763a05fe623e2363c86d2af',
   },
   zapper: '0x3b56c09543d3068f8488ed34e6f383c3854d2bc1',
   harvester: undefined,
