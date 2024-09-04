@@ -19,6 +19,7 @@ import {
   USDT_ADDRESS,
   VEOGV_ADDRESS,
   XOGN_ADDRESS,
+  YNLSDE_ADDRESS,
   addresses,
 } from './addresses'
 import { baseAddresses } from './addresses-base'
@@ -235,6 +236,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   // primeETH Contracts
   [PRIME_ETH_LRT_DEPOSIT_POOL]: 'PrimeETH Deposit Pool',
   '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee': 'ETH',
+  [YNLSDE_ADDRESS]: 'ynLSDe',
 }
 
 export const getAddressesPyName = (address?: string): string | undefined =>
