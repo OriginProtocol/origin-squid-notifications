@@ -209,7 +209,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [OETH_DRIPPER_ADDRESS]: 'OETH Dripper',
   [OETH_ETH_AMO_METAPOOL]: 'OETH Curve AMO Metapool',
 
-  // OETH Base Contracts
+  // OETH Base Contracts / Addresses
   [baseAddresses.superOETHb.address]: 'Super OETH Base',
   [baseAddresses.superOETHb.wrapped]: 'Wrapped Super OETH Base',
   [baseAddresses.superOETHb.vault]: 'Super OETH Base Vault',
@@ -220,6 +220,8 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [baseAddresses.superOETHb.strategies.amo]: 'Super OETH - Aerodrome AMO Strategy',
   [baseAddresses.multisig['5/8']]: 'Base Multisig 5/8',
   [baseAddresses.multisig['2/8']]: 'Base Multisig 2/8',
+  [baseAddresses.multisig.reservoir]: 'Super OETH Base Reservoir',
+  [baseAddresses.baseHotWallet]: 'Base Hot Wallet',
 
   // Base Tokens
   [baseAddresses.tokens.bridgedWOETH]: 'WOETH (Base)',

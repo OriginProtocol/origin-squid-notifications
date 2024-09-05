@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-8/29/2024, 9:42:53 AM
+9/5/2024, 9:59:04 AM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -898,6 +898,7 @@ events:
     address: 
       - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
       - 0x28bce2ee5775b652d92bb7c2891a89f036619703 (Base Multisig 2/8)
+      - 0xb6d85ce798660076152d6fd3a484129668839c95 (Super OETH Base Reservoir)
     topic0: 
       - AddedOwner | 0x9465fa0c
       - ApproveHash | 0xf2a0eb15

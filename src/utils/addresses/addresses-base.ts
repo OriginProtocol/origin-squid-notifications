@@ -21,6 +21,7 @@ export const tokens = {
   WETH: '0x4200000000000000000000000000000000000006',
   OGN: '0x7002458b1df59eccb57387bc79ffc7c29e22e6f7',
   cbETH: '0x2ae3f1ec7f1f5012cfeab0185bfc7aa3cf0dec22',
+  AERO: '0x940181a94a35a4569e4529a3cdfb74e38fd98631',
   bridgedWOETH: '0xd8724322f44e5c58d7a815f542036fb17dbbf839',
   superOETHb: superOETHb.address,
   wsuperOETHb: superOETHb.wrapped,
@@ -55,7 +56,10 @@ export const aerodromePools = {
     ],
     lps: ['0xfd9e6005187f448957a0972a7d0c0a6da2911236'],
     from: 18084976,
-    gauge: null,
+    gauge: {
+      address: '0x147587251c3a4f8c907edbc0e5a5ea953bda743d',
+      from: 18633758,
+    },
   },
   'CL1-WETH/superOETHb': {
     name: 'CL1-WETH/superOETHb',
@@ -68,9 +72,12 @@ export const aerodromePools = {
       },
       { address: '0xdbfefd2e8460a6ee4955a68582f85708baea60a3', decimals: 18 },
     ],
-    lps: ['0xfd9e6005187f448957a0972a7d0c0a6da2911236'],
+    lps: [superOETHb.strategies.amo],
     from: 18056601,
-    gauge: null,
+    gauge: {
+      address: '0xdd234dbe2eff53bed9e8fc0e427ebcd74ed4f429',
+      from: 18633733,
+    },
   },
   'CL1-cbETH/WETH': {
     name: 'CL1-cbETH/WETH',
@@ -111,7 +118,9 @@ export const baseAddresses = {
   multisig: {
     '5/8': '0x92a19381444a001d62ce67baff066fa1111d7202',
     '2/8': '0x28bce2ee5775b652d92bb7c2891a89f036619703',
+    reservoir: '0xb6d85ce798660076152d6fd3a484129668839c95',
   },
+  baseHotWallet: '0x3c112e20141b65041c252a68a611ef145f58b7bc',
   tokens,
   superOETHb,
   origin: compact(
