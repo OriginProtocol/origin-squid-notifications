@@ -210,8 +210,8 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [OETH_ETH_AMO_METAPOOL]: 'OETH Curve AMO Metapool',
 
   // OETH Base Contracts / Addresses
-  [baseAddresses.superOETHb.address]: 'Super OETH Base',
-  [baseAddresses.superOETHb.wrapped]: 'Wrapped Super OETH Base',
+  [baseAddresses.superOETHb.address]: 'superOETHb',
+  [baseAddresses.superOETHb.wrapped]: 'wsuperOETHb',
   [baseAddresses.superOETHb.vault]: 'Super OETH Base Vault',
   [baseAddresses.superOETHb.oracleRouter]: 'Super OETH Base Price Oracle',
   [baseAddresses.superOETHb.dripper]: 'Super OETH Dripper',

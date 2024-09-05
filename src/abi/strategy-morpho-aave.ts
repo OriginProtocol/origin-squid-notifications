@@ -29,8 +29,8 @@ export const functions = {
     getRewardTokenAddresses: viewFun("0xf6ca71b0", "getRewardTokenAddresses()", {}, p.array(p.address)),
     governor: viewFun("0x0c340a24", "governor()", {}, p.address),
     harvesterAddress: viewFun("0x67c7066c", "harvesterAddress()", {}, p.address),
-    "initialize(address,address[],address[],address[])": fun("0x2f26b1de", "initialize(address,address[],address[],address[])", {"_vaultAddress": p.address, "_rewardTokenAddresses": p.array(p.address), "_assets": p.array(p.address), "_pTokens": p.array(p.address)}, ),
-    "initialize(address,address,address[],address[],address[])": fun("0x9688d2fc", "initialize(address,address,address[],address[],address[])", {"_platformAddress": p.address, "_vaultAddress": p.address, "_rewardTokenAddresses": p.array(p.address), "_assets": p.array(p.address), "_pTokens": p.array(p.address)}, ),
+    'initialize(address,address[],address[],address[])': fun("0x2f26b1de", "initialize(address,address[],address[],address[])", {"_vaultAddress": p.address, "_rewardTokenAddresses": p.array(p.address), "_assets": p.array(p.address), "_pTokens": p.array(p.address)}, ),
+    'initialize(address,address,address[],address[],address[])': fun("0x9688d2fc", "initialize(address,address,address[],address[],address[])", {"_platformAddress": p.address, "_vaultAddress": p.address, "_rewardTokenAddresses": p.array(p.address), "_assets": p.array(p.address), "_pTokens": p.array(p.address)}, ),
     isGovernor: viewFun("0xc7af3352", "isGovernor()", {}, p.bool),
     platformAddress: viewFun("0xdbe55e56", "platformAddress()", {}, p.address),
     removePToken: fun("0x9136616a", "removePToken(uint256)", {"_assetIndex": p.uint256}, ),
@@ -164,11 +164,11 @@ export type GovernorReturn = FunctionReturn<typeof functions.governor>
 export type HarvesterAddressParams = FunctionArguments<typeof functions.harvesterAddress>
 export type HarvesterAddressReturn = FunctionReturn<typeof functions.harvesterAddress>
 
-export type InitializeParams_0 = FunctionArguments<typeof functions["initialize(address,address[],address[],address[])"]>
-export type InitializeReturn_0 = FunctionReturn<typeof functions["initialize(address,address[],address[],address[])"]>
+export type InitializeParams_0 = FunctionArguments<typeof functions['initialize(address,address[],address[],address[])']>
+export type InitializeReturn_0 = FunctionReturn<typeof functions['initialize(address,address[],address[],address[])']>
 
-export type InitializeParams_1 = FunctionArguments<typeof functions["initialize(address,address,address[],address[],address[])"]>
-export type InitializeReturn_1 = FunctionReturn<typeof functions["initialize(address,address,address[],address[],address[])"]>
+export type InitializeParams_1 = FunctionArguments<typeof functions['initialize(address,address,address[],address[],address[])']>
+export type InitializeReturn_1 = FunctionReturn<typeof functions['initialize(address,address,address[],address[],address[])']>
 
 export type IsGovernorParams = FunctionArguments<typeof functions.isGovernor>
 export type IsGovernorReturn = FunctionReturn<typeof functions.isGovernor>

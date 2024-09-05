@@ -43,3 +43,8 @@ export function formatAmount(amount: string | bigint | number, decimals = 18, op
 
   return `~0`
 }
+
+export function formatChange(amount: string | bigint | number, decimals = 18, options?: Intl.NumberFormatOptions) {
+  if (Number(amount) > 0) return `+${formatAmount(amount, decimals, options)}`
+  return formatAmount(amount, decimals, options)
+}

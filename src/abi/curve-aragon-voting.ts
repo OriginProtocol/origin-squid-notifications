@@ -49,7 +49,7 @@ export const functions = {
     canExecute: viewFun("0xcc63604a", "canExecute(uint256)", {"_voteId": p.uint256}, p.bool),
     canVote: viewFun("0xcdb2867b", "canVote(uint256,address)", {"_voteId": p.uint256, "_voter": p.address}, p.bool),
     kernel: viewFun("0xd4aae0c4", "kernel()", {}, p.address),
-    "newVote(bytes,string)": fun("0xd5db2c80", "newVote(bytes,string)", {"_executionScript": p.bytes, "_metadata": p.string}, p.uint256),
+    'newVote(bytes,string)': fun("0xd5db2c80", "newVote(bytes,string)", {"_executionScript": p.bytes, "_metadata": p.string}, p.uint256),
     forward: fun("0xd948d468", "forward(bytes)", {"_evmScript": p.bytes}, ),
     disableVoteCreationOnce: fun("0xdc177eec", "disableVoteCreationOnce()", {}, ),
     minAcceptQuorumPct: viewFun("0xdc474b1a", "minAcceptQuorumPct()", {}, p.uint64),
@@ -60,7 +60,7 @@ export const functions = {
     minTimeUpperLimit: viewFun("0xdf352197", "minTimeUpperLimit()", {}, p.uint256),
     minBalanceLowerLimit: viewFun("0xeb1e3b77", "minBalanceLowerLimit()", {}, p.uint256),
     enableVoteCreation: viewFun("0xee0f160e", "enableVoteCreation()", {}, p.bool),
-    "newVote(bytes,string,bool,bool)": fun("0xf4b00513", "newVote(bytes,string,bool,bool)", {"_executionScript": p.bytes, "_metadata": p.string, "_castVote": p.bool, "_executesIfDecided": p.bool}, p.uint256),
+    'newVote(bytes,string,bool,bool)': fun("0xf4b00513", "newVote(bytes,string,bool,bool)", {"_executionScript": p.bytes, "_metadata": p.string, "_castVote": p.bool, "_executesIfDecided": p.bool}, p.uint256),
     executeVote: fun("0xf98a4eca", "executeVote(uint256)", {"_voteId": p.uint256}, ),
     supportRequiredPct: viewFun("0xfad167ab", "supportRequiredPct()", {}, p.uint64),
     token: viewFun("0xfc0c546a", "token()", {}, p.address),
@@ -338,8 +338,8 @@ export type CanVoteReturn = FunctionReturn<typeof functions.canVote>
 export type KernelParams = FunctionArguments<typeof functions.kernel>
 export type KernelReturn = FunctionReturn<typeof functions.kernel>
 
-export type NewVoteParams_0 = FunctionArguments<typeof functions["newVote(bytes,string)"]>
-export type NewVoteReturn_0 = FunctionReturn<typeof functions["newVote(bytes,string)"]>
+export type NewVoteParams_0 = FunctionArguments<typeof functions['newVote(bytes,string)']>
+export type NewVoteReturn_0 = FunctionReturn<typeof functions['newVote(bytes,string)']>
 
 export type ForwardParams = FunctionArguments<typeof functions.forward>
 export type ForwardReturn = FunctionReturn<typeof functions.forward>
@@ -371,8 +371,8 @@ export type MinBalanceLowerLimitReturn = FunctionReturn<typeof functions.minBala
 export type EnableVoteCreationParams = FunctionArguments<typeof functions.enableVoteCreation>
 export type EnableVoteCreationReturn = FunctionReturn<typeof functions.enableVoteCreation>
 
-export type NewVoteParams_1 = FunctionArguments<typeof functions["newVote(bytes,string,bool,bool)"]>
-export type NewVoteReturn_1 = FunctionReturn<typeof functions["newVote(bytes,string,bool,bool)"]>
+export type NewVoteParams_1 = FunctionArguments<typeof functions['newVote(bytes,string,bool,bool)']>
+export type NewVoteReturn_1 = FunctionReturn<typeof functions['newVote(bytes,string,bool,bool)']>
 
 export type ExecuteVoteParams = FunctionArguments<typeof functions.executeVote>
 export type ExecuteVoteReturn = FunctionReturn<typeof functions.executeVote>

@@ -114,6 +114,8 @@ export const aerodromePools = {
 export type PoolDefinition = (typeof aerodromePools)[keyof typeof aerodromePools]
 export const aerodromePoolArray: PoolDefinition[] = Object.values(aerodromePools)
 
+export const getAerodromePool = (address: string) => aerodromePoolArray.find((p) => p.address === address)
+
 export const baseAddresses = {
   multisig: {
     '5/8': '0x92a19381444a001d62ce67baff066fa1111d7202',
@@ -138,6 +140,7 @@ export const baseAddresses = {
     basePrices: '0xee717411f6e44f9fee011835c8e6faac5deff166',
     offchainOracle: '0x5b80fd3dc871d56a31bf7bb13b14cd8a8fbf7baf',
     sugarLPV3: '0x68c19e13618c41158fe4baba1b8fb3a9c74bdb0a',
+    clHelper: '0x6d2d739bf37dfd93d804523c2dfa948eaf32f8e1',
     factoryRegistry: '0x5c3f18f06cc09ca1910767a34a20f771039e37c0',
     slipstreamNft: '0x827922686190790b37229fd06084350e74485b72',
     pools: aerodromePools,

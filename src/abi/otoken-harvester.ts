@@ -19,8 +19,8 @@ export const functions = {
     claimGovernance: fun("0x5d36b190", "claimGovernance()", {}, ),
     curvePoolIndices: viewFun("0xe48d7fc5", "curvePoolIndices(address)", {"_0": p.address}, {"rewardTokenIndex": p.uint128, "baseTokenIndex": p.uint128}),
     governor: viewFun("0x0c340a24", "governor()", {}, p.address),
-    "harvestAndSwap(address)": fun("0x548f5ae5", "harvestAndSwap(address)", {"_strategyAddr": p.address}, ),
-    "harvestAndSwap(address,address)": fun("0xa994317f", "harvestAndSwap(address,address)", {"_strategyAddr": p.address, "_rewardTo": p.address}, ),
+    'harvestAndSwap(address)': fun("0x548f5ae5", "harvestAndSwap(address)", {"_strategyAddr": p.address}, ),
+    'harvestAndSwap(address,address)': fun("0xa994317f", "harvestAndSwap(address,address)", {"_strategyAddr": p.address, "_rewardTo": p.address}, ),
     isGovernor: viewFun("0xc7af3352", "isGovernor()", {}, p.bool),
     rewardProceedsAddress: viewFun("0xb76e83af", "rewardProceedsAddress()", {}, p.address),
     rewardTokenConfigs: viewFun("0x587c8440", "rewardTokenConfigs(address)", {"_0": p.address}, {"allowedSlippageBps": p.uint16, "harvestRewardBps": p.uint16, "swapPlatformAddr": p.address, "doSwapRewardToken": p.bool, "swapPlatform": p.uint8, "liquidationLimit": p.uint256}),
@@ -114,11 +114,11 @@ export type CurvePoolIndicesReturn = FunctionReturn<typeof functions.curvePoolIn
 export type GovernorParams = FunctionArguments<typeof functions.governor>
 export type GovernorReturn = FunctionReturn<typeof functions.governor>
 
-export type HarvestAndSwapParams_0 = FunctionArguments<typeof functions["harvestAndSwap(address)"]>
-export type HarvestAndSwapReturn_0 = FunctionReturn<typeof functions["harvestAndSwap(address)"]>
+export type HarvestAndSwapParams_0 = FunctionArguments<typeof functions['harvestAndSwap(address)']>
+export type HarvestAndSwapReturn_0 = FunctionReturn<typeof functions['harvestAndSwap(address)']>
 
-export type HarvestAndSwapParams_1 = FunctionArguments<typeof functions["harvestAndSwap(address,address)"]>
-export type HarvestAndSwapReturn_1 = FunctionReturn<typeof functions["harvestAndSwap(address,address)"]>
+export type HarvestAndSwapParams_1 = FunctionArguments<typeof functions['harvestAndSwap(address,address)']>
+export type HarvestAndSwapReturn_1 = FunctionReturn<typeof functions['harvestAndSwap(address,address)']>
 
 export type IsGovernorParams = FunctionArguments<typeof functions.isGovernor>
 export type IsGovernorReturn = FunctionReturn<typeof functions.isGovernor>

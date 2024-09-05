@@ -17,8 +17,8 @@ export const functions = {
     governor: viewFun("0x0c340a24", "governor()", {}, p.address),
     isGovernor: viewFun("0xc7af3352", "isGovernor()", {}, p.bool),
     isMigrationActive: viewFun("0x0e913a6c", "isMigrationActive()", {}, p.bool),
-    "migrate(uint256)": fun("0x454b0608", "migrate(uint256)", {"ogvAmount": p.uint256}, p.uint256),
-    "migrate(uint256[],uint256,uint256,bool,uint256,uint256)": fun("0x5e1da48d", "migrate(uint256[],uint256,uint256,bool,uint256,uint256)", {"lockupIds": p.array(p.uint256), "ogvAmountFromWallet": p.uint256, "ognAmountFromWallet": p.uint256, "migrateRewards": p.bool, "newStakeAmount": p.uint256, "newStakeDuration": p.uint256}, ),
+    'migrate(uint256)': fun("0x454b0608", "migrate(uint256)", {"ogvAmount": p.uint256}, p.uint256),
+    'migrate(uint256[],uint256,uint256,bool,uint256,uint256)': fun("0x5e1da48d", "migrate(uint256[],uint256,uint256,bool,uint256,uint256)", {"lockupIds": p.array(p.uint256), "ogvAmountFromWallet": p.uint256, "ognAmountFromWallet": p.uint256, "migrateRewards": p.bool, "newStakeAmount": p.uint256, "newStakeDuration": p.uint256}, ),
     ogn: viewFun("0x602bc098", "ogn()", {}, p.address),
     ognStaking: viewFun("0x8a4d8f35", "ognStaking()", {}, p.address),
     ogv: viewFun("0x142561cf", "ogv()", {}, p.address),
@@ -93,11 +93,11 @@ export type IsGovernorReturn = FunctionReturn<typeof functions.isGovernor>
 export type IsMigrationActiveParams = FunctionArguments<typeof functions.isMigrationActive>
 export type IsMigrationActiveReturn = FunctionReturn<typeof functions.isMigrationActive>
 
-export type MigrateParams_0 = FunctionArguments<typeof functions["migrate(uint256)"]>
-export type MigrateReturn_0 = FunctionReturn<typeof functions["migrate(uint256)"]>
+export type MigrateParams_0 = FunctionArguments<typeof functions['migrate(uint256)']>
+export type MigrateReturn_0 = FunctionReturn<typeof functions['migrate(uint256)']>
 
-export type MigrateParams_1 = FunctionArguments<typeof functions["migrate(uint256[],uint256,uint256,bool,uint256,uint256)"]>
-export type MigrateReturn_1 = FunctionReturn<typeof functions["migrate(uint256[],uint256,uint256,bool,uint256,uint256)"]>
+export type MigrateParams_1 = FunctionArguments<typeof functions['migrate(uint256[],uint256,uint256,bool,uint256,uint256)']>
+export type MigrateReturn_1 = FunctionReturn<typeof functions['migrate(uint256[],uint256,uint256,bool,uint256,uint256)']>
 
 export type OgnParams = FunctionArguments<typeof functions.ogn>
 export type OgnReturn = FunctionReturn<typeof functions.ogn>
