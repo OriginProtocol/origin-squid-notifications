@@ -1,11 +1,9 @@
 import * as vaultAbi from '../../../abi/otoken-vault'
 import { OETH_VAULT_ADDRESS, OUSD_VAULT_ADDRESS } from '../../../utils/addresses'
 import { baseAddresses } from '../../../utils/addresses/addresses-base'
-import { getAddressesPyName } from '../../../utils/addresses/names'
 import { formatAmount } from '../../../utils/formatAmount'
-import { transactionLink } from '../../../utils/links'
+import { addressLink, transactionLink } from '../../../utils/links'
 import { Topic } from '../../const'
-import { notifyDiscord } from '../../discord'
 import { registerEventRenderer } from '../event'
 import { defaultEventRenderer } from './default'
 import { renderDiscordEmbed } from './utils'
@@ -31,9 +29,7 @@ registerEventRenderer(vaultAbi.events.Mint.topic, async (params) => {
     severity: params.severity,
     title: `${vault.topic} Minted`,
     titleUrl: transactionLink(log.transactionHash, params.ctx.chain),
-    description: `Wallet: [${getAddressesPyName(data._addr) ?? data._addr}](https://etherscan.io/address/${
-      data._addr
-    })`,
+    description: `Wallet: ${addressLink(params.ctx, data._addr)}`,
     fields: [
       {
         name: formatAmount(data._value),
@@ -58,7 +54,7 @@ registerEventRenderer(vaultAbi.events.YieldDistribution.topic, async (params) =>
     severity: params.severity,
     title: `${vault.topic} YieldDistribution`,
     titleUrl: transactionLink(log.transactionHash, params.ctx.chain),
-    description: `Wallet: [${getAddressesPyName(data._to) ?? data._to}](https://etherscan.io/address/${data._to})`,
+    description: `Wallet: ${addressLink(params.ctx, data._to)}`,
     fields: [
       {
         name: formatAmount(data._yield),
@@ -89,13 +85,85 @@ registerEventRenderer(vaultAbi.events.Redeem.topic, async (params) => {
     severity: params.severity,
     title: `${vault.topic} Redeem`,
     titleUrl: transactionLink(log.transactionHash, params.ctx.chain),
-    description: `Wallet: [${getAddressesPyName(data._addr) ?? data._addr}](https://etherscan.io/address/${
-      data._addr
-    })`,
+    description: `Wallet: ${addressLink(params.ctx, data._addr)}`,
     fields: [
       {
         name: formatAmount(data._value),
         value: `${vault.emoji} Redeem`,
+      },
+    ],
+  })
+})
+
+registerEventRenderer(vaultAbi.events.WithdrawalRequested.topic, async (params) => {
+  const { log } = params
+  const vault = vaults[log.address]
+  if (!vault) {
+    params.ctx.log.warn({ address: params.log.address }, 'Unsupported Vault')
+    return defaultEventRenderer(params)
+  }
+
+  const data = vaultAbi.events.WithdrawalRequested.decode(log)
+  renderDiscordEmbed({
+    sortId: `${log.block.height}:${log.transactionIndex}:${log.logIndex}`,
+    topic: params.topic,
+    severity: params.severity,
+    title: `${vault.topic} Withdrawal Requested`,
+    titleUrl: transactionLink(log.transactionHash, params.ctx.chain),
+    description: `Wallet: ${addressLink(params.ctx, data._withdrawer)}`,
+    fields: [
+      {
+        name: formatAmount(data._amount),
+        value: `${vault.emoji} Requested`,
+      },
+    ],
+  })
+})
+
+registerEventRenderer(vaultAbi.events.WithdrawalClaimed.topic, async (params) => {
+  const { log } = params
+  const vault = vaults[log.address]
+  if (!vault) {
+    params.ctx.log.warn({ address: params.log.address }, 'Unsupported Vault')
+    return defaultEventRenderer(params)
+  }
+
+  const data = vaultAbi.events.WithdrawalClaimed.decode(log)
+  renderDiscordEmbed({
+    sortId: `${log.block.height}:${log.transactionIndex}:${log.logIndex}`,
+    topic: params.topic,
+    severity: params.severity,
+    title: `${vault.topic} Withdrawal Claimed`,
+    titleUrl: transactionLink(log.transactionHash, params.ctx.chain),
+    description: `Wallet: ${addressLink(params.ctx, data._withdrawer)}`,
+    fields: [
+      {
+        name: formatAmount(data._amount),
+        value: `${vault.emoji} Claimed`,
+      },
+    ],
+  })
+})
+
+registerEventRenderer(vaultAbi.events.WithdrawalClaimable.topic, async (params) => {
+  const { log } = params
+  const vault = vaults[log.address]
+  if (!vault) {
+    params.ctx.log.warn({ address: params.log.address }, 'Unsupported Vault')
+    return defaultEventRenderer(params)
+  }
+
+  const data = vaultAbi.events.WithdrawalClaimable.decode(log)
+  renderDiscordEmbed({
+    sortId: `${log.block.height}:${log.transactionIndex}:${log.logIndex}`,
+    topic: params.topic,
+    severity: params.severity,
+    title: `${vault.topic} Withdrawal Claimable`,
+    titleUrl: transactionLink(log.transactionHash, params.ctx.chain),
+    fields: [
+      {
+        name: formatAmount(data._newClaimable),
+        value: `${vault.emoji} Claimable`,
       },
     ],
   })

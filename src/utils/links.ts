@@ -1,6 +1,9 @@
 import { Chain } from 'viem'
 import { arbitrum, base } from 'viem/chains'
 
+import { Context } from '../types'
+import { getAddressesPyName } from './addresses/names'
+
 export const transactionLink = (
   tx: string,
   chain: Chain,
@@ -17,3 +20,8 @@ export const transactionLink = (
     `&utm_source=alert_notification`
   )
 }
+
+export const addressLink = (ctx: Context, address: string) =>
+  `[${getAddressesPyName(address) ?? address}](${
+    ctx.chain.blockExplorers?.default?.url ?? 'https://etherscan.io/'
+  }/address/${address})`
