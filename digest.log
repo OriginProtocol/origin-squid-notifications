@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-9/5/2024, 9:59:04 AM
+9/13/2024, 12:10:29 PM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -124,7 +124,6 @@ events:
       - ETHStaked | 0x958934bb
       - FuseIntervalUpdated | 0xcb8d24e4
       - HarvesterAddressesUpdated | 0xe48386b8
-      - Paused | 0x62e78cea
       - RegistratorChanged | 0x83f29c79
       - RewardTokenAddressesUpdated | 0x04c0b964
       - RewardTokenCollected | 0xf6c07a06
@@ -141,9 +140,15 @@ events:
       - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
       - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
     topic0: 
+      - Paused | 0x62e78cea
       - PTokenAdded | 0xef6485b8
       - PTokenRemoved | 0x16b7600a
-    severity: high
+    severity:     high
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
 =========================================
 name:    OETH Curve AMO Strategy
 topic:   OETH
@@ -719,7 +724,7 @@ chainId: 8453
 events: 
   - 
     address: 
-      - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (Super OETH Base)
+      - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (superOETHb)
     topic0: 
       - AccountRebasingDisabled | 0x201ace89
       - AccountRebasingEnabled | 0x19a249fa
@@ -843,7 +848,7 @@ chainId: 8453
 events: 
   - 
     address: 
-      - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (Super OETH Base)
+      - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (superOETHb)
     topic0: 
       - Transfer | 0xddf252ad
     topic2: 
@@ -857,7 +862,7 @@ chainId: 8453
 events: 
   - 
     address: 
-      - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (Wrapped Super OETH Base)
+      - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
     topic0: 
       - Transfer | 0xddf252ad
     topic2: 
@@ -871,8 +876,8 @@ chainId: 8453
 events: 
   - 
     address: 
-      - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (Super OETH Base)
-      - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (Wrapped Super OETH Base)
+      - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (superOETHb)
+      - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
       - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
       - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
       - 0x0030c7dc6cb7f449e9566f273342c3370ee6b16a (Super OETH Dripper)
@@ -934,8 +939,8 @@ traces:
         type: 
           - call
         callFrom: 
-          - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (Super OETH Base)
-          - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (Wrapped Super OETH Base)
+          - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (superOETHb)
+          - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
           - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
           - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
           - 0x0030c7dc6cb7f449e9566f273342c3370ee6b16a (Super OETH Dripper)
@@ -945,8 +950,8 @@ traces:
         type: 
           - call
         callTo: 
-          - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (Super OETH Base)
-          - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (Wrapped Super OETH Base)
+          - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (superOETHb)
+          - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
           - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
           - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
           - 0x0030c7dc6cb7f449e9566f273342c3370ee6b16a (Super OETH Dripper)

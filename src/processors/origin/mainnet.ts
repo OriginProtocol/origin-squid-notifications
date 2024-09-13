@@ -61,6 +61,7 @@ createEventProcessor({
       address: OETH_NATIVE_STRATEGY_ADDRESSES,
       events: omit(strategyNativeStakingAbi.events, [
         ...Object.keys(governedUpgradeabilityProxy.events),
+        'Paused',
         'PTokenAdded',
         'PTokenRemoved',
       ]),
@@ -74,8 +75,9 @@ createEventProcessor({
     },
     {
       address: OETH_NATIVE_STRATEGY_ADDRESSES,
-      events: pick(strategyNativeStakingAbi.events, 'PTokenAdded', 'PTokenRemoved'),
+      events: pick(strategyNativeStakingAbi.events, 'Paused', 'PTokenAdded', 'PTokenRemoved'),
       severity: 'high',
+      notifyTarget: notifyTargets.Engineering,
     },
   ],
 })
