@@ -8,6 +8,7 @@ import * as multisigABI from '../../abi/multisig'
 import * as oethZapperAbi from '../../abi/oeth-zapper'
 import * as strategyAerodromeAMOABI from '../../abi/strategy-aerodrome-amo'
 import * as strategyBridgedWOETHABI from '../../abi/strategy-bridged-woeth'
+import * as timelockBaseABI from '../../abi/timelock-base'
 import { discordIconOrName, notifyTargets } from '../../notify/const'
 import { renderEventDiscordEmbed } from '../../notify/event/renderers/utils'
 import { WOETH_ADDRESS } from '../../utils/addresses'
@@ -161,6 +162,21 @@ createEventProcessor({
       severity: 'medium',
       events: multisigABI.events,
       address: Object.values(baseAddresses.multisig),
+      notifyTarget: notifyTargets.Engineering,
+    },
+  ],
+})
+
+// Timelock
+createEventProcessor({
+  name: 'Base Timelock',
+  chainId: base.id,
+  topic: 'superOETHb',
+  tracks: [
+    {
+      severity: 'medium',
+      events: timelockBaseABI.events,
+      address: [baseAddresses.timelock],
       notifyTarget: notifyTargets.Engineering,
     },
   ],

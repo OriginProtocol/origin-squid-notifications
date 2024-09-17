@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-9/13/2024, 12:10:29 PM
+9/17/2024, 9:19:52 AM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -880,7 +880,7 @@ events:
       - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
       - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
       - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
-      - 0x0030c7dc6cb7f449e9566f273342c3370ee6b16a (Super OETH Dripper)
+      - 0x02f2c609950e90934ce99e58b4d7326ad0d7f8d6 (Super OETH Dripper)
       - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
       - 0x80c864704dd06c3693ed5179190786ee38acf835 (Super OETH - Bridged WOETH Strategy)
       - 0xf611cc500eee7e4e4763a05fe623e2363c86d2af (Super OETH - Aerodrome AMO Strategy)
@@ -929,6 +929,28 @@ events:
       discordMentions: 
         - <@&997340701551513762>
 =========================================
+name:    Base Timelock
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0xf817cb3092179083c48c014688d98b72fb61464f (Base Timelock)
+    topic0: 
+      - CallExecuted | 0xc2617efa
+      - CallScheduled | 0x4cf4410c
+      - Cancelled | 0xbaa1eb22
+      - MinDelayChange | 0x11c24f4e
+      - RoleAdminChanged | 0xbd79b86f
+      - RoleGranted | 0x2f878811
+      - RoleRevoked | 0xf6391f5c
+    severity:     medium
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
 name:    Super OETH Base Error Trace
 topic:   superOETHb
 chainId: 8453
@@ -943,7 +965,7 @@ traces:
           - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
           - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
           - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
-          - 0x0030c7dc6cb7f449e9566f273342c3370ee6b16a (Super OETH Dripper)
+          - 0x02f2c609950e90934ce99e58b4d7326ad0d7f8d6 (Super OETH Dripper)
           - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
         error:    true
       - 
@@ -954,7 +976,7 @@ traces:
           - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
           - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
           - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
-          - 0x0030c7dc6cb7f449e9566f273342c3370ee6b16a (Super OETH Dripper)
+          - 0x02f2c609950e90934ce99e58b4d7326ad0d7f8d6 (Super OETH Dripper)
           - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
         error:  true
     topic:        superOETHb

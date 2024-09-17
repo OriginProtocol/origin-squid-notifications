@@ -122,6 +122,7 @@ export const baseAddresses = {
     '2/8': '0x28bce2ee5775b652d92bb7c2891a89f036619703',
     reservoir: '0xb6d85ce798660076152d6fd3a484129668839c95',
   },
+  timelock: '0xf817cb3092179083c48c014688d98b72fb61464f',
   baseHotWallet: '0x3c112e20141b65041c252a68a611ef145f58b7bc',
   tokens,
   superOETHb,

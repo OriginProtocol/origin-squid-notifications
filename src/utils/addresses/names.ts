@@ -221,6 +221,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [baseAddresses.multisig['5/8']]: 'Base Multisig 5/8',
   [baseAddresses.multisig['2/8']]: 'Base Multisig 2/8',
   [baseAddresses.multisig.reservoir]: 'Super OETH Base Reservoir',
+  [baseAddresses.timelock]: 'Base Timelock',
   [baseAddresses.baseHotWallet]: 'Base Hot Wallet',
 
   // Base Tokens
