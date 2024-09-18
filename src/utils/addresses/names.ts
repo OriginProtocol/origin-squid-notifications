@@ -230,6 +230,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [baseAddresses.tokens.WETH]: 'WETH (Base)',
   [baseAddresses.tokens.cbETH]: 'cbETH (Base)',
   [baseAddresses.tokens.USDC]: 'USDC (Base)',
+  [baseAddresses.tokens.AERO]: 'AERO',
 
   // Aerodrome Pools
   [baseAddresses.aerodrome.pools['vAMM-WETH/OGN'].address]: 'Aerodrome: vAMM-WETH/OGN',

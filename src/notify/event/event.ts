@@ -1,5 +1,3 @@
-import { pick } from 'lodash'
-
 import { AbiEvent } from '@subsquid/evm-abi'
 
 import { Block, Context, Log } from '../../types'
@@ -30,7 +28,7 @@ export const notifyForEvent = async (params: {
   notifyTarget?: NotifyTarget
   renderer?: EventRenderer
 }) => {
-  if (process.env.BLOCK_FROM) {
+  if (process.env.BLOCK_FROM && process.env.RESTRICT_NOTIFICATIONS !== 'false') {
     if (uniqueEventsFired.has(params.log.topics[0])) return
     else uniqueEventsFired.add(params.log.topics[0])
   }

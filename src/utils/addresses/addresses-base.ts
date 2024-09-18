@@ -1,4 +1,4 @@
-import { compact, keyBy, omit, uniq } from 'lodash'
+import { compact, omit, uniq } from 'lodash'
 
 const superOETHb = {
   address: '0xdbfefd2e8460a6ee4955a68582f85708baea60a3',
@@ -58,6 +58,8 @@ export const aerodromePools = {
     from: 18084976,
     gauge: {
       address: '0x147587251c3a4f8c907edbc0e5a5ea953bda743d',
+      bribeVotingRewards: '0x1f6ab4aa92aa7f95b7eff5aa507119472ad1c5d3',
+      feeVotingReward: '0x5b15cbd32ca5e9f9f484fb1f9788d7ff08e4e6a9',
       from: 18633758,
     },
   },
@@ -76,6 +78,8 @@ export const aerodromePools = {
     from: 18056601,
     gauge: {
       address: '0xdd234dbe2eff53bed9e8fc0e427ebcd74ed4f429',
+      bribeVotingRewards: '0x685ce0e36ca4b81f13b7551c76143d962568f6dd',
+      feeVotingReward: '0x9f1ccb5da202d445fb59cfebf6eec72975e7ed4e',
       from: 18633733,
     },
   },

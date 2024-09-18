@@ -12,7 +12,7 @@ import {
 import { baseAddresses } from '../utils/addresses/addresses-base'
 import { getAddressesPyName } from '../utils/addresses/names'
 
-export type Severity = 'low' | 'medium' | 'high' | 'critical' | 'broken'
+export type Severity = 'low' | 'medium' | 'high' | 'critical' | 'broken' | 'highlight'
 export type Topic = 'OGN' | 'xOGN' | 'OETH' | 'superOETHb' | 'OUSD' | 'primeETH'
 
 export const severityEmojis: Record<Severity, string> = {
@@ -21,6 +21,7 @@ export const severityEmojis: Record<Severity, string> = {
   high: '🟥',
   critical: '🟪',
   broken: '💔',
+  highlight: '🥳',
 }
 
 export const severityColors: Record<Severity, HexColorString> = {
@@ -29,6 +30,7 @@ export const severityColors: Record<Severity, HexColorString> = {
   high: '#d62c1d',
   critical: '#bc3bff',
   broken: '#ff4638',
+  highlight: '#1285FF',
 }
 
 export const topicThumbnails: Record<Topic, string> = {

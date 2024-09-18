@@ -29,6 +29,7 @@ import {
   XOGN_ADDRESS,
   addresses,
   strategies,
+  tokens,
 } from '../../utils/addresses'
 import { oethABIs, ognABIs, ousdABIs } from '../../utils/addresses/address-abis'
 import { GOVERNANCE_TIMELOCK, WOUSD } from '../../utils/addresses/ousd-analytics'
@@ -215,6 +216,8 @@ createTraceErrorProcessor({
   topic: 'OGN',
   severity: 'high',
   notifyTarget: notifyTargets.Engineering,
+  excludeFilter: ({ trace, functionName }) =>
+    trace.type === 'call' && trace.action.to === tokens.OGN && functionName === 'supportsInterface',
 })
 createTraceErrorProcessor({
   name: 'OETH Error Trace',

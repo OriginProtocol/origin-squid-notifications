@@ -9,6 +9,17 @@ import { notifyOncall } from './oncall'
 
 const uniqueTracesFired = new Set<string>()
 
+export interface NotifyForTraceInput {
+  ctx: Context
+  topic: Topic
+  severity?: Severity
+  name?: string
+  functionName?: string
+  functionData?: unknown
+  trace: Trace
+  notifyTarget?: NotifyTarget
+}
+
 export const notifyForTrace = async ({
   ctx,
   topic,
@@ -18,16 +29,7 @@ export const notifyForTrace = async ({
   functionData,
   trace,
   notifyTarget,
-}: {
-  ctx: Context
-  topic: Topic
-  severity?: Severity
-  name?: string
-  functionName?: string
-  functionData?: unknown
-  trace: Trace
-  notifyTarget?: NotifyTarget
-}) => {
+}: NotifyForTraceInput) => {
   let from = trace.type === 'call' ? trace.action.from : undefined
   let to = trace.type === 'call' ? trace.action.to : undefined
   let fromName = getAddressesPyName(from)

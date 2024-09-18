@@ -1,6 +1,7 @@
 import { omit, pick } from 'lodash'
 import { base } from 'viem/chains'
 
+import * as aeroBribeVotingRewardsABI from '../../abi/aerodrome-bribe-voting-rewards'
 import * as aeroCLPoolABI from '../../abi/aerodrome-cl-pool'
 import * as aeroPoolABI from '../../abi/aerodrome-pool'
 import * as erc20ABI from '../../abi/erc20'
@@ -219,6 +220,46 @@ createEventProcessor({
       severity: 'low',
       events: pick(aeroCLPoolABI.events, ['Mint', 'Burn', 'Swap']),
       address: [baseAddresses.aerodrome.pools['CL1-WETH/superOETHb'].address],
+    },
+  ],
+})
+
+// Aerodrome Bribe Voting Rewards
+createEventProcessor({
+  name: 'Aerodrome Incentives',
+  chainId: base.id,
+  topic: 'superOETHb',
+  tracks: [
+    {
+      severity: 'highlight',
+      events: pick(aeroBribeVotingRewardsABI.events, ['NotifyReward']),
+      address: [
+        baseAddresses.aerodrome.pools['CL1-WETH/superOETHb'].gauge.bribeVotingRewards,
+        baseAddresses.aerodrome.pools['vAMM-OGN/superOETHb'].gauge.bribeVotingRewards,
+      ],
+      renderers: {
+        NotifyReward: (params) => {
+          const pool =
+            params.log.address === baseAddresses.aerodrome.pools['CL1-WETH/superOETHb'].gauge.bribeVotingRewards
+              ? '[CL1-WETH/superOETHb](https://aerodrome.finance/vote?query=CL1-WETH%2FsuperOETHb)'
+              : '[vAMM-OGN/superOETHb](https://aerodrome.finance/vote?query=vAMM-OGN%2FsuperOETHb)'
+          const data = aeroBribeVotingRewardsABI.events.NotifyReward.decode(params.log)
+          const amountF = formatAmount(data.amount, 18, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+          renderEventDiscordEmbed(params, {
+            description: `Rewards added to: ${pool}`,
+            fields: [
+              {
+                name: `${amountF}`,
+                value: discordIconOrName(data.reward) ?? data.reward,
+                inline: true,
+              },
+            ],
+          })
+        },
+      },
     },
   ],
 })

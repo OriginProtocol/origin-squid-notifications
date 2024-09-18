@@ -3,7 +3,7 @@ import { EvmBatchProcessor } from '@subsquid/evm-processor'
 
 import { createProcessor } from '..'
 import { NotifyTarget, Severity, Topic } from '../../notify/const'
-import { notifyForTrace } from '../../notify/trace'
+import { NotifyForTraceInput, notifyForTrace } from '../../notify/trace'
 import { Context } from '../../types'
 import { traceFilter } from '../../utils/traceFilter'
 
@@ -17,6 +17,7 @@ export const createTraceProcessor = ({
   severity,
   notifyTarget,
   markEventsNotified,
+  excludeFilter,
 }: {
   name: string
   chainId: number
@@ -26,6 +27,7 @@ export const createTraceProcessor = ({
   severity?: Severity
   notifyTarget?: NotifyTarget
   markEventsNotified?: boolean
+  excludeFilter?: (notification: NotifyForTraceInput) => boolean
 }) => {
   const filter = traceParams.map((tp) => traceFilter(tp))
   const abiEntries = abi.flatMap((a) => Object.entries(a.functions))
@@ -62,7 +64,9 @@ export const createTraceProcessor = ({
             if (trace.error) {
               input.severity = 'broken'
             }
-            await notifyForTrace(input)
+            if (!excludeFilter || !excludeFilter(input)) {
+              await notifyForTrace(input)
+            }
           }
         }
       }

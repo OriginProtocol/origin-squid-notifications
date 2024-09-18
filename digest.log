@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-9/17/2024, 9:19:52 AM
+9/18/2024, 1:39:07 PM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -1013,6 +1013,18 @@ events:
       - Burn | 0x0c396cd9
       - Swap | 0xc42079f9
     severity: low
+=========================================
+name:    Aerodrome Incentives
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x685ce0e36ca4b81f13b7551c76143d962568f6dd
+      - 0x1f6ab4aa92aa7f95b7eff5aa507119472ad1c5d3
+    topic0: 
+      - NotifyReward | 0x52977ea9
+    severity: highlight
 =========================================
 name:    primeETH LRT Deposit Pool
 topic:   primeETH
