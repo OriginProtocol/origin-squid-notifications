@@ -5,6 +5,7 @@ import * as governedUpgradeabilityProxy from '../../abi/governed-upgradeability-
 import * as multisigABIs from '../../abi/multisig'
 import * as oethZapperAbi from '../../abi/oeth-zapper'
 import * as ogvOgnMigratorAbi from '../../abi/ogv-ogn-migrator'
+import * as strategyMetaMorphoAbi from '../../abi/strategy-meta-morpho'
 import * as strategyMorphoAaveAbi from '../../abi/strategy-morpho-aave'
 import * as strategyNativeStakingAbi from '../../abi/strategy-native-staking'
 import { discordIconOrName, notifyTargets } from '../../notify/const'
@@ -121,6 +122,17 @@ createEventProcessor({
       address: [strategies.ousd.MorphoAaveStrategy],
       events: pick(strategyMorphoAaveAbi.events, 'PTokenRemoved'),
       severity: 'high',
+    },
+  ],
+})
+createEventProcessor({
+  name: 'OUSD Meta Morpho Strategy',
+  chainId: 1,
+  topic: 'OUSD',
+  tracks: [
+    {
+      address: [strategies.ousd.MetaMorphoStrategy],
+      events: omit(strategyMetaMorphoAbi.events, [...Object.keys(governedUpgradeabilityProxy.events)]),
     },
   ],
 })

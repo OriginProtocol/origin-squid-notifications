@@ -149,6 +149,7 @@ export const strategies = {
     MorphoAaveStrategy: '0x79f2188ef9350a1dc11a062cca0abe90684b0197',
     FluxStrategy: '0x76bf500b6305dc4ea851384d3d5502f1c7a0ed44',
     Generalized4626Strategy: '0x6b69b755c629590ed59618a2712d8a2957ca98fc',
+    MetaMorphoStrategy: '0x603cdeaec82a60e3c4a10da6ab546459e5f64fa0',
     // CompoundStrategy: '0x9c459eeb3fa179a40329b81c1635525e9a0ef094', // Deprecated
     // ConvexStrategy: '0xea2ef2e2e5a749d4a66b41db9ad85a38aa264cb3', // Deprecated
     // LUSDMetaStrategy: '0x7a192dd9cc4ea9bdedec9992df74f1da55e60a19', // Deprecated

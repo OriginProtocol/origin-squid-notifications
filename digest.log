@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-9/18/2024, 1:39:07 PM
+9/23/2024, 9:46:37 AM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -194,6 +194,22 @@ events:
     topic0: 
       - PTokenRemoved | 0x16b7600a
     severity: high
+=========================================
+name:    OUSD Meta Morpho Strategy
+topic:   OUSD
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x603cdeaec82a60e3c4a10da6ab546459e5f64fa0 (OUSD Meta Morpho Strategy)
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - Withdrawal | 0x2717ead6
 =========================================
 name:    OETH Vault
 topic:   OETH
@@ -469,6 +485,7 @@ events:
       - 0x79f2188ef9350a1dc11a062cca0abe90684b0197 (Morpho Aave Strategy)
       - 0x76bf500b6305dc4ea851384d3d5502f1c7a0ed44 (Flux Strategy)
       - 0x6b69b755c629590ed59618a2712d8a2957ca98fc (Maker DSR Strategy)
+      - 0x603cdeaec82a60e3c4a10da6ab546459e5f64fa0 (OUSD Meta Morpho Strategy)
       - 0x9c354503c38481a7a7a51629142963f98ecc12d0 (OGV)
       - 0x0c4576ca1c365868e162554af8e385dc3e7c66d9 (veOGV)
       - 0x3cdd07c16614059e66344a7b579dab4f9516c0b6 (OUSD Governance (old))

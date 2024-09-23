@@ -196,6 +196,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
 
   // OUSD Contracts
   [OUSD_HARVESTER_ADDRESS]: 'OUSD Harvester',
+  [addresses.strategies.ousd.MetaMorphoStrategy]: 'OUSD Meta Morpho Strategy',
 
   // OETH Contracts
   [OETH]: 'OETH',
