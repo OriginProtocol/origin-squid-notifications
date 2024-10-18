@@ -41,6 +41,7 @@ import { createEventProcessor } from '../templates/event'
 import { createExponentialStakingProcessor } from '../templates/exponential-staking'
 import { createFixedRateRewardsSourceProcessor } from '../templates/fixed-rate-rewards-source'
 import { createGovernanceProcessor } from '../templates/governance'
+import { createOriginArmProcessor } from '../templates/origin-arm'
 import { createOTokenProcessor } from '../templates/otoken'
 import { createOTokenBuybackProcessor } from '../templates/otoken-buyback'
 import { createOTokenVaultProcessor } from '../templates/otoken-vaults'
@@ -308,4 +309,13 @@ createTraceProcessor({
       suicideRefundAddress: OETH_NATIVE_STRATEGY_ADDRESSES,
     },
   ],
+})
+
+createOriginArmProcessor({
+  name: 'Origin Lido ARM',
+  topic: 'ARM',
+  chainId: 1,
+  address: addresses.arm.address,
+  capManagerAddress: addresses.arm.capManager,
+  zapperAddress: addresses.arm.zapper,
 })

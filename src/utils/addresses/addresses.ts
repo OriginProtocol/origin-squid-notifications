@@ -201,6 +201,12 @@ export const ogn = {
   ogvMigrator: OGV_OGN_MIGRATOR_ADDRESS,
 }
 
+export const arm = {
+  address: '0x85b78aca6deae198fbf201c82daf6ca21942acc6',
+  capManager: '0xf54ebff575f699d281645c6f14fe427dffe629cf',
+  zapper: '0x01f30b7358ba51f637d1aa05d9b4a60f76dad680',
+}
+
 export const COMPOUND_GOVERNANCE_ALPHA = '0xc0da01a04c3f3e0be433606045bb7017a7323e38'
 export const COMPOUND_GOVERNANCE_BRAVO = '0xc0da02939e1441f497fd74f78ce7decb17b66529'
 export const COMPOUND_TIMELOCK = '0x6d903f6003cca6255d85cca4d3b5e5146dc33925'
@@ -227,6 +233,7 @@ export const addresses = {
   ousd,
   ogv,
   ogn,
+  arm,
   compound,
   origin: uniq(
     [
@@ -236,6 +243,7 @@ export const addresses = {
       ...Object.values(omit(ousd, 'vaultTokens')),
       ...Object.values(strategies.ousd),
       ...Object.values(ogv),
+      ...Object.values(arm),
     ]
       .flat()
       .map((a) => a.toLowerCase()),

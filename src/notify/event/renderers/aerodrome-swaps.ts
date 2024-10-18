@@ -1,5 +1,3 @@
-import { compact } from 'lodash'
-
 import { viewFun } from '@subsquid/evm-abi'
 import * as p from '@subsquid/evm-codec'
 
@@ -78,6 +76,11 @@ registerEventRenderer(aeroCLPoolAbi.events.Swap.topic, async (params) => {
   const token1 = pool.assets[1].address
   const amount0 = data.amount0
   const amount1 = data.amount1
+
+  if (pool.address === baseAddresses.aerodrome.pools['CL1-WETH/superOETHb'].address && amount0 < 10n ** 17n) {
+    return
+  }
+
   const contract = new aeroCLPoolAbi.Contract(params.ctx, params.block.header, log.address)
   const tickData = await contract.ticks(data.tick)
   const helperContract = new clHelperAbi.Contract(params.ctx, params.block.header, baseAddresses.aerodrome.clHelper)

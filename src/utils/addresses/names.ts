@@ -242,6 +242,10 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [PRIME_ETH_LRT_DEPOSIT_POOL]: 'PrimeETH Deposit Pool',
   '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee': 'ETH',
   [YNLSDE_ADDRESS]: 'ynLSDe',
+
+  // Misc
+  '0x17768cfd6030e2b65eb5086e34a512fde5dc1f1f': 'danielvf.eth',
+  '0xc8f2cf4742c86295653f893214725813b16f7410': 'ARM Gnosis Safe',
 }
 
 export const getAddressesPyName = (address?: string): string | undefined =>

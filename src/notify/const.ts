@@ -13,7 +13,7 @@ import { baseAddresses } from '../utils/addresses/addresses-base'
 import { getAddressesPyName } from '../utils/addresses/names'
 
 export type Severity = 'low' | 'medium' | 'high' | 'critical' | 'broken' | 'highlight'
-export type Topic = 'OGN' | 'xOGN' | 'OETH' | 'superOETHb' | 'OUSD' | 'primeETH'
+export type Topic = 'OGN' | 'xOGN' | 'OETH' | 'superOETHb' | 'OUSD' | 'primeETH' | 'ARM'
 
 export const severityEmojis: Record<Severity, string> = {
   low: 'ℹ️',
@@ -40,6 +40,7 @@ export const topicThumbnails: Record<Topic, string> = {
   superOETHb: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-super-oethb-logo.png',
   OUSD: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-dollar-ousd-logo.png',
   primeETH: 'https://origin-squid-notifications.s3.amazonaws.com/images/prime-eth-logo.png',
+  ARM: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-ogn-logo.png', // TODO: Add ARM thumbnail
 }
 
 export interface NotifyTarget {

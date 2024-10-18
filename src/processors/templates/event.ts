@@ -5,7 +5,7 @@ import { createProcessor } from '..'
 import { NotifyTarget, Severity, Topic } from '../../notify/const'
 import { EventRenderer, notifyForEvent } from '../../notify/event'
 import { Context } from '../../types'
-import { logFilter } from '../../utils/logFilter'
+import { LogFilter, logFilter } from '../../utils/logFilter'
 
 export type EventProcessorParams = Parameters<typeof createEventProcessor>[0]
 export const createEventProcessor = ({
@@ -18,7 +18,7 @@ export const createEventProcessor = ({
   chainId: number
   topic: Topic
   tracks: {
-    address: string[]
+    address?: string[]
     events: Record<string, ReturnType<typeof event>>
     topic1?: string[]
     topic2?: string[]
@@ -26,10 +26,11 @@ export const createEventProcessor = ({
     severity?: Severity
     notifyTarget?: NotifyTarget
     renderers?: Record<string, EventRenderer>
+    additionalFilters?: LogFilter[]
   }[]
 }) => {
   const trackData = tracks.map((track) => {
-    const { address, events, topic1, topic2, topic3 } = track
+    const { address, events, topic1, topic2, topic3, additionalFilters } = track
     const entries = Object.entries(events)
     const filter = logFilter({
       address,
@@ -37,8 +38,10 @@ export const createEventProcessor = ({
       topic1,
       topic2,
       topic3,
+      transaction: true,
+      transactionLogs: true,
     })
-    return { track, filter, entries }
+    return { track, filter, entries, additionalFilters }
   })
 
   createProcessor({
@@ -55,8 +58,11 @@ export const createEventProcessor = ({
       notifyTarget: d.track.notifyTarget,
     })),
     setup: (processor: EvmBatchProcessor) => {
-      for (const { filter } of trackData) {
+      for (const { filter, additionalFilters = [] } of trackData) {
         processor.addLog(filter.value)
+        for (const additionalFilter of additionalFilters) {
+          processor.addLog(additionalFilter.value)
+        }
       }
     },
     process: async (ctx: Context) => {

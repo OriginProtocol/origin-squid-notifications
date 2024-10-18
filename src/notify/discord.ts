@@ -10,6 +10,7 @@ const webhookUrls: Record<Topic, string> = {
   OUSD: process.env['DISCORD_WEBHOOK_URL_OUSD'] ?? '',
   xOGN: process.env['DISCORD_WEBHOOK_URL_XOGN'] ?? '',
   primeETH: process.env['DISCORD_WEBHOOK_URL_PRIME_ETH'] ?? '',
+  ARM: process.env['DISCORD_WEBHOOK_URL_ARM'] ?? '',
 }
 
 const clients: Record<Topic, WebhookClient | undefined> = {
@@ -19,6 +20,7 @@ const clients: Record<Topic, WebhookClient | undefined> = {
   OUSD: new WebhookClient({ url: webhookUrls.OUSD }),
   xOGN: new WebhookClient({ url: webhookUrls.xOGN }),
   primeETH: new WebhookClient({ url: webhookUrls.primeETH }),
+  ARM: new WebhookClient({ url: webhookUrls.ARM }),
 }
 
 let messageQueue: Map<string, { topic: Topic; data: WebhookMessageCreateOptions }> = new Map()

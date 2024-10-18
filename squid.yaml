@@ -19,12 +19,13 @@ deploy:
     - DISCORD_WEBHOOK_URL_SUPER_OETH_B
     - DISCORD_WEBHOOK_URL_OUSD
     - DISCORD_WEBHOOK_URL_PRIME_ETH
+    - DISCORD_WEBHOOK_URL_ARM
     - ONCALL_WEBHOOK_URL
   processor:
     - name: mainnet-processor
-      cmd: [ "sqd", "process:prod" ]
+      cmd: ['sqd', 'process:prod']
     - name: base-processor
-      cmd: [ "sqd", "process:base:prod" ]
+      cmd: ['sqd', 'process:base:prod']
       env:
         RPC_ENV_BASE: RPC_BASE_HTTP
 scale:

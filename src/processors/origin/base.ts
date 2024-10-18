@@ -220,6 +220,55 @@ createEventProcessor({
       severity: 'low',
       events: pick(aeroCLPoolABI.events, ['Mint', 'Burn', 'Swap']),
       address: [baseAddresses.aerodrome.pools['CL1-WETH/superOETHb'].address],
+      renderers: {
+        Mint: (params) => {
+          const data = aeroCLPoolABI.events.Mint.decode(params.log)
+          renderEventDiscordEmbed(params, {
+            description: `[${discordIconOrName(data.owner) ?? data.owner}](https://basescan.org/address/${data.owner})`,
+            fields: [
+              {
+                name: formatAmount(data.amount, 18, { maximumFractionDigits: 6 }),
+                value: 'Amount',
+                inline: true,
+              },
+              {
+                name: formatAmount(data.amount0, 18, { maximumFractionDigits: 6 }),
+                value: 'Amount0',
+                inline: true,
+              },
+              {
+                name: formatAmount(data.amount1, 18, { maximumFractionDigits: 6 }),
+                value: 'Amount1',
+                inline: true,
+              },
+            ],
+          })
+        },
+        Burn: (params) => {
+          const data = aeroCLPoolABI.events.Burn.decode(params.log)
+          if (data.amount === 0n) return
+          renderEventDiscordEmbed(params, {
+            description: `[${discordIconOrName(data.owner) ?? data.owner}](https://basescan.org/address/${data.owner})`,
+            fields: [
+              {
+                name: formatAmount(data.amount, 18, { maximumFractionDigits: 6 }),
+                value: 'Amount',
+                inline: true,
+              },
+              {
+                name: formatAmount(data.amount0, 18, { maximumFractionDigits: 6 }),
+                value: 'Amount0',
+                inline: true,
+              },
+              {
+                name: formatAmount(data.amount1, 18, { maximumFractionDigits: 6 }),
+                value: 'Amount1',
+                inline: true,
+              },
+            ],
+          })
+        },
+      },
     },
   ],
 })
