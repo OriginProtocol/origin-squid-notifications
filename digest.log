@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-9/23/2024, 9:46:37 AM
+11/13/2024, 12:36:29 PM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -115,6 +115,7 @@ events:
     address: 
       - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
       - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
+      - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
     topic0: 
       - AccountingConsensusRewards | 0x7a745a2c
       - AccountingFullyWithdrawnValidator | 0xbe704003
@@ -139,6 +140,7 @@ events:
     address: 
       - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
       - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
+      - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
     topic0: 
       - Paused | 0x62e78cea
       - PTokenAdded | 0xef6485b8
@@ -471,6 +473,7 @@ events:
       - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
       - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
       - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
+      - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
       - 0x1827f9ea98e0bf96550b2fc20f7233277fcd7e63 (OETH/ETH Curve AMO Strategy)
       - 0x3ff8654d633d4ea0fae24c52aec73b4a20d0d0e5 (FraxETH Strategy)
       - 0xc1fc9e5ec3058921ea5025d703cbe31764756319 (OETH Morpho Aave Strategy)
@@ -489,6 +492,9 @@ events:
       - 0x9c354503c38481a7a7a51629142963f98ecc12d0 (OGV)
       - 0x0c4576ca1c365868e162554af8e385dc3e7c66d9 (veOGV)
       - 0x3cdd07c16614059e66344a7b579dab4f9516c0b6 (OUSD Governance (old))
+      - 0x85b78aca6deae198fbf201c82daf6ca21942acc6
+      - 0xf54ebff575f699d281645c6f14fe427dffe629cf
+      - 0x01f30b7358ba51f637d1aa05d9b4a60f76dad680
     topic0: 
       - GovernorshipTransferred | 0xc7c0c772
       - PendingGovernorshipTransfer | 0xa39cc5eb
@@ -630,6 +636,7 @@ traces:
           - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/9)
           - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
           - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
+          - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
           - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
         error:    true
       - 
@@ -646,6 +653,7 @@ traces:
           - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/9)
           - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
           - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
+          - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
           - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
         error:  true
     topic:        OETH
@@ -727,6 +735,7 @@ traces:
         suicideRefundAddress: 
           - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
           - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
+          - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
     topic:        OETH
     severity:     high
     notifyTarget: 
@@ -734,6 +743,42 @@ traces:
         - engineering@originprotocol.com
       discordMentions: 
         - <@&997340701551513762>
+=========================================
+name:    Origin Lido ARM
+topic:   ARM
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x85b78aca6deae198fbf201c82daf6ca21942acc6
+    topic0: 
+      - AdminChanged | 0x7e644d79
+      - CapManagerUpdated | 0xb8fd9afc
+      - FeeCollectorUpdated | 0xe5693914
+      - FeeUpdated | 0x8c4d35e5
+      - Initialized | 0xc7f505b2
+      - OperatorChanged | 0x4721129e
+    severity: high
+  - 
+    address: 
+      - 0x85b78aca6deae198fbf201c82daf6ca21942acc6
+    topic0: 
+      - Approval | 0x8c5be1e5
+      - ClaimLidoWithdrawals | 0xb7700a52
+      - CrossPriceUpdated | 0x6f938e86
+      - Deposit | 0x90890809
+      - FeeCollected | 0x06c5efef
+      - RedeemClaimed | 0x36dd2c9b
+      - RedeemRequested | 0xc04c86cf
+      - RequestLidoWithdrawals | 0x3fdbeb02
+      - TraderateChanged | 0xa2136948
+    severity: low
+  - 
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x00000000000000000000000085b78aca6deae198fbf201c82daf6ca21942acc6
+    severity: low
 =========================================
 name:    Super OETH Base Contract
 topic:   superOETHb
