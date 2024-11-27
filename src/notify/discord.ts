@@ -4,6 +4,7 @@ import { sortBy } from 'lodash'
 import { Severity, Topic, severityEmojis, topicThumbnails } from './const'
 
 const webhookUrls: Record<Topic, string> = {
+  Governance: process.env['DISCORD_WEBHOOK_URL_GOVERNANCE'] ?? '',
   OGN: process.env['DISCORD_WEBHOOK_URL_OGN'] ?? '',
   OETH: process.env['DISCORD_WEBHOOK_URL_OETH'] ?? '',
   superOETHb: process.env['DISCORD_WEBHOOK_URL_SUPER_OETH_B'] ?? '',
@@ -14,6 +15,7 @@ const webhookUrls: Record<Topic, string> = {
 }
 
 const clients: Record<Topic, WebhookClient | undefined> = {
+  Governance: new WebhookClient({ url: webhookUrls.Governance }),
   OGN: new WebhookClient({ url: webhookUrls.OGN }),
   OETH: new WebhookClient({ url: webhookUrls.OETH }),
   superOETHb: new WebhookClient({ url: webhookUrls.superOETHb }),

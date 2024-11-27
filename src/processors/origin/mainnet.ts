@@ -187,13 +187,18 @@ createBurnProcessor({ name: 'OUSD Burn', chainId: 1, address: [OUSD_ADDRESS], to
 createBurnProcessor({ name: 'WOUSD Burn', chainId: 1, address: [WOUSD], topic: 'OUSD' })
 
 // Governance Related
-createGovernanceProcessor({ name: 'Origin Governance', chainId: 1, address: [OGN_GOVERNANCE_ADDRESS], topic: 'OGN' })
-createTimelockProcessor({ name: 'Origin Timelock', chainId: 1, address: [GOVERNANCE_TIMELOCK], topic: 'OGN' })
+createGovernanceProcessor({
+  name: 'Origin Governance',
+  chainId: 1,
+  address: [OGN_GOVERNANCE_ADDRESS],
+  topic: 'Governance',
+})
+createTimelockProcessor({ name: 'Origin Timelock', chainId: 1, address: [GOVERNANCE_TIMELOCK], topic: 'Governance' })
 createGovernedUpgradeabilityProxyProcessor({
   name: 'Origin Proxy Contracts',
   chainId: 1,
   address: addresses.origin,
-  topic: 'OGN',
+  topic: 'Governance',
   severity: 'high',
   notifyTarget: notifyTargets.Engineering,
 })
@@ -202,7 +207,7 @@ createGovernedUpgradeabilityProxyProcessor({
 createEventProcessor({
   name: 'Mainnet Multisig',
   chainId: 1,
-  topic: 'OGN',
+  topic: 'Governance',
   tracks: [
     {
       severity: 'medium',

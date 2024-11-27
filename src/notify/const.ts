@@ -13,7 +13,7 @@ import { baseAddresses } from '../utils/addresses/addresses-base'
 import { getAddressesPyName } from '../utils/addresses/names'
 
 export type Severity = 'low' | 'medium' | 'high' | 'critical' | 'broken' | 'highlight'
-export type Topic = 'OGN' | 'xOGN' | 'OETH' | 'superOETHb' | 'OUSD' | 'primeETH' | 'ARM'
+export type Topic = 'Governance' | 'OGN' | 'xOGN' | 'OETH' | 'superOETHb' | 'OUSD' | 'primeETH' | 'ARM'
 
 export const severityEmojis: Record<Severity, string> = {
   low: 'ℹ️',
@@ -34,6 +34,7 @@ export const severityColors: Record<Severity, HexColorString> = {
 }
 
 export const topicThumbnails: Record<Topic, string> = {
+  Governance: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-ogn-logo.png',
   OGN: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-ogn-logo.png',
   xOGN: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-xogn-logo.png',
   OETH: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-ether-oeth-logo.png',

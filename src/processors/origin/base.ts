@@ -148,7 +148,7 @@ createGovernedUpgradeabilityProxyProcessor({
   name: 'Origin Proxy Contracts Base',
   chainId: base.id,
   address: baseAddresses.origin,
-  topic: 'superOETHb',
+  topic: 'Governance',
   severity: 'high',
   notifyTarget: notifyTargets.Engineering,
 })
@@ -157,7 +157,7 @@ createGovernedUpgradeabilityProxyProcessor({
 createEventProcessor({
   name: 'Base Multisig',
   chainId: base.id,
-  topic: 'superOETHb',
+  topic: 'Governance',
   tracks: [
     {
       severity: 'medium',
@@ -172,7 +172,7 @@ createEventProcessor({
 createEventProcessor({
   name: 'Base Timelock',
   chainId: base.id,
-  topic: 'superOETHb',
+  topic: 'Governance',
   tracks: [
     {
       severity: 'medium',
@@ -210,6 +210,7 @@ createEventProcessor({
     },
   ],
 })
+
 // Aerodrome CL Pools
 createEventProcessor({
   name: 'Aerodrome CL Pools',
