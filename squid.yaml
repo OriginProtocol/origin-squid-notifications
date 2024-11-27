@@ -20,6 +20,7 @@ deploy:
     - DISCORD_WEBHOOK_URL_OUSD
     - DISCORD_WEBHOOK_URL_PRIME_ETH
     - DISCORD_WEBHOOK_URL_ARM
+    - DISCORD_WEBHOOK_URL_GOVERNANCE
     - ONCALL_WEBHOOK_URL
   processor:
     - name: mainnet-processor
