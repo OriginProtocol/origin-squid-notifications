@@ -105,7 +105,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [COMP]: 'COMP Token',
   [OUSD_VAULT]: 'OUSD Vault',
   [GOVERNANCE]: 'OUSD Governance (old)',
-  [GOVERNANCE_TIMELOCK]: 'OUSD Timelock',
+  [GOVERNANCE_TIMELOCK]: 'Mainnet Timelock',
   [MIX_ORACLE]: 'MixOracle',
   [CHAINLINK_ORACLE]: 'ChainlinkOracle',
   [OGN_STAKING]: 'OGN Staking',
@@ -140,7 +140,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [GOVERNORV2]: 'Origin Governor V2',
   [GOVERNORV3]: 'Origin Governor V3',
   [addresses.multisig['5/8']]: 'Mainnet Multisig 5/8',
-  [addresses.multisig['2/9']]: 'Mainnet Multisig 2/9',
+  [addresses.multisig['2/8']]: 'Mainnet Multisig 2/8',
   [METAMASK_SWAP_ROUTER]: 'Metamask Swap Router',
   [FLIPPER]: 'OUSD Swap',
   [UNISWAP_V3_ROUTER]: 'Uniswap V3 Router',
@@ -250,3 +250,5 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
 
 export const getAddressesPyName = (address?: string): string | undefined =>
   address ? CONTRACT_ADDR_TO_NAME[address.toLowerCase()] : undefined
+
+export const getAddressName = (address: string): string => CONTRACT_ADDR_TO_NAME[address.toLowerCase()] ?? address

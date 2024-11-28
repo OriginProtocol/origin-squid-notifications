@@ -1,3 +1,5 @@
+import 'tsconfig-paths/register'
+
 import { run } from './evm-processor'
 import { load } from './processors'
 

@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-11/13/2024, 12:36:29 PM
+11/28/2024, 10:46:02 AM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -414,7 +414,7 @@ events:
       - 0x000000000000000000000000000000000000000000000000000000000000dead
 =========================================
 name:    Origin Governance
-topic:   OGN
+topic:   Governance
 chainId: 1
 events: 
   - 
@@ -440,23 +440,24 @@ events:
         - <@&997340701551513762>
 =========================================
 name:    Origin Timelock
-topic:   OGN
+topic:   Governance
 chainId: 1
 events: 
   - 
     address: 
-      - 0x35918cde7233f2dd33fa41ae3cb6ae0e42e0e69f (OUSD Timelock)
+      - 0x35918cde7233f2dd33fa41ae3cb6ae0e42e0e69f (Mainnet Timelock)
     topic0: 
-      - NewAdmin | 0x71614071
-      - NewPendingAdmin | 0x69d78e38
-      - NewDelay | 0x948b1f6a
-      - CancelTransaction | 0x2fffc091
-      - ExecuteTransaction | 0xa560e319
-      - QueueTransaction | 0x76e2796d
+      - CallExecuted | 0xc2617efa
+      - CallScheduled | 0x4cf4410c
+      - Cancelled | 0xbaa1eb22
+      - MinDelayChange | 0x11c24f4e
+      - RoleAdminChanged | 0xbd79b86f
+      - RoleGranted | 0x2f878811
+      - RoleRevoked | 0xf6391f5c
     severity: high
 =========================================
 name:    Origin Proxy Contracts
-topic:   OGN
+topic:   Governance
 chainId: 1
 events: 
   - 
@@ -507,13 +508,13 @@ events:
         - <@&997340701551513762>
 =========================================
 name:    Mainnet Multisig
-topic:   OGN
+topic:   Governance
 chainId: 1
 events: 
   - 
     address: 
       - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
-      - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/9)
+      - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/8)
     topic0: 
       - AddedOwner | 0x9465fa0c
       - ApproveHash | 0xf2a0eb15
@@ -633,7 +634,7 @@ traces:
           - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
           - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH BuyBack)
           - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
-          - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/9)
+          - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/8)
           - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
           - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
           - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
@@ -650,7 +651,7 @@ traces:
           - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
           - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH BuyBack)
           - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
-          - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/9)
+          - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/8)
           - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
           - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
           - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
@@ -933,7 +934,7 @@ events:
       - 0x000000000000000000000000000000000000000000000000000000000000dead
 =========================================
 name:    Origin Proxy Contracts Base
-topic:   superOETHb
+topic:   Governance
 chainId: 8453
 events: 
   - 
@@ -958,7 +959,7 @@ events:
         - <@&997340701551513762>
 =========================================
 name:    Base Multisig
-topic:   superOETHb
+topic:   Governance
 chainId: 8453
 events: 
   - 
@@ -992,7 +993,7 @@ events:
         - <@&997340701551513762>
 =========================================
 name:    Base Timelock
-topic:   superOETHb
+topic:   Governance
 chainId: 8453
 events: 
   - 

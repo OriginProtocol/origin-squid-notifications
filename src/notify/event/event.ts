@@ -1,8 +1,11 @@
 import { AbiEvent } from '@subsquid/evm-abi'
+import { Codec } from '@subsquid/evm-codec'
+import { transactionLink } from '@utils/links'
 
 import { Block, Context, Log } from '../../types'
 import { NotifyTarget, Severity, Topic } from '../const'
 import { notifyOncall } from '../oncall'
+import { renderDiscordEmbed } from './renderers/utils'
 
 const uniqueEventsFired = new Set<string>()
 export type EventRendererParams = Parameters<typeof notifyForEvent>[0]
@@ -14,6 +17,33 @@ export const registerEventRenderer = (
 ) => {
   eventRenderers.set(topic, fn)
   return fn
+}
+
+type EventArgs = {
+  [key: string]: Codec<any> & { indexed?: boolean }
+}
+
+export const registerDiscordRenderer = <const T extends EventArgs>(
+  event: AbiEvent<T>,
+  render: (
+    params: Parameters<Parameters<typeof registerEventRenderer>[1]>[0] & {
+      data: ReturnType<typeof event.decode>
+    },
+  ) => Promise<Omit<Parameters<typeof renderDiscordEmbed>[0], 'sortId' | 'topic' | 'severity' | 'titleUrl'>>,
+) => {
+  registerEventRenderer(event.topic, async (params) => {
+    const { log } = params
+    const sortId = `${log.block.height}:${log.transactionIndex}:${log.logIndex}`
+    const data = event.decode(log)
+    const renderData = await render({ ...params, data })
+    renderDiscordEmbed({
+      ...renderData,
+      sortId,
+      topic: params.topic,
+      severity: params.severity,
+      titleUrl: transactionLink(params.log.transactionHash, params.ctx.chain),
+    })
+  })
 }
 
 export const notifyForEvent = async (params: {

@@ -11,13 +11,16 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "./src/",
+    "paths": {
+      "@abi/*": ["abi/*"],
+      "@model/*": ["model/*"],
+      "@notify/*": ["notify/*"],
+      "@processors/*": ["processors/*"],
+      "@utils/*": ["utils/*"]
+    }
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "lib"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "lib"]
 }

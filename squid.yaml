@@ -4,6 +4,8 @@ version: 1
 description: 'Origin Protocol 🦑 - Notifications'
 build:
 deploy:
+  env:
+    TS_NODE_BASEURL: './lib'
   addons:
     postgres:
     rpc:

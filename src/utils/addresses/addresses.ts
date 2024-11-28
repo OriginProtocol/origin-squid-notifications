@@ -223,7 +223,7 @@ export const compound = {
 
 export const multisig = {
   '5/8': GOVERNANCE_ADMIN_MULTISIG,
-  '2/9': GOVERNANCE_GUARDIAN_MULTISIG,
+  '2/8': GOVERNANCE_GUARDIAN_MULTISIG,
 }
 
 export const addresses = {

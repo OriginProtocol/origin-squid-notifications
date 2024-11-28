@@ -9,7 +9,7 @@ import * as multisigABI from '../../abi/multisig'
 import * as oethZapperAbi from '../../abi/oeth-zapper'
 import * as strategyAerodromeAMOABI from '../../abi/strategy-aerodrome-amo'
 import * as strategyBridgedWOETHABI from '../../abi/strategy-bridged-woeth'
-import * as timelockBaseABI from '../../abi/timelock-base'
+import * as timelockABI from '../../abi/timelock'
 import { discordIconOrName, notifyTargets } from '../../notify/const'
 import { renderEventDiscordEmbed } from '../../notify/event/renderers/utils'
 import { WOETH_ADDRESS } from '../../utils/addresses'
@@ -176,7 +176,7 @@ createEventProcessor({
   tracks: [
     {
       severity: 'medium',
-      events: timelockBaseABI.events,
+      events: timelockABI.events,
       address: [baseAddresses.timelock],
       notifyTarget: notifyTargets.Engineering,
     },

@@ -1,3 +1,4 @@
+import 'tsconfig-paths/register'
 import { base } from 'viem/chains'
 
 import { run } from './evm-processor'

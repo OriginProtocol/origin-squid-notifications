@@ -31,10 +31,6 @@ import {
   OUSD_DRIPPER_ADDRESS,
   OUSD_HARVESTER_ADDRESS,
   OUSD_VAULT_ADDRESS,
-  SUPER_OETH_BASE_ADDRESS,
-  SUPER_OETH_BASE_ORACLE_ROUTER_ADDRESS,
-  SUPER_OETH_VAULT_BASE_ADDRESS,
-  SUPER_WOETH_BASE_ADDRESS,
   WOETH_ADDRESS,
   XOGN_ADDRESS,
   addresses,
@@ -79,7 +75,7 @@ export const oethABIs: Record<string, any> = {
   [OETH_DRIPPER_ADDRESS]: otokenDripperAbi,
   [OETH_BUYBACK]: otokenBuybackAbi,
   [addresses.multisig['5/8']]: multisigAbi,
-  [addresses.multisig['2/9']]: multisigAbi,
+  [addresses.multisig['2/8']]: multisigAbi,
   ...oethStrategyABIs,
 }
 export const oethBaseABIs: Record<string, any> = {

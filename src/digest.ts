@@ -1,3 +1,5 @@
+import 'tsconfig-paths/register'
+
 import './env'
 import { load } from './processors'
 import { formatJson } from './utils/formatJson'

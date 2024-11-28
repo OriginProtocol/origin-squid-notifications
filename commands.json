@@ -3,96 +3,50 @@
   "commands": {
     "clean": {
       "description": "delete all build artifacts",
-      "cmd": [
-        "npx",
-        "--yes",
-        "rimraf",
-        "lib"
-      ]
+      "cmd": ["npx", "--yes", "rimraf", "lib"]
     },
     "build": {
       "description": "Build the squid project",
-      "deps": [
-        "clean"
-      ],
-      "cmd": [
-        "tsc"
-      ]
+      "deps": ["clean"],
+      "cmd": ["tsc"]
     },
     "up": {
       "description": "Start a PG database",
-      "cmd": [
-        "docker-compose",
-        "up",
-        "-d"
-      ]
+      "cmd": ["docker-compose", "up", "-d"]
     },
     "down": {
       "description": "Drop a PG database",
-      "cmd": [
-        "docker-compose",
-        "down"
-      ]
+      "cmd": ["docker-compose", "down"]
     },
     "sleep": {
       "description": "Sleep 1 second",
-      "cmd": [
-        "sleep",
-        "1"
-      ]
+      "cmd": ["sleep", "1"]
     },
     "setup": {
       "description": "Setup DB for fresh processing",
-      "deps": [
-        "down",
-        "up",
-        "sleep",
-        "migration:apply"
-      ]
+      "deps": ["down", "up", "sleep", "migration:apply"]
     },
     "migration:apply": {
       "description": "Apply the DB migrations",
-      "cmd": [
-        "squid-typeorm-migration",
-        "apply"
-      ]
+      "cmd": ["squid-typeorm-migration", "apply"]
     },
     "migration:generate": {
       "description": "Generate a DB migration matching the TypeORM entities",
-      "deps": [
-        "build",
-        "migration:clean",
-        "setup"
-      ],
-      "cmd": [
-        "squid-typeorm-migration",
-        "generate"
-      ]
+      "deps": ["build", "migration:clean", "setup"],
+      "cmd": ["squid-typeorm-migration", "generate"]
     },
     "migration:clean": {
       "description": "Clean the migrations folder",
-      "cmd": [
-        "npx",
-        "--yes",
-        "rimraf",
-        "./db/migrations"
-      ]
+      "cmd": ["npx", "--yes", "rimraf", "./db/migrations"]
     },
     "migration": {
-      "deps": [
-        "build"
-      ],
-      "cmd": [
-        "squid-typeorm-migration",
-        "generate"
-      ],
+      "deps": ["build"],
+      "cmd": ["squid-typeorm-migration", "generate"],
       "hidden": true
     },
     "codegen": {
       "description": "Generate TypeORM entities from the schema file",
-      "cmd": [
-        "squid-typeorm-codegen"
-      ]
+      "cmd": ["squid-typeorm-codegen"]
     },
     "typegen": {
       "description": "Generate data access classes for an ABI file(s) in the ./abi folder",
@@ -107,70 +61,36 @@
     },
     "process": {
       "description": "Load .env and start the squid processor",
-      "deps": [
-        "build"
-      ],
-      "cmd": [
-        "node",
-        "--require=dotenv/config",
-        "lib/main.js"
-      ]
+      "deps": ["build"],
+      "cmd": ["node", "--require=dotenv/config", "lib/main.js"]
     },
     "process:prod": {
       "description": "Start the squid processor",
-      "cmd": [
-        "node",
-        "lib/main.js"
-      ],
+      "cmd": ["node", "lib/main.js"],
       "hidden": true
     },
     "process:base": {
       "description": "Load .env and start the squid base processor",
-      "deps": [
-        "build"
-      ],
-      "cmd": [
-        "node",
-        "--require=dotenv/config",
-        "lib/main-base.js"
-      ]
+      "deps": ["build"],
+      "cmd": ["node", "--require=dotenv/config", "lib/main-base.js"]
     },
     "process:base:prod": {
       "description": "Start the squid base processor",
-      "cmd": [
-        "node",
-        "lib/main-base.js"
-      ],
+      "cmd": ["node", "lib/main-base.js"],
       "hidden": true
     },
     "check-updates": {
-      "cmd": [
-        "npx",
-        "--yes",
-        "npm-check-updates",
-        "--filter=/subsquid/",
-        "--upgrade"
-      ],
+      "cmd": ["npx", "--yes", "npm-check-updates", "--filter=/subsquid/", "--upgrade"],
       "hidden": true
     },
     "bump": {
       "description": "Bump @subsquid packages to the latest versions",
-      "deps": [
-        "check-updates"
-      ],
-      "cmd": [
-        "npm",
-        "i",
-        "-f"
-      ]
+      "deps": ["check-updates"],
+      "cmd": ["npm", "i", "-f"]
     },
     "open": {
       "description": "Open a local browser window",
-      "cmd": [
-        "npx",
-        "--yes",
-        "opener"
-      ]
+      "cmd": ["npx", "--yes", "opener"]
     }
   }
 }
