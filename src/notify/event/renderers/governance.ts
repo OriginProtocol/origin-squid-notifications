@@ -1,3 +1,4 @@
+import { gql } from 'graphql-request'
 import { compact } from 'lodash'
 
 import * as governanceAbi from '@abi/governance'
@@ -7,8 +8,33 @@ import * as timelockAbi from '@abi/timelock'
 import { getAddressName } from '@utils/addresses/names'
 import { formatAmount } from '@utils/formatAmount'
 import { transactionLink } from '@utils/links'
+import { squid } from '@utils/subsquid'
 
 import { registerDiscordRenderer } from '..'
+
+gql`
+  query getProposalData($proposalId: BigInt!) {
+    governanceProposals(limit: 1, where: { proposalId_eq: $proposalId }) {
+      proposalId
+      proposer
+      description
+    }
+  }
+`
+
+export const getExtraProposalFields = async (proposalId: string) => {
+  const { governanceProposals } = await squid.getProposalData({ proposalId }).catch(() => ({ governanceProposals: [] }))
+  return compact([
+    governanceProposals[0]?.proposer && {
+      name: 'Proposer',
+      value: getAddressName(governanceProposals[0].proposer),
+    },
+    governanceProposals[0]?.description && {
+      name: 'Description',
+      value: governanceProposals[0].description,
+    },
+  ])
+}
 
 // Governance ABI Events
 registerDiscordRenderer(governanceAbi.events.LateQuorumVoteExtensionSet, async (params) => {
@@ -34,6 +60,7 @@ registerDiscordRenderer(governanceAbi.events.ProposalCanceled, async (params) =>
         name: 'Proposal ID',
         value: `0x${params.data.proposalId.toString(16)}`,
       },
+      ...(await getExtraProposalFields(params.data.proposalId.toString())),
     ],
   }
 })
@@ -56,8 +83,8 @@ registerDiscordRenderer(governanceAbi.events.ProposalCreated, async (params) => 
     ],
   }
 })
+
 registerDiscordRenderer(governanceAbi.events.ProposalExecuted, async (params) => {
-  // TODO: Pull extra data from subsquid and add it in here
   return {
     title: `${getAddressName(params.log.address)} - Proposal Executed`,
     fields: [
@@ -65,6 +92,7 @@ registerDiscordRenderer(governanceAbi.events.ProposalExecuted, async (params) =>
         name: 'Proposal ID',
         value: `0x${params.data.proposalId.toString(16)}`,
       },
+      ...(await getExtraProposalFields(params.data.proposalId.toString())),
     ],
   }
 })
@@ -80,6 +108,7 @@ registerDiscordRenderer(governanceAbi.events.ProposalExtended, async (params) =>
         name: 'Extended Deadline',
         value: params.data.extendedDeadline.toString(),
       },
+      ...(await getExtraProposalFields(params.data.proposalId.toString())),
     ],
   }
 })
@@ -95,6 +124,7 @@ registerDiscordRenderer(governanceAbi.events.ProposalQueued, async (params) => {
         name: 'ETA',
         value: params.data.eta.toString(),
       },
+      ...(await getExtraProposalFields(params.data.proposalId.toString())),
     ],
   }
 })

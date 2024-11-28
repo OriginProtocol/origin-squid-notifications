@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "rm -rf lib && tsc",
+    "codegen": "graphql-codegen --config codegen.ts",
     "prettier-check": "prettier --check src",
     "prettier-fix": "prettier --write src",
     "generate-abis": "sqd typegen",
@@ -26,6 +27,7 @@
     "dotenv": "^16.1.4",
     "esbuild": "^0.19.5",
     "ethers": "^6.5.1",
+    "graphql-request": "^6",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
     "node-fetch": "^2.7.0",
@@ -39,6 +41,10 @@
     "viem": "^1.10.13"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/typescript": "^4.0.9",
+    "@graphql-codegen/typescript-graphql-request": "^6.2.0",
+    "@graphql-codegen/typescript-operations": "^4.2.3",
     "@subsquid/evm-typegen": "^4.3.0",
     "@subsquid/typeorm-codegen": "^2.0.2",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",

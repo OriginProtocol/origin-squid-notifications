@@ -1,9 +1,5 @@
-projects:
-  separate:
-    schema: schema/*.graphql
-    include:
-      - types.graphql
-  combined:
-    schema: schema.graphql
-    include:
-      - types.graphql
+schema:
+  schema: https://origin.squids.live/origin-squid/graphql
+  include:
+    - schema.graphql
+    - types.graphql
