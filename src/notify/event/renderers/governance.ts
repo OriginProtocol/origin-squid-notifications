@@ -422,14 +422,7 @@ registerDiscordRenderer(multisigAbi.events.SafeMultiSigTransaction, async (param
         name: 'To',
         value: getAddressName(params.data.to),
       },
-      {
-        name: 'Signature Count',
-        value: params.data.signatures.length.toString(),
-      },
-      params.data.additionalInfo.length > 0 && {
-        name: 'Additional Info',
-        value: params.data.additionalInfo,
-      },
+      ...getDecodedDataFields(params.ctx.chain.id, params.data.to, params.data.data),
     ]),
   }
 })
@@ -646,3 +639,21 @@ registerDiscordRenderer(proxyAbi.events.Upgraded, async (params) => {
     ],
   }
 })
+
+const getDecodedDataFields = (
+  chainId: number,
+  to: string,
+  data: string,
+): { name: string; value: string; inline?: boolean }[] => {
+  // if (chainId === 8453 && to === '0xa1dabef33b3b82c7814b6d82a79e50f4ac44102b') {
+  //   const decoded = multiSendAbi.functions.multiSend.decode(data)
+  //   // Encoded transactions. Each transaction is encoded as a packed bytes of operation has to be
+  //   //  uint8(0) in this version(=> 1 byte),
+  //   //  to as a address(=> 20 bytes),
+  //   //  value as a uint256(=> 32 bytes),
+  //   //  data length as a uint256(=> 32 bytes),
+  //   //  data as bytes.see abi.encodePacked for more information on packed encoding
+  //   return []
+  // }
+  return []
+}
