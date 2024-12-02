@@ -22,6 +22,6 @@
       "@utils/*": ["utils/*"]
     }
   },
-  "include": ["src", "scripts"],
+  "include": ["src"],
   "exclude": ["node_modules", "lib"]
 }
