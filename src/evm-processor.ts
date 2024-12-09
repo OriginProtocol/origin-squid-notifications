@@ -106,90 +106,87 @@ export const run = async ({
   const latestBlock = await client.getBlock()
 
   const processor = createSquidProcessor(config.archive, rpcEnv)
+  const stateSchema = chainId === 1 ? undefined : `chain-${chainId}`
+  const database = new TypeormDatabase({ supportHotBlocks: true, stateSchema })
+
+  // In order to resume from the last processed block while having no `from` block declared,
+  //   we must pull the state and use that as our `from` block.
+  const databaseState = await database.connect()
+  const latestHeight = databaseState.height
+  await database.disconnect()
+
+  let from = processors.reduce((min, p) => (p.from && p.from < min ? p.from : min), latestHeight)
+  if (from === -1) {
+    from = Number(latestBlock.number)
+  }
+
   processor.setBlockRange({
-    from: process.env.BLOCK_FROM
-      ? Number(process.env.BLOCK_FROM)
-      : processors.reduce((min, p) => (p.from && p.from < min ? p.from : min), Number(latestBlock.number)),
+    from: process.env.BLOCK_FROM ? Number(process.env.BLOCK_FROM) : from,
   })
   processors.forEach((p) => p.setup?.(processor, config.chain))
   postProcessors?.forEach((p) => p.setup?.(processor, config.chain))
 
-  const stateSchema = chainId === 1 ? undefined : `chain-${chainId}`
-  processor.run(new TypeormDatabase({ supportHotBlocks: true, stateSchema }), async (_ctx) => {
+  processor.run(database, async (_ctx) => {
     const ctx = _ctx as Context
-    try {
-      ctx.chain = config.chain
-      ctx.eventsHandled = new Set<string>()
-      ctx.isEventHandled = (log: Log) => ctx.eventsHandled.has(log.id)
-      ctx.markEventHandled = (log: Log) => ctx.eventsHandled.add(log.id)
+    ctx.chain = config.chain
+    ctx.eventsHandled = new Set<string>()
+    ctx.isEventHandled = (log: Log) => ctx.eventsHandled.has(log.id)
+    ctx.markEventHandled = (log: Log) => ctx.eventsHandled.add(log.id)
 
-      let start: number
-      const time = (name: string) => () => {
-        const message = `${name} ${Date.now() - start}ms`
-        return () => ctx.log.info(message)
-      }
+    let start: number
+    const time = (name: string) => () => {
+      const message = `${name} ${Date.now() - start}ms`
+      return () => ctx.log.info(message)
+    }
 
-      // Initialization Run
-      if (!initialized) {
-        initialized = true
-        ctx.log.info(`initializing`)
-        start = Date.now()
-        const times = await Promise.all([
-          ...processors
-            .filter((p) => p.initialize)
-            .map((p, index) => p.initialize!(ctx).then(time(p.name ?? `initializing processor-${index}`))),
-          ...(postProcessors ?? [])
-            .filter((p) => p.initialize)
-            .map((p, index) => p.initialize!(ctx).then(time(p.name ?? `initializing postProcessors-${index}`))),
-        ])
-        times.forEach((t) => t())
-      }
-
-      // Main Processing Run
+    // Initialization Run
+    if (!initialized) {
+      initialized = true
+      ctx.log.info(`initializing`)
       start = Date.now()
-      const times = await Promise.all(
-        processors.map((p, index) => p.process(ctx).then(time(p.name ?? `processor-${index}`))),
+      const times = await Promise.all([
+        ...processors
+          .filter((p) => p.initialize)
+          .map((p, index) => p.initialize!(ctx).then(time(p.name ?? `initializing processor-${index}`))),
+        ...(postProcessors ?? [])
+          .filter((p) => p.initialize)
+          .map((p, index) => p.initialize!(ctx).then(time(p.name ?? `initializing postProcessors-${index}`))),
+      ])
+      times.forEach((t) => t())
+    }
+
+    // Main Processing Run
+    start = Date.now()
+    const times = await Promise.all(
+      processors.map((p, index) => p.process(ctx).then(time(p.name ?? `processor-${index}`))),
+    )
+    if (process.env.DEBUG_PERF === 'true') {
+      times.forEach((t) => t())
+    }
+
+    if (postProcessors) {
+      // Post Processing Run
+      start = Date.now()
+      const postTimes = await Promise.all(
+        postProcessors.map((p, index) => p.process(ctx).then(time(p.name ?? `postProcessor-${index}`))),
       )
       if (process.env.DEBUG_PERF === 'true') {
-        times.forEach((t) => t())
+        postTimes.forEach((t) => t())
       }
-
-      if (postProcessors) {
-        // Post Processing Run
-        start = Date.now()
-        const postTimes = await Promise.all(
-          postProcessors.map((p, index) => p.process(ctx).then(time(p.name ?? `postProcessor-${index}`))),
-        )
-        if (process.env.DEBUG_PERF === 'true') {
-          postTimes.forEach((t) => t())
-        }
-      }
-
-      if (validators) {
-        // Validation Run
-        start = Date.now()
-        const validatorTimes = await Promise.all(
-          validators.map((p, index) => p.process(ctx).then(time(p.name ?? `validator-${index}`))),
-        )
-        if (process.env.DEBUG_PERF === 'true') {
-          validatorTimes.forEach((t) => t())
-        }
-      }
-
-      await processDiscordQueue()
-      await processOncallQueue()
-    } catch (err) {
-      ctx.log.info({
-        blocks: ctx.blocks.length,
-        logs: ctx.blocks.reduce((sum, block) => sum + block.logs.length, 0),
-        traces: ctx.blocks.reduce((sum, block) => sum + block.traces.length, 0),
-        transactions: ctx.blocks.reduce((sum, block) => sum + block.transactions.length, 0),
-        // logArray: ctx.blocks.reduce(
-        //   (logs, block) => [...logs, ...block.logs],
-        //   [] as Log[],
-        // ),
-      })
-      throw err
     }
+
+    if (validators) {
+      // Validation Run
+      start = Date.now()
+      const validatorTimes = await Promise.all(
+        validators.map((p, index) => p.process(ctx).then(time(p.name ?? `validator-${index}`))),
+      )
+      if (process.env.DEBUG_PERF === 'true') {
+        validatorTimes.forEach((t) => t())
+      }
+    }
+
+    await processDiscordQueue()
+    await processOncallQueue()
   })
 }
