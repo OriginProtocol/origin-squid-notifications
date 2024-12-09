@@ -13,8 +13,6 @@ deploy:
       - base.http
   secrets:
     - RPC_ENDPOINT
-    - RPC_ENDPOINT_ARBITRUM
-    - RPC_ENDPOINT_BASE
     - DISCORD_WEBHOOK_URL_OGN
     - DISCORD_WEBHOOK_URL_XOGN
     - DISCORD_WEBHOOK_URL_OETH
