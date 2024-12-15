@@ -1,5 +1,7 @@
+import { renderDiscordEmbed } from '@notify/event/renderers/utils'
 import { event } from '@subsquid/evm-abi'
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
+import { transactionLink } from '@utils/links'
 
 import { createProcessor } from '..'
 import { NotifyTarget, Severity, Topic } from '../../notify/const'
@@ -88,6 +90,16 @@ export const createEventProcessor = ({
                   severity,
                   notifyTarget,
                   renderer: renderers?.[eventName] ?? renderers?.['default'],
+                }).catch((e) => {
+                  console.error('Error notifying for event', eventName, e)
+                  renderDiscordEmbed({
+                    sortId: `${log.block.height}:${log.transactionIndex}:${log.logIndex}`,
+                    topic,
+                    severity,
+                    title: 'Error notifying for event: ' + eventName,
+                    titleUrl: transactionLink(log.transactionHash, ctx.chain),
+                    description: e.message,
+                  })
                 })
               }
             }
