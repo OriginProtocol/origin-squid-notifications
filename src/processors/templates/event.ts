@@ -92,7 +92,7 @@ export const createEventProcessor = ({
                   renderer: renderers?.[eventName] ?? renderers?.['default'],
                 }).catch((e) => {
                   console.error('Error notifying for event', eventName, e)
-                  renderDiscordEmbed({
+                  return renderDiscordEmbed({
                     sortId: `${log.block.height}:${log.transactionIndex}:${log.logIndex}`,
                     topic,
                     severity,

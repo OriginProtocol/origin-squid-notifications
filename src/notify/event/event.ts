@@ -66,7 +66,9 @@ export const notifyForEvent = async (params: {
     params.ctx.markEventHandled(params.log)
     console.log('Sending notification for event', params.eventName)
     const renderer = params.renderer ?? eventRenderers.get(params.event.topic) ?? eventRenderers.get('default')
-    renderer?.(params)
+    if (renderer) {
+      await renderer(params)
+    }
     if (params.severity === 'high' || params.severity === 'critical') {
       notifyOncall(params.log.id, {
         topic: params.topic,
