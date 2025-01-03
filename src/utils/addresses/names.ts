@@ -141,6 +141,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<string, string> = {
   [GOVERNORV3]: 'Origin Governor V3',
   [addresses.multisig['5/8']]: 'Mainnet Multisig 5/8',
   [addresses.multisig['2/8']]: 'Mainnet Multisig 2/8',
+  [addresses.multisig['multichain-guardian']]: 'Multichain Guardian',
   [METAMASK_SWAP_ROUTER]: 'Metamask Swap Router',
   [FLIPPER]: 'OUSD Swap',
   [UNISWAP_V3_ROUTER]: 'Uniswap V3 Router',

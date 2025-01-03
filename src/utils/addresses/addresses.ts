@@ -224,6 +224,7 @@ export const compound = {
 export const multisig = {
   '5/8': GOVERNANCE_ADMIN_MULTISIG,
   '2/8': GOVERNANCE_GUARDIAN_MULTISIG,
+  'multichain-guardian': '0x4ff1b9d9ba8558f5eafcec096318ea0d8b541971',
 }
 
 export const addresses = {
