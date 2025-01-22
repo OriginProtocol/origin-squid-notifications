@@ -10,8 +10,10 @@
     "generate-schema": "sqd codegen && sqd migration:generate && git add db/migrations/*",
     "process": "sqd setup && sqd process",
     "process:base": "sqd setup && sqd process:base",
+    "process:sonic": "sqd setup && sqd process:sonic",
     "resume": "sqd process",
     "resume:base": "sqd process:base",
+    "resume:sonic": "sqd process:sonic",
     "digest": "ts-node src/digest > digest.log"
   },
   "dependencies": {

@@ -37,6 +37,7 @@ import {
   strategies,
 } from './addresses'
 import { baseAddresses } from './addresses-base'
+import { sonicAddresses } from './addresses-sonic'
 
 /**
  * Active OGN ABIs
@@ -63,6 +64,22 @@ export const oethStrategyABIs: Record<string, any> = {
   ),
   [OETH_ETH_AMO_METAPOOL]: strategyCurveMetapoolAbi,
 }
+
+// TODO: do it
+/**
+ * Active OS Strategy ABIs
+ */
+// export const osStrategyABIs: Record<string, any> = {
+//   ...sonicAddresses.OS.strategies.reduce(
+//     (map, strategy) => {
+//       map[strategy.address] = strategyNativeStakingAbi
+//       return map
+//     },
+//     {} as Record<string, any>,
+//   ),
+//   [OETH_ETH_AMO_METAPOOL]: strategyCurveMetapoolAbi,
+// }
+
 /**
  * Active OETH ABIs
  * - Including Strategies
@@ -78,6 +95,10 @@ export const oethABIs: Record<string, any> = {
   [addresses.multisig['2/8']]: multisigAbi,
   ...oethStrategyABIs,
 }
+
+/**
+ * Active Super OETH Base ABIs
+ */
 export const oethBaseABIs: Record<string, any> = {
   [baseAddresses.superOETHb.address]: otokenAbi,
   [baseAddresses.superOETHb.wrapped]: wotokenAbi,
@@ -85,6 +106,22 @@ export const oethBaseABIs: Record<string, any> = {
   [baseAddresses.superOETHb.oracleRouter]: otokenPriceOracleAbi,
   [baseAddresses.superOETHb.dripper]: otokenDripperAbi,
   [baseAddresses.multisig['5/8']]: multisigAbi,
+  [baseAddresses.multisig['2/8']]: multisigAbi,
+  [baseAddresses.multisig['multichain-guardian']]: multisigAbi,
+  [baseAddresses.multisig.reservoir]: multisigAbi,
+}
+
+/**
+ * Active Sonic ABIs
+ */
+export const sonicABIs: Record<string, any> = {
+  [sonicAddresses.OS.address]: otokenAbi,
+  [sonicAddresses.OS.wrapped]: wotokenAbi,
+  [sonicAddresses.OS.vault]: otokenVaultAbi,
+  [sonicAddresses.OS.oracleRouter]: otokenPriceOracleAbi,
+  [sonicAddresses.OS.dripper]: otokenDripperAbi,
+  [sonicAddresses.multisig.admin]: multisigAbi,
+  [sonicAddresses.multisig.guardian]: multisigAbi,
 }
 
 /**
@@ -114,4 +151,5 @@ export const originABIs: Record<string, unknown> = {
   ...ognABIs,
   ...oethABIs,
   ...ousdABIs,
+  ...sonicABIs,
 }

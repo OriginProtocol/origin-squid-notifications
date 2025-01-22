@@ -79,6 +79,16 @@
       "cmd": ["node", "lib/main-base.js"],
       "hidden": true
     },
+    "process:sonic": {
+      "description": "Load .env and start the squid sonic processor",
+      "deps": ["build"],
+      "cmd": ["node", "--require=dotenv/config", "lib/main-sonic.js"]
+    },
+    "process:sonic:prod": {
+      "description": "Start the squid sonic processor",
+      "cmd": ["node", "lib/main-sonic.js"],
+      "hidden": true
+    },
     "check-updates": {
       "cmd": ["npx", "--yes", "npm-check-updates", "--filter=/subsquid/", "--upgrade"],
       "hidden": true

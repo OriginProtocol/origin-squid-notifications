@@ -1,35 +1,36 @@
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 import utc from 'dayjs/plugin/utc'
+import { compact } from 'lodash'
 import { Chain, createPublicClient, http } from 'viem'
 import { arbitrum, base, mainnet } from 'viem/chains'
 
-import { lookupArchive } from '@subsquid/archive-registry'
-import { KnownArchives } from '@subsquid/archive-registry/lib/chains'
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
 import { TypeormDatabase } from '@subsquid/typeorm-store'
+import { sonic } from '@utils/chains'
 
 import { processDiscordQueue } from './notify/discord'
 import { processOncallQueue } from './notify/oncall'
 import './rpc-issues'
 import { Context, EvmProcessor, Log } from './types'
-import { env } from './utils/env'
 
 dayjs.extend(duration)
 dayjs.extend(utc)
 
-export const createSquidProcessor = (
-  archive: KnownArchives = 'eth-mainnet',
-  rpc_env = process.env.RPC_ENV ?? 'RPC_ENDPOINT',
-) => {
-  const url = process.env[rpc_env] || 'http://localhost:8545'
-  console.log(`Archive: ${archive}`)
-  console.log(`RPC: ${url}`)
-  return new EvmBatchProcessor()
-    .setGateway(lookupArchive(archive))
+export interface ChainConfig {
+  chain: Chain
+  gateway: string
+  endpoints: string[]
+}
+
+export const createSquidProcessor = (config: ChainConfig) => {
+  const url = config.endpoints[0] || 'http://localhost:8545'
+  console.log('rpc url', url)
+  const processor = new EvmBatchProcessor()
     .setRpcEndpoint({
       url,
       maxBatchCallSize: url.includes('alchemy.com') ? 1 : 100,
+      // rateLimit: url.includes('sqd_rpc') ? 100 : undefined,
     })
     .setRpcDataIngestionSettings({
       disabled: process.env.ARCHIVE_ONLY === 'true',
@@ -65,27 +66,53 @@ export const createSquidProcessor = (
         suicideBalance: true,
       },
     })
+
+  if (process.env.DISABLE_ARCHIVE !== 'true') {
+    console.log(`Archive gateway: ${config.gateway}`)
+    processor.setGateway(config.gateway)
+  } else {
+    console.log(`Archive disabled`)
+  }
+
+  return processor
 }
 
 let initialized = false
 
-const chainConfigs: Record<number, { chain: Chain; archive: KnownArchives; rpcEnv: string } | undefined> = {
+export const chainConfigs = {
   [mainnet.id]: {
     chain: mainnet,
-    archive: 'eth-mainnet',
-    rpcEnv: process.env.RPC_ENV ?? 'RPC_ENDPOINT',
+    gateway: 'https://v2.archive.subsquid.io/network/ethereum-mainnet',
+    endpoints: compact([
+      process.env[process.env.RPC_ENV ?? 'RPC_ENDPOINT'],
+      process.env[process.env.RPC_ENV_BACKUP ?? 'RPC_ETH_HTTP'],
+    ]),
   },
   [arbitrum.id]: {
     chain: arbitrum,
-    archive: 'arbitrum',
-    rpcEnv: process.env.RPC_ENV_ARBITRUM ?? 'RPC_ENDPOINT_ARBITRUM',
+    gateway: 'https://v2.archive.subsquid.io/network/arbitrum-one',
+    endpoints: compact([
+      process.env[process.env.RPC_ARBITRUM_ENV ?? 'RPC_ARBITRUM_ENDPOINT'],
+      process.env[process.env.RPC_ARBITRUM_ENV_BACKUP ?? 'RPC_ARBITRUM_ONE_HTTP'],
+    ]),
   },
   [base.id]: {
     chain: base,
-    archive: 'base-mainnet',
-    rpcEnv: process.env.RPC_ENV_BASE ?? 'RPC_ENDPOINT_BASE',
+    gateway: 'https://v2.archive.subsquid.io/network/base-mainnet',
+    endpoints: compact([
+      process.env[process.env.RPC_BASE_ENV ?? 'RPC_BASE_ENDPOINT'],
+      process.env[process.env.RPC_BASE_ENV_BACKUP ?? 'RPC_BASE_HTTP'],
+    ]),
   },
-}
+  [sonic.id]: {
+    chain: sonic,
+    gateway: 'https://v2.archive.subsquid.io/network/sonic-mainnet',
+    endpoints: compact([
+      process.env[process.env.RPC_SONIC_ENV ?? 'RPC_SONIC_ENDPOINT'],
+      process.env[process.env.RPC_SONIC_ENV_BACKUP ?? 'RPC_SONIC_HTTP'],
+    ]),
+  },
+} as const
 
 export const run = async ({
   chainId = 1,
@@ -93,7 +120,7 @@ export const run = async ({
   postProcessors,
   validators,
 }: {
-  chainId?: number
+  chainId?: 1 | 42161 | 8453 | 146
   processors: EvmProcessor[]
   postProcessors?: EvmProcessor[]
   validators?: Pick<EvmProcessor, 'process' | 'name'>[]
@@ -101,11 +128,10 @@ export const run = async ({
   const config = chainConfigs[chainId]
   if (!config) throw new Error('No chain configuration found.')
 
-  const rpcEnv = config.rpcEnv
-  const client = createPublicClient({ chain: config.chain, transport: http(env[rpcEnv]) })
+  const client = createPublicClient({ chain: config.chain, transport: http(config.endpoints[0]) })
   const latestBlock = await client.getBlock()
 
-  const processor = createSquidProcessor(config.archive, rpcEnv)
+  const processor = createSquidProcessor(config)
   const stateSchema = chainId === 1 ? undefined : `chain-${chainId}`
   const database = new TypeormDatabase({ supportHotBlocks: true, stateSchema })
 
