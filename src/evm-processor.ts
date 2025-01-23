@@ -128,6 +128,9 @@ export const run = async ({
   const config = chainConfigs[chainId]
   if (!config) throw new Error('No chain configuration found.')
 
+  if (chainState.current) throw new Error('Chain state already set')
+  chainState.current = config.chain
+
   const client = createPublicClient({ chain: config.chain, transport: http(config.endpoints[0]) })
   const latestBlock = await client.getBlock()
 
@@ -155,8 +158,6 @@ export const run = async ({
   processor.run(database, async (_ctx) => {
     const ctx = _ctx as Context
     ctx.chain = config.chain
-    if (chainState.current) throw new Error('Chain state already set')
-    chainState.current = config.chain
     ctx.eventsHandled = new Set<string>()
     ctx.isEventHandled = (log: Log) => ctx.eventsHandled.has(log.id)
     ctx.markEventHandled = (log: Log) => ctx.eventsHandled.add(log.id)
