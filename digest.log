@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-11/28/2024, 10:46:02 AM
+1/22/2025, 6:06:35 PM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -515,6 +515,7 @@ events:
     address: 
       - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
       - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/8)
+      - 0x4ff1b9d9ba8558f5eafcec096318ea0d8b541971 (Multichain Guardian)
     topic0: 
       - AddedOwner | 0x9465fa0c
       - ApproveHash | 0xf2a0eb15
@@ -781,6 +782,247 @@ events:
       - 0x00000000000000000000000085b78aca6deae198fbf201c82daf6ca21942acc6
     severity: low
 =========================================
+name:    primeETH LRT Deposit Pool
+topic:   primeETH
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xa479582c8b64533102f6f528774c536e354b8d32 (PrimeETH Deposit Pool)
+    topic0: 
+      - AssetDeposit | 0x07c31fcc
+      - AssetSwapped | 0x4ac5df40
+      - ETHDeposit | 0x8b0422d4
+      - Initialized | 0x7f26b83f
+      - MaxNodeDelegatorLimitUpdated | 0x44a9f72c
+      - MinAmountToDepositUpdated | 0x1bba2f11
+      - NodeDelegatorAddedInQueue | 0xd402f64d
+      - NodeDelegatorRemovedFromQueue | 0xb17adb7f
+      - Paused | 0x62e78cea
+      - Unpaused | 0x5db9ee0a
+      - UpdatedLRTConfig | 0x9cf19cef
+      - WithdrawalClaimed | 0x8188e2b4
+      - WithdrawalRequested | 0x92072c62
+=========================================
+name:    OS Contract
+topic:   OS
+chainId: 146
+events: 
+  - 
+    address: 
+      - 0xb1e25689d55734fd3fffc939c4c3eb52dff8a794 (OS)
+    topic0: 
+      - AccountRebasingDisabled | 0x201ace89
+      - AccountRebasingEnabled | 0x19a249fa
+      - TotalSupplyUpdatedHighres | 0x41645eb8
+=========================================
+name:    OS Vault
+topic:   OS
+chainId: 146
+events: 
+  - 
+    address: 
+      - 0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186 (OS Vault)
+    topic0: 
+      - CapitalPaused | 0x71f0e5b6
+      - CapitalUnpaused | 0x891ebab1
+      - RebasePaused | 0x8cff26a5
+      - RebaseUnpaused | 0xbc044409
+      - AssetSupported | 0x4f1ac485
+      - PriceProviderUpdated | 0xb266add5
+      - TrusteeAddressChanged | 0x1e4af5ac
+    severity: high
+  - 
+    address: 
+      - 0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186 (OS Vault)
+    topic0: 
+      - AllocateThresholdUpdated | 0x2ec5fb5a
+      - AssetAllocated | 0x41b99659
+      - AssetDefaultStrategyUpdated | 0xba58ce12
+      - AssetRemoved | 0x37803e21
+      - DripperChanged | 0xaf2910d9
+      - MaxSupplyDiffChanged | 0x95201f9c
+      - Mint | 0x0f6798a5
+      - NetOusdMintForStrategyThresholdChanged | 0xc29d6fed
+      - OusdMetaStrategyUpdated | 0xa12850fb
+      - RebaseThresholdUpdated | 0x39367850
+      - Redeem | 0x222838db
+      - RedeemFeeUpdated | 0xd6c7508d
+      - StrategistUpdated | 0x869e0abd
+      - StrategyAddedToMintWhitelist | 0x47c8c96a
+      - StrategyApproved | 0x960dd94c
+      - StrategyRemoved | 0x09a1db4b
+      - StrategyRemovedFromMintWhitelist | 0x0ec40967
+      - SwapAllowedUndervalueChanged | 0xf12c0025
+      - SwapSlippageChanged | 0x8d22e9d2
+      - Swapped | 0xa078c419
+      - SwapperChanged | 0x7d771931
+      - TrusteeFeeBpsChanged | 0x56287a45
+      - VaultBufferUpdated | 0x41ecb23a
+      - WithdrawalClaimable | 0xee79a0c4
+      - WithdrawalClaimed | 0x2d43eb17
+      - WithdrawalRequested | 0x38e3d972
+      - YieldDistribution | 0x09516ecf
+=========================================
+name:    OS Zapper
+topic:   OS
+chainId: 146
+events: 
+  - 
+    address: 
+      - 0xe25a2b256ffb3ad73678d5e80de8d2f6022fab21 (OS Zapper)
+    topic0: 
+      - Zap | 0x9d0b99c2
+    severity: low
+=========================================
+name:    OS Burn
+topic:   OS
+chainId: 146
+events: 
+  - 
+    address: 
+      - 0xb1e25689d55734fd3fffc939c4c3eb52dff8a794 (OS)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    Wrapped OS Burn
+topic:   OS
+chainId: 146
+events: 
+  - 
+    address: 
+      - 0x9f0df7799f6fdad409300080cff680f5a23df4b1 (Wrapped OS)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    Origin Proxy Contracts Sonic
+topic:   Governance
+chainId: 146
+events: 
+  - 
+    address: 
+      - 0xb1e25689d55734fd3fffc939c4c3eb52dff8a794 (OS)
+      - 0x5b72992e9cde8c07ce7c8217eb014ec7fd281f03 (OS Dripper)
+      - 0xe68e0c66950a7e02335fc9f44daa05d115c4e88b (OS Price Oracle)
+      - 0x0000000000000000000000000000000000000000 (OS Harvester)
+      - 0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186 (OS Vault)
+      - 0x4bc73050916e6d1738286d8863f8fdcffaa879f8 (OS Vault Admin)
+      - 0x06f172e6852085eca886b7f9fd8f7b21db3d2c40 (OS Vault Value Checker)
+      - 0x9f0df7799f6fdad409300080cff680f5a23df4b1 (Wrapped OS)
+      - 0xe25a2b256ffb3ad73678d5e80de8d2f6022fab21 (OS Zapper)
+      - 0x31a91336414d3b955e494e7d485a6b06b55fc8fb
+    topic0: 
+      - GovernorshipTransferred | 0xc7c0c772
+      - PendingGovernorshipTransfer | 0xa39cc5eb
+      - Upgraded | 0xbc7cd75a
+    severity:     high
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
+name:    Sonic Multisig
+topic:   Governance
+chainId: 146
+events: 
+  - 
+    address: 
+      - 0xaddea7933db7d83855786eb43a238111c69b00b6 (Multisig Admin)
+      - 0xe8947f06351bda440e4e8ae9bf48437f25b41538 (Multisig Guardian)
+    topic0: 
+      - AddedOwner | 0x9465fa0c
+      - ApproveHash | 0xf2a0eb15
+      - ChangedFallbackHandler | 0x5ac6c46c
+      - ChangedGuard | 0x11511169
+      - ChangedThreshold | 0x610f7ff2
+      - DisabledModule | 0xaab4fa2b
+      - EnabledModule | 0xecdf3a3e
+      - ExecutionFailure | 0x23428b18
+      - ExecutionFromModuleFailure | 0xacd2c870
+      - ExecutionFromModuleSuccess | 0x6895c136
+      - ExecutionSuccess | 0x442e715f
+      - RemovedOwner | 0xf8d49fc5
+      - SafeModuleTransaction | 0xb648d364
+      - SafeMultiSigTransaction | 0x66753cd2
+      - SafeReceived | 0x3d0ce9bf
+      - SafeSetup | 0x141df868
+      - SignMsg | 0xe7f46750
+    severity:     medium
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
+name:    Sonic Timelock
+topic:   Governance
+chainId: 146
+events: 
+  - 
+    address: 
+      - 0x31a91336414d3b955e494e7d485a6b06b55fc8fb
+    topic0: 
+      - CallExecuted | 0xc2617efa
+      - CallScheduled | 0x4cf4410c
+      - Cancelled | 0xbaa1eb22
+      - MinDelayChange | 0x11c24f4e
+      - RoleAdminChanged | 0xbd79b86f
+      - RoleGranted | 0x2f878811
+      - RoleRevoked | 0xf6391f5c
+    severity:     medium
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
+name:    Sonic Error Trace
+topic:   OS
+chainId: 146
+traces: 
+  - 
+    traceParams: 
+      - 
+        type: 
+          - call
+        callFrom: 
+          - 0xb1e25689d55734fd3fffc939c4c3eb52dff8a794 (OS)
+          - 0x9f0df7799f6fdad409300080cff680f5a23df4b1 (Wrapped OS)
+          - 0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186 (OS Vault)
+          - 0xe68e0c66950a7e02335fc9f44daa05d115c4e88b (OS Price Oracle)
+          - 0x5b72992e9cde8c07ce7c8217eb014ec7fd281f03 (OS Dripper)
+          - 0xaddea7933db7d83855786eb43a238111c69b00b6 (Multisig Admin)
+          - 0xe8947f06351bda440e4e8ae9bf48437f25b41538 (Multisig Guardian)
+        error:    true
+      - 
+        type: 
+          - call
+        callTo: 
+          - 0xb1e25689d55734fd3fffc939c4c3eb52dff8a794 (OS)
+          - 0x9f0df7799f6fdad409300080cff680f5a23df4b1 (Wrapped OS)
+          - 0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186 (OS Vault)
+          - 0xe68e0c66950a7e02335fc9f44daa05d115c4e88b (OS Price Oracle)
+          - 0x5b72992e9cde8c07ce7c8217eb014ec7fd281f03 (OS Dripper)
+          - 0xaddea7933db7d83855786eb43a238111c69b00b6 (Multisig Admin)
+          - 0xe8947f06351bda440e4e8ae9bf48437f25b41538 (Multisig Guardian)
+        error:  true
+    topic:        OS
+    severity:     high
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
 name:    Super OETH Base Contract
 topic:   superOETHb
 chainId: 8453
@@ -966,6 +1208,7 @@ events:
     address: 
       - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
       - 0x28bce2ee5775b652d92bb7c2891a89f036619703 (Base Multisig 2/8)
+      - 0x4ff1b9d9ba8558f5eafcec096318ea0d8b541971 (Multichain Guardian)
       - 0xb6d85ce798660076152d6fd3a484129668839c95 (Super OETH Base Reservoir)
     topic0: 
       - AddedOwner | 0x9465fa0c
@@ -1030,6 +1273,9 @@ traces:
           - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
           - 0x02f2c609950e90934ce99e58b4d7326ad0d7f8d6 (Super OETH Dripper)
           - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
+          - 0x28bce2ee5775b652d92bb7c2891a89f036619703 (Base Multisig 2/8)
+          - 0x4ff1b9d9ba8558f5eafcec096318ea0d8b541971 (Multichain Guardian)
+          - 0xb6d85ce798660076152d6fd3a484129668839c95 (Super OETH Base Reservoir)
         error:    true
       - 
         type: 
@@ -1041,6 +1287,9 @@ traces:
           - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
           - 0x02f2c609950e90934ce99e58b4d7326ad0d7f8d6 (Super OETH Dripper)
           - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
+          - 0x28bce2ee5775b652d92bb7c2891a89f036619703 (Base Multisig 2/8)
+          - 0x4ff1b9d9ba8558f5eafcec096318ea0d8b541971 (Multichain Guardian)
+          - 0xb6d85ce798660076152d6fd3a484129668839c95 (Super OETH Base Reservoir)
         error:  true
     topic:        superOETHb
     severity:     high
@@ -1088,25 +1337,3 @@ events:
     topic0: 
       - NotifyReward | 0x52977ea9
     severity: highlight
-=========================================
-name:    primeETH LRT Deposit Pool
-topic:   primeETH
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0xa479582c8b64533102f6f528774c536e354b8d32 (PrimeETH Deposit Pool)
-    topic0: 
-      - AssetDeposit | 0x07c31fcc
-      - AssetSwapped | 0x4ac5df40
-      - ETHDeposit | 0x8b0422d4
-      - Initialized | 0x7f26b83f
-      - MaxNodeDelegatorLimitUpdated | 0x44a9f72c
-      - MinAmountToDepositUpdated | 0x1bba2f11
-      - NodeDelegatorAddedInQueue | 0xd402f64d
-      - NodeDelegatorRemovedFromQueue | 0xb17adb7f
-      - Paused | 0x62e78cea
-      - Unpaused | 0x5db9ee0a
-      - UpdatedLRTConfig | 0x9cf19cef
-      - WithdrawalClaimed | 0x8188e2b4
-      - WithdrawalRequested | 0x92072c62

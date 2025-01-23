@@ -1,6 +1,10 @@
 import { Chain, defineChain } from 'viem'
 import { base, mainnet } from 'viem/chains'
 
+export const chainState: { current?: Chain } = {
+  current: undefined,
+}
+
 export const sonic = defineChain({
   id: 146,
   name: 'Sonic',

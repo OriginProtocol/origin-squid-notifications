@@ -8,7 +8,7 @@ console.log('# Origin Squid Notifications - Digest')
 console.log(new Date().toLocaleString())
 console.log('=========================================')
 load().then((processors) => {
-  for (const p of processors) {
+  for (const p of processors.sort((a, b) => a.chainId - b.chainId)) {
     console.log('=========================================')
     console.log(formatJson(p))
   }
