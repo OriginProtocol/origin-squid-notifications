@@ -1,5 +1,7 @@
 import { omit, pick } from 'lodash'
 
+import { logFilter } from '@originprotocol/squid-utils'
+
 import * as erc20Abi from '../../abi/erc20'
 import * as originArmAbi from '../../abi/origin-lido-arm'
 import { Topic, discordIconOrName } from '../../notify/const'
@@ -8,7 +10,6 @@ import { renderDiscordEmbed, renderEventDiscordEmbed } from '../../notify/event/
 import { addresses } from '../../utils/addresses'
 import { formatAmount } from '../../utils/formatAmount'
 import { transactionLink } from '../../utils/links'
-import { logFilter } from '../../utils/logFilter'
 import { createEventProcessor } from './event'
 
 export const createOriginArmProcessor = ({

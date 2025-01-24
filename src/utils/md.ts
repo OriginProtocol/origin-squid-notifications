@@ -1,6 +1,6 @@
 import { compact, padEnd, padStart } from 'lodash'
 
-import { jsonify } from './jsonify'
+import { jsonify } from '@originprotocol/squid-utils'
 
 /**
  * Markdown helpers

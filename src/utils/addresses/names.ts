@@ -1,4 +1,6 @@
-import { base, chainState, mainnet, sonic } from '@utils/chains'
+import { base, mainnet, sonic } from 'viem/chains'
+
+import { chainState } from '@utils/chainState'
 
 import { AAVE_GOVERNANCE_ADDRESS } from '../../processors/aave'
 import {

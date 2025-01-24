@@ -3,13 +3,12 @@
  */
 import fs from 'node:fs'
 
-import { fun, viewFun } from '@subsquid/evm-abi'
+import { Processor, traceFilter } from '@originprotocol/squid-utils'
 
 import { NotifyTarget, Severity, Topic } from '../notify/const'
-import { EvmProcessor } from '../types'
-import { traceFilter } from '../utils/traceFilter'
 
-export interface NotificationProcessor extends EvmProcessor {
+export interface NotificationProcessor extends Processor {
+  chainId: number
   topic: Topic
   events?: {
     address?: string[]
@@ -31,7 +30,7 @@ export interface NotificationProcessor extends EvmProcessor {
 const processors: NotificationProcessor[] = []
 
 export const createProcessor = (processor: NotificationProcessor) => {
-  if (!process.env.PROCESSOR || processor.name.includes(process.env.PROCESSOR)) {
+  if (!process.env.PROCESSOR || processor.name?.includes(process.env.PROCESSOR)) {
     processors.push(processor)
   }
 }

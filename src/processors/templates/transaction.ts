@@ -1,10 +1,9 @@
+import { Context, transactionFilter } from '@originprotocol/squid-utils'
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
 
 import { createProcessor } from '..'
 import { NotifyTarget, Severity, Topic } from '../../notify/const'
 import { notifyForTransaction } from '../../notify/transaction'
-import { Context } from '../../types'
-import { transactionFilter } from '../../utils/transactionFilter'
 
 export type TransactionProcessorParams = Parameters<typeof createTransactionProcessor>[0]
 export const createTransactionProcessor = ({

@@ -1,4 +1,5 @@
-import { Context, Trace } from '../types'
+import { Context, Trace } from '@originprotocol/squid-utils'
+
 import { getAddressesPyName } from '../utils/addresses/names'
 import { formatJson } from '../utils/formatJson'
 import { transactionLink } from '../utils/links'

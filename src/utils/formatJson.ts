@@ -1,8 +1,9 @@
 import prettyjson from 'prettyjson'
 
+import { jsonify } from '@originprotocol/squid-utils'
+
 import { getAddressesPyName } from './addresses/names'
 import { formatAmount } from './formatAmount'
-import { jsonify } from './jsonify'
 
 export function formatJson(json: unknown) {
   return prettyjson.renderString(

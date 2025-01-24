@@ -1,8 +1,8 @@
+import { Block, Context, Log, useProcessorState } from '@originprotocol/squid-utils'
 import { AbiEvent } from '@subsquid/evm-abi'
 import { Codec } from '@subsquid/evm-codec'
 import { transactionLink } from '@utils/links'
 
-import { Block, Context, Log } from '../../types'
 import { NotifyTarget, Severity, Topic } from '../const'
 import { notifyOncall } from '../oncall'
 import { renderDiscordEmbed } from './renderers/utils'
@@ -46,6 +46,15 @@ export const registerDiscordRenderer = <const T extends EventArgs>(
   })
 }
 
+export const useEventState = (ctx: Context) => {
+  const state = useProcessorState(ctx, 'eventState', {
+    eventsHandled: new Set<string>(),
+    isEventHandled: (log: Log) => state.eventsHandled.has(log.topics[0]),
+    markEventHandled: (log: Log) => state.eventsHandled.add(log.topics[0]),
+  })[0]
+  return state
+}
+
 export const notifyForEvent = async (params: {
   ctx: Context
   topic: Topic
@@ -62,8 +71,9 @@ export const notifyForEvent = async (params: {
     if (uniqueEventsFired.has(params.log.topics[0])) return
     else uniqueEventsFired.add(params.log.topics[0])
   }
-  if (!params.ctx.isEventHandled(params.log)) {
-    params.ctx.markEventHandled(params.log)
+  const eventState = useEventState(params.ctx)
+  if (!eventState.isEventHandled(params.log)) {
+    eventState.markEventHandled(params.log)
     console.log('Sending notification for event', params.eventName)
     const renderer = params.renderer ?? eventRenderers.get(params.event.topic) ?? eventRenderers.get('default')
     if (renderer) {

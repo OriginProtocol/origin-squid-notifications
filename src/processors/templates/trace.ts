@@ -1,11 +1,11 @@
+import { useEventState } from '@notify/event'
+import { Context, traceFilter } from '@originprotocol/squid-utils'
 import { fun, viewFun } from '@subsquid/evm-abi'
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
 
 import { createProcessor } from '..'
 import { NotifyTarget, Severity, Topic } from '../../notify/const'
 import { NotifyForTraceInput, notifyForTrace } from '../../notify/trace'
-import { Context } from '../../types'
-import { traceFilter } from '../../utils/traceFilter'
 
 export type TraceProcessorParams = Parameters<typeof createTraceProcessor>[0]
 export const createTraceProcessor = ({
@@ -41,12 +41,13 @@ export const createTraceProcessor = ({
       filter.forEach((f) => processor.addTrace(f.value))
     },
     process: async (ctx: Context) => {
+      const eventState = useEventState(ctx)
       for (const block of ctx.blocks) {
         for (const trace of block.traces) {
           if (filter.find((f) => f.matches(trace))) {
             const relatedEvents = block.logs.filter((log) => log.transactionHash === trace.transaction?.hash)
             if (markEventsNotified) {
-              relatedEvents.forEach((l) => ctx.markEventHandled(l))
+              relatedEvents.forEach((l) => eventState.markEventHandled(l))
             }
             const input: Parameters<typeof notifyForTrace>[0] = {
               ctx,

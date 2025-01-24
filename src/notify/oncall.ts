@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { jsonify } from '../utils/jsonify'
+import { jsonify } from '@originprotocol/squid-utils'
 
 if (!process.env.ONCALL_WEBHOOK_URL) {
   throw new Error('Env ONCALL_WEBHOOK_URL must be set.')

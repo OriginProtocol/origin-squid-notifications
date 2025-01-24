@@ -1,9 +1,9 @@
 import { Chain } from 'viem'
-import { arbitrum, base } from 'viem/chains'
+import { arbitrum, base, sonic } from 'viem/chains'
 
-import { Context } from '../types'
+import { Context } from '@originprotocol/squid-utils'
+
 import { getAddressesPyName } from './addresses/names'
-import { sonic } from './chains'
 
 export const transactionLink = (
   tx: string,

@@ -1,4 +1,6 @@
 import { renderDiscordEmbed } from '@notify/event/renderers/utils'
+import { LogFilter, logFilter } from '@originprotocol/squid-utils'
+import { Context } from '@originprotocol/squid-utils'
 import { event } from '@subsquid/evm-abi'
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
 import { transactionLink } from '@utils/links'
@@ -6,8 +8,6 @@ import { transactionLink } from '@utils/links'
 import { createProcessor } from '..'
 import { NotifyTarget, Severity, Topic } from '../../notify/const'
 import { EventRenderer, notifyForEvent } from '../../notify/event'
-import { Context } from '../../types'
-import { LogFilter, logFilter } from '../../utils/logFilter'
 
 export type EventProcessorParams = Parameters<typeof createEventProcessor>[0]
 export const createEventProcessor = ({
