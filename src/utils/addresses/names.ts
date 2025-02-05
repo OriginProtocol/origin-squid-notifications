@@ -105,7 +105,7 @@ import {
   OUSD_VAULT,
 } from './strategies-py'
 
-export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string>> = {
+export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undefined>> = {
   [mainnet.id]: {
     [OUSD]: 'OUSD Token',
     [COMP]: 'COMP Token',
@@ -259,7 +259,8 @@ export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string>> = {
   [sonic.id]: {
     [sonicAddresses.OS.address]: 'OS',
     [sonicAddresses.OS.dripper]: 'OS Dripper',
-    [sonicAddresses.OS.harvester]: 'OS Harvester',
+    [sonicAddresses.OS.harvester]:
+      sonicAddresses.OS.harvester === '0x0000000000000000000000000000000000000000' ? undefined : 'OS Harvester',
     [sonicAddresses.OS.oracleRouter]: 'OS Price Oracle',
     [sonicAddresses.OS.vault]: 'OS Vault',
     [sonicAddresses.OS.vaultAdmin]: 'OS Vault Admin',

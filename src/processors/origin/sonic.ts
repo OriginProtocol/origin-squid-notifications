@@ -1,5 +1,8 @@
+import { pick } from 'lodash'
+
 import * as multisigABI from '@abi/multisig'
 import * as oethZapperAbi from '@abi/oeth-zapper'
+import * as sfcAbi from '@abi/sonic-sfc'
 import * as timelockABI from '@abi/timelock'
 import { discordIconOrName, notifyTargets } from '@notify/const'
 import { renderEventDiscordEmbed } from '@notify/event/renderers/utils'
@@ -125,4 +128,27 @@ createTraceErrorProcessor({
   topic: 'OS',
   severity: 'high',
   notifyTarget: notifyTargets.Engineering,
+})
+
+// Sonic Chain SFC
+const highPrioritySfcEvents = pick(sfcAbi.events, [
+  'ChangedValidatorStatus',
+  'Upgraded',
+  'OwnershipTransferred',
+  'CreatedValidator',
+  'DeactivatedValidator',
+  'UpdatedSlashingRefundRatio',
+])
+createEventProcessor({
+  name: 'Sonic Chain SFC',
+  chainId,
+  topic: 'Governance',
+  tracks: [
+    {
+      severity: 'high',
+      events: highPrioritySfcEvents,
+      address: [sonicAddresses.sfc],
+      notifyTarget: notifyTargets.Engineering,
+    },
+  ],
 })

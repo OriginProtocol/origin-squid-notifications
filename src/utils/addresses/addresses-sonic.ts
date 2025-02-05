@@ -37,6 +37,7 @@ export const multisig = {
 }
 
 export const sonicAddresses = {
+  sfc: '0xfc00face00000000000000000000000000000000',
   tokens: sonicTokens,
   originList: compact(
     uniq(
