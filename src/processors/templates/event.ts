@@ -98,7 +98,6 @@ export const createEventProcessor = ({
                     severity,
                     title: `${getAddressName(log.address)} - ${eventName}`,
                     titleUrl: transactionLink(log.transactionHash, ctx.chain),
-                    description: e.message,
                   })
                 })
               }
