@@ -1,8 +1,8 @@
 import { renderDiscordEmbed } from '@notify/event/renderers/utils'
-import { LogFilter, logFilter } from '@originprotocol/squid-utils'
-import { Context } from '@originprotocol/squid-utils'
+import { Context, LogFilter, logFilter } from '@originprotocol/squid-utils'
 import { event } from '@subsquid/evm-abi'
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
+import { getAddressName } from '@utils/addresses/names'
 import { transactionLink } from '@utils/links'
 
 import { createProcessor } from '..'
@@ -96,7 +96,7 @@ export const createEventProcessor = ({
                     sortId: `${log.block.height}:${log.transactionIndex}:${log.logIndex}`,
                     topic,
                     severity,
-                    title: 'Error notifying for event: ' + eventName,
+                    title: `${getAddressName(log.address)} - ${eventName}`,
                     titleUrl: transactionLink(log.transactionHash, ctx.chain),
                     description: e.message,
                   })
