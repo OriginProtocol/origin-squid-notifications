@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-1/22/2025, 6:06:35 PM
+2/6/2025, 2:28:25 PM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -912,7 +912,7 @@ events:
       - 0xb1e25689d55734fd3fffc939c4c3eb52dff8a794 (OS)
       - 0x5b72992e9cde8c07ce7c8217eb014ec7fd281f03 (OS Dripper)
       - 0xe68e0c66950a7e02335fc9f44daa05d115c4e88b (OS Price Oracle)
-      - 0x0000000000000000000000000000000000000000 (OS Harvester)
+      - 0x0000000000000000000000000000000000000000
       - 0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186 (OS Vault)
       - 0x4bc73050916e6d1738286d8863f8fdcffaa879f8 (OS Vault Admin)
       - 0x06f172e6852085eca886b7f9fd8f7b21db3d2c40 (OS Vault Value Checker)
@@ -1016,6 +1016,27 @@ traces:
           - 0xe8947f06351bda440e4e8ae9bf48437f25b41538 (Multisig Guardian)
         error:  true
     topic:        OS
+    severity:     high
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
+name:    Sonic Chain SFC
+topic:   Governance
+chainId: 146
+events: 
+  - 
+    address: 
+      - 0xfc00face00000000000000000000000000000000 (SFC)
+    topic0: 
+      - ChangedValidatorStatus | 0xcd35267e
+      - Upgraded | 0xbc7cd75a
+      - OwnershipTransferred | 0x8be0079c
+      - CreatedValidator | 0x49bca1ed
+      - DeactivatedValidator | 0xac4801c3
+      - UpdatedSlashingRefundRatio | 0x047575f4
     severity:     high
     notifyTarget: 
       email: 
