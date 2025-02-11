@@ -191,7 +191,6 @@ createTraceErrorProcessor({
   abi: Object.values(oethBaseABIs),
   topic: 'superOETHb',
   severity: 'high',
-  notifyTarget: notifyTargets.Engineering,
 })
 
 // Aerodrome vAMM Pools

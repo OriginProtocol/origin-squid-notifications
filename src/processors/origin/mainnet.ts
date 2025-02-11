@@ -233,7 +233,6 @@ createTraceErrorProcessor({
   abi: Object.values(ognABIs),
   topic: 'OGN',
   severity: 'high',
-  notifyTarget: notifyTargets.Engineering,
   excludeFilter: ({ trace, functionName }) =>
     trace.type === 'call' && trace.action.to === tokens.OGN && functionName === 'supportsInterface',
 })

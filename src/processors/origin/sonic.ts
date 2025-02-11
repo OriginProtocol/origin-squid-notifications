@@ -127,7 +127,6 @@ createTraceErrorProcessor({
   abi: Object.values(sonicABIs),
   topic: 'OS',
   severity: 'high',
-  notifyTarget: notifyTargets.Engineering,
 })
 
 // Sonic Chain SFC
