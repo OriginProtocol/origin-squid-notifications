@@ -274,6 +274,9 @@ export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undef
     [sonicAddresses.tokens.USDC]: 'USDC',
     [sonicAddresses.tokens.WETH]: 'WETH',
     [sonicAddresses.tokens.wS]: 'Wrapped S',
+    // In the case of Zapper, it sends 0xee... even for S.
+    //  Potentially an issue later down the line...
+    '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee': 'S',
   },
 }
 
