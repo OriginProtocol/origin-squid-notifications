@@ -63,6 +63,10 @@ export const notifyTargets = {
     email: ['engineering@originprotocol.com'],
     discordMentions: ['<@&997340701551513762>'],
   } as NotifyTarget,
+  ContractsTeam: {
+    email: ['engineering@originprotocol.com'],
+    discordMentions: ['<@&1252601672019087502>'],
+  } as NotifyTarget,
 } as const
 
 export const assetIcons: Record<string, `<:${string}>`> = {
