@@ -1,0 +1,43 @@
+{
+  "importPaths": {
+    "@abi/*": "./src/abi/*",
+    "@utils/*": "./src/utils/*",
+    "@notify/*": "./src/notify/*",
+    "@processors/*": "./src/processors/*",
+    "@model/*": "./src/model/*",
+    "@generated/*": "./src/generated/*",
+    "@config/*": "./src/config/*"
+  },
+  "organization": {
+    "src/abi": "Contract ABIs and interfaces",
+    "src/utils": "Utility functions and helpers",
+    "src/notify": "Notification system and event renderers",
+    "src/processors": "Event processors and chain-specific logic",
+    "src/model": "Data models and types",
+    "src/generated": "Auto-generated code files",
+    "src/config": "Configuration files and constants"
+  },
+  "rules": {
+    "imports": {
+      "preferRelative": false,
+      "preferAliases": true,
+      "order": [
+        "external",
+        "@abi",
+        "@config",
+        "@utils",
+        "@notify",
+        "@processors",
+        "@model",
+        "@generated",
+        "relative"
+      ]
+    },
+    "fileNaming": {
+      "pattern": "kebab-case",
+      "exceptions": [
+        "*.ts"
+      ]
+    }
+  }
+}
