@@ -4,7 +4,7 @@ import * as multisigABI from '@abi/multisig'
 import * as oethZapperAbi from '@abi/oeth-zapper'
 import * as sfcAbi from '@abi/sonic-sfc'
 import * as timelockABI from '@abi/timelock'
-import { discordIconOrName, notifyTargets } from '@notify/const'
+import { notifyTargets } from '@notify/const'
 import { renderEventDiscordEmbed } from '@notify/event/renderers/utils'
 import { createBurnProcessor } from '@processors/templates/burn'
 import { createEventProcessor } from '@processors/templates/event'
@@ -52,7 +52,7 @@ createEventProcessor({
             fields: [
               {
                 name: formatAmount(data.amount),
-                value: discordIconOrName(data.asset) ?? data.asset,
+                value: 'S',
                 inline: true,
               },
             ],
