@@ -16,6 +16,7 @@ import { WOETH_ADDRESS } from '../../utils/addresses'
 import { oethBaseABIs } from '../../utils/addresses/address-abis'
 import { baseAddresses } from '../../utils/addresses/addresses-base'
 import { formatAmount } from '../../utils/formatAmount'
+import { meetsLimit } from '../../utils/limits'
 import { createBurnProcessor } from '../templates/burn'
 import { createEventProcessor } from '../templates/event'
 import { createOTokenProcessor } from '../templates/otoken'
@@ -50,8 +51,10 @@ createEventProcessor({
       events: oethZapperAbi.events,
       severity: 'low',
       renderers: {
-        Zap: (params) => {
+        Zap: async (params) => {
           const data = oethZapperAbi.events.Zap.decode(params.log)
+          if ((await meetsLimit('otoken', 'mint', baseAddresses.superOETHb.address, data.amount)) === false) return
+
           renderEventDiscordEmbed(params, {
             description: `[${data.minter}](https://basescan.org/address/${data.minter})`,
             fields: [
@@ -221,8 +224,13 @@ createEventProcessor({
       events: pick(aeroCLPoolABI.events, ['Mint', 'Burn', 'Swap']),
       address: [baseAddresses.aerodrome.pools['CL1-WETH/superOETHb'].address],
       renderers: {
-        Mint: (params) => {
+        Mint: async (params) => {
           const data = aeroCLPoolABI.events.Mint.decode(params.log)
+
+          const assets = baseAddresses.aerodrome.pools['CL1-WETH/superOETHb'].assets
+          if ((await meetsLimit('aerodrome', 'mint', assets[0].address, data.amount0)) === false) return
+          if ((await meetsLimit('aerodrome', 'mint', assets[1].address, data.amount1)) === false) return
+
           renderEventDiscordEmbed(params, {
             description: `[${discordIconOrName(data.owner) ?? data.owner}](https://basescan.org/address/${data.owner})`,
             fields: [
@@ -244,9 +252,14 @@ createEventProcessor({
             ],
           })
         },
-        Burn: (params) => {
+        Burn: async (params) => {
           const data = aeroCLPoolABI.events.Burn.decode(params.log)
           if (data.amount === 0n) return
+
+          const assets = baseAddresses.aerodrome.pools['CL1-WETH/superOETHb'].assets
+          if ((await meetsLimit('aerodrome', 'burn', assets[0].address, data.amount0)) === false) return
+          if ((await meetsLimit('aerodrome', 'burn', assets[1].address, data.amount1)) === false) return
+
           renderEventDiscordEmbed(params, {
             description: `[${discordIconOrName(data.owner) ?? data.owner}](https://basescan.org/address/${data.owner})`,
             fields: [

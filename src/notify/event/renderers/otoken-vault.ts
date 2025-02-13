@@ -1,4 +1,5 @@
 import { sonicAddresses } from '@utils/addresses/addresses-sonic'
+import { meetsLimit } from '@utils/limits'
 
 import * as vaultAbi from '../../../abi/otoken-vault'
 import { OETH_VAULT_ADDRESS, OUSD_VAULT_ADDRESS } from '../../../utils/addresses'
@@ -26,6 +27,7 @@ registerEventRenderer(vaultAbi.events.Mint.topic, async (params) => {
   }
 
   const data = vaultAbi.events.Mint.decode(log)
+  if ((await meetsLimit('otoken', 'mint', baseAddresses.superOETHb.address, data._value)) === false) return
   renderDiscordEmbed({
     sortId: `${log.block.height}:${log.transactionIndex}:${log.logIndex}`,
     topic: params.topic,

@@ -1,5 +1,6 @@
 import { viewFun } from '@subsquid/evm-abi'
 import * as p from '@subsquid/evm-codec'
+import { meetsLimit } from '@utils/limits'
 
 import * as clHelperAbi from '../../../abi/aerodrome-cl-helper'
 import * as aeroCLPoolAbi from '../../../abi/aerodrome-cl-pool'
@@ -42,6 +43,9 @@ registerEventRenderer(aeroPoolAbi.events.Swap.topic, async (params) => {
   const contract = new aeroPoolAbi.Contract(params.ctx, params.block.header, log.address)
   const { _reserve0, _reserve1 } = await contract.getReserves()
   const percentage = ((100 * Math.abs(Number(amount0))) / Number(_reserve0 + amount0)).toFixed(2)
+
+  if ((await meetsLimit('aerodrome', 'swap', token0, amount0)) === false) return
+  if ((await meetsLimit('aerodrome', 'swap', token1, amount1)) === false) return
 
   renderDiscordEmbed({
     sortId: `${log.block.height}:${log.transactionIndex}:${log.logIndex}`,

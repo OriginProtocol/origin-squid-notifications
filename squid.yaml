@@ -24,6 +24,9 @@ deploy:
     - DISCORD_WEBHOOK_URL_OS
     - DISCORD_WEBHOOK_URL_GOVERNANCE
     - ONCALL_WEBHOOK_URL
+    - CLOUDFLARE_ACCOUNT_ID
+    - CLOUDFLARE_NAMESPACE_ID
+    - CLOUDFLARE_KV_KEY
   processor:
     - name: mainnet-processor
       cmd: ['sqd', 'process:prod']

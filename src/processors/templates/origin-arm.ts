@@ -1,6 +1,7 @@
 import { omit, pick } from 'lodash'
 
 import { logFilter } from '@originprotocol/squid-utils'
+import { cloudflareKV } from '@utils/cloudflare-kv'
 
 import * as erc20Abi from '../../abi/erc20'
 import * as originArmAbi from '../../abi/origin-lido-arm'
@@ -148,7 +149,7 @@ export const createOriginArmProcessor = ({
         events: pick(erc20Abi.events, ['Transfer']),
         additionalFilters: [transferInFilter, transferOutFilter],
         renderers: {
-          Transfer: (value: EventRendererParams) => {
+          Transfer: async (value: EventRendererParams) => {
             const transferIn = value.log.transaction?.logs.find((log) => transferInFilter.matches(log))
             const transferOut = value.log.transaction?.logs.find((log) => transferOutFilter.matches(log))
             if ([transferIn?.address, transferOut?.address].includes('0x889edc2edab5f40e902b864ad4d7ade8e412f9b1')) {
@@ -161,6 +162,8 @@ export const createOriginArmProcessor = ({
                 armSources[transferInData.from.toLowerCase()] ??
                 discordIconOrName(transferInData.from) ??
                 transferInData.from
+              const configLimit = await cloudflareKV.getOrSet('origin-arm-swap-limit', 0).then((limit) => BigInt(limit))
+              if (transferInData.value < configLimit && transferOutData.value < configLimit) return
               renderDiscordEmbed({
                 sortId: `${value.log.block.height}:${value.log.transactionIndex}:${value.log.logIndex}`,
                 topic: value.topic,
