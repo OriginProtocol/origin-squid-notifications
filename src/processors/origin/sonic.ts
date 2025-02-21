@@ -9,6 +9,7 @@ import { renderEventDiscordEmbed } from '@notify/event/renderers/utils'
 import { createBurnProcessor } from '@processors/templates/burn'
 import { createEventProcessor } from '@processors/templates/event'
 import { createOTokenProcessor } from '@processors/templates/otoken'
+import { createOTokenCurvePoolBoosterProcessor } from '@processors/templates/otoken-curve-pool-booster'
 import { createOTokenVaultProcessor } from '@processors/templates/otoken-vaults'
 import { createGovernedUpgradeabilityProxyProcessor } from '@processors/templates/proxy'
 import { createTraceErrorProcessor } from '@processors/templates/trace-errors'
@@ -150,4 +151,10 @@ createEventProcessor({
       notifyTarget: notifyTargets.Engineering,
     },
   ],
+})
+
+createOTokenCurvePoolBoosterProcessor({
+  name: 'Curve Pool Booster',
+  chainId,
+  topic: 'OGN',
 })

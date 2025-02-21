@@ -1,5 +1,7 @@
 import { omit, pick } from 'lodash'
 
+import { createOTokenCurvePoolBoosterProcessor } from '@processors/templates/otoken-curve-pool-booster'
+
 import * as strategyCurveMetapoolAbi from '../../abi/curve-metapool'
 import * as governedUpgradeabilityProxy from '../../abi/governed-upgradeability-proxy'
 import * as multisigABIs from '../../abi/multisig'
@@ -322,4 +324,10 @@ createOriginArmProcessor({
   address: addresses.arm.address,
   capManagerAddress: addresses.arm.capManager,
   zapperAddress: addresses.arm.zapper,
+})
+
+createOTokenCurvePoolBoosterProcessor({
+  name: 'Curve Pool Booster',
+  chainId: 1,
+  topic: 'OGN',
 })

@@ -1,6 +1,8 @@
 import { omit, pick } from 'lodash'
 import { base } from 'viem/chains'
 
+import { createOTokenCurvePoolBoosterProcessor } from '@processors/templates/otoken-curve-pool-booster'
+
 import * as aeroBribeVotingRewardsABI from '../../abi/aerodrome-bribe-voting-rewards'
 import * as aeroCLPoolABI from '../../abi/aerodrome-cl-pool'
 import * as aeroPoolABI from '../../abi/aerodrome-pool'
@@ -324,4 +326,10 @@ createEventProcessor({
       },
     },
   ],
+})
+
+createOTokenCurvePoolBoosterProcessor({
+  name: 'Curve Pool Booster',
+  chainId: base.id,
+  topic: 'OGN',
 })

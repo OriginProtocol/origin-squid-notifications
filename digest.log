@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-2/6/2025, 2:28:25 PM
+2/21/2025, 2:48:46 PM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -610,13 +610,8 @@ traces:
           - 0x63898b3b6ef3d39332082178656e9862bee45c57 (xOGN)
           - 0x95c347d6214614a780847b8aaf4f96eb84f4da6d (OGV Migrator)
         error:  true
-    topic:        OGN
-    severity:     high
-    notifyTarget: 
-      email: 
-        - engineering@originprotocol.com
-      discordMentions: 
-        - <@&997340701551513762>
+    topic:       OGN
+    severity:    high
 =========================================
 name:    OETH Error Trace
 topic:   OETH
@@ -781,6 +776,16 @@ events:
     topic2: 
       - 0x00000000000000000000000085b78aca6deae198fbf201c82daf6ca21942acc6
     severity: low
+=========================================
+name:    Curve Pool Booster
+topic:   OGN
+chainId: 1
+events: 
+  - 
+    topic0: 
+      - CampaignCreated | 0xfe76983a
+      - CampaignClosed | 0x5e6eb33a
+      - FeeCollected | 0x06c5efef
 =========================================
 name:    primeETH LRT Deposit Pool
 topic:   primeETH
@@ -1015,13 +1020,8 @@ traces:
           - 0xaddea7933db7d83855786eb43a238111c69b00b6 (Multisig Admin)
           - 0xe8947f06351bda440e4e8ae9bf48437f25b41538 (Multisig Guardian)
         error:  true
-    topic:        OS
-    severity:     high
-    notifyTarget: 
-      email: 
-        - engineering@originprotocol.com
-      discordMentions: 
-        - <@&997340701551513762>
+    topic:       OS
+    severity:    high
 =========================================
 name:    Sonic Chain SFC
 topic:   Governance
@@ -1043,6 +1043,16 @@ events:
         - engineering@originprotocol.com
       discordMentions: 
         - <@&997340701551513762>
+=========================================
+name:    Curve Pool Booster
+topic:   OGN
+chainId: 146
+events: 
+  - 
+    topic0: 
+      - CampaignCreated | 0xfe76983a
+      - CampaignClosed | 0x5e6eb33a
+      - FeeCollected | 0x06c5efef
 =========================================
 name:    Super OETH Base Contract
 topic:   superOETHb
@@ -1312,13 +1322,8 @@ traces:
           - 0x4ff1b9d9ba8558f5eafcec096318ea0d8b541971 (Multichain Guardian)
           - 0xb6d85ce798660076152d6fd3a484129668839c95 (Super OETH Base Reservoir)
         error:  true
-    topic:        superOETHb
-    severity:     high
-    notifyTarget: 
-      email: 
-        - engineering@originprotocol.com
-      discordMentions: 
-        - <@&997340701551513762>
+    topic:       superOETHb
+    severity:    high
 =========================================
 name:    Aerodrome vAMM Pools
 topic:   superOETHb
@@ -1358,3 +1363,13 @@ events:
     topic0: 
       - NotifyReward | 0x52977ea9
     severity: highlight
+=========================================
+name:    Curve Pool Booster
+topic:   OGN
+chainId: 8453
+events: 
+  - 
+    topic0: 
+      - CampaignCreated | 0xfe76983a
+      - CampaignClosed | 0x5e6eb33a
+      - FeeCollected | 0x06c5efef
