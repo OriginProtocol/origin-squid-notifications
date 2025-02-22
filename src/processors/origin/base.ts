@@ -6,6 +6,7 @@ import { createOTokenCurvePoolBoosterProcessor } from '@processors/templates/oto
 import * as aeroBribeVotingRewardsABI from '../../abi/aerodrome-bribe-voting-rewards'
 import * as aeroCLPoolABI from '../../abi/aerodrome-cl-pool'
 import * as aeroPoolABI from '../../abi/aerodrome-pool'
+import * as strategyCurveAmoAbi from '../../abi/base-curve-amo'
 import * as erc20ABI from '../../abi/erc20'
 import * as multisigABI from '../../abi/multisig'
 import * as oethZapperAbi from '../../abi/oeth-zapper'
@@ -116,6 +117,18 @@ createEventProcessor({
       severity: 'low',
       events: omit(strategyAerodromeAMOABI.events, 'GovernorshipTransferred', 'PendingGovernorshipTransfer'),
       address: [baseAddresses.superOETHb.strategies.amo],
+    },
+  ],
+})
+createEventProcessor({
+  name: 'Super OETH Curve AMO Strategy',
+  chainId: base.id,
+  topic: 'superOETHb',
+  tracks: [
+    {
+      severity: 'low',
+      events: omit(strategyCurveAmoAbi.events, 'GovernorshipTransferred', 'PendingGovernorshipTransfer'),
+      address: [baseAddresses.superOETHb.strategies.curveAMO],
     },
   ],
 })

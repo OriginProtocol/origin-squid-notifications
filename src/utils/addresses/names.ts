@@ -236,6 +236,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undef
     [baseAddresses.superOETHb.zapper]: 'Super OETH Zapper',
     [baseAddresses.superOETHb.strategies.bridgedWOETH]: 'Super OETH - Bridged WOETH Strategy',
     [baseAddresses.superOETHb.strategies.amo]: 'Super OETH - Aerodrome AMO Strategy',
+    [baseAddresses.superOETHb.strategies.curveAMO]: 'Super OETH - Curve AMO Strategy',
     [baseAddresses.multisig['5/8']]: 'Base Multisig 5/8',
     [baseAddresses.multisig['2/8']]: 'Base Multisig 2/8',
     [baseAddresses.multisig['multichain-guardian']]: 'Multichain Guardian',

@@ -9,6 +9,7 @@ const superOETHb = {
   strategies: {
     bridgedWOETH: '0x80c864704dd06c3693ed5179190786ee38acf835',
     amo: '0xf611cc500eee7e4e4763a05fe623e2363c86d2af',
+    curveAMO: '0x9cfcaf81600155e01c63e4d2993a8a81a8205829',
   },
   zapper: '0x3b56c09543d3068f8488ed34e6f383c3854d2bc1',
   harvester: undefined,
