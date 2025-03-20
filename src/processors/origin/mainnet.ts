@@ -7,6 +7,7 @@ import * as governedUpgradeabilityProxy from '../../abi/governed-upgradeability-
 import * as multisigABIs from '../../abi/multisig'
 import * as oethZapperAbi from '../../abi/oeth-zapper'
 import * as ogvOgnMigratorAbi from '../../abi/ogv-ogn-migrator'
+import * as strategyGenericAbi from '../../abi/strategy-generic'
 import * as strategyMetaMorphoAbi from '../../abi/strategy-meta-morpho'
 import * as strategyMorphoAaveAbi from '../../abi/strategy-morpho-aave'
 import * as strategyNativeStakingAbi from '../../abi/strategy-native-staking'
@@ -136,6 +137,50 @@ createEventProcessor({
     {
       address: [strategies.ousd.MetaMorphoStrategy],
       events: omit(strategyMetaMorphoAbi.events, [...Object.keys(governedUpgradeabilityProxy.events)]),
+    },
+  ],
+})
+createEventProcessor({
+  name: 'OUSD Maker Strategy',
+  chainId: 1,
+  topic: 'OUSD',
+  tracks: [
+    {
+      address: [strategies.ousd.MakerStrategy],
+      events: omit(strategyGenericAbi.events, [...Object.keys(governedUpgradeabilityProxy.events)]),
+    },
+  ],
+})
+createEventProcessor({
+  name: 'OUSD Gauntlet Prime USDC Strategy',
+  chainId: 1,
+  topic: 'OUSD',
+  tracks: [
+    {
+      address: [strategies.ousd.GauntletPrimeUSDCStrategy],
+      events: omit(strategyGenericAbi.events, [...Object.keys(governedUpgradeabilityProxy.events)]),
+    },
+  ],
+})
+createEventProcessor({
+  name: 'OUSD Gauntlet Prime USDT Strategy',
+  chainId: 1,
+  topic: 'OUSD',
+  tracks: [
+    {
+      address: [strategies.ousd.GauntletPrimeUSDTStrategy],
+      events: omit(strategyGenericAbi.events, [...Object.keys(governedUpgradeabilityProxy.events)]),
+    },
+  ],
+})
+createEventProcessor({
+  name: 'OUSD Sky Savings Rate Strategy',
+  chainId: 1,
+  topic: 'OUSD',
+  tracks: [
+    {
+      address: [strategies.ousd.SkySavingsRateStrategy],
+      events: omit(strategyGenericAbi.events, [...Object.keys(governedUpgradeabilityProxy.events)]),
     },
   ],
 })

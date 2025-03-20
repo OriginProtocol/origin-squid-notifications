@@ -11,6 +11,7 @@ export const DAI_ADDRESS = '0x6b175474e89094c44da98b954eedeac495271d0f'
 export const USDT_ADDRESS = '0xdac17f958d2ee523a2206206994597c13d831ec7'
 export const USDC_ADDRESS = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
 export const LUSD_ADDRESS = '0x5f98805a4e8be255a32880fdec7f6728c6568ba0'
+export const USDS_ADDRESS = '0xdc035d45d973e3ec169d2276ddab16f1e407384f'
 
 // ETH Stables
 export const WETH_ADDRESS = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
@@ -151,6 +152,10 @@ export const strategies = {
     FluxStrategy: '0x76bf500b6305dc4ea851384d3d5502f1c7a0ed44',
     Generalized4626Strategy: '0x6b69b755c629590ed59618a2712d8a2957ca98fc',
     MetaMorphoStrategy: '0x603cdeaec82a60e3c4a10da6ab546459e5f64fa0',
+    MakerStrategy: '0x6b69b755c629590ed59618a2712d8a2957ca98fc',
+    GauntletPrimeUSDCStrategy: '0x2b8f37893ee713a4e9ff0ceb79f27539f20a32a1',
+    GauntletPrimeUSDTStrategy: '0xe3ae7c80a1b02ccd3fb0227773553aeb14e32f26',
+    SkySavingsRateStrategy: '0x5bd9af9c2506d29b6d79cb878284a270190eaeaa',
     // CompoundStrategy: '0x9c459eeb3fa179a40329b81c1635525e9a0ef094', // Deprecated
     // ConvexStrategy: '0xea2ef2e2e5a749d4a66b41db9ad85a38aa264cb3', // Deprecated
     // LUSDMetaStrategy: '0x7a192dd9cc4ea9bdedec9992df74f1da55e60a19', // Deprecated
