@@ -10,7 +10,9 @@ deploy:
     postgres:
     rpc:
       - arbitrum-one.http
+      - eth.http
       - base.http
+      - sonic-mainnet.http
   secrets:
     - RPC_ENDPOINT
     - RPC_SONIC_ENDPOINT

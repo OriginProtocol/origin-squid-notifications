@@ -290,7 +290,6 @@ createTraceErrorProcessor({
   abi: Object.values(oethABIs),
   topic: 'OETH',
   severity: 'high',
-  notifyTarget: notifyTargets.Engineering,
 })
 createTraceErrorProcessor({
   name: 'OUSD Error Trace',
@@ -299,7 +298,6 @@ createTraceErrorProcessor({
   abi: Object.values(ousdABIs),
   topic: 'OUSD',
   severity: 'high',
-  notifyTarget: notifyTargets.Engineering,
 })
 
 // Trace OGV Migrations
