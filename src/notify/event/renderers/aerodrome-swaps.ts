@@ -81,7 +81,10 @@ registerEventRenderer(aeroCLPoolAbi.events.Swap.topic, async (params) => {
   const amount0 = data.amount0
   const amount1 = data.amount1
 
-  if (pool.address === baseAddresses.aerodrome.pools['CL1-WETH/superOETHb'].address && amount0 < 10n ** 17n) {
+  if (
+    pool.address === baseAddresses.aerodrome.pools['CL1-WETH/superOETHb'].address &&
+    (amount0 < 0n ? -amount0 : amount0) < 10n ** 17n
+  ) {
     return
   }
 
