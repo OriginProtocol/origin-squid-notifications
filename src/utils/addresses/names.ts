@@ -1,5 +1,6 @@
-import { base, mainnet, sonic } from 'viem/chains'
+import { base, mainnet, plumeMainnet, sonic } from 'viem/chains'
 
+import { invertMap } from '@originprotocol/squid-utils'
 import { chainState } from '@utils/chainState'
 
 import { AAVE_GOVERNANCE_ADDRESS } from '../../processors/aave'
@@ -27,6 +28,7 @@ import {
   addresses,
 } from './addresses'
 import { baseAddresses } from './addresses-base'
+import { plumeAddresses } from './addresses-plume'
 import { sonicAddresses } from './addresses-sonic'
 import {
   CDAI,
@@ -245,7 +247,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undef
     [baseAddresses.baseHotWallet]: 'Base Hot Wallet',
 
     // Base Tokens
-    [baseAddresses.tokens.bridgedWOETH]: 'WOETH (Base)',
+    [baseAddresses.tokens.bridgedWOETH]: 'WOETH',
     [baseAddresses.tokens.OGN]: 'OGN (Base)',
     [baseAddresses.tokens.WETH]: 'WETH (Base)',
     [baseAddresses.tokens.cbETH]: 'cbETH (Base)',
@@ -279,17 +281,27 @@ export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undef
     //  Potentially an issue later down the line...
     '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee': 'S',
   },
+  [plumeMainnet.id]: {
+    [plumeAddresses.superOETHp.vault]: 'superOETHp Vault',
+    [plumeAddresses.superOETHp.oracleRouter]: 'superOETHp Price Oracle',
+    [plumeAddresses.superOETHp.dripper]: 'superOETHp Dripper',
+    [plumeAddresses.multisig['5/8']]: 'Plume Multisig 5/8',
+    [plumeAddresses.plumeOrigin.timelock]: 'Plume Timelock',
+    ...invertMap(plumeAddresses.tokens),
+  },
 }
 
 export const getAddressesPyName = (address?: string): string | undefined =>
   address
     ? CONTRACT_ADDR_TO_NAME[chainState.current?.id ?? mainnet.id]?.[address.toLowerCase()] ??
       CONTRACT_ADDR_TO_NAME[base.id]?.[address.toLowerCase()] ??
-      CONTRACT_ADDR_TO_NAME[sonic.id]?.[address.toLowerCase()]
+      CONTRACT_ADDR_TO_NAME[sonic.id]?.[address.toLowerCase()] ??
+      CONTRACT_ADDR_TO_NAME[plumeMainnet.id]?.[address.toLowerCase()]
     : undefined
 
 export const getAddressName = (address: string): string =>
   CONTRACT_ADDR_TO_NAME[chainState.current?.id ?? mainnet.id]?.[address.toLowerCase()] ??
   CONTRACT_ADDR_TO_NAME[base.id]?.[address.toLowerCase()] ??
   CONTRACT_ADDR_TO_NAME[sonic.id]?.[address.toLowerCase()] ??
+  CONTRACT_ADDR_TO_NAME[plumeMainnet.id]?.[address.toLowerCase()] ??
   address

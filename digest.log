@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-3/20/2025, 1:59:38 PM
+4/23/2025, 5:56:35 PM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -720,13 +720,8 @@ traces:
           - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
           - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
         error:  true
-    topic:        OETH
-    severity:     high
-    notifyTarget: 
-      email: 
-        - engineering@originprotocol.com
-      discordMentions: 
-        - <@&997340701551513762>
+    topic:       OETH
+    severity:    high
 =========================================
 name:    OUSD Error Trace
 topic:   OUSD
@@ -756,13 +751,8 @@ traces:
           - 0xd7b28d06365b85933c64e11e639ea0d3bc0e3bab (OUSD BuyBack)
           - 0x79f2188ef9350a1dc11a062cca0abe90684b0197 (Morpho Aave Strategy)
         error:  true
-    topic:        OUSD
-    severity:     high
-    notifyTarget: 
-      email: 
-        - engineering@originprotocol.com
-      discordMentions: 
-        - <@&997340701551513762>
+    topic:       OUSD
+    severity:    high
 =========================================
 name:    OGV Migration
 topic:   OGN
@@ -1121,7 +1111,7 @@ events:
       - CampaignClosed | 0x5e6eb33a
       - FeeCollected | 0x06c5efef
 =========================================
-name:    Super OETH Base Contract
+name:    superOETHb Contract
 topic:   superOETHb
 chainId: 8453
 events: 
@@ -1133,7 +1123,7 @@ events:
       - AccountRebasingEnabled | 0x19a249fa
       - TotalSupplyUpdatedHighres | 0x41645eb8
 =========================================
-name:    Super OETH Base Vault
+name:    superOETHb Vault
 topic:   superOETHb
 chainId: 8453
 events: 
@@ -1192,7 +1182,7 @@ events:
       - Zap | 0x9d0b99c2
     severity: low
 =========================================
-name:    Super OETH Bridged WOETH Strategy
+name:    superOETHb Bridged WOETH Strategy
 topic:   superOETHb
 chainId: 8453
 events: 
@@ -1211,7 +1201,7 @@ events:
       - Withdrawal | 0x2717ead6
     severity: low
 =========================================
-name:    Super OETH Aerodrome AMO
+name:    superOETHb Aerodrome AMO
 topic:   superOETHb
 chainId: 8453
 events: 
@@ -1233,7 +1223,7 @@ events:
       - Withdrawal | 0x2717ead6
     severity: low
 =========================================
-name:    Super OETH Curve AMO Strategy
+name:    superOETHb Curve AMO Strategy
 topic:   superOETHb
 chainId: 8453
 events: 
@@ -1257,13 +1247,13 @@ chainId: 8453
 events: 
   - 
     address: 
-      - 0xd8724322f44e5c58d7a815f542036fb17dbbf839 (WOETH (Base))
+      - 0xd8724322f44e5c58d7a815f542036fb17dbbf839 (WOETH)
     topic0: 
       - Approval | 0x8c5be1e5
       - Transfer | 0xddf252ad
     severity: low
 =========================================
-name:    Super OETH Base Burn
+name:    superOETHb Burn
 topic:   superOETHb
 chainId: 8453
 events: 
@@ -1277,7 +1267,7 @@ events:
       - 0x0000000000000000000000000000000000000000000000000000000000000001
       - 0x000000000000000000000000000000000000000000000000000000000000dead
 =========================================
-name:    Wrapped Super OETH Base Burn
+name:    wsuperOETHb Burn
 topic:   superOETHb
 chainId: 8453
 events: 
@@ -1459,3 +1449,220 @@ events:
       - CampaignCreated | 0xfe76983a
       - CampaignClosed | 0x5e6eb33a
       - FeeCollected | 0x06c5efef
+=========================================
+name:    superOETHp Contract
+topic:   superOETHp
+chainId: 98866
+events: 
+  - 
+    address: 
+      - 0xfcbe50dbe43bf7e5c88c6f6fb9ef432d4165406e (superOETHp)
+    topic0: 
+      - AccountRebasingDisabled | 0x201ace89
+      - AccountRebasingEnabled | 0x19a249fa
+      - TotalSupplyUpdatedHighres | 0x41645eb8
+=========================================
+name:    superOETHp Vault
+topic:   superOETHp
+chainId: 98866
+events: 
+  - 
+    address: 
+      - 0xf1d0bb43c194371b04717ee8029a467a218c69b4 (superOETHp Vault)
+    topic0: 
+      - CapitalPaused | 0x71f0e5b6
+      - CapitalUnpaused | 0x891ebab1
+      - RebasePaused | 0x8cff26a5
+      - RebaseUnpaused | 0xbc044409
+      - AssetSupported | 0x4f1ac485
+      - PriceProviderUpdated | 0xb266add5
+      - TrusteeAddressChanged | 0x1e4af5ac
+    severity: high
+  - 
+    address: 
+      - 0xf1d0bb43c194371b04717ee8029a467a218c69b4 (superOETHp Vault)
+    topic0: 
+      - AllocateThresholdUpdated | 0x2ec5fb5a
+      - AssetAllocated | 0x41b99659
+      - AssetDefaultStrategyUpdated | 0xba58ce12
+      - AssetRemoved | 0x37803e21
+      - DripperChanged | 0xaf2910d9
+      - MaxSupplyDiffChanged | 0x95201f9c
+      - Mint | 0x0f6798a5
+      - NetOusdMintForStrategyThresholdChanged | 0xc29d6fed
+      - OusdMetaStrategyUpdated | 0xa12850fb
+      - RebaseThresholdUpdated | 0x39367850
+      - Redeem | 0x222838db
+      - RedeemFeeUpdated | 0xd6c7508d
+      - StrategistUpdated | 0x869e0abd
+      - StrategyAddedToMintWhitelist | 0x47c8c96a
+      - StrategyApproved | 0x960dd94c
+      - StrategyRemoved | 0x09a1db4b
+      - StrategyRemovedFromMintWhitelist | 0x0ec40967
+      - SwapAllowedUndervalueChanged | 0xf12c0025
+      - SwapSlippageChanged | 0x8d22e9d2
+      - Swapped | 0xa078c419
+      - SwapperChanged | 0x7d771931
+      - TrusteeFeeBpsChanged | 0x56287a45
+      - VaultBufferUpdated | 0x41ecb23a
+      - WithdrawalClaimable | 0xee79a0c4
+      - WithdrawalClaimed | 0x2d43eb17
+      - WithdrawalRequested | 0x38e3d972
+      - YieldDistribution | 0x09516ecf
+=========================================
+name:    superOETHb Bridged WOETH Strategy
+topic:   superOETHb
+chainId: 98866
+events: 
+  - 
+    address: 
+      - 0x0000000000000000000000000000000000000000
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - MaxPriceDiffBpsUpdated | 0x5066a7b9
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - WOETHPriceUpdated | 0x688768fc
+      - Withdrawal | 0x2717ead6
+    severity: low
+=========================================
+name:    superOETHp Burn
+topic:   superOETHp
+chainId: 98866
+events: 
+  - 
+    address: 
+      - 0xfcbe50dbe43bf7e5c88c6f6fb9ef432d4165406e (superOETHp)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    wsuperOETHp Burn
+topic:   superOETHp
+chainId: 98866
+events: 
+  - 
+    address: 
+      - 0x2de8a403f7a5c6c5161d4a129918ec9f0b653918 (wsuperOETHp)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    Origin Proxy Contracts Plume
+topic:   Governance
+chainId: 98866
+events: 
+  - 
+    address: 
+      - 0x6c6f8f839a7648949873d3d2beea936fc2932e5c (Plume Timelock)
+      - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
+      - 0xfcbe50dbe43bf7e5c88c6f6fb9ef432d4165406e (superOETHp)
+      - 0x2de8a403f7a5c6c5161d4a129918ec9f0b653918 (wsuperOETHp)
+      - 0xf1d0bb43c194371b04717ee8029a467a218c69b4 (superOETHp Vault)
+      - 0xa6c76fc1ac0ac86f19cd874524726b456905ea81 (superOETHp Price Oracle)
+      - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
+      - 0x0000000000000000000000000000000000000000
+    topic0: 
+      - GovernorshipTransferred | 0xc7c0c772
+      - PendingGovernorshipTransfer | 0xa39cc5eb
+      - Upgraded | 0xbc7cd75a
+    severity:     high
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
+name:    Plume Multisig
+topic:   Governance
+chainId: 98866
+events: 
+  - 
+    address: 
+      - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
+    topic0: 
+      - AddedOwner | 0x9465fa0c
+      - ApproveHash | 0xf2a0eb15
+      - ChangedFallbackHandler | 0x5ac6c46c
+      - ChangedGuard | 0x11511169
+      - ChangedThreshold | 0x610f7ff2
+      - DisabledModule | 0xaab4fa2b
+      - EnabledModule | 0xecdf3a3e
+      - ExecutionFailure | 0x23428b18
+      - ExecutionFromModuleFailure | 0xacd2c870
+      - ExecutionFromModuleSuccess | 0x6895c136
+      - ExecutionSuccess | 0x442e715f
+      - RemovedOwner | 0xf8d49fc5
+      - SafeModuleTransaction | 0xb648d364
+      - SafeMultiSigTransaction | 0x66753cd2
+      - SafeReceived | 0x3d0ce9bf
+      - SafeSetup | 0x141df868
+      - SignMsg | 0xe7f46750
+    severity:     medium
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
+name:    Plume Timelock
+topic:   Governance
+chainId: 98866
+events: 
+  - 
+    address: 
+      - 0x6c6f8f839a7648949873d3d2beea936fc2932e5c (Plume Timelock)
+    topic0: 
+      - CallExecuted | 0xc2617efa
+      - CallScheduled | 0x4cf4410c
+      - Cancelled | 0xbaa1eb22
+      - MinDelayChange | 0x11c24f4e
+      - RoleAdminChanged | 0xbd79b86f
+      - RoleGranted | 0x2f878811
+      - RoleRevoked | 0xf6391f5c
+    severity:     medium
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
+name:    Plume Error Trace
+topic:   OS
+chainId: 98866
+traces: 
+  - 
+    traceParams: 
+      - 
+        type: 
+          - call
+        callFrom: 
+          - 0xfcbe50dbe43bf7e5c88c6f6fb9ef432d4165406e (superOETHp)
+          - 0x2de8a403f7a5c6c5161d4a129918ec9f0b653918 (wsuperOETHp)
+          - 0xf1d0bb43c194371b04717ee8029a467a218c69b4 (superOETHp Vault)
+          - 0xa6c76fc1ac0ac86f19cd874524726b456905ea81 (superOETHp Price Oracle)
+          - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
+          - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
+        error:    true
+      - 
+        type: 
+          - call
+        callTo: 
+          - 0xfcbe50dbe43bf7e5c88c6f6fb9ef432d4165406e (superOETHp)
+          - 0x2de8a403f7a5c6c5161d4a129918ec9f0b653918 (wsuperOETHp)
+          - 0xf1d0bb43c194371b04717ee8029a467a218c69b4 (superOETHp Vault)
+          - 0xa6c76fc1ac0ac86f19cd874524726b456905ea81 (superOETHp Price Oracle)
+          - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
+          - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
+        error:  true
+    topic:       OS
+    severity:    high

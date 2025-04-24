@@ -1,5 +1,6 @@
 import { HexColorString } from 'discord.js'
 
+import { plumeAddresses } from '@utils/addresses/addresses-plume'
 import { sonicAddresses } from '@utils/addresses/addresses-sonic'
 
 import {
@@ -15,7 +16,17 @@ import { baseAddresses } from '../utils/addresses/addresses-base'
 import { getAddressesPyName } from '../utils/addresses/names'
 
 export type Severity = 'low' | 'medium' | 'high' | 'critical' | 'broken' | 'highlight'
-export type Topic = 'Governance' | 'OGN' | 'xOGN' | 'OETH' | 'superOETHb' | 'OUSD' | 'primeETH' | 'ARM' | 'OS'
+export type Topic =
+  | 'Governance'
+  | 'OGN'
+  | 'xOGN'
+  | 'OETH'
+  | 'superOETHb'
+  | 'superOETHp'
+  | 'OUSD'
+  | 'primeETH'
+  | 'ARM'
+  | 'OS'
 
 export const severityEmojis: Record<Severity, string> = {
   low: 'ℹ️',
@@ -41,6 +52,7 @@ export const topicThumbnails: Record<Topic, string> = {
   xOGN: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-xogn-logo.png',
   OETH: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-ether-oeth-logo.png',
   superOETHb: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-super-oethb-logo.png',
+  superOETHp: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-super-oethb-logo.png',
   OUSD: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-dollar-ousd-logo.png',
   primeETH: 'https://origin-squid-notifications.s3.amazonaws.com/images/prime-eth-logo.png',
   ARM: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-ogn-logo.png', // TODO: Add ARM thumbnail
@@ -81,6 +93,7 @@ export const assetIcons: Record<string, `<:${string}>`> = {
   [XOGN_ADDRESS]: '<:xogn_staked_origin_token:1245864423285850202>',
   [baseAddresses.superOETHb.address]: '<:super_oeth:1273652568014454914>',
   [baseAddresses.superOETHb.wrapped]: '<:wrapped_superoeth:1278095593025310800>',
+  [plumeAddresses.superOETHp.wrapped]: '<:wrapped_superoeth:1278095593025310800>',
   [sonicAddresses.OS.address]: '<:origin_sonic_os:1326419890302750730>',
 }
 

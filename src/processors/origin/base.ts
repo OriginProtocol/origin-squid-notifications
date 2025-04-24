@@ -29,7 +29,7 @@ import { createTraceErrorProcessor } from '../templates/trace-errors'
 
 // OTokens
 createOTokenProcessor({
-  name: 'Super OETH Base Contract',
+  name: 'superOETHb Contract',
   chainId: base.id,
   address: [baseAddresses.superOETHb.address],
   topic: 'superOETHb',
@@ -37,7 +37,7 @@ createOTokenProcessor({
 
 // OTokenVaults
 createOTokenVaultProcessor({
-  name: 'Super OETH Base Vault',
+  name: 'superOETHb Vault',
   chainId: base.id,
   address: [baseAddresses.superOETHb.vault],
   topic: 'superOETHb',
@@ -76,7 +76,7 @@ createEventProcessor({
 
 // Strategies
 createEventProcessor({
-  name: 'Super OETH Bridged WOETH Strategy',
+  name: 'superOETHb Bridged WOETH Strategy',
   chainId: base.id,
   topic: 'superOETHb',
   tracks: [
@@ -109,7 +109,7 @@ createEventProcessor({
   ],
 })
 createEventProcessor({
-  name: 'Super OETH Aerodrome AMO',
+  name: 'superOETHb Aerodrome AMO',
   chainId: base.id,
   topic: 'superOETHb',
   tracks: [
@@ -121,7 +121,7 @@ createEventProcessor({
   ],
 })
 createEventProcessor({
-  name: 'Super OETH Curve AMO Strategy',
+  name: 'superOETHb Curve AMO Strategy',
   chainId: base.id,
   topic: 'superOETHb',
   tracks: [
@@ -149,13 +149,13 @@ createEventProcessor({
 
 // Burns
 createBurnProcessor({
-  name: 'Super OETH Base Burn',
+  name: 'superOETHb Burn',
   chainId: base.id,
   address: [baseAddresses.superOETHb.address],
   topic: 'superOETHb',
 })
 createBurnProcessor({
-  name: 'Wrapped Super OETH Base Burn',
+  name: 'wsuperOETHb Burn',
   chainId: base.id,
   address: [baseAddresses.superOETHb.wrapped],
   topic: 'superOETHb',

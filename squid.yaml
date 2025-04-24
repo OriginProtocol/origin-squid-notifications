@@ -16,10 +16,13 @@ deploy:
   secrets:
     - RPC_ENDPOINT
     - RPC_SONIC_ENDPOINT
+    - RPC_PLUME_ENDPOINT
+    - RPC_PLUME_ENV
     - DISCORD_WEBHOOK_URL_OGN
     - DISCORD_WEBHOOK_URL_XOGN
     - DISCORD_WEBHOOK_URL_OETH
     - DISCORD_WEBHOOK_URL_SUPER_OETH_B
+    - DISCORD_WEBHOOK_URL_SUPER_OETH_P
     - DISCORD_WEBHOOK_URL_OUSD
     - DISCORD_WEBHOOK_URL_PRIME_ETH
     - DISCORD_WEBHOOK_URL_ARM
@@ -38,6 +41,8 @@ deploy:
         RPC_ENV_BASE: RPC_BASE_HTTP
     - name: sonic-processor
       cmd: ['sqd', 'process:sonic:prod']
+    - name: plume-processor
+      cmd: ['sqd', 'process:plume:prod']
 scale:
   dedicated: true
   addons:
