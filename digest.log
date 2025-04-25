@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-4/23/2025, 5:56:35 PM
+4/25/2025, 2:16:20 PM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -235,7 +235,7 @@ chainId: 1
 events: 
   - 
     address: 
-      - 0x2b8f37893ee713a4e9ff0ceb79f27539f20a32a1
+      - 0x2b8f37893ee713a4e9ff0ceb79f27539f20a32a1 (OUSD Gauntlet Prime USDC Strategy)
     topic0: 
       - Deposit | 0x5548c837
       - HarvesterAddressesUpdated | 0xe48386b8
@@ -251,7 +251,7 @@ chainId: 1
 events: 
   - 
     address: 
-      - 0xe3ae7c80a1b02ccd3fb0227773553aeb14e32f26
+      - 0xe3ae7c80a1b02ccd3fb0227773553aeb14e32f26 (OUSD Gauntlet Prime USDT Strategy)
     topic0: 
       - Deposit | 0x5548c837
       - HarvesterAddressesUpdated | 0xe48386b8
@@ -267,7 +267,23 @@ chainId: 1
 events: 
   - 
     address: 
-      - 0x5bd9af9c2506d29b6d79cb878284a270190eaeaa
+      - 0x5bd9af9c2506d29b6d79cb878284a270190eaeaa (OUSD Sky Savings Rate Strategy)
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - Withdrawal | 0x2717ead6
+=========================================
+name:    OUSD Curve AMO Strategy
+topic:   OUSD
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x26a02ec47acc2a3442b757f45e0a82b8e993ce11 (OUSD Curve AMO Strategy)
     topic0: 
       - Deposit | 0x5548c837
       - HarvesterAddressesUpdated | 0xe48386b8
@@ -554,9 +570,10 @@ events:
       - 0x76bf500b6305dc4ea851384d3d5502f1c7a0ed44 (Flux Strategy)
       - 0x6b69b755c629590ed59618a2712d8a2957ca98fc (Maker DSR Strategy)
       - 0x603cdeaec82a60e3c4a10da6ab546459e5f64fa0 (OUSD Meta Morpho Strategy)
-      - 0x2b8f37893ee713a4e9ff0ceb79f27539f20a32a1
-      - 0xe3ae7c80a1b02ccd3fb0227773553aeb14e32f26
-      - 0x5bd9af9c2506d29b6d79cb878284a270190eaeaa
+      - 0x2b8f37893ee713a4e9ff0ceb79f27539f20a32a1 (OUSD Gauntlet Prime USDC Strategy)
+      - 0xe3ae7c80a1b02ccd3fb0227773553aeb14e32f26 (OUSD Gauntlet Prime USDT Strategy)
+      - 0x5bd9af9c2506d29b6d79cb878284a270190eaeaa (OUSD Sky Savings Rate Strategy)
+      - 0x26a02ec47acc2a3442b757f45e0a82b8e993ce11 (OUSD Curve AMO Strategy)
       - 0x9c354503c38481a7a7a51629142963f98ecc12d0 (OGV)
       - 0x0c4576ca1c365868e162554af8e385dc3e7c66d9 (veOGV)
       - 0x3cdd07c16614059e66344a7b579dab4f9516c0b6 (OUSD Governance (old))
@@ -1468,7 +1485,7 @@ chainId: 98866
 events: 
   - 
     address: 
-      - 0xf1d0bb43c194371b04717ee8029a467a218c69b4 (superOETHp Vault)
+      - 0xc8c8f8bea5631a8af26440af32a55002138cb76a (superOETHp Vault)
     topic0: 
       - CapitalPaused | 0x71f0e5b6
       - CapitalUnpaused | 0x891ebab1
@@ -1480,7 +1497,7 @@ events:
     severity: high
   - 
     address: 
-      - 0xf1d0bb43c194371b04717ee8029a467a218c69b4 (superOETHp Vault)
+      - 0xc8c8f8bea5631a8af26440af32a55002138cb76a (superOETHp Vault)
     topic0: 
       - AllocateThresholdUpdated | 0x2ec5fb5a
       - AssetAllocated | 0x41b99659
@@ -1567,7 +1584,7 @@ events:
       - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
       - 0xfcbe50dbe43bf7e5c88c6f6fb9ef432d4165406e (superOETHp)
       - 0x2de8a403f7a5c6c5161d4a129918ec9f0b653918 (wsuperOETHp)
-      - 0xf1d0bb43c194371b04717ee8029a467a218c69b4 (superOETHp Vault)
+      - 0xc8c8f8bea5631a8af26440af32a55002138cb76a (superOETHp Vault)
       - 0xa6c76fc1ac0ac86f19cd874524726b456905ea81 (superOETHp Price Oracle)
       - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
       - 0x0000000000000000000000000000000000000000
@@ -1637,7 +1654,7 @@ events:
         - <@&997340701551513762>
 =========================================
 name:    Plume Error Trace
-topic:   OS
+topic:   superOETHp
 chainId: 98866
 traces: 
   - 
@@ -1648,7 +1665,7 @@ traces:
         callFrom: 
           - 0xfcbe50dbe43bf7e5c88c6f6fb9ef432d4165406e (superOETHp)
           - 0x2de8a403f7a5c6c5161d4a129918ec9f0b653918 (wsuperOETHp)
-          - 0xf1d0bb43c194371b04717ee8029a467a218c69b4 (superOETHp Vault)
+          - 0xc8c8f8bea5631a8af26440af32a55002138cb76a (superOETHp Vault)
           - 0xa6c76fc1ac0ac86f19cd874524726b456905ea81 (superOETHp Price Oracle)
           - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
           - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
@@ -1659,10 +1676,10 @@ traces:
         callTo: 
           - 0xfcbe50dbe43bf7e5c88c6f6fb9ef432d4165406e (superOETHp)
           - 0x2de8a403f7a5c6c5161d4a129918ec9f0b653918 (wsuperOETHp)
-          - 0xf1d0bb43c194371b04717ee8029a467a218c69b4 (superOETHp Vault)
+          - 0xc8c8f8bea5631a8af26440af32a55002138cb76a (superOETHp Vault)
           - 0xa6c76fc1ac0ac86f19cd874524726b456905ea81 (superOETHp Price Oracle)
           - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
           - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
         error:  true
-    topic:       OS
+    topic:       superOETHp
     severity:    high

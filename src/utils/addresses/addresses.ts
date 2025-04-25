@@ -156,6 +156,7 @@ export const strategies = {
     GauntletPrimeUSDCStrategy: '0x2b8f37893ee713a4e9ff0ceb79f27539f20a32a1',
     GauntletPrimeUSDTStrategy: '0xe3ae7c80a1b02ccd3fb0227773553aeb14e32f26',
     SkySavingsRateStrategy: '0x5bd9af9c2506d29b6d79cb878284a270190eaeaa',
+    OUSDCurveAMOStrategy: '0x26a02ec47acc2a3442b757f45e0a82b8e993ce11',
     // CompoundStrategy: '0x9c459eeb3fa179a40329b81c1635525e9a0ef094', // Deprecated
     // ConvexStrategy: '0xea2ef2e2e5a749d4a66b41db9ad85a38aa264cb3', // Deprecated
     // LUSDMetaStrategy: '0x7a192dd9cc4ea9bdedec9992df74f1da55e60a19', // Deprecated

@@ -184,6 +184,17 @@ createEventProcessor({
     },
   ],
 })
+createEventProcessor({
+  name: 'OUSD Curve AMO Strategy',
+  chainId: 1,
+  topic: 'OUSD',
+  tracks: [
+    {
+      address: [strategies.ousd.OUSDCurveAMOStrategy],
+      events: omit(strategyGenericAbi.events, [...Object.keys(governedUpgradeabilityProxy.events)]),
+    },
+  ],
+})
 
 // OTokenVaults
 createOTokenVaultProcessor({ name: 'OETH Vault', chainId: 1, address: [OETH_VAULT_ADDRESS], topic: 'OETH' })

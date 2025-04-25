@@ -206,6 +206,10 @@ export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undef
     // OUSD Contracts
     [OUSD_HARVESTER_ADDRESS]: 'OUSD Harvester',
     [addresses.strategies.ousd.MetaMorphoStrategy]: 'OUSD Meta Morpho Strategy',
+    [addresses.strategies.ousd.GauntletPrimeUSDTStrategy]: 'OUSD Gauntlet Prime USDT Strategy',
+    [addresses.strategies.ousd.GauntletPrimeUSDCStrategy]: 'OUSD Gauntlet Prime USDC Strategy',
+    [addresses.strategies.ousd.SkySavingsRateStrategy]: 'OUSD Sky Savings Rate Strategy',
+    [addresses.strategies.ousd.OUSDCurveAMOStrategy]: 'OUSD Curve AMO Strategy',
 
     // OETH Contracts
     [OETH]: 'OETH',
