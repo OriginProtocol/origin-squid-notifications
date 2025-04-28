@@ -7,7 +7,7 @@ const superOETHp = {
   oracleRouter: '0xa6c76fc1ac0ac86f19cd874524726b456905ea81',
   dripper: '0x3b56c09543d3068f8488ed34e6f383c3854d2bc1',
   strategies: {
-    bridgedWOETH: '0x0000000000000000000000000000000000000000',
+    bridgedWOETH: '0x1e3edd5e019207d6355ea77f724b1f1bf639b569',
   },
   zapper: undefined,
   harvester: undefined,

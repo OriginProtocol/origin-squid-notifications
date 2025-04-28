@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-4/25/2025, 2:16:20 PM
+4/28/2025, 1:25:51 PM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -1533,7 +1533,7 @@ chainId: 98866
 events: 
   - 
     address: 
-      - 0x0000000000000000000000000000000000000000
+      - 0x1e3edd5e019207d6355ea77f724b1f1bf639b569 (superOETHp - Bridged WOETH Strategy)
     topic0: 
       - Deposit | 0x5548c837
       - HarvesterAddressesUpdated | 0xe48386b8
@@ -1587,7 +1587,7 @@ events:
       - 0xc8c8f8bea5631a8af26440af32a55002138cb76a (superOETHp Vault)
       - 0xa6c76fc1ac0ac86f19cd874524726b456905ea81 (superOETHp Price Oracle)
       - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
-      - 0x0000000000000000000000000000000000000000
+      - 0x1e3edd5e019207d6355ea77f724b1f1bf639b569 (superOETHp - Bridged WOETH Strategy)
     topic0: 
       - GovernorshipTransferred | 0xc7c0c772
       - PendingGovernorshipTransfer | 0xa39cc5eb

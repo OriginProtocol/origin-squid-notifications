@@ -291,6 +291,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undef
     [plumeAddresses.superOETHp.dripper]: 'superOETHp Dripper',
     [plumeAddresses.multisig['5/8']]: 'Plume Multisig 5/8',
     [plumeAddresses.plumeOrigin.timelock]: 'Plume Timelock',
+    [plumeAddresses.superOETHp.strategies.bridgedWOETH]: 'superOETHp - Bridged WOETH Strategy',
     ...invertMap(plumeAddresses.tokens),
   },
 }
