@@ -15,6 +15,7 @@ deploy:
       - sonic-mainnet.http
   secrets:
     - RPC_ENDPOINT
+    - RPC_ENV
     - RPC_SONIC_ENDPOINT
     - RPC_PLUME_ENDPOINT
     - RPC_PLUME_ENV
