@@ -1,12 +1,17 @@
 # Origin Squid Notifications - Digest
-6/2/2025, 6:40:43 PM
+6/2/2025, 6:41:21 PM
 =========================================
-Loading processor: aave.ts
-Loading processor: chainlink.ts
-Loading processor: curve.ts
+Loading processor: arm.ts
+Loading processor: governance
 Loading processor: index.ts
-Loading processor: origin
+Loading processor: oeth
+Loading processor: ogn
+Loading processor: os
+Loading processor: ousd
 Loading processor: prime-eth.ts
+Loading processor: superoethb
+Loading processor: superoethp
+Loading processor: xogn
 =========================================
 name:    Origin Lido ARM
 topic:   ARM
@@ -853,6 +858,16 @@ events:
       - CampaignClosed | 0x5e6eb33a
       - FeeCollected | 0x06c5efef
 =========================================
+name:    Curve Pool Booster
+topic:   OGN
+chainId: 98866
+events: 
+  - 
+    topic0: 
+      - CampaignCreated | 0xfe76983a
+      - CampaignClosed | 0x5e6eb33a
+      - FeeCollected | 0x06c5efef
+=========================================
 name:    OS Burn
 topic:   OS
 chainId: 146
@@ -1533,25 +1548,6 @@ events:
       - 0x0000000000000000000000000000000000000000000000000000000000000001
       - 0x000000000000000000000000000000000000000000000000000000000000dead
 =========================================
-name:    superOETHb Bridged WOETH Strategy
-topic:   superOETHb
-chainId: 98866
-events: 
-  - 
-    address: 
-      - 0x1e3edd5e019207d6355ea77f724b1f1bf639b569 (superOETHp - Bridged WOETH Strategy)
-    topic0: 
-      - Deposit | 0x5548c837
-      - HarvesterAddressesUpdated | 0xe48386b8
-      - MaxPriceDiffBpsUpdated | 0x5066a7b9
-      - PTokenAdded | 0xef6485b8
-      - PTokenRemoved | 0x16b7600a
-      - RewardTokenAddressesUpdated | 0x04c0b964
-      - RewardTokenCollected | 0xf6c07a06
-      - WOETHPriceUpdated | 0x688768fc
-      - Withdrawal | 0x2717ead6
-    severity: low
-=========================================
 name:    Plume Error Trace
 topic:   superOETHp
 chainId: 98866
@@ -1582,6 +1578,25 @@ traces:
         error:  true
     topic:       superOETHp
     severity:    high
+=========================================
+name:    superOETHp Bridged WOETH Strategy
+topic:   superOETHp
+chainId: 98866
+events: 
+  - 
+    address: 
+      - 0x1e3edd5e019207d6355ea77f724b1f1bf639b569 (superOETHp - Bridged WOETH Strategy)
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - MaxPriceDiffBpsUpdated | 0x5066a7b9
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - WOETHPriceUpdated | 0x688768fc
+      - Withdrawal | 0x2717ead6
+    severity: low
 =========================================
 name:    superOETHp Burn
 topic:   superOETHp
