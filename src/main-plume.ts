@@ -5,7 +5,7 @@ import { processDiscordQueue } from '@notify/discord'
 import { processOncallQueue } from '@notify/oncall'
 import { run } from '@originprotocol/squid-utils'
 
-import { load } from './processors'
+import { load } from './topics'
 import { DEFAULT_FIELDS } from './utils/batch-processor-fields'
 
 load().then((processors) => {

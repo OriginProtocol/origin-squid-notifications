@@ -1,7 +1,7 @@
 import 'tsconfig-paths/register'
 
 import './env'
-import { load } from './processors'
+import { load } from './topics'
 import { formatJson } from './utils/formatJson'
 
 console.log('# Origin Squid Notifications - Digest')

@@ -6,7 +6,7 @@ import { processOncallQueue } from '@notify/oncall'
 import { run } from '@originprotocol/squid-utils'
 import { DEFAULT_FIELDS } from '@utils/batch-processor-fields'
 
-import { load } from './processors'
+import { load } from './topics'
 
 load().then((processors) => {
   run({
