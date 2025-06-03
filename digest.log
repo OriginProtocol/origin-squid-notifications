@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-4/28/2025, 1:25:51 PM
+6/2/2025, 6:40:43 PM
 =========================================
 Loading processor: aave.ts
 Loading processor: chainlink.ts
@@ -8,490 +8,75 @@ Loading processor: index.ts
 Loading processor: origin
 Loading processor: prime-eth.ts
 =========================================
-name:    Aave Governance
-topic:   OUSD
+name:    Origin Lido ARM
+topic:   ARM
 chainId: 1
 events: 
   - 
     address: 
-      - 0x9aee0b04504cef83a65ac3f0e838d0593bcb2bc7 (Aave Governance)
+      - 0x85b78aca6deae198fbf201c82daf6ca21942acc6
     topic0: 
-      - CancellationFeeRedeemed | 0xe2470238
-      - CancellationFeeUpdated | 0x5b81b8e6
-      - GasLimitUpdated | 0x3d1394ba
-      - GuardianUpdated | 0x064d28d3
-      - Initialized | 0x7f26b83f
-      - OwnershipTransferred | 0x8be0079c
-      - PayloadSent | 0x9c687134
-      - PowerStrategyUpdated | 0xfc61eef8
-      - ProposalCanceled | 0x789cf55b
-      - ProposalCreated | 0xcc914bec
-      - ProposalExecuted | 0x712ae138
-      - ProposalFailed | 0x2bed8784
-      - ProposalQueued | 0xe39e7fc9
-      - RepresentativeUpdated | 0x918b5bd4
-      - VoteForwarded | 0xf78ab0f6
-      - VotingActivated | 0x45f1db29
-      - VotingConfigUpdated | 0xa743f6cc
-      - VotingPortalUpdated | 0x5e1f23fe
-    severity: medium
+      - AdminChanged | 0x7e644d79
+      - CapManagerUpdated | 0xb8fd9afc
+      - FeeCollectorUpdated | 0xe5693914
+      - FeeUpdated | 0x8c4d35e5
+      - Initialized | 0xc7f505b2
+      - OperatorChanged | 0x4721129e
+    severity: high
+  - 
+    address: 
+      - 0x85b78aca6deae198fbf201c82daf6ca21942acc6
+    topic0: 
+      - Approval | 0x8c5be1e5
+      - ClaimLidoWithdrawals | 0xb7700a52
+      - CrossPriceUpdated | 0x6f938e86
+      - Deposit | 0x90890809
+      - FeeCollected | 0x06c5efef
+      - RedeemClaimed | 0x36dd2c9b
+      - RedeemRequested | 0xc04c86cf
+      - RequestLidoWithdrawals | 0x3fdbeb02
+      - TraderateChanged | 0xa2136948
+    severity: low
+  - 
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x00000000000000000000000085b78aca6deae198fbf201c82daf6ca21942acc6
+    severity: low
 =========================================
-name:    Chainlink Keeper
-topic:   OGN
+name:    Mainnet Multisig
+topic:   Governance
 chainId: 1
 events: 
   - 
     address: 
-      - 0x7b3ec232b08bd7b4b3305be0c044d907b2df960b (Chainlink KeeperRegistry)
+      - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
+      - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/8)
+      - 0x4ff1b9d9ba8558f5eafcec096318ea0d8b541971 (Multichain Guardian)
     topic0: 
-      - UpkeepPerformed | 0xcaacad83
-      - UpkeepCanceled | 0x91cb3bb7
-      - FundsAdded | 0xafd24114
-      - FundsWithdrawn | 0xf3b5906e
-=========================================
-name:    Curve Aragon Voting (51%)
-topic:   OETH
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0xe478de485ad2fe566d49342cbd03e49ed7db3356 (Curve Aragon Voting (51%))
-    topic0: 
-      - StartVote | 0x0730610a
-      - ExecuteVote | 0xbf8e2b10
-      - ChangeSupportRequired | 0x903b617f
-      - ChangeMinQuorum | 0x3172f2e9
-      - MinimumBalanceSet | 0xbd5318ad
-      - MinimumTimeSet | 0xcb34d057
-      - ScriptResult | 0x5229a5db
-      - RecoverToVault | 0x596caf56
-=========================================
-name:    Curve Aragon Voting (60%)
-topic:   OETH
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0xbcff8b0b9419b9a88c44546519b1e909cf330399 (Curve Aragon Voting (60%))
-    topic0: 
-      - StartVote | 0x0730610a
-      - ExecuteVote | 0xbf8e2b10
-      - ChangeSupportRequired | 0x903b617f
-      - ChangeMinQuorum | 0x3172f2e9
-      - MinimumBalanceSet | 0xbd5318ad
-      - MinimumTimeSet | 0xcb34d057
-      - ScriptResult | 0x5229a5db
-      - RecoverToVault | 0x596caf56
-=========================================
-name:    OETH Contract
-topic:   OETH
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3 (OETH)
-    topic0: 
-      - AccountRebasingDisabled | 0x201ace89
-      - AccountRebasingEnabled | 0x19a249fa
-      - TotalSupplyUpdatedHighres | 0x41645eb8
-=========================================
-name:    OUSD Contract
-topic:   OUSD
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD Token)
-    topic0: 
-      - AccountRebasingDisabled | 0x201ace89
-      - AccountRebasingEnabled | 0x19a249fa
-      - TotalSupplyUpdatedHighres | 0x41645eb8
-=========================================
-name:    OETH Native Staking Strategy
-topic:   OETH
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
-      - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
-      - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
-    topic0: 
-      - AccountingConsensusRewards | 0x7a745a2c
-      - AccountingFullyWithdrawnValidator | 0xbe704003
-      - AccountingManuallyFixed | 0x80d02271
-      - AccountingValidatorSlashed | 0x6aa7e307
-      - Deposit | 0x5548c837
-      - ETHStaked | 0x958934bb
-      - FuseIntervalUpdated | 0xcb8d24e4
-      - HarvesterAddressesUpdated | 0xe48386b8
-      - RegistratorChanged | 0x83f29c79
-      - RewardTokenAddressesUpdated | 0x04c0b964
-      - RewardTokenCollected | 0xf6c07a06
-      - SSVValidatorExitCompleted | 0x6aecca20
-      - SSVValidatorExitInitiated | 0x8c2e1530
-      - SSVValidatorRegistered | 0xacd38e90
-      - StakeETHTallyReset | 0xe765a88a
-      - StakeETHThresholdChanged | 0xe26b0674
-      - StakingMonitorChanged | 0x3329861a
-      - Unpaused | 0x5db9ee0a
-      - Withdrawal | 0x2717ead6
-  - 
-    address: 
-      - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
-      - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
-      - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
-    topic0: 
-      - Paused | 0x62e78cea
-      - PTokenAdded | 0xef6485b8
-      - PTokenRemoved | 0x16b7600a
-    severity:     high
+      - AddedOwner | 0x9465fa0c
+      - ApproveHash | 0xf2a0eb15
+      - ChangedFallbackHandler | 0x5ac6c46c
+      - ChangedGuard | 0x11511169
+      - ChangedThreshold | 0x610f7ff2
+      - DisabledModule | 0xaab4fa2b
+      - EnabledModule | 0xecdf3a3e
+      - ExecutionFailure | 0x23428b18
+      - ExecutionFromModuleFailure | 0xacd2c870
+      - ExecutionFromModuleSuccess | 0x6895c136
+      - ExecutionSuccess | 0x442e715f
+      - RemovedOwner | 0xf8d49fc5
+      - SafeModuleTransaction | 0xb648d364
+      - SafeMultiSigTransaction | 0x66753cd2
+      - SafeReceived | 0x3d0ce9bf
+      - SafeSetup | 0x141df868
+      - SignMsg | 0xe7f46750
+    severity:     medium
     notifyTarget: 
       email: 
         - engineering@originprotocol.com
       discordMentions: 
         - <@&997340701551513762>
-=========================================
-name:    OETH Curve AMO Strategy
-topic:   OETH
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
-    topic0: 
-      - AddLiquidity | 0x26f55a85
-      - RemoveLiquidity | 0x7c363854
-      - RemoveLiquidityOne | 0x5ad056f2
-      - RemoveLiquidityImbalance | 0x2b550837
-      - RampA | 0xa2b71ec6
-      - StopRampA | 0x46e22fb3
-      - CommitNewFee | 0x878eb36b
-      - ApplyNewFee | 0xa8715770
-  - 
-    address: 
-      - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
-    topic0: 
-      (empty array)
-    severity: high
-=========================================
-name:    OUSD Morpho Aave Strategy
-topic:   OUSD
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x79f2188ef9350a1dc11a062cca0abe90684b0197 (Morpho Aave Strategy)
-    topic0: 
-      - Deposit | 0x5548c837
-      - HarvesterAddressesUpdated | 0xe48386b8
-      - PTokenAdded | 0xef6485b8
-      - PTokenRemoved | 0x16b7600a
-      - RewardTokenAddressesUpdated | 0x04c0b964
-      - RewardTokenCollected | 0xf6c07a06
-      - Withdrawal | 0x2717ead6
-  - 
-    address: 
-      - 0x79f2188ef9350a1dc11a062cca0abe90684b0197 (Morpho Aave Strategy)
-    topic0: 
-      - PTokenRemoved | 0x16b7600a
-    severity: high
-=========================================
-name:    OUSD Meta Morpho Strategy
-topic:   OUSD
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x603cdeaec82a60e3c4a10da6ab546459e5f64fa0 (OUSD Meta Morpho Strategy)
-    topic0: 
-      - Deposit | 0x5548c837
-      - HarvesterAddressesUpdated | 0xe48386b8
-      - PTokenAdded | 0xef6485b8
-      - PTokenRemoved | 0x16b7600a
-      - RewardTokenAddressesUpdated | 0x04c0b964
-      - RewardTokenCollected | 0xf6c07a06
-      - Withdrawal | 0x2717ead6
-=========================================
-name:    OUSD Maker Strategy
-topic:   OUSD
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x6b69b755c629590ed59618a2712d8a2957ca98fc (Maker DSR Strategy)
-    topic0: 
-      - Deposit | 0x5548c837
-      - HarvesterAddressesUpdated | 0xe48386b8
-      - PTokenAdded | 0xef6485b8
-      - PTokenRemoved | 0x16b7600a
-      - RewardTokenAddressesUpdated | 0x04c0b964
-      - RewardTokenCollected | 0xf6c07a06
-      - Withdrawal | 0x2717ead6
-=========================================
-name:    OUSD Gauntlet Prime USDC Strategy
-topic:   OUSD
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x2b8f37893ee713a4e9ff0ceb79f27539f20a32a1 (OUSD Gauntlet Prime USDC Strategy)
-    topic0: 
-      - Deposit | 0x5548c837
-      - HarvesterAddressesUpdated | 0xe48386b8
-      - PTokenAdded | 0xef6485b8
-      - PTokenRemoved | 0x16b7600a
-      - RewardTokenAddressesUpdated | 0x04c0b964
-      - RewardTokenCollected | 0xf6c07a06
-      - Withdrawal | 0x2717ead6
-=========================================
-name:    OUSD Gauntlet Prime USDT Strategy
-topic:   OUSD
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0xe3ae7c80a1b02ccd3fb0227773553aeb14e32f26 (OUSD Gauntlet Prime USDT Strategy)
-    topic0: 
-      - Deposit | 0x5548c837
-      - HarvesterAddressesUpdated | 0xe48386b8
-      - PTokenAdded | 0xef6485b8
-      - PTokenRemoved | 0x16b7600a
-      - RewardTokenAddressesUpdated | 0x04c0b964
-      - RewardTokenCollected | 0xf6c07a06
-      - Withdrawal | 0x2717ead6
-=========================================
-name:    OUSD Sky Savings Rate Strategy
-topic:   OUSD
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x5bd9af9c2506d29b6d79cb878284a270190eaeaa (OUSD Sky Savings Rate Strategy)
-    topic0: 
-      - Deposit | 0x5548c837
-      - HarvesterAddressesUpdated | 0xe48386b8
-      - PTokenAdded | 0xef6485b8
-      - PTokenRemoved | 0x16b7600a
-      - RewardTokenAddressesUpdated | 0x04c0b964
-      - RewardTokenCollected | 0xf6c07a06
-      - Withdrawal | 0x2717ead6
-=========================================
-name:    OUSD Curve AMO Strategy
-topic:   OUSD
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x26a02ec47acc2a3442b757f45e0a82b8e993ce11 (OUSD Curve AMO Strategy)
-    topic0: 
-      - Deposit | 0x5548c837
-      - HarvesterAddressesUpdated | 0xe48386b8
-      - PTokenAdded | 0xef6485b8
-      - PTokenRemoved | 0x16b7600a
-      - RewardTokenAddressesUpdated | 0x04c0b964
-      - RewardTokenCollected | 0xf6c07a06
-      - Withdrawal | 0x2717ead6
-=========================================
-name:    OETH Vault
-topic:   OETH
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
-    topic0: 
-      - CapitalPaused | 0x71f0e5b6
-      - CapitalUnpaused | 0x891ebab1
-      - RebasePaused | 0x8cff26a5
-      - RebaseUnpaused | 0xbc044409
-      - AssetSupported | 0x4f1ac485
-      - PriceProviderUpdated | 0xb266add5
-      - TrusteeAddressChanged | 0x1e4af5ac
-    severity: high
-  - 
-    address: 
-      - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
-    topic0: 
-      - AllocateThresholdUpdated | 0x2ec5fb5a
-      - AssetAllocated | 0x41b99659
-      - AssetDefaultStrategyUpdated | 0xba58ce12
-      - AssetRemoved | 0x37803e21
-      - DripperChanged | 0xaf2910d9
-      - MaxSupplyDiffChanged | 0x95201f9c
-      - Mint | 0x0f6798a5
-      - NetOusdMintForStrategyThresholdChanged | 0xc29d6fed
-      - OusdMetaStrategyUpdated | 0xa12850fb
-      - RebaseThresholdUpdated | 0x39367850
-      - Redeem | 0x222838db
-      - RedeemFeeUpdated | 0xd6c7508d
-      - StrategistUpdated | 0x869e0abd
-      - StrategyAddedToMintWhitelist | 0x47c8c96a
-      - StrategyApproved | 0x960dd94c
-      - StrategyRemoved | 0x09a1db4b
-      - StrategyRemovedFromMintWhitelist | 0x0ec40967
-      - SwapAllowedUndervalueChanged | 0xf12c0025
-      - SwapSlippageChanged | 0x8d22e9d2
-      - Swapped | 0xa078c419
-      - SwapperChanged | 0x7d771931
-      - TrusteeFeeBpsChanged | 0x56287a45
-      - VaultBufferUpdated | 0x41ecb23a
-      - WithdrawalClaimable | 0xee79a0c4
-      - WithdrawalClaimed | 0x2d43eb17
-      - WithdrawalRequested | 0x38e3d972
-      - YieldDistribution | 0x09516ecf
-=========================================
-name:    OUSD Vault
-topic:   OUSD
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0xe75d77b1865ae93c7eaa3040b038d7aa7bc02f70 (OUSD Vault)
-    topic0: 
-      - CapitalPaused | 0x71f0e5b6
-      - CapitalUnpaused | 0x891ebab1
-      - RebasePaused | 0x8cff26a5
-      - RebaseUnpaused | 0xbc044409
-      - AssetSupported | 0x4f1ac485
-      - PriceProviderUpdated | 0xb266add5
-      - TrusteeAddressChanged | 0x1e4af5ac
-    severity: high
-  - 
-    address: 
-      - 0xe75d77b1865ae93c7eaa3040b038d7aa7bc02f70 (OUSD Vault)
-    topic0: 
-      - AllocateThresholdUpdated | 0x2ec5fb5a
-      - AssetAllocated | 0x41b99659
-      - AssetDefaultStrategyUpdated | 0xba58ce12
-      - AssetRemoved | 0x37803e21
-      - DripperChanged | 0xaf2910d9
-      - MaxSupplyDiffChanged | 0x95201f9c
-      - Mint | 0x0f6798a5
-      - NetOusdMintForStrategyThresholdChanged | 0xc29d6fed
-      - OusdMetaStrategyUpdated | 0xa12850fb
-      - RebaseThresholdUpdated | 0x39367850
-      - Redeem | 0x222838db
-      - RedeemFeeUpdated | 0xd6c7508d
-      - StrategistUpdated | 0x869e0abd
-      - StrategyAddedToMintWhitelist | 0x47c8c96a
-      - StrategyApproved | 0x960dd94c
-      - StrategyRemoved | 0x09a1db4b
-      - StrategyRemovedFromMintWhitelist | 0x0ec40967
-      - SwapAllowedUndervalueChanged | 0xf12c0025
-      - SwapSlippageChanged | 0x8d22e9d2
-      - Swapped | 0xa078c419
-      - SwapperChanged | 0x7d771931
-      - TrusteeFeeBpsChanged | 0x56287a45
-      - VaultBufferUpdated | 0x41ecb23a
-      - WithdrawalClaimable | 0xee79a0c4
-      - WithdrawalClaimed | 0x2d43eb17
-      - WithdrawalRequested | 0x38e3d972
-      - YieldDistribution | 0x09516ecf
-=========================================
-name:    OETH Zapper
-topic:   OETH
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x9858e47bcbbe6fbac040519b02d7cd4b2c470c66 (OETH Zapper)
-    topic0: 
-      - Zap | 0x9d0b99c2
-    severity: low
-=========================================
-name:    Origin Rewards
-topic:   OGN
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x7609c88e5880e934dd3a75bcfef44e31b1badb8b (OGN RewardsSource)
-    topic0: 
-      - RewardsPerSecondChanged | 0xe261f91b
-      - RewardsTargetChange | 0x41ad0a33
-    severity:     high
-    notifyTarget: 
-      email: 
-        - engineering@originprotocol.com
-      discordMentions: 
-        - <@&997340701551513762>
-  - 
-    address: 
-      - 0x7609c88e5880e934dd3a75bcfef44e31b1badb8b (OGN RewardsSource)
-    topic0: 
-      - RewardCollected | 0x9026b1dc
-    severity: low
-=========================================
-name:    OGN Burn
-topic:   OGN
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x8207c1ffc5b6804f6024322ccf34f29c3541ae26 (OGN)
-    topic0: 
-      - Transfer | 0xddf252ad
-    topic2: 
-      - 0x0000000000000000000000000000000000000000000000000000000000000000
-      - 0x0000000000000000000000000000000000000000000000000000000000000001
-      - 0x000000000000000000000000000000000000000000000000000000000000dead
-=========================================
-name:    OETH Burn
-topic:   OETH
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3 (OETH)
-    topic0: 
-      - Transfer | 0xddf252ad
-    topic2: 
-      - 0x0000000000000000000000000000000000000000000000000000000000000000
-      - 0x0000000000000000000000000000000000000000000000000000000000000001
-      - 0x000000000000000000000000000000000000000000000000000000000000dead
-=========================================
-name:    WOETH Burn
-topic:   OETH
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0xdcee70654261af21c44c093c300ed3bb97b78192 (WOETH)
-    topic0: 
-      - Transfer | 0xddf252ad
-    topic2: 
-      - 0x0000000000000000000000000000000000000000000000000000000000000000
-      - 0x0000000000000000000000000000000000000000000000000000000000000001
-      - 0x000000000000000000000000000000000000000000000000000000000000dead
-=========================================
-name:    OUSD Burn
-topic:   OUSD
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD Token)
-    topic0: 
-      - Transfer | 0xddf252ad
-    topic2: 
-      - 0x0000000000000000000000000000000000000000000000000000000000000000
-      - 0x0000000000000000000000000000000000000000000000000000000000000001
-      - 0x000000000000000000000000000000000000000000000000000000000000dead
-=========================================
-name:    WOUSD Burn
-topic:   OUSD
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0xd2af830e8cbdfed6cc11bab697bb25496ed6fa62
-    topic0: 
-      - Transfer | 0xddf252ad
-    topic2: 
-      - 0x0000000000000000000000000000000000000000000000000000000000000000
-      - 0x0000000000000000000000000000000000000000000000000000000000000001
-      - 0x000000000000000000000000000000000000000000000000000000000000dead
 =========================================
 name:    Origin Governance
 topic:   Governance
@@ -518,23 +103,6 @@ events:
         - engineering@originprotocol.com
       discordMentions: 
         - <@&997340701551513762>
-=========================================
-name:    Origin Timelock
-topic:   Governance
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x35918cde7233f2dd33fa41ae3cb6ae0e42e0e69f (Mainnet Timelock)
-    topic0: 
-      - CallExecuted | 0xc2617efa
-      - CallScheduled | 0x4cf4410c
-      - Cancelled | 0xbaa1eb22
-      - MinDelayChange | 0x11c24f4e
-      - RoleAdminChanged | 0xbd79b86f
-      - RoleGranted | 0x2f878811
-      - RoleRevoked | 0xf6391f5c
-    severity: high
 =========================================
 name:    Origin Proxy Contracts
 topic:   Governance
@@ -591,396 +159,22 @@ events:
       discordMentions: 
         - <@&997340701551513762>
 =========================================
-name:    Mainnet Multisig
+name:    Origin Timelock
 topic:   Governance
 chainId: 1
 events: 
   - 
     address: 
-      - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
-      - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/8)
-      - 0x4ff1b9d9ba8558f5eafcec096318ea0d8b541971 (Multichain Guardian)
+      - 0x35918cde7233f2dd33fa41ae3cb6ae0e42e0e69f (Mainnet Timelock)
     topic0: 
-      - AddedOwner | 0x9465fa0c
-      - ApproveHash | 0xf2a0eb15
-      - ChangedFallbackHandler | 0x5ac6c46c
-      - ChangedGuard | 0x11511169
-      - ChangedThreshold | 0x610f7ff2
-      - DisabledModule | 0xaab4fa2b
-      - EnabledModule | 0xecdf3a3e
-      - ExecutionFailure | 0x23428b18
-      - ExecutionFromModuleFailure | 0xacd2c870
-      - ExecutionFromModuleSuccess | 0x6895c136
-      - ExecutionSuccess | 0x442e715f
-      - RemovedOwner | 0xf8d49fc5
-      - SafeModuleTransaction | 0xb648d364
-      - SafeMultiSigTransaction | 0x66753cd2
-      - SafeReceived | 0x3d0ce9bf
-      - SafeSetup | 0x141df868
-      - SignMsg | 0xe7f46750
-    severity:     medium
-    notifyTarget: 
-      email: 
-        - engineering@originprotocol.com
-      discordMentions: 
-        - <@&997340701551513762>
-=========================================
-name:    OETH Buyback
-topic:   OETH
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH BuyBack)
-    topic0: 
-      - CVXShareBpsUpdated | 0x62039806
-      - OTokenBuyback | 0x298e4dbf
-      - RewardsSourceUpdated | 0x95561238
-      - StrategistUpdated | 0x869e0abd
-      - SwapRouterUpdated | 0x36db479a
-      - TreasuryManagerUpdated | 0xd16d2cf2
-=========================================
-name:    OUSD Buyback
-topic:   OUSD
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0xd7b28d06365b85933c64e11e639ea0d3bc0e3bab (OUSD BuyBack)
-    topic0: 
-      - CVXShareBpsUpdated | 0x62039806
-      - OTokenBuyback | 0x298e4dbf
-      - RewardsSourceUpdated | 0x95561238
-      - StrategistUpdated | 0x869e0abd
-      - SwapRouterUpdated | 0x36db479a
-      - TreasuryManagerUpdated | 0xd16d2cf2
-=========================================
-name:    OGN Staking
-topic:   xOGN
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x63898b3b6ef3d39332082178656e9862bee45c57 (xOGN)
-    topic0: 
-      - DelegateChanged | 0x3134e8a2
-      - DelegateVotesChanged | 0xdec2bacd
-      - Stake | 0x2720efa4
-      - Unstake | 0x05b744e3
-=========================================
-name:    OGN Error Trace
-topic:   OGN
-chainId: 1
-traces: 
-  - 
-    traceParams: 
-      - 
-        type: 
-          - call
-        callFrom: 
-          - 0x8207c1ffc5b6804f6024322ccf34f29c3541ae26 (OGN)
-          - 0x1d3fbd4d129ddd2372ea85c5fa00b2682081c9ec (OGN Governance)
-          - 0x7609c88e5880e934dd3a75bcfef44e31b1badb8b (OGN RewardsSource)
-          - 0x63898b3b6ef3d39332082178656e9862bee45c57 (xOGN)
-          - 0x95c347d6214614a780847b8aaf4f96eb84f4da6d (OGV Migrator)
-        error:    true
-      - 
-        type: 
-          - call
-        callTo: 
-          - 0x8207c1ffc5b6804f6024322ccf34f29c3541ae26 (OGN)
-          - 0x1d3fbd4d129ddd2372ea85c5fa00b2682081c9ec (OGN Governance)
-          - 0x7609c88e5880e934dd3a75bcfef44e31b1badb8b (OGN RewardsSource)
-          - 0x63898b3b6ef3d39332082178656e9862bee45c57 (xOGN)
-          - 0x95c347d6214614a780847b8aaf4f96eb84f4da6d (OGV Migrator)
-        error:  true
-    topic:       OGN
-    severity:    high
-=========================================
-name:    OETH Error Trace
-topic:   OETH
-chainId: 1
-traces: 
-  - 
-    traceParams: 
-      - 
-        type: 
-          - call
-        callFrom: 
-          - 0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3 (OETH)
-          - 0xdcee70654261af21c44c093c300ed3bb97b78192 (WOETH)
-          - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
-          - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
-          - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
-          - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH BuyBack)
-          - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
-          - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/8)
-          - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
-          - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
-          - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
-          - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
-        error:    true
-      - 
-        type: 
-          - call
-        callTo: 
-          - 0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3 (OETH)
-          - 0xdcee70654261af21c44c093c300ed3bb97b78192 (WOETH)
-          - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
-          - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
-          - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
-          - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH BuyBack)
-          - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
-          - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/8)
-          - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
-          - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
-          - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
-          - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
-        error:  true
-    topic:       OETH
-    severity:    high
-=========================================
-name:    OUSD Error Trace
-topic:   OUSD
-chainId: 1
-traces: 
-  - 
-    traceParams: 
-      - 
-        type: 
-          - call
-        callFrom: 
-          - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD Token)
-          - 0xe75d77b1865ae93c7eaa3040b038d7aa7bc02f70 (OUSD Vault)
-          - 0x21fb5812d70b3396880d30e90d9e5c1202266c89 (OUSD Harvester)
-          - 0x80c898ae5e56f888365e235ceb8cea3eb726cb58 (OUSD Dripper)
-          - 0xd7b28d06365b85933c64e11e639ea0d3bc0e3bab (OUSD BuyBack)
-          - 0x79f2188ef9350a1dc11a062cca0abe90684b0197 (Morpho Aave Strategy)
-        error:    true
-      - 
-        type: 
-          - call
-        callTo: 
-          - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD Token)
-          - 0xe75d77b1865ae93c7eaa3040b038d7aa7bc02f70 (OUSD Vault)
-          - 0x21fb5812d70b3396880d30e90d9e5c1202266c89 (OUSD Harvester)
-          - 0x80c898ae5e56f888365e235ceb8cea3eb726cb58 (OUSD Dripper)
-          - 0xd7b28d06365b85933c64e11e639ea0d3bc0e3bab (OUSD BuyBack)
-          - 0x79f2188ef9350a1dc11a062cca0abe90684b0197 (Morpho Aave Strategy)
-        error:  true
-    topic:       OUSD
-    severity:    high
-=========================================
-name:    OGV Migration
-topic:   OGN
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x95c347d6214614a780847b8aaf4f96eb84f4da6d (OGV Migrator)
-    topic0: 
-      - LockupsMigrated | 0xb5895e6e
-      - TokenExchanged | 0x9c1f2141
-    severity: low
-  - 
-    address: 
-      - 0x95c347d6214614a780847b8aaf4f96eb84f4da6d (OGV Migrator)
-    topic0: 
-      - Decommissioned | 0x4bd04f34
-    severity:     high
-    notifyTarget: 
-      email: 
-        - engineering@originprotocol.com
-      discordMentions: 
-        - <@&997340701551513762>
-=========================================
-name:    OETH Native Staking - Suicide Refund Received
-topic:   OETH
-chainId: 1
-traces: 
-  - 
-    traceParams: 
-      - 
-        type: 
-          - suicide
-        suicideRefundAddress: 
-          - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
-          - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
-          - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
-    topic:        OETH
-    severity:     high
-    notifyTarget: 
-      email: 
-        - engineering@originprotocol.com
-      discordMentions: 
-        - <@&997340701551513762>
-=========================================
-name:    Origin Lido ARM
-topic:   ARM
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0x85b78aca6deae198fbf201c82daf6ca21942acc6
-    topic0: 
-      - AdminChanged | 0x7e644d79
-      - CapManagerUpdated | 0xb8fd9afc
-      - FeeCollectorUpdated | 0xe5693914
-      - FeeUpdated | 0x8c4d35e5
-      - Initialized | 0xc7f505b2
-      - OperatorChanged | 0x4721129e
+      - CallExecuted | 0xc2617efa
+      - CallScheduled | 0x4cf4410c
+      - Cancelled | 0xbaa1eb22
+      - MinDelayChange | 0x11c24f4e
+      - RoleAdminChanged | 0xbd79b86f
+      - RoleGranted | 0x2f878811
+      - RoleRevoked | 0xf6391f5c
     severity: high
-  - 
-    address: 
-      - 0x85b78aca6deae198fbf201c82daf6ca21942acc6
-    topic0: 
-      - Approval | 0x8c5be1e5
-      - ClaimLidoWithdrawals | 0xb7700a52
-      - CrossPriceUpdated | 0x6f938e86
-      - Deposit | 0x90890809
-      - FeeCollected | 0x06c5efef
-      - RedeemClaimed | 0x36dd2c9b
-      - RedeemRequested | 0xc04c86cf
-      - RequestLidoWithdrawals | 0x3fdbeb02
-      - TraderateChanged | 0xa2136948
-    severity: low
-  - 
-    topic0: 
-      - Transfer | 0xddf252ad
-    topic2: 
-      - 0x00000000000000000000000085b78aca6deae198fbf201c82daf6ca21942acc6
-    severity: low
-=========================================
-name:    Curve Pool Booster
-topic:   OGN
-chainId: 1
-events: 
-  - 
-    topic0: 
-      - CampaignCreated | 0xfe76983a
-      - CampaignClosed | 0x5e6eb33a
-      - FeeCollected | 0x06c5efef
-=========================================
-name:    primeETH LRT Deposit Pool
-topic:   primeETH
-chainId: 1
-events: 
-  - 
-    address: 
-      - 0xa479582c8b64533102f6f528774c536e354b8d32 (PrimeETH Deposit Pool)
-    topic0: 
-      - AssetDeposit | 0x07c31fcc
-      - AssetSwapped | 0x4ac5df40
-      - ETHDeposit | 0x8b0422d4
-      - Initialized | 0x7f26b83f
-      - MaxNodeDelegatorLimitUpdated | 0x44a9f72c
-      - MinAmountToDepositUpdated | 0x1bba2f11
-      - NodeDelegatorAddedInQueue | 0xd402f64d
-      - NodeDelegatorRemovedFromQueue | 0xb17adb7f
-      - Paused | 0x62e78cea
-      - Unpaused | 0x5db9ee0a
-      - UpdatedLRTConfig | 0x9cf19cef
-      - WithdrawalClaimed | 0x8188e2b4
-      - WithdrawalRequested | 0x92072c62
-=========================================
-name:    OS Contract
-topic:   OS
-chainId: 146
-events: 
-  - 
-    address: 
-      - 0xb1e25689d55734fd3fffc939c4c3eb52dff8a794 (OS)
-    topic0: 
-      - AccountRebasingDisabled | 0x201ace89
-      - AccountRebasingEnabled | 0x19a249fa
-      - TotalSupplyUpdatedHighres | 0x41645eb8
-=========================================
-name:    OS Vault
-topic:   OS
-chainId: 146
-events: 
-  - 
-    address: 
-      - 0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186 (OS Vault)
-    topic0: 
-      - CapitalPaused | 0x71f0e5b6
-      - CapitalUnpaused | 0x891ebab1
-      - RebasePaused | 0x8cff26a5
-      - RebaseUnpaused | 0xbc044409
-      - AssetSupported | 0x4f1ac485
-      - PriceProviderUpdated | 0xb266add5
-      - TrusteeAddressChanged | 0x1e4af5ac
-    severity: high
-  - 
-    address: 
-      - 0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186 (OS Vault)
-    topic0: 
-      - AllocateThresholdUpdated | 0x2ec5fb5a
-      - AssetAllocated | 0x41b99659
-      - AssetDefaultStrategyUpdated | 0xba58ce12
-      - AssetRemoved | 0x37803e21
-      - DripperChanged | 0xaf2910d9
-      - MaxSupplyDiffChanged | 0x95201f9c
-      - Mint | 0x0f6798a5
-      - NetOusdMintForStrategyThresholdChanged | 0xc29d6fed
-      - OusdMetaStrategyUpdated | 0xa12850fb
-      - RebaseThresholdUpdated | 0x39367850
-      - Redeem | 0x222838db
-      - RedeemFeeUpdated | 0xd6c7508d
-      - StrategistUpdated | 0x869e0abd
-      - StrategyAddedToMintWhitelist | 0x47c8c96a
-      - StrategyApproved | 0x960dd94c
-      - StrategyRemoved | 0x09a1db4b
-      - StrategyRemovedFromMintWhitelist | 0x0ec40967
-      - SwapAllowedUndervalueChanged | 0xf12c0025
-      - SwapSlippageChanged | 0x8d22e9d2
-      - Swapped | 0xa078c419
-      - SwapperChanged | 0x7d771931
-      - TrusteeFeeBpsChanged | 0x56287a45
-      - VaultBufferUpdated | 0x41ecb23a
-      - WithdrawalClaimable | 0xee79a0c4
-      - WithdrawalClaimed | 0x2d43eb17
-      - WithdrawalRequested | 0x38e3d972
-      - YieldDistribution | 0x09516ecf
-=========================================
-name:    OS Zapper
-topic:   OS
-chainId: 146
-events: 
-  - 
-    address: 
-      - 0xe25a2b256ffb3ad73678d5e80de8d2f6022fab21 (OS Zapper)
-    topic0: 
-      - Zap | 0x9d0b99c2
-    severity: low
-=========================================
-name:    OS Burn
-topic:   OS
-chainId: 146
-events: 
-  - 
-    address: 
-      - 0xb1e25689d55734fd3fffc939c4c3eb52dff8a794 (OS)
-    topic0: 
-      - Transfer | 0xddf252ad
-    topic2: 
-      - 0x0000000000000000000000000000000000000000000000000000000000000000
-      - 0x0000000000000000000000000000000000000000000000000000000000000001
-      - 0x000000000000000000000000000000000000000000000000000000000000dead
-=========================================
-name:    Wrapped OS Burn
-topic:   OS
-chainId: 146
-events: 
-  - 
-    address: 
-      - 0x9f0df7799f6fdad409300080cff680f5a23df4b1 (Wrapped OS)
-    topic0: 
-      - Transfer | 0xddf252ad
-    topic2: 
-      - 0x0000000000000000000000000000000000000000000000000000000000000000
-      - 0x0000000000000000000000000000000000000000000000000000000000000001
-      - 0x000000000000000000000000000000000000000000000000000000000000dead
 =========================================
 name:    Origin Proxy Contracts Sonic
 topic:   Governance
@@ -1002,6 +196,27 @@ events:
       - GovernorshipTransferred | 0xc7c0c772
       - PendingGovernorshipTransfer | 0xa39cc5eb
       - Upgraded | 0xbc7cd75a
+    severity:     high
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
+name:    Sonic Chain SFC
+topic:   Governance
+chainId: 146
+events: 
+  - 
+    address: 
+      - 0xfc00face00000000000000000000000000000000 (SFC)
+    topic0: 
+      - ChangedValidatorStatus | 0xcd35267e
+      - Upgraded | 0xbc7cd75a
+      - OwnershipTransferred | 0x8be0079c
+      - CreatedValidator | 0x49bca1ed
+      - DeactivatedValidator | 0xac4801c3
+      - UpdatedSlashingRefundRatio | 0x047575f4
     severity:     high
     notifyTarget: 
       email: 
@@ -1058,266 +273,6 @@ events:
       - RoleGranted | 0x2f878811
       - RoleRevoked | 0xf6391f5c
     severity:     medium
-    notifyTarget: 
-      email: 
-        - engineering@originprotocol.com
-      discordMentions: 
-        - <@&997340701551513762>
-=========================================
-name:    Sonic Error Trace
-topic:   OS
-chainId: 146
-traces: 
-  - 
-    traceParams: 
-      - 
-        type: 
-          - call
-        callFrom: 
-          - 0xb1e25689d55734fd3fffc939c4c3eb52dff8a794 (OS)
-          - 0x9f0df7799f6fdad409300080cff680f5a23df4b1 (Wrapped OS)
-          - 0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186 (OS Vault)
-          - 0xe68e0c66950a7e02335fc9f44daa05d115c4e88b (OS Price Oracle)
-          - 0x5b72992e9cde8c07ce7c8217eb014ec7fd281f03 (OS Dripper)
-          - 0xaddea7933db7d83855786eb43a238111c69b00b6 (Multisig Admin)
-          - 0xe8947f06351bda440e4e8ae9bf48437f25b41538 (Multisig Guardian)
-        error:    true
-      - 
-        type: 
-          - call
-        callTo: 
-          - 0xb1e25689d55734fd3fffc939c4c3eb52dff8a794 (OS)
-          - 0x9f0df7799f6fdad409300080cff680f5a23df4b1 (Wrapped OS)
-          - 0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186 (OS Vault)
-          - 0xe68e0c66950a7e02335fc9f44daa05d115c4e88b (OS Price Oracle)
-          - 0x5b72992e9cde8c07ce7c8217eb014ec7fd281f03 (OS Dripper)
-          - 0xaddea7933db7d83855786eb43a238111c69b00b6 (Multisig Admin)
-          - 0xe8947f06351bda440e4e8ae9bf48437f25b41538 (Multisig Guardian)
-        error:  true
-    topic:       OS
-    severity:    high
-=========================================
-name:    Sonic Chain SFC
-topic:   Governance
-chainId: 146
-events: 
-  - 
-    address: 
-      - 0xfc00face00000000000000000000000000000000 (SFC)
-    topic0: 
-      - ChangedValidatorStatus | 0xcd35267e
-      - Upgraded | 0xbc7cd75a
-      - OwnershipTransferred | 0x8be0079c
-      - CreatedValidator | 0x49bca1ed
-      - DeactivatedValidator | 0xac4801c3
-      - UpdatedSlashingRefundRatio | 0x047575f4
-    severity:     high
-    notifyTarget: 
-      email: 
-        - engineering@originprotocol.com
-      discordMentions: 
-        - <@&997340701551513762>
-=========================================
-name:    Curve Pool Booster
-topic:   OGN
-chainId: 146
-events: 
-  - 
-    topic0: 
-      - CampaignCreated | 0xfe76983a
-      - CampaignClosed | 0x5e6eb33a
-      - FeeCollected | 0x06c5efef
-=========================================
-name:    superOETHb Contract
-topic:   superOETHb
-chainId: 8453
-events: 
-  - 
-    address: 
-      - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (superOETHb)
-    topic0: 
-      - AccountRebasingDisabled | 0x201ace89
-      - AccountRebasingEnabled | 0x19a249fa
-      - TotalSupplyUpdatedHighres | 0x41645eb8
-=========================================
-name:    superOETHb Vault
-topic:   superOETHb
-chainId: 8453
-events: 
-  - 
-    address: 
-      - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
-    topic0: 
-      - CapitalPaused | 0x71f0e5b6
-      - CapitalUnpaused | 0x891ebab1
-      - RebasePaused | 0x8cff26a5
-      - RebaseUnpaused | 0xbc044409
-      - AssetSupported | 0x4f1ac485
-      - PriceProviderUpdated | 0xb266add5
-      - TrusteeAddressChanged | 0x1e4af5ac
-    severity: high
-  - 
-    address: 
-      - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
-    topic0: 
-      - AllocateThresholdUpdated | 0x2ec5fb5a
-      - AssetAllocated | 0x41b99659
-      - AssetDefaultStrategyUpdated | 0xba58ce12
-      - AssetRemoved | 0x37803e21
-      - DripperChanged | 0xaf2910d9
-      - MaxSupplyDiffChanged | 0x95201f9c
-      - Mint | 0x0f6798a5
-      - NetOusdMintForStrategyThresholdChanged | 0xc29d6fed
-      - OusdMetaStrategyUpdated | 0xa12850fb
-      - RebaseThresholdUpdated | 0x39367850
-      - Redeem | 0x222838db
-      - RedeemFeeUpdated | 0xd6c7508d
-      - StrategistUpdated | 0x869e0abd
-      - StrategyAddedToMintWhitelist | 0x47c8c96a
-      - StrategyApproved | 0x960dd94c
-      - StrategyRemoved | 0x09a1db4b
-      - StrategyRemovedFromMintWhitelist | 0x0ec40967
-      - SwapAllowedUndervalueChanged | 0xf12c0025
-      - SwapSlippageChanged | 0x8d22e9d2
-      - Swapped | 0xa078c419
-      - SwapperChanged | 0x7d771931
-      - TrusteeFeeBpsChanged | 0x56287a45
-      - VaultBufferUpdated | 0x41ecb23a
-      - WithdrawalClaimable | 0xee79a0c4
-      - WithdrawalClaimed | 0x2d43eb17
-      - WithdrawalRequested | 0x38e3d972
-      - YieldDistribution | 0x09516ecf
-=========================================
-name:    superOETHb Zapper
-topic:   superOETHb
-chainId: 8453
-events: 
-  - 
-    address: 
-      - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
-    topic0: 
-      - Zap | 0x9d0b99c2
-    severity: low
-=========================================
-name:    superOETHb Bridged WOETH Strategy
-topic:   superOETHb
-chainId: 8453
-events: 
-  - 
-    address: 
-      - 0x80c864704dd06c3693ed5179190786ee38acf835 (Super OETH - Bridged WOETH Strategy)
-    topic0: 
-      - Deposit | 0x5548c837
-      - HarvesterAddressesUpdated | 0xe48386b8
-      - MaxPriceDiffBpsUpdated | 0x5066a7b9
-      - PTokenAdded | 0xef6485b8
-      - PTokenRemoved | 0x16b7600a
-      - RewardTokenAddressesUpdated | 0x04c0b964
-      - RewardTokenCollected | 0xf6c07a06
-      - WOETHPriceUpdated | 0x688768fc
-      - Withdrawal | 0x2717ead6
-    severity: low
-=========================================
-name:    superOETHb Aerodrome AMO
-topic:   superOETHb
-chainId: 8453
-events: 
-  - 
-    address: 
-      - 0xf611cc500eee7e4e4763a05fe623e2363c86d2af (Super OETH - Aerodrome AMO Strategy)
-    topic0: 
-      - Deposit | 0x5548c837
-      - HarvesterAddressesUpdated | 0xe48386b8
-      - LiquidityAdded | 0x1530ec74
-      - LiquidityRemoved | 0xede5d7a6
-      - PTokenAdded | 0xef6485b8
-      - PTokenRemoved | 0x16b7600a
-      - PoolRebalanced | 0x0d0d42e2
-      - PoolWethShareIntervalUpdated | 0xfb25072e
-      - RewardTokenAddressesUpdated | 0x04c0b964
-      - RewardTokenCollected | 0xf6c07a06
-      - UnderlyingAssetsUpdated | 0xab1ece05
-      - Withdrawal | 0x2717ead6
-    severity: low
-=========================================
-name:    superOETHb Curve AMO Strategy
-topic:   superOETHb
-chainId: 8453
-events: 
-  - 
-    address: 
-      - 0x9cfcaf81600155e01c63e4d2993a8a81a8205829 (Super OETH - Curve AMO Strategy)
-    topic0: 
-      - Deposit | 0x5548c837
-      - HarvesterAddressesUpdated | 0xe48386b8
-      - MaxSlippageUpdated | 0x9c922f6d
-      - PTokenAdded | 0xef6485b8
-      - PTokenRemoved | 0x16b7600a
-      - RewardTokenAddressesUpdated | 0x04c0b964
-      - RewardTokenCollected | 0xf6c07a06
-      - Withdrawal | 0x2717ead6
-    severity: low
-=========================================
-name:    Bridged WOETH (Base)
-topic:   superOETHb
-chainId: 8453
-events: 
-  - 
-    address: 
-      - 0xd8724322f44e5c58d7a815f542036fb17dbbf839 (WOETH)
-    topic0: 
-      - Approval | 0x8c5be1e5
-      - Transfer | 0xddf252ad
-    severity: low
-=========================================
-name:    superOETHb Burn
-topic:   superOETHb
-chainId: 8453
-events: 
-  - 
-    address: 
-      - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (superOETHb)
-    topic0: 
-      - Transfer | 0xddf252ad
-    topic2: 
-      - 0x0000000000000000000000000000000000000000000000000000000000000000
-      - 0x0000000000000000000000000000000000000000000000000000000000000001
-      - 0x000000000000000000000000000000000000000000000000000000000000dead
-=========================================
-name:    wsuperOETHb Burn
-topic:   superOETHb
-chainId: 8453
-events: 
-  - 
-    address: 
-      - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
-    topic0: 
-      - Transfer | 0xddf252ad
-    topic2: 
-      - 0x0000000000000000000000000000000000000000000000000000000000000000
-      - 0x0000000000000000000000000000000000000000000000000000000000000001
-      - 0x000000000000000000000000000000000000000000000000000000000000dead
-=========================================
-name:    Origin Proxy Contracts Base
-topic:   Governance
-chainId: 8453
-events: 
-  - 
-    address: 
-      - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (superOETHb)
-      - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
-      - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
-      - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
-      - 0x02f2c609950e90934ce99e58b4d7326ad0d7f8d6 (Super OETH Dripper)
-      - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
-      - 0x80c864704dd06c3693ed5179190786ee38acf835 (Super OETH - Bridged WOETH Strategy)
-      - 0xf611cc500eee7e4e4763a05fe623e2363c86d2af (Super OETH - Aerodrome AMO Strategy)
-      - 0x9cfcaf81600155e01c63e4d2993a8a81a8205829 (Super OETH - Curve AMO Strategy)
-    topic0: 
-      - GovernorshipTransferred | 0xc7c0c772
-      - PendingGovernorshipTransfer | 0xa39cc5eb
-      - Upgraded | 0xbc7cd75a
-    severity:     high
     notifyTarget: 
       email: 
         - engineering@originprotocol.com
@@ -1381,198 +336,31 @@ events:
       discordMentions: 
         - <@&997340701551513762>
 =========================================
-name:    Super OETH Base Error Trace
-topic:   superOETHb
-chainId: 8453
-traces: 
-  - 
-    traceParams: 
-      - 
-        type: 
-          - call
-        callFrom: 
-          - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (superOETHb)
-          - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
-          - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
-          - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
-          - 0x02f2c609950e90934ce99e58b4d7326ad0d7f8d6 (Super OETH Dripper)
-          - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
-          - 0x28bce2ee5775b652d92bb7c2891a89f036619703 (Base Multisig 2/8)
-          - 0x4ff1b9d9ba8558f5eafcec096318ea0d8b541971 (Multichain Guardian)
-          - 0xb6d85ce798660076152d6fd3a484129668839c95 (Super OETH Base Reservoir)
-        error:    true
-      - 
-        type: 
-          - call
-        callTo: 
-          - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (superOETHb)
-          - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
-          - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
-          - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
-          - 0x02f2c609950e90934ce99e58b4d7326ad0d7f8d6 (Super OETH Dripper)
-          - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
-          - 0x28bce2ee5775b652d92bb7c2891a89f036619703 (Base Multisig 2/8)
-          - 0x4ff1b9d9ba8558f5eafcec096318ea0d8b541971 (Multichain Guardian)
-          - 0xb6d85ce798660076152d6fd3a484129668839c95 (Super OETH Base Reservoir)
-        error:  true
-    topic:       superOETHb
-    severity:    high
-=========================================
-name:    Aerodrome vAMM Pools
-topic:   superOETHb
+name:    Origin Proxy Contracts Base
+topic:   Governance
 chainId: 8453
 events: 
   - 
     address: 
-      - 0x8ea4c49b712217fd6e29db920e3dd48287a0d50d (Aerodrome: vAMM-WETH/OGN)
-      - 0x6fb655476fdcfb9712dd200308d941a1c6d1119e (Aerodrome: vAMM-OGN/superOETHb)
+      - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (superOETHb)
+      - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
+      - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
+      - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
+      - 0x02f2c609950e90934ce99e58b4d7326ad0d7f8d6 (Super OETH Dripper)
+      - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
+      - 0x80c864704dd06c3693ed5179190786ee38acf835 (Super OETH - Bridged WOETH Strategy)
+      - 0xf611cc500eee7e4e4763a05fe623e2363c86d2af (Super OETH - Aerodrome AMO Strategy)
+      - 0x9cfcaf81600155e01c63e4d2993a8a81a8205829 (Super OETH - Curve AMO Strategy)
     topic0: 
-      - Mint | 0x4c209b5f
-      - Burn | 0x5d624aa9
-      - Swap | 0xb3e27736
-    severity: low
-=========================================
-name:    Aerodrome CL Pools
-topic:   superOETHb
-chainId: 8453
-events: 
-  - 
-    address: 
-      - 0x6446021f4e396da3df4235c62537431372195d38 (Aerodrome: CL1-WETH/superOETHb)
-    topic0: 
-      - Mint | 0x7a53080b
-      - Burn | 0x0c396cd9
-      - Swap | 0xc42079f9
-    severity: low
-=========================================
-name:    Aerodrome Incentives
-topic:   superOETHb
-chainId: 8453
-events: 
-  - 
-    address: 
-      - 0x685ce0e36ca4b81f13b7551c76143d962568f6dd
-      - 0x1f6ab4aa92aa7f95b7eff5aa507119472ad1c5d3
-    topic0: 
-      - NotifyReward | 0x52977ea9
-    severity: highlight
-=========================================
-name:    Curve Pool Booster
-topic:   OGN
-chainId: 8453
-events: 
-  - 
-    topic0: 
-      - CampaignCreated | 0xfe76983a
-      - CampaignClosed | 0x5e6eb33a
-      - FeeCollected | 0x06c5efef
-=========================================
-name:    superOETHp Contract
-topic:   superOETHp
-chainId: 98866
-events: 
-  - 
-    address: 
-      - 0xfcbe50dbe43bf7e5c88c6f6fb9ef432d4165406e (superOETHp)
-    topic0: 
-      - AccountRebasingDisabled | 0x201ace89
-      - AccountRebasingEnabled | 0x19a249fa
-      - TotalSupplyUpdatedHighres | 0x41645eb8
-=========================================
-name:    superOETHp Vault
-topic:   superOETHp
-chainId: 98866
-events: 
-  - 
-    address: 
-      - 0xc8c8f8bea5631a8af26440af32a55002138cb76a (superOETHp Vault)
-    topic0: 
-      - CapitalPaused | 0x71f0e5b6
-      - CapitalUnpaused | 0x891ebab1
-      - RebasePaused | 0x8cff26a5
-      - RebaseUnpaused | 0xbc044409
-      - AssetSupported | 0x4f1ac485
-      - PriceProviderUpdated | 0xb266add5
-      - TrusteeAddressChanged | 0x1e4af5ac
-    severity: high
-  - 
-    address: 
-      - 0xc8c8f8bea5631a8af26440af32a55002138cb76a (superOETHp Vault)
-    topic0: 
-      - AllocateThresholdUpdated | 0x2ec5fb5a
-      - AssetAllocated | 0x41b99659
-      - AssetDefaultStrategyUpdated | 0xba58ce12
-      - AssetRemoved | 0x37803e21
-      - DripperChanged | 0xaf2910d9
-      - MaxSupplyDiffChanged | 0x95201f9c
-      - Mint | 0x0f6798a5
-      - NetOusdMintForStrategyThresholdChanged | 0xc29d6fed
-      - OusdMetaStrategyUpdated | 0xa12850fb
-      - RebaseThresholdUpdated | 0x39367850
-      - Redeem | 0x222838db
-      - RedeemFeeUpdated | 0xd6c7508d
-      - StrategistUpdated | 0x869e0abd
-      - StrategyAddedToMintWhitelist | 0x47c8c96a
-      - StrategyApproved | 0x960dd94c
-      - StrategyRemoved | 0x09a1db4b
-      - StrategyRemovedFromMintWhitelist | 0x0ec40967
-      - SwapAllowedUndervalueChanged | 0xf12c0025
-      - SwapSlippageChanged | 0x8d22e9d2
-      - Swapped | 0xa078c419
-      - SwapperChanged | 0x7d771931
-      - TrusteeFeeBpsChanged | 0x56287a45
-      - VaultBufferUpdated | 0x41ecb23a
-      - WithdrawalClaimable | 0xee79a0c4
-      - WithdrawalClaimed | 0x2d43eb17
-      - WithdrawalRequested | 0x38e3d972
-      - YieldDistribution | 0x09516ecf
-=========================================
-name:    superOETHb Bridged WOETH Strategy
-topic:   superOETHb
-chainId: 98866
-events: 
-  - 
-    address: 
-      - 0x1e3edd5e019207d6355ea77f724b1f1bf639b569 (superOETHp - Bridged WOETH Strategy)
-    topic0: 
-      - Deposit | 0x5548c837
-      - HarvesterAddressesUpdated | 0xe48386b8
-      - MaxPriceDiffBpsUpdated | 0x5066a7b9
-      - PTokenAdded | 0xef6485b8
-      - PTokenRemoved | 0x16b7600a
-      - RewardTokenAddressesUpdated | 0x04c0b964
-      - RewardTokenCollected | 0xf6c07a06
-      - WOETHPriceUpdated | 0x688768fc
-      - Withdrawal | 0x2717ead6
-    severity: low
-=========================================
-name:    superOETHp Burn
-topic:   superOETHp
-chainId: 98866
-events: 
-  - 
-    address: 
-      - 0xfcbe50dbe43bf7e5c88c6f6fb9ef432d4165406e (superOETHp)
-    topic0: 
-      - Transfer | 0xddf252ad
-    topic2: 
-      - 0x0000000000000000000000000000000000000000000000000000000000000000
-      - 0x0000000000000000000000000000000000000000000000000000000000000001
-      - 0x000000000000000000000000000000000000000000000000000000000000dead
-=========================================
-name:    wsuperOETHp Burn
-topic:   superOETHp
-chainId: 98866
-events: 
-  - 
-    address: 
-      - 0x2de8a403f7a5c6c5161d4a129918ec9f0b653918 (wsuperOETHp)
-    topic0: 
-      - Transfer | 0xddf252ad
-    topic2: 
-      - 0x0000000000000000000000000000000000000000000000000000000000000000
-      - 0x0000000000000000000000000000000000000000000000000000000000000001
-      - 0x000000000000000000000000000000000000000000000000000000000000dead
+      - GovernorshipTransferred | 0xc7c0c772
+      - PendingGovernorshipTransfer | 0xa39cc5eb
+      - Upgraded | 0xbc7cd75a
+    severity:     high
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
 =========================================
 name:    Origin Proxy Contracts Plume
 topic:   Governance
@@ -1653,6 +441,1117 @@ events:
       discordMentions: 
         - <@&997340701551513762>
 =========================================
+name:    Curve Aragon Voting (51%)
+topic:   OETH
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xe478de485ad2fe566d49342cbd03e49ed7db3356 (Curve Aragon Voting (51%))
+    topic0: 
+      - StartVote | 0x0730610a
+      - ExecuteVote | 0xbf8e2b10
+      - ChangeSupportRequired | 0x903b617f
+      - ChangeMinQuorum | 0x3172f2e9
+      - MinimumBalanceSet | 0xbd5318ad
+      - MinimumTimeSet | 0xcb34d057
+      - ScriptResult | 0x5229a5db
+      - RecoverToVault | 0x596caf56
+=========================================
+name:    Curve Aragon Voting (60%)
+topic:   OETH
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xbcff8b0b9419b9a88c44546519b1e909cf330399 (Curve Aragon Voting (60%))
+    topic0: 
+      - StartVote | 0x0730610a
+      - ExecuteVote | 0xbf8e2b10
+      - ChangeSupportRequired | 0x903b617f
+      - ChangeMinQuorum | 0x3172f2e9
+      - MinimumBalanceSet | 0xbd5318ad
+      - MinimumTimeSet | 0xcb34d057
+      - ScriptResult | 0x5229a5db
+      - RecoverToVault | 0x596caf56
+=========================================
+name:    OETH Burn
+topic:   OETH
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3 (OETH)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    OETH Buyback
+topic:   OETH
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH BuyBack)
+    topic0: 
+      - CVXShareBpsUpdated | 0x62039806
+      - OTokenBuyback | 0x298e4dbf
+      - RewardsSourceUpdated | 0x95561238
+      - StrategistUpdated | 0x869e0abd
+      - SwapRouterUpdated | 0x36db479a
+      - TreasuryManagerUpdated | 0xd16d2cf2
+=========================================
+name:    OETH Contract
+topic:   OETH
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3 (OETH)
+    topic0: 
+      - AccountRebasingDisabled | 0x201ace89
+      - AccountRebasingEnabled | 0x19a249fa
+      - TotalSupplyUpdatedHighres | 0x41645eb8
+=========================================
+name:    OETH Curve AMO Strategy
+topic:   OETH
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
+    topic0: 
+      - AddLiquidity | 0x26f55a85
+      - RemoveLiquidity | 0x7c363854
+      - RemoveLiquidityOne | 0x5ad056f2
+      - RemoveLiquidityImbalance | 0x2b550837
+      - RampA | 0xa2b71ec6
+      - StopRampA | 0x46e22fb3
+      - CommitNewFee | 0x878eb36b
+      - ApplyNewFee | 0xa8715770
+  - 
+    address: 
+      - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
+    topic0: 
+      (empty array)
+    severity: high
+=========================================
+name:    OETH Error Trace
+topic:   OETH
+chainId: 1
+traces: 
+  - 
+    traceParams: 
+      - 
+        type: 
+          - call
+        callFrom: 
+          - 0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3 (OETH)
+          - 0xdcee70654261af21c44c093c300ed3bb97b78192 (WOETH)
+          - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
+          - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
+          - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
+          - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH BuyBack)
+          - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
+          - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/8)
+          - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
+          - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
+          - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
+          - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
+        error:    true
+      - 
+        type: 
+          - call
+        callTo: 
+          - 0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3 (OETH)
+          - 0xdcee70654261af21c44c093c300ed3bb97b78192 (WOETH)
+          - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
+          - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
+          - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
+          - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH BuyBack)
+          - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
+          - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/8)
+          - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
+          - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
+          - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
+          - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
+        error:  true
+    topic:       OETH
+    severity:    high
+=========================================
+name:    OETH Native Staking - Suicide Refund Received
+topic:   OETH
+chainId: 1
+traces: 
+  - 
+    traceParams: 
+      - 
+        type: 
+          - suicide
+        suicideRefundAddress: 
+          - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
+          - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
+          - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
+    topic:        OETH
+    severity:     high
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
+name:    OETH Native Staking Strategy
+topic:   OETH
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
+      - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
+      - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
+    topic0: 
+      - AccountingConsensusRewards | 0x7a745a2c
+      - AccountingFullyWithdrawnValidator | 0xbe704003
+      - AccountingManuallyFixed | 0x80d02271
+      - AccountingValidatorSlashed | 0x6aa7e307
+      - Deposit | 0x5548c837
+      - ETHStaked | 0x958934bb
+      - FuseIntervalUpdated | 0xcb8d24e4
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - RegistratorChanged | 0x83f29c79
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - SSVValidatorExitCompleted | 0x6aecca20
+      - SSVValidatorExitInitiated | 0x8c2e1530
+      - SSVValidatorRegistered | 0xacd38e90
+      - StakeETHTallyReset | 0xe765a88a
+      - StakeETHThresholdChanged | 0xe26b0674
+      - StakingMonitorChanged | 0x3329861a
+      - Unpaused | 0x5db9ee0a
+      - Withdrawal | 0x2717ead6
+  - 
+    address: 
+      - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
+      - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
+      - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
+    topic0: 
+      - Paused | 0x62e78cea
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+    severity:     high
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
+name:    OETH Vault
+topic:   OETH
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
+    topic0: 
+      - CapitalPaused | 0x71f0e5b6
+      - CapitalUnpaused | 0x891ebab1
+      - RebasePaused | 0x8cff26a5
+      - RebaseUnpaused | 0xbc044409
+      - AssetSupported | 0x4f1ac485
+      - PriceProviderUpdated | 0xb266add5
+      - TrusteeAddressChanged | 0x1e4af5ac
+    severity: high
+  - 
+    address: 
+      - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
+    topic0: 
+      - AllocateThresholdUpdated | 0x2ec5fb5a
+      - AssetAllocated | 0x41b99659
+      - AssetDefaultStrategyUpdated | 0xba58ce12
+      - AssetRemoved | 0x37803e21
+      - DripperChanged | 0xaf2910d9
+      - MaxSupplyDiffChanged | 0x95201f9c
+      - Mint | 0x0f6798a5
+      - NetOusdMintForStrategyThresholdChanged | 0xc29d6fed
+      - OusdMetaStrategyUpdated | 0xa12850fb
+      - RebaseThresholdUpdated | 0x39367850
+      - Redeem | 0x222838db
+      - RedeemFeeUpdated | 0xd6c7508d
+      - StrategistUpdated | 0x869e0abd
+      - StrategyAddedToMintWhitelist | 0x47c8c96a
+      - StrategyApproved | 0x960dd94c
+      - StrategyRemoved | 0x09a1db4b
+      - StrategyRemovedFromMintWhitelist | 0x0ec40967
+      - SwapAllowedUndervalueChanged | 0xf12c0025
+      - SwapSlippageChanged | 0x8d22e9d2
+      - Swapped | 0xa078c419
+      - SwapperChanged | 0x7d771931
+      - TrusteeFeeBpsChanged | 0x56287a45
+      - VaultBufferUpdated | 0x41ecb23a
+      - WithdrawalClaimable | 0xee79a0c4
+      - WithdrawalClaimed | 0x2d43eb17
+      - WithdrawalRequested | 0x38e3d972
+      - YieldDistribution | 0x09516ecf
+=========================================
+name:    OETH Zapper
+topic:   OETH
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x9858e47bcbbe6fbac040519b02d7cd4b2c470c66 (OETH Zapper)
+    topic0: 
+      - Zap | 0x9d0b99c2
+    severity: low
+=========================================
+name:    WOETH Burn
+topic:   OETH
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xdcee70654261af21c44c093c300ed3bb97b78192 (WOETH)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    Chainlink Keeper
+topic:   OGN
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x7b3ec232b08bd7b4b3305be0c044d907b2df960b (Chainlink KeeperRegistry)
+    topic0: 
+      - UpkeepPerformed | 0xcaacad83
+      - UpkeepCanceled | 0x91cb3bb7
+      - FundsAdded | 0xafd24114
+      - FundsWithdrawn | 0xf3b5906e
+=========================================
+name:    Curve Pool Booster
+topic:   OGN
+chainId: 1
+events: 
+  - 
+    topic0: 
+      - CampaignCreated | 0xfe76983a
+      - CampaignClosed | 0x5e6eb33a
+      - FeeCollected | 0x06c5efef
+=========================================
+name:    OGN Burn
+topic:   OGN
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x8207c1ffc5b6804f6024322ccf34f29c3541ae26 (OGN)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    OGN Error Trace
+topic:   OGN
+chainId: 1
+traces: 
+  - 
+    traceParams: 
+      - 
+        type: 
+          - call
+        callFrom: 
+          - 0x8207c1ffc5b6804f6024322ccf34f29c3541ae26 (OGN)
+          - 0x1d3fbd4d129ddd2372ea85c5fa00b2682081c9ec (OGN Governance)
+          - 0x7609c88e5880e934dd3a75bcfef44e31b1badb8b (OGN RewardsSource)
+          - 0x63898b3b6ef3d39332082178656e9862bee45c57 (xOGN)
+          - 0x95c347d6214614a780847b8aaf4f96eb84f4da6d (OGV Migrator)
+        error:    true
+      - 
+        type: 
+          - call
+        callTo: 
+          - 0x8207c1ffc5b6804f6024322ccf34f29c3541ae26 (OGN)
+          - 0x1d3fbd4d129ddd2372ea85c5fa00b2682081c9ec (OGN Governance)
+          - 0x7609c88e5880e934dd3a75bcfef44e31b1badb8b (OGN RewardsSource)
+          - 0x63898b3b6ef3d39332082178656e9862bee45c57 (xOGN)
+          - 0x95c347d6214614a780847b8aaf4f96eb84f4da6d (OGV Migrator)
+        error:  true
+    topic:       OGN
+    severity:    high
+=========================================
+name:    OGV Migration
+topic:   OGN
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x95c347d6214614a780847b8aaf4f96eb84f4da6d (OGV Migrator)
+    topic0: 
+      - LockupsMigrated | 0xb5895e6e
+      - TokenExchanged | 0x9c1f2141
+    severity: low
+  - 
+    address: 
+      - 0x95c347d6214614a780847b8aaf4f96eb84f4da6d (OGV Migrator)
+    topic0: 
+      - Decommissioned | 0x4bd04f34
+    severity:     high
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
+name:    Origin Rewards
+topic:   OGN
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x7609c88e5880e934dd3a75bcfef44e31b1badb8b (OGN RewardsSource)
+    topic0: 
+      - RewardsPerSecondChanged | 0xe261f91b
+      - RewardsTargetChange | 0x41ad0a33
+    severity:     high
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+  - 
+    address: 
+      - 0x7609c88e5880e934dd3a75bcfef44e31b1badb8b (OGN RewardsSource)
+    topic0: 
+      - RewardCollected | 0x9026b1dc
+    severity: low
+=========================================
+name:    Curve Pool Booster
+topic:   OGN
+chainId: 146
+events: 
+  - 
+    topic0: 
+      - CampaignCreated | 0xfe76983a
+      - CampaignClosed | 0x5e6eb33a
+      - FeeCollected | 0x06c5efef
+=========================================
+name:    Curve Pool Booster
+topic:   OGN
+chainId: 8453
+events: 
+  - 
+    topic0: 
+      - CampaignCreated | 0xfe76983a
+      - CampaignClosed | 0x5e6eb33a
+      - FeeCollected | 0x06c5efef
+=========================================
+name:    OS Burn
+topic:   OS
+chainId: 146
+events: 
+  - 
+    address: 
+      - 0xb1e25689d55734fd3fffc939c4c3eb52dff8a794 (OS)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    OS Contract
+topic:   OS
+chainId: 146
+events: 
+  - 
+    address: 
+      - 0xb1e25689d55734fd3fffc939c4c3eb52dff8a794 (OS)
+    topic0: 
+      - AccountRebasingDisabled | 0x201ace89
+      - AccountRebasingEnabled | 0x19a249fa
+      - TotalSupplyUpdatedHighres | 0x41645eb8
+=========================================
+name:    OS Vault
+topic:   OS
+chainId: 146
+events: 
+  - 
+    address: 
+      - 0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186 (OS Vault)
+    topic0: 
+      - CapitalPaused | 0x71f0e5b6
+      - CapitalUnpaused | 0x891ebab1
+      - RebasePaused | 0x8cff26a5
+      - RebaseUnpaused | 0xbc044409
+      - AssetSupported | 0x4f1ac485
+      - PriceProviderUpdated | 0xb266add5
+      - TrusteeAddressChanged | 0x1e4af5ac
+    severity: high
+  - 
+    address: 
+      - 0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186 (OS Vault)
+    topic0: 
+      - AllocateThresholdUpdated | 0x2ec5fb5a
+      - AssetAllocated | 0x41b99659
+      - AssetDefaultStrategyUpdated | 0xba58ce12
+      - AssetRemoved | 0x37803e21
+      - DripperChanged | 0xaf2910d9
+      - MaxSupplyDiffChanged | 0x95201f9c
+      - Mint | 0x0f6798a5
+      - NetOusdMintForStrategyThresholdChanged | 0xc29d6fed
+      - OusdMetaStrategyUpdated | 0xa12850fb
+      - RebaseThresholdUpdated | 0x39367850
+      - Redeem | 0x222838db
+      - RedeemFeeUpdated | 0xd6c7508d
+      - StrategistUpdated | 0x869e0abd
+      - StrategyAddedToMintWhitelist | 0x47c8c96a
+      - StrategyApproved | 0x960dd94c
+      - StrategyRemoved | 0x09a1db4b
+      - StrategyRemovedFromMintWhitelist | 0x0ec40967
+      - SwapAllowedUndervalueChanged | 0xf12c0025
+      - SwapSlippageChanged | 0x8d22e9d2
+      - Swapped | 0xa078c419
+      - SwapperChanged | 0x7d771931
+      - TrusteeFeeBpsChanged | 0x56287a45
+      - VaultBufferUpdated | 0x41ecb23a
+      - WithdrawalClaimable | 0xee79a0c4
+      - WithdrawalClaimed | 0x2d43eb17
+      - WithdrawalRequested | 0x38e3d972
+      - YieldDistribution | 0x09516ecf
+=========================================
+name:    OS Zapper
+topic:   OS
+chainId: 146
+events: 
+  - 
+    address: 
+      - 0xe25a2b256ffb3ad73678d5e80de8d2f6022fab21 (OS Zapper)
+    topic0: 
+      - Zap | 0x9d0b99c2
+    severity: low
+=========================================
+name:    Sonic Error Trace
+topic:   OS
+chainId: 146
+traces: 
+  - 
+    traceParams: 
+      - 
+        type: 
+          - call
+        callFrom: 
+          - 0xb1e25689d55734fd3fffc939c4c3eb52dff8a794 (OS)
+          - 0x9f0df7799f6fdad409300080cff680f5a23df4b1 (Wrapped OS)
+          - 0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186 (OS Vault)
+          - 0xe68e0c66950a7e02335fc9f44daa05d115c4e88b (OS Price Oracle)
+          - 0x5b72992e9cde8c07ce7c8217eb014ec7fd281f03 (OS Dripper)
+          - 0xaddea7933db7d83855786eb43a238111c69b00b6 (Multisig Admin)
+          - 0xe8947f06351bda440e4e8ae9bf48437f25b41538 (Multisig Guardian)
+        error:    true
+      - 
+        type: 
+          - call
+        callTo: 
+          - 0xb1e25689d55734fd3fffc939c4c3eb52dff8a794 (OS)
+          - 0x9f0df7799f6fdad409300080cff680f5a23df4b1 (Wrapped OS)
+          - 0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186 (OS Vault)
+          - 0xe68e0c66950a7e02335fc9f44daa05d115c4e88b (OS Price Oracle)
+          - 0x5b72992e9cde8c07ce7c8217eb014ec7fd281f03 (OS Dripper)
+          - 0xaddea7933db7d83855786eb43a238111c69b00b6 (Multisig Admin)
+          - 0xe8947f06351bda440e4e8ae9bf48437f25b41538 (Multisig Guardian)
+        error:  true
+    topic:       OS
+    severity:    high
+=========================================
+name:    Wrapped OS Burn
+topic:   OS
+chainId: 146
+events: 
+  - 
+    address: 
+      - 0x9f0df7799f6fdad409300080cff680f5a23df4b1 (Wrapped OS)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    Aave Governance
+topic:   OUSD
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x9aee0b04504cef83a65ac3f0e838d0593bcb2bc7 (Aave Governance)
+    topic0: 
+      - CancellationFeeRedeemed | 0xe2470238
+      - CancellationFeeUpdated | 0x5b81b8e6
+      - GasLimitUpdated | 0x3d1394ba
+      - GuardianUpdated | 0x064d28d3
+      - Initialized | 0x7f26b83f
+      - OwnershipTransferred | 0x8be0079c
+      - PayloadSent | 0x9c687134
+      - PowerStrategyUpdated | 0xfc61eef8
+      - ProposalCanceled | 0x789cf55b
+      - ProposalCreated | 0xcc914bec
+      - ProposalExecuted | 0x712ae138
+      - ProposalFailed | 0x2bed8784
+      - ProposalQueued | 0xe39e7fc9
+      - RepresentativeUpdated | 0x918b5bd4
+      - VoteForwarded | 0xf78ab0f6
+      - VotingActivated | 0x45f1db29
+      - VotingConfigUpdated | 0xa743f6cc
+      - VotingPortalUpdated | 0x5e1f23fe
+    severity: medium
+=========================================
+name:    OUSD Burn
+topic:   OUSD
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD Token)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    OUSD Buyback
+topic:   OUSD
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xd7b28d06365b85933c64e11e639ea0d3bc0e3bab (OUSD BuyBack)
+    topic0: 
+      - CVXShareBpsUpdated | 0x62039806
+      - OTokenBuyback | 0x298e4dbf
+      - RewardsSourceUpdated | 0x95561238
+      - StrategistUpdated | 0x869e0abd
+      - SwapRouterUpdated | 0x36db479a
+      - TreasuryManagerUpdated | 0xd16d2cf2
+=========================================
+name:    OUSD Contract
+topic:   OUSD
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD Token)
+    topic0: 
+      - AccountRebasingDisabled | 0x201ace89
+      - AccountRebasingEnabled | 0x19a249fa
+      - TotalSupplyUpdatedHighres | 0x41645eb8
+=========================================
+name:    OUSD Curve AMO Strategy
+topic:   OUSD
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x26a02ec47acc2a3442b757f45e0a82b8e993ce11 (OUSD Curve AMO Strategy)
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - Withdrawal | 0x2717ead6
+=========================================
+name:    OUSD Error Trace
+topic:   OUSD
+chainId: 1
+traces: 
+  - 
+    traceParams: 
+      - 
+        type: 
+          - call
+        callFrom: 
+          - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD Token)
+          - 0xe75d77b1865ae93c7eaa3040b038d7aa7bc02f70 (OUSD Vault)
+          - 0x21fb5812d70b3396880d30e90d9e5c1202266c89 (OUSD Harvester)
+          - 0x80c898ae5e56f888365e235ceb8cea3eb726cb58 (OUSD Dripper)
+          - 0xd7b28d06365b85933c64e11e639ea0d3bc0e3bab (OUSD BuyBack)
+          - 0x79f2188ef9350a1dc11a062cca0abe90684b0197 (Morpho Aave Strategy)
+        error:    true
+      - 
+        type: 
+          - call
+        callTo: 
+          - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD Token)
+          - 0xe75d77b1865ae93c7eaa3040b038d7aa7bc02f70 (OUSD Vault)
+          - 0x21fb5812d70b3396880d30e90d9e5c1202266c89 (OUSD Harvester)
+          - 0x80c898ae5e56f888365e235ceb8cea3eb726cb58 (OUSD Dripper)
+          - 0xd7b28d06365b85933c64e11e639ea0d3bc0e3bab (OUSD BuyBack)
+          - 0x79f2188ef9350a1dc11a062cca0abe90684b0197 (Morpho Aave Strategy)
+        error:  true
+    topic:       OUSD
+    severity:    high
+=========================================
+name:    OUSD Gauntlet Prime USDC Strategy
+topic:   OUSD
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x2b8f37893ee713a4e9ff0ceb79f27539f20a32a1 (OUSD Gauntlet Prime USDC Strategy)
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - Withdrawal | 0x2717ead6
+=========================================
+name:    OUSD Gauntlet Prime USDT Strategy
+topic:   OUSD
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xe3ae7c80a1b02ccd3fb0227773553aeb14e32f26 (OUSD Gauntlet Prime USDT Strategy)
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - Withdrawal | 0x2717ead6
+=========================================
+name:    OUSD Maker Strategy
+topic:   OUSD
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x6b69b755c629590ed59618a2712d8a2957ca98fc (Maker DSR Strategy)
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - Withdrawal | 0x2717ead6
+=========================================
+name:    OUSD Meta Morpho Strategy
+topic:   OUSD
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x603cdeaec82a60e3c4a10da6ab546459e5f64fa0 (OUSD Meta Morpho Strategy)
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - Withdrawal | 0x2717ead6
+=========================================
+name:    OUSD Morpho Aave Strategy
+topic:   OUSD
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x79f2188ef9350a1dc11a062cca0abe90684b0197 (Morpho Aave Strategy)
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - Withdrawal | 0x2717ead6
+  - 
+    address: 
+      - 0x79f2188ef9350a1dc11a062cca0abe90684b0197 (Morpho Aave Strategy)
+    topic0: 
+      - PTokenRemoved | 0x16b7600a
+    severity: high
+=========================================
+name:    OUSD Sky Savings Rate Strategy
+topic:   OUSD
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x5bd9af9c2506d29b6d79cb878284a270190eaeaa (OUSD Sky Savings Rate Strategy)
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - Withdrawal | 0x2717ead6
+=========================================
+name:    OUSD Vault
+topic:   OUSD
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xe75d77b1865ae93c7eaa3040b038d7aa7bc02f70 (OUSD Vault)
+    topic0: 
+      - CapitalPaused | 0x71f0e5b6
+      - CapitalUnpaused | 0x891ebab1
+      - RebasePaused | 0x8cff26a5
+      - RebaseUnpaused | 0xbc044409
+      - AssetSupported | 0x4f1ac485
+      - PriceProviderUpdated | 0xb266add5
+      - TrusteeAddressChanged | 0x1e4af5ac
+    severity: high
+  - 
+    address: 
+      - 0xe75d77b1865ae93c7eaa3040b038d7aa7bc02f70 (OUSD Vault)
+    topic0: 
+      - AllocateThresholdUpdated | 0x2ec5fb5a
+      - AssetAllocated | 0x41b99659
+      - AssetDefaultStrategyUpdated | 0xba58ce12
+      - AssetRemoved | 0x37803e21
+      - DripperChanged | 0xaf2910d9
+      - MaxSupplyDiffChanged | 0x95201f9c
+      - Mint | 0x0f6798a5
+      - NetOusdMintForStrategyThresholdChanged | 0xc29d6fed
+      - OusdMetaStrategyUpdated | 0xa12850fb
+      - RebaseThresholdUpdated | 0x39367850
+      - Redeem | 0x222838db
+      - RedeemFeeUpdated | 0xd6c7508d
+      - StrategistUpdated | 0x869e0abd
+      - StrategyAddedToMintWhitelist | 0x47c8c96a
+      - StrategyApproved | 0x960dd94c
+      - StrategyRemoved | 0x09a1db4b
+      - StrategyRemovedFromMintWhitelist | 0x0ec40967
+      - SwapAllowedUndervalueChanged | 0xf12c0025
+      - SwapSlippageChanged | 0x8d22e9d2
+      - Swapped | 0xa078c419
+      - SwapperChanged | 0x7d771931
+      - TrusteeFeeBpsChanged | 0x56287a45
+      - VaultBufferUpdated | 0x41ecb23a
+      - WithdrawalClaimable | 0xee79a0c4
+      - WithdrawalClaimed | 0x2d43eb17
+      - WithdrawalRequested | 0x38e3d972
+      - YieldDistribution | 0x09516ecf
+=========================================
+name:    WOUSD Burn
+topic:   OUSD
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xd2af830e8cbdfed6cc11bab697bb25496ed6fa62
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    primeETH LRT Deposit Pool
+topic:   primeETH
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xa479582c8b64533102f6f528774c536e354b8d32 (PrimeETH Deposit Pool)
+    topic0: 
+      - AssetDeposit | 0x07c31fcc
+      - AssetSwapped | 0x4ac5df40
+      - ETHDeposit | 0x8b0422d4
+      - Initialized | 0x7f26b83f
+      - MaxNodeDelegatorLimitUpdated | 0x44a9f72c
+      - MinAmountToDepositUpdated | 0x1bba2f11
+      - NodeDelegatorAddedInQueue | 0xd402f64d
+      - NodeDelegatorRemovedFromQueue | 0xb17adb7f
+      - Paused | 0x62e78cea
+      - Unpaused | 0x5db9ee0a
+      - UpdatedLRTConfig | 0x9cf19cef
+      - WithdrawalClaimed | 0x8188e2b4
+      - WithdrawalRequested | 0x92072c62
+=========================================
+name:    Aerodrome CL Pools
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x6446021f4e396da3df4235c62537431372195d38 (Aerodrome: CL1-WETH/superOETHb)
+    topic0: 
+      - Mint | 0x7a53080b
+      - Burn | 0x0c396cd9
+      - Swap | 0xc42079f9
+    severity: low
+=========================================
+name:    Aerodrome Incentives
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x685ce0e36ca4b81f13b7551c76143d962568f6dd
+      - 0x1f6ab4aa92aa7f95b7eff5aa507119472ad1c5d3
+    topic0: 
+      - NotifyReward | 0x52977ea9
+    severity: highlight
+=========================================
+name:    Aerodrome vAMM Pools
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x8ea4c49b712217fd6e29db920e3dd48287a0d50d (Aerodrome: vAMM-WETH/OGN)
+      - 0x6fb655476fdcfb9712dd200308d941a1c6d1119e (Aerodrome: vAMM-OGN/superOETHb)
+    topic0: 
+      - Mint | 0x4c209b5f
+      - Burn | 0x5d624aa9
+      - Swap | 0xb3e27736
+    severity: low
+=========================================
+name:    Bridged WOETH (Base)
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0xd8724322f44e5c58d7a815f542036fb17dbbf839 (WOETH)
+    topic0: 
+      - Approval | 0x8c5be1e5
+      - Transfer | 0xddf252ad
+    severity: low
+=========================================
+name:    Super OETH Base Error Trace
+topic:   superOETHb
+chainId: 8453
+traces: 
+  - 
+    traceParams: 
+      - 
+        type: 
+          - call
+        callFrom: 
+          - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (superOETHb)
+          - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
+          - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
+          - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
+          - 0x02f2c609950e90934ce99e58b4d7326ad0d7f8d6 (Super OETH Dripper)
+          - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
+          - 0x28bce2ee5775b652d92bb7c2891a89f036619703 (Base Multisig 2/8)
+          - 0x4ff1b9d9ba8558f5eafcec096318ea0d8b541971 (Multichain Guardian)
+          - 0xb6d85ce798660076152d6fd3a484129668839c95 (Super OETH Base Reservoir)
+        error:    true
+      - 
+        type: 
+          - call
+        callTo: 
+          - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (superOETHb)
+          - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
+          - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
+          - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
+          - 0x02f2c609950e90934ce99e58b4d7326ad0d7f8d6 (Super OETH Dripper)
+          - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
+          - 0x28bce2ee5775b652d92bb7c2891a89f036619703 (Base Multisig 2/8)
+          - 0x4ff1b9d9ba8558f5eafcec096318ea0d8b541971 (Multichain Guardian)
+          - 0xb6d85ce798660076152d6fd3a484129668839c95 (Super OETH Base Reservoir)
+        error:  true
+    topic:       superOETHb
+    severity:    high
+=========================================
+name:    superOETHb Aerodrome AMO
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0xf611cc500eee7e4e4763a05fe623e2363c86d2af (Super OETH - Aerodrome AMO Strategy)
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - LiquidityAdded | 0x1530ec74
+      - LiquidityRemoved | 0xede5d7a6
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - PoolRebalanced | 0x0d0d42e2
+      - PoolWethShareIntervalUpdated | 0xfb25072e
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - UnderlyingAssetsUpdated | 0xab1ece05
+      - Withdrawal | 0x2717ead6
+    severity: low
+=========================================
+name:    superOETHb Bridged WOETH Strategy
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x80c864704dd06c3693ed5179190786ee38acf835 (Super OETH - Bridged WOETH Strategy)
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - MaxPriceDiffBpsUpdated | 0x5066a7b9
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - WOETHPriceUpdated | 0x688768fc
+      - Withdrawal | 0x2717ead6
+    severity: low
+=========================================
+name:    superOETHb Burn
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (superOETHb)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    superOETHb Contract
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0xdbfefd2e8460a6ee4955a68582f85708baea60a3 (superOETHb)
+    topic0: 
+      - AccountRebasingDisabled | 0x201ace89
+      - AccountRebasingEnabled | 0x19a249fa
+      - TotalSupplyUpdatedHighres | 0x41645eb8
+=========================================
+name:    superOETHb Curve AMO Strategy
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x9cfcaf81600155e01c63e4d2993a8a81a8205829 (Super OETH - Curve AMO Strategy)
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - MaxSlippageUpdated | 0x9c922f6d
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - Withdrawal | 0x2717ead6
+    severity: low
+=========================================
+name:    superOETHb Vault
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
+    topic0: 
+      - CapitalPaused | 0x71f0e5b6
+      - CapitalUnpaused | 0x891ebab1
+      - RebasePaused | 0x8cff26a5
+      - RebaseUnpaused | 0xbc044409
+      - AssetSupported | 0x4f1ac485
+      - PriceProviderUpdated | 0xb266add5
+      - TrusteeAddressChanged | 0x1e4af5ac
+    severity: high
+  - 
+    address: 
+      - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
+    topic0: 
+      - AllocateThresholdUpdated | 0x2ec5fb5a
+      - AssetAllocated | 0x41b99659
+      - AssetDefaultStrategyUpdated | 0xba58ce12
+      - AssetRemoved | 0x37803e21
+      - DripperChanged | 0xaf2910d9
+      - MaxSupplyDiffChanged | 0x95201f9c
+      - Mint | 0x0f6798a5
+      - NetOusdMintForStrategyThresholdChanged | 0xc29d6fed
+      - OusdMetaStrategyUpdated | 0xa12850fb
+      - RebaseThresholdUpdated | 0x39367850
+      - Redeem | 0x222838db
+      - RedeemFeeUpdated | 0xd6c7508d
+      - StrategistUpdated | 0x869e0abd
+      - StrategyAddedToMintWhitelist | 0x47c8c96a
+      - StrategyApproved | 0x960dd94c
+      - StrategyRemoved | 0x09a1db4b
+      - StrategyRemovedFromMintWhitelist | 0x0ec40967
+      - SwapAllowedUndervalueChanged | 0xf12c0025
+      - SwapSlippageChanged | 0x8d22e9d2
+      - Swapped | 0xa078c419
+      - SwapperChanged | 0x7d771931
+      - TrusteeFeeBpsChanged | 0x56287a45
+      - VaultBufferUpdated | 0x41ecb23a
+      - WithdrawalClaimable | 0xee79a0c4
+      - WithdrawalClaimed | 0x2d43eb17
+      - WithdrawalRequested | 0x38e3d972
+      - YieldDistribution | 0x09516ecf
+=========================================
+name:    superOETHb Zapper
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
+    topic0: 
+      - Zap | 0x9d0b99c2
+    severity: low
+=========================================
+name:    wsuperOETHb Burn
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    superOETHb Bridged WOETH Strategy
+topic:   superOETHb
+chainId: 98866
+events: 
+  - 
+    address: 
+      - 0x1e3edd5e019207d6355ea77f724b1f1bf639b569 (superOETHp - Bridged WOETH Strategy)
+    topic0: 
+      - Deposit | 0x5548c837
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - MaxPriceDiffBpsUpdated | 0x5066a7b9
+      - PTokenAdded | 0xef6485b8
+      - PTokenRemoved | 0x16b7600a
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - WOETHPriceUpdated | 0x688768fc
+      - Withdrawal | 0x2717ead6
+    severity: low
+=========================================
 name:    Plume Error Trace
 topic:   superOETHp
 chainId: 98866
@@ -1683,3 +1582,104 @@ traces:
         error:  true
     topic:       superOETHp
     severity:    high
+=========================================
+name:    superOETHp Burn
+topic:   superOETHp
+chainId: 98866
+events: 
+  - 
+    address: 
+      - 0xfcbe50dbe43bf7e5c88c6f6fb9ef432d4165406e (superOETHp)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    superOETHp Contract
+topic:   superOETHp
+chainId: 98866
+events: 
+  - 
+    address: 
+      - 0xfcbe50dbe43bf7e5c88c6f6fb9ef432d4165406e (superOETHp)
+    topic0: 
+      - AccountRebasingDisabled | 0x201ace89
+      - AccountRebasingEnabled | 0x19a249fa
+      - TotalSupplyUpdatedHighres | 0x41645eb8
+=========================================
+name:    superOETHp Vault
+topic:   superOETHp
+chainId: 98866
+events: 
+  - 
+    address: 
+      - 0xc8c8f8bea5631a8af26440af32a55002138cb76a (superOETHp Vault)
+    topic0: 
+      - CapitalPaused | 0x71f0e5b6
+      - CapitalUnpaused | 0x891ebab1
+      - RebasePaused | 0x8cff26a5
+      - RebaseUnpaused | 0xbc044409
+      - AssetSupported | 0x4f1ac485
+      - PriceProviderUpdated | 0xb266add5
+      - TrusteeAddressChanged | 0x1e4af5ac
+    severity: high
+  - 
+    address: 
+      - 0xc8c8f8bea5631a8af26440af32a55002138cb76a (superOETHp Vault)
+    topic0: 
+      - AllocateThresholdUpdated | 0x2ec5fb5a
+      - AssetAllocated | 0x41b99659
+      - AssetDefaultStrategyUpdated | 0xba58ce12
+      - AssetRemoved | 0x37803e21
+      - DripperChanged | 0xaf2910d9
+      - MaxSupplyDiffChanged | 0x95201f9c
+      - Mint | 0x0f6798a5
+      - NetOusdMintForStrategyThresholdChanged | 0xc29d6fed
+      - OusdMetaStrategyUpdated | 0xa12850fb
+      - RebaseThresholdUpdated | 0x39367850
+      - Redeem | 0x222838db
+      - RedeemFeeUpdated | 0xd6c7508d
+      - StrategistUpdated | 0x869e0abd
+      - StrategyAddedToMintWhitelist | 0x47c8c96a
+      - StrategyApproved | 0x960dd94c
+      - StrategyRemoved | 0x09a1db4b
+      - StrategyRemovedFromMintWhitelist | 0x0ec40967
+      - SwapAllowedUndervalueChanged | 0xf12c0025
+      - SwapSlippageChanged | 0x8d22e9d2
+      - Swapped | 0xa078c419
+      - SwapperChanged | 0x7d771931
+      - TrusteeFeeBpsChanged | 0x56287a45
+      - VaultBufferUpdated | 0x41ecb23a
+      - WithdrawalClaimable | 0xee79a0c4
+      - WithdrawalClaimed | 0x2d43eb17
+      - WithdrawalRequested | 0x38e3d972
+      - YieldDistribution | 0x09516ecf
+=========================================
+name:    wsuperOETHp Burn
+topic:   superOETHp
+chainId: 98866
+events: 
+  - 
+    address: 
+      - 0x2de8a403f7a5c6c5161d4a129918ec9f0b653918 (wsuperOETHp)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000000000000000000000000000000000000000000000
+      - 0x0000000000000000000000000000000000000000000000000000000000000001
+      - 0x000000000000000000000000000000000000000000000000000000000000dead
+=========================================
+name:    OGN Staking
+topic:   xOGN
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x63898b3b6ef3d39332082178656e9862bee45c57 (xOGN)
+    topic0: 
+      - DelegateChanged | 0x3134e8a2
+      - DelegateVotesChanged | 0xdec2bacd
+      - Stake | 0x2720efa4
+      - Unstake | 0x05b744e3
