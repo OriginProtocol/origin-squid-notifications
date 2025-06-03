@@ -1,9 +1,9 @@
+import { AAVE_GOVERNANCE_ADDRESS } from 'topics/ousd'
 import { base, mainnet, plumeMainnet, sonic } from 'viem/chains'
 
 import { invertMap } from '@originprotocol/squid-utils'
 import { chainState } from '@utils/chainState'
 
-import { AAVE_GOVERNANCE_ADDRESS } from '../../topics/aave'
 import {
   DAI_ADDRESS,
   FRXETH_ADDRESS,
