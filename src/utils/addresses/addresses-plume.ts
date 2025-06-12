@@ -30,7 +30,12 @@ export const plumeOrigin = {
   },
 } as const
 
+export const buybacks = {
+  operator: '0xbb077e716a5f1f1b63ed5244ebff5214e50fec8c',
+}
+
 export const plumeAddresses = {
+  buybacks,
   multisig: {
     '5/8': '0x92a19381444a001d62ce67baff066fa1111d7202',
   },

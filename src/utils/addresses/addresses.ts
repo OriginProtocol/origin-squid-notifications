@@ -233,7 +233,13 @@ export const multisig = {
   'multichain-guardian': '0x4ff1b9d9ba8558f5eafcec096318ea0d8b541971',
 }
 
+export const buybacks = {
+  operator: '0xbb077e716a5f1f1b63ed5244ebff5214e50fec8c',
+  legacyOperator: '0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2',
+}
+
 export const addresses = {
+  buybacks,
   multisig,
   tokens,
   strategies,

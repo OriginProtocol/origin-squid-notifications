@@ -36,7 +36,12 @@ export const multisig = {
   guardian: '0xe8947f06351bda440e4e8ae9bf48437f25b41538',
 }
 
+export const buybacks = {
+  operator: '0xbb077e716a5f1f1b63ed5244ebff5214e50fec8c',
+}
+
 export const sonicAddresses = {
+  buybacks,
   sfc: '0xfc00face00000000000000000000000000000000',
   tokens: sonicTokens,
   originList: compact(
