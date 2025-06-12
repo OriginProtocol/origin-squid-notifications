@@ -79,14 +79,14 @@ createProcessor({
               ? `
 🚨 New OGN Buyback: 
 ${valueFormatted} $OGN bought back from the market with ${tokenOutValueFormatted} $${tokenOutName} (${tokenOutPriceFormatted})
-OGN from buybacks are distributed to OGN stakers.
+OGN from buybacks is distributed to xOGN stakers.
 Stake OGN here ⬇️
 https://app.originprotocol.com/#/ogn/staking
 `.trim()
               : `
 🚨 New OGN Buyback: 
 ${valueFormatted} $OGN bought back from the market.
-OGN from buybacks are distributed to OGN stakers.
+OGN from buybacks is distributed to xOGN stakers.
 Stake OGN here ⬇️
 https://app.originprotocol.com/#/ogn/staking
 `.trim()
@@ -117,6 +117,9 @@ createEventProcessor({
         Stake: async (params) => {
           const { user, amount, end, points } = exponentialStakingAbi.events.Stake.decode(params.log)
           const amountNumber = Number(formatUnits(amount, 18))
+          const amountFormatted = amountNumber.toLocaleString('en-US', {
+            maximumFractionDigits: 0,
+          })
           const price = await convertToUsd(amountNumber, 'OGN')
           if (price < minimumDollarValue) {
             return
@@ -129,7 +132,8 @@ createEventProcessor({
           const months = dayjs(Number(end) * 1000).diff(dayjs(), 'month')
           const message = `
 🚨 New OGN Stake:
-${priceFormatted} $OGN has been locked for ${months} months. $xOGN receives OGN staking rewards from 100% of protocol revenue.  
+${amountFormatted} $OGN has been locked for ${months} months.
+$xOGN receives staking rewards funded by OGN buybacks.
 Stake OGN here ⬇️
 https://app.originprotocol.com/#/ogn/staking
           `
