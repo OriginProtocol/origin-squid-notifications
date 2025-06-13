@@ -104,6 +104,11 @@ export const notifyDiscord = ({
     },
     embeds,
   }
-  if (messageQueue.has(sortId)) throw new Error(`Duplicate message received: ${sortId}`)
+  if (messageQueue.has(sortId)) {
+    console.error(`Duplicate message received: ${sortId}`)
+    console.log('Current payload:', payload)
+    console.log('Existing payload:', messageQueue.get(sortId)?.data)
+    return
+  }
   messageQueue.set(sortId, { topic, data: payload })
 }
