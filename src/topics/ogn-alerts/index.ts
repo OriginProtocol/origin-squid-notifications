@@ -78,15 +78,21 @@ createProcessor({
             const message = tokenOutName
               ? `
 🚨 New OGN Buyback: 
+
 ${valueFormatted} $OGN bought back from the market with ${tokenOutValueFormatted} $${tokenOutName} (${tokenOutPriceFormatted})
+
 OGN from buybacks is distributed to xOGN stakers.
+
 Stake OGN here ⬇️
 https://app.originprotocol.com/#/ogn/staking
 `.trim()
               : `
 🚨 New OGN Buyback: 
+
 ${valueFormatted} $OGN bought back from the market.
+
 OGN from buybacks is distributed to xOGN stakers.
+
 Stake OGN here ⬇️
 https://app.originprotocol.com/#/ogn/staking
 `.trim()
@@ -132,8 +138,11 @@ createEventProcessor({
           const months = dayjs(Number(end) * 1000).diff(dayjs(), 'month')
           const message = `
 🚨 New OGN Stake:
+
 ${amountFormatted} $OGN has been locked for ${months} months.
+
 $xOGN receives staking rewards funded by OGN buybacks.
+
 Stake OGN here ⬇️
 https://app.originprotocol.com/#/ogn/staking
           `
