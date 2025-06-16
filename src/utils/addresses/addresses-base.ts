@@ -28,6 +28,10 @@ export const tokens = {
   wsuperOETHb: superOETHb.wrapped,
 } as const
 
+export const buybacks = {
+  operator: '0xbb077e716a5f1f1b63ed5244ebff5214e50fec8c',
+}
+
 export const aerodromePools = {
   'vAMM-WETH/OGN': {
     name: 'vAMM-WETH/OGN',
@@ -122,6 +126,7 @@ export const aerodromePoolArray: PoolDefinition[] = Object.values(aerodromePools
 export const getAerodromePool = (address: string) => aerodromePoolArray.find((p) => p.address === address)
 
 export const baseAddresses = {
+  buybacks,
   multisig: {
     '5/8': '0x92a19381444a001d62ce67baff066fa1111d7202',
     '2/8': '0x28bce2ee5775b652d92bb7c2891a89f036619703',

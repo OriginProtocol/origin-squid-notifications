@@ -1,4 +1,4 @@
-import { EmbedBuilder, WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
+import { EmbedBuilder, MessageFlags, WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
 import { sortBy } from 'lodash'
 
 import { Severity, Topic, severityEmojis, topicThumbnails } from './const'
@@ -6,6 +6,7 @@ import { Severity, Topic, severityEmojis, topicThumbnails } from './const'
 const webhookUrls: Record<Topic, string> = {
   Governance: process.env['DISCORD_WEBHOOK_URL_GOVERNANCE'] ?? '',
   OGN: process.env['DISCORD_WEBHOOK_URL_OGN'] ?? '',
+  'OGN Alerts': process.env['DISCORD_WEBHOOK_URL_OGN_ALERTS'] ?? '',
   OETH: process.env['DISCORD_WEBHOOK_URL_OETH'] ?? '',
   superOETHb: process.env['DISCORD_WEBHOOK_URL_SUPER_OETH_B'] ?? '',
   superOETHp: process.env['DISCORD_WEBHOOK_URL_SUPER_OETH_P'] ?? '',
@@ -19,6 +20,7 @@ const webhookUrls: Record<Topic, string> = {
 const clients: Record<Topic, WebhookClient | undefined> = {
   Governance: new WebhookClient({ url: webhookUrls.Governance }),
   OGN: new WebhookClient({ url: webhookUrls.OGN }),
+  'OGN Alerts': new WebhookClient({ url: webhookUrls['OGN Alerts'] }),
   OETH: new WebhookClient({ url: webhookUrls.OETH }),
   superOETHb: new WebhookClient({ url: webhookUrls.superOETHb }),
   superOETHp: new WebhookClient({ url: webhookUrls.superOETHp }),
@@ -103,6 +105,7 @@ export const notifyDiscord = ({
       parse: ['users', 'roles'],
     },
     embeds,
+    flags: MessageFlags.SuppressEmbeds,
   }
   if (messageQueue.has(sortId)) {
     console.error(`Duplicate message received: ${sortId}`)

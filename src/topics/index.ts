@@ -13,6 +13,7 @@ export interface NotificationProcessor extends Processor {
   events?: {
     address?: string[]
     eventName?: string[]
+    topic0?: string[]
     topic1?: string[]
     topic2?: string[]
     topic3?: string[]

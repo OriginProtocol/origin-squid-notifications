@@ -19,6 +19,7 @@ export type Severity = 'low' | 'medium' | 'high' | 'critical' | 'broken' | 'high
 export type Topic =
   | 'Governance'
   | 'OGN'
+  | 'OGN Alerts'
   | 'xOGN'
   | 'OETH'
   | 'superOETHb'
@@ -49,6 +50,7 @@ export const severityColors: Record<Severity, HexColorString> = {
 export const topicThumbnails: Record<Topic, string> = {
   Governance: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-ogn-logo.png',
   OGN: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-ogn-logo.png',
+  'OGN Alerts': 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-ogn-logo.png',
   xOGN: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-protocol-xogn-logo.png',
   OETH: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-ether-oeth-logo.png',
   superOETHb: 'https://origin-squid-notifications.s3.amazonaws.com/images/origin-super-oethb-logo.png',
