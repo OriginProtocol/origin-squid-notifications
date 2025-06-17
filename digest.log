@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-6/16/2025, 5:03:15 PM
+6/17/2025, 1:21:49 PM
 =========================================
 Loading processor: arm.ts
 Loading processor: governance
@@ -7,6 +7,7 @@ Loading processor: index.ts
 Loading processor: oeth
 Loading processor: ogn
 Loading processor: ogn-alerts
+Loading processor: ogn-buybacks
 Loading processor: os
 Loading processor: ousd
 Loading processor: prime-eth.ts
@@ -882,6 +883,20 @@ events:
 name:    OGN Alerts
 chainId: 1
 topic:   OGN Alerts
+events: 
+  - 
+    address: 
+      - 0x8207c1ffc5b6804f6024322ccf34f29c3541ae26 (OGN)
+    topic0: 
+      - 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+    topic2: 
+      - 0x0000000000000000000000007609c88e5880e934dd3a75bcfef44e31b1badb8b
+    transaction:     true
+    transactionLogs: true
+=========================================
+name:    OGN Buybacks
+chainId: 1
+topic:   OGN Buybacks
 events: 
   - 
     address: 
