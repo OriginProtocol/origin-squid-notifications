@@ -1,4 +1,4 @@
-import { EmbedBuilder, MessageFlags, WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
+import { EmbedBuilder, WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
 import { sortBy } from 'lodash'
 
 import { Severity, Topic, severityEmojis, topicThumbnails } from './const'
@@ -43,6 +43,7 @@ export interface DiscordOptions {
   topic: Topic
   links?: Record<string, string>
   mentions?: string[]
+  flags?: WebhookMessageCreateOptions['flags']
 }
 
 export const processDiscordQueue = async () => {
@@ -75,6 +76,7 @@ export const notifyDiscord = ({
   topic,
   links,
   mentions,
+  flags,
 }: DiscordOptions) => {
   let content = ''
   const linkString = links
@@ -105,7 +107,7 @@ export const notifyDiscord = ({
       parse: ['users', 'roles'],
     },
     embeds,
-    flags: MessageFlags.SuppressEmbeds,
+    flags,
   }
   if (messageQueue.has(sortId)) {
     console.error(`Duplicate message received: ${sortId}`)

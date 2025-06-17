@@ -1,11 +1,12 @@
 # Origin Squid Notifications - Digest
-6/2/2025, 6:41:21 PM
+6/16/2025, 5:03:15 PM
 =========================================
 Loading processor: arm.ts
 Loading processor: governance
 Loading processor: index.ts
 Loading processor: oeth
 Loading processor: ogn
+Loading processor: ogn-alerts
 Loading processor: os
 Loading processor: ousd
 Loading processor: prime-eth.ts
@@ -500,7 +501,7 @@ chainId: 1
 events: 
   - 
     address: 
-      - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH BuyBack)
+      - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH Buyback)
     topic0: 
       - CVXShareBpsUpdated | 0x62039806
       - OTokenBuyback | 0x298e4dbf
@@ -559,7 +560,7 @@ traces:
           - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
           - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
           - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
-          - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH BuyBack)
+          - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH Buyback)
           - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
           - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/8)
           - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
@@ -576,7 +577,7 @@ traces:
           - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
           - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
           - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
-          - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH BuyBack)
+          - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH Buyback)
           - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
           - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/8)
           - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
@@ -868,6 +869,30 @@ events:
       - CampaignClosed | 0x5e6eb33a
       - FeeCollected | 0x06c5efef
 =========================================
+name:    OGN Alerts
+topic:   OGN Alerts
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x63898b3b6ef3d39332082178656e9862bee45c57 (xOGN)
+    topic0: 
+      - Stake | 0x2720efa4
+=========================================
+name:    OGN Alerts
+chainId: 1
+topic:   OGN Alerts
+events: 
+  - 
+    address: 
+      - 0x8207c1ffc5b6804f6024322ccf34f29c3541ae26 (OGN)
+    topic0: 
+      - 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+    topic2: 
+      - 0x0000000000000000000000007609c88e5880e934dd3a75bcfef44e31b1badb8b
+    transaction:     true
+    transactionLogs: true
+=========================================
 name:    OS Burn
 topic:   OS
 chainId: 146
@@ -1048,7 +1073,7 @@ chainId: 1
 events: 
   - 
     address: 
-      - 0xd7b28d06365b85933c64e11e639ea0d3bc0e3bab (OUSD BuyBack)
+      - 0xd7b28d06365b85933c64e11e639ea0d3bc0e3bab (OUSD Buyback)
     topic0: 
       - CVXShareBpsUpdated | 0x62039806
       - OTokenBuyback | 0x298e4dbf
@@ -1099,7 +1124,7 @@ traces:
           - 0xe75d77b1865ae93c7eaa3040b038d7aa7bc02f70 (OUSD Vault)
           - 0x21fb5812d70b3396880d30e90d9e5c1202266c89 (OUSD Harvester)
           - 0x80c898ae5e56f888365e235ceb8cea3eb726cb58 (OUSD Dripper)
-          - 0xd7b28d06365b85933c64e11e639ea0d3bc0e3bab (OUSD BuyBack)
+          - 0xd7b28d06365b85933c64e11e639ea0d3bc0e3bab (OUSD Buyback)
           - 0x79f2188ef9350a1dc11a062cca0abe90684b0197 (Morpho Aave Strategy)
         error:    true
       - 
@@ -1110,7 +1135,7 @@ traces:
           - 0xe75d77b1865ae93c7eaa3040b038d7aa7bc02f70 (OUSD Vault)
           - 0x21fb5812d70b3396880d30e90d9e5c1202266c89 (OUSD Harvester)
           - 0x80c898ae5e56f888365e235ceb8cea3eb726cb58 (OUSD Dripper)
-          - 0xd7b28d06365b85933c64e11e639ea0d3bc0e3bab (OUSD BuyBack)
+          - 0xd7b28d06365b85933c64e11e639ea0d3bc0e3bab (OUSD Buyback)
           - 0x79f2188ef9350a1dc11a062cca0abe90684b0197 (Morpho Aave Strategy)
         error:  true
     topic:       OUSD

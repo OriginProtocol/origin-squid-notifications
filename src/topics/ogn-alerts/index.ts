@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { MessageFlags } from 'discord.js'
 import { compact, pick } from 'lodash'
 import { createEventProcessor } from 'templates/event'
 import { createProcessor } from 'topics'
@@ -98,10 +99,11 @@ https://app.originprotocol.com/#/ogn/staking
 `.trim()
 
             notifyDiscord({
-              sortId: log.id,
+              sortId: log.id + '-ogn-alerts',
               description: message,
               topic: 'OGN Alerts',
               severity: 'low',
+              flags: MessageFlags.SuppressEmbeds,
             })
           }
         }
@@ -147,10 +149,11 @@ Stake OGN here ⬇️
 https://app.originprotocol.com/#/ogn/staking
           `
           notifyDiscord({
-            sortId: params.log.id,
+            sortId: params.log.id + '-ogn-alerts',
             description: message,
             topic: 'OGN Alerts',
             severity: 'low',
+            flags: MessageFlags.SuppressEmbeds,
           })
         },
       },
