@@ -79,7 +79,7 @@ createEventProcessor({
           if (price < minimumDollarValue) {
             return
           }
-          const months = dayjs(Number(end) * 1000).diff(dayjs(), 'month')
+          const months = Math.ceil(dayjs(Number(end) * 1000).diff(dayjs(), 'month', true))
           const message = `
 🚨 New OGN Stake:
 
