@@ -39,7 +39,8 @@ export const getBuybacks = async (ctx: Context, minimumDollarValue: number = 0) 
 
         const tokenOut = transferFrom.log.address
         const tokenOutName = getAddressName(tokenOut)
-        const tokenOutValueNumber = Number(formatUnits(transferFrom.data.value, 18))
+        const tokenOutDecimals = await new erc20Abi.Contract(ctx, block.header, tokenOut).decimals()
+        const tokenOutValueNumber = Number(formatUnits(transferFrom.data.value, tokenOutDecimals))
         const tokenOutValueFormatted = tokenOutValueNumber.toLocaleString('en-US', {
           maximumFractionDigits: 2,
         })
