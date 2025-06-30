@@ -109,7 +109,7 @@ import {
 
 export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undefined>> = {
   [mainnet.id]: {
-    [OUSD]: 'OUSD Token',
+    [OUSD]: 'OUSD',
     [COMP]: 'COMP Token',
     [OUSD_VAULT]: 'OUSD Vault',
     [GOVERNANCE]: 'OUSD Governance (old)',

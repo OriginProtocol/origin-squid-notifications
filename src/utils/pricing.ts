@@ -1,53 +1,63 @@
+import { createPublicClient, http, parseAbi } from 'viem'
+import { base, mainnet } from 'viem/chains'
+
 import { withCache } from './withCache'
 
-interface CoinGeckoPriceResponse {
-  'origin-protocol': {
-    usd: number
-  }
+const registry = {
+  ETH_USD: '0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419',
+  OGN_USD: '0x91d7aed72bf772a0da30199b925acb866acd3d9e', // On Base
 }
 
+const client = createPublicClient({
+  chain: mainnet,
+  transport: http(process.env[process.env.RPC_ENV!]! || process.env.RPC_ENDPOINT!),
+})
+const baseClient = createPublicClient({
+  chain: base,
+  transport: http(process.env[process.env.RPC_BASE_ENV!]! || process.env.RPC_BASE_ENDPOINT!),
+})
+
+const chainlinkAbi = parseAbi(['function latestAnswer() external view returns (int256)'])
+
 /**
- * Internal function to fetch OGN price from CoinGecko API
+ * Internal function to fetch token prices from Chainlink feeds
  */
-async function fetchCoingeckoPrice(
-  token: 'OGN' | 'OETH' | 'superOETHb' | 'superOETHp' | 'OUSD' | 'OS' | 'WETH' | 'USDC',
+async function fetchPrice(
+  token: 'OGN' | 'OETH' | 'superOETHb' | 'superOETHp' | 'OUSD' | 'WETH' | 'USDC',
 ): Promise<number> {
   if (token === 'OUSD' || token === 'USDC') return 1
-  try {
-    const id = {
-      OGN: 'origin-protocol',
-      WETH: 'ethereum',
-      OETH: 'ethereum',
-      superOETHb: 'ethereum',
-      superOETHp: 'ethereum',
-      OS: 'sonic',
-    }
 
-    const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${id[token]}&vs_currencies=usd`)
-
-    if (!response.ok) {
-      throw new Error(`CoinGecko API request failed: ${response.status} ${response.statusText}`)
-    }
-
-    const data: any = await response.json()
-
-    if (!data[id[token]]?.usd) {
-      throw new Error('Invalid response format from CoinGecko API')
-    }
-
-    return data[id[token]].usd
-  } catch (error) {
-    throw new Error(`Failed to fetch OGN price: ${error instanceof Error ? error.message : 'Unknown error'}`)
+  // ETH derivatives should use ETH price
+  if (token === 'OETH' || token === 'superOETHb' || token === 'superOETHp' || token === 'WETH') {
+    const ethPrice = await client.readContract({
+      address: registry.ETH_USD as `0x${string}`,
+      abi: chainlinkAbi,
+      functionName: 'latestAnswer',
+    })
+    // Chainlink ETH/USD feed returns 8 decimals
+    return Number(ethPrice) / 1e8
   }
+
+  if (token === 'OGN') {
+    const ognPrice = await baseClient.readContract({
+      address: registry.OGN_USD as `0x${string}`,
+      abi: chainlinkAbi,
+      functionName: 'latestAnswer',
+    })
+    // Chainlink OGN/USD feed returns 8 decimals
+    return Number(ognPrice) / 1e8
+  }
+
+  throw new Error(`Unknown token: ${token}`)
 }
 
 /**
- * Fetches the current USD price of OGN token from CoinGecko API
+ * Fetches the current USD price of tokens from Chainlink feeds
  * Uses caching to avoid frequent API calls (5-minute cache duration)
- * @returns Promise<number> The current USD price of OGN
+ * @returns Promise<number> The current USD price of the token
  */
-export const getCoingeckoPrice = withCache(fetchCoingeckoPrice)
-export const convertToUsd = async (amount: number, ...params: Parameters<typeof getCoingeckoPrice>) => {
-  const price = await getCoingeckoPrice(...params)
+export const getPrice = withCache(fetchPrice)
+export const convertToUsd = async (amount: number, ...params: Parameters<typeof getPrice>) => {
+  const price = await getPrice(...params)
   return amount * price
 }
