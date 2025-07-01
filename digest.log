@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-6/17/2025, 1:21:49 PM
+7/1/2025, 12:28:29 PM
 =========================================
 Loading processor: arm.ts
 Loading processor: governance
@@ -134,7 +134,7 @@ events:
       - 0x3ff8654d633d4ea0fae24c52aec73b4a20d0d0e5 (FraxETH Strategy)
       - 0xc1fc9e5ec3058921ea5025d703cbe31764756319 (OETH Morpho Aave Strategy)
       - 0x49109629ac1deb03f2e9b2fe2ac4a623e0e7dfdc (OETH Balancer rETH Strategy)
-      - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD Token)
+      - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD)
       - 0xe75d77b1865ae93c7eaa3040b038d7aa7bc02f70 (OUSD Vault)
       - 0x80c898ae5e56f888365e235ceb8cea3eb726cb58 (OUSD Dripper)
       - 0x21fb5812d70b3396880d30e90d9e5c1202266c89 (OUSD Harvester)
@@ -1074,7 +1074,7 @@ chainId: 1
 events: 
   - 
     address: 
-      - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD Token)
+      - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD)
     topic0: 
       - Transfer | 0xddf252ad
     topic2: 
@@ -1103,7 +1103,7 @@ chainId: 1
 events: 
   - 
     address: 
-      - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD Token)
+      - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD)
     topic0: 
       - AccountRebasingDisabled | 0x201ace89
       - AccountRebasingEnabled | 0x19a249fa
@@ -1135,7 +1135,7 @@ traces:
         type: 
           - call
         callFrom: 
-          - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD Token)
+          - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD)
           - 0xe75d77b1865ae93c7eaa3040b038d7aa7bc02f70 (OUSD Vault)
           - 0x21fb5812d70b3396880d30e90d9e5c1202266c89 (OUSD Harvester)
           - 0x80c898ae5e56f888365e235ceb8cea3eb726cb58 (OUSD Dripper)
@@ -1146,7 +1146,7 @@ traces:
         type: 
           - call
         callTo: 
-          - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD Token)
+          - 0x2a8e1e676ec238d8a992307b495b45b3feaa5e86 (OUSD)
           - 0xe75d77b1865ae93c7eaa3040b038d7aa7bc02f70 (OUSD Vault)
           - 0x21fb5812d70b3396880d30e90d9e5c1202266c89 (OUSD Harvester)
           - 0x80c898ae5e56f888365e235ceb8cea3eb726cb58 (OUSD Dripper)
