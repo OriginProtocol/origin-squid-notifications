@@ -21,7 +21,7 @@ createProcessor({
     for (const { valueFormatted, tokenOutName, tokenOutValueFormatted, tokenOutPriceFormatted, log } of buybackArray) {
       const message = tokenOutName
         ? `
-🚨 New OGN Buyback: 
+🚨 [New OGN Buyback](https://etherscan.io/tx/${log.transactionHash}): 
 
 ${valueFormatted} $OGN bought back from the market with ${tokenOutValueFormatted} $${tokenOutName} (${tokenOutPriceFormatted})
 
@@ -31,7 +31,7 @@ Stake OGN here ⬇️
 https://app.originprotocol.com/#/ogn/staking
 `.trim()
         : `
-🚨 New OGN Buyback: 
+🚨 [New OGN Buyback](https://etherscan.io/tx/${log.transactionHash}): 
 
 ${valueFormatted} $OGN bought back from the market.
 
