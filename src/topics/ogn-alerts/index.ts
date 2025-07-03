@@ -10,9 +10,6 @@ import * as exponentialStakingAbi from '@abi/exponential-staking'
 import { notifyDiscord } from '@notify/discord'
 import { XOGN_ADDRESS } from '@utils/addresses'
 import { buybackFilter, getBuybacks } from '@utils/buybacks'
-import { convertToUsd } from '@utils/pricing'
-
-const minimumDollarValue = 1
 
 // Buybacks
 createProcessor({
@@ -24,7 +21,7 @@ createProcessor({
     p.addLog(buybackFilter.value)
   },
   process: async (ctx) => {
-    const buybackArray = await getBuybacks(ctx, minimumDollarValue)
+    const buybackArray = await getBuybacks(ctx, 1)
     for (const { valueFormatted, tokenOutName, tokenOutValueFormatted, tokenOutPriceFormatted, log } of buybackArray) {
       const message = tokenOutName
         ? `
@@ -75,8 +72,7 @@ createEventProcessor({
           const amountFormatted = amountNumber.toLocaleString('en-US', {
             maximumFractionDigits: 0,
           })
-          const price = await convertToUsd(amountNumber, 'OGN')
-          if (price < minimumDollarValue) {
+          if (amountNumber < 5000) {
             return
           }
           const months = Math.ceil(dayjs(Number(end) * 1000).diff(dayjs(), 'month', true))
