@@ -103,31 +103,26 @@ export const getBuybacksThisMonth = async (
   timestamp: number,
   alertingTx: { transactionHash: string; ognBoughtUSD: number },
 ) => {
-  try {
-    // Calculate date one month ago
-    const timestampGte = dayjs(timestamp).startOf('month').toISOString()
-    const timestampLt = dayjs(timestamp).endOf('month').toISOString()
+  // Calculate date one month ago
+  const timestampGte = dayjs(timestamp).startOf('month').toISOString()
+  const timestampLt = dayjs(timestamp).endOf('month').toISOString()
 
-    // Use the generated SDK function (will be available after codegen)
-    const response = await squid.BuybacksThisMonth({
-      timestampGte,
-      timestampLt,
-      excludeTxHash: alertingTx.transactionHash,
-    })
+  // Use the generated SDK function (will be available after codegen)
+  const response = await squid.BuybacksThisMonth({
+    timestampGte,
+    timestampLt,
+    excludeTxHash: alertingTx.transactionHash,
+  })
 
-    // Sum up the USD value of buybacks
-    const totalBuybacksUSD = response.ognBuybacks.reduce((sum: number, buyback) => {
-      return sum + (buyback.ognBoughtUSD || 0)
-    }, alertingTx.ognBoughtUSD)
+  // Sum up the USD value of buybacks
+  const totalBuybacksUSD = response.ognBuybacks.reduce((sum: number, buyback) => {
+    return sum + (buyback.ognBoughtUSD || 0)
+  }, alertingTx.ognBoughtUSD)
 
-    // Format as currency
-    return totalBuybacksUSD.toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      maximumFractionDigits: 0,
-    })
-  } catch (error) {
-    console.error('Error fetching buybacks this month:', error)
-    return '$0'
-  }
+  // Format as currency
+  return totalBuybacksUSD.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0,
+  })
 }
