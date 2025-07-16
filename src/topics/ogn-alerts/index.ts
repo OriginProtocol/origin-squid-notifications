@@ -13,7 +13,7 @@ import * as fixedRateRewardsSourceAbi from '@abi/fixed-rate-rewards-source'
 import { notifyDiscord } from '@notify/discord'
 import { Block, Context } from '@originprotocol/squid-utils'
 import { OGN_ADDRESS, XOGN_ADDRESS } from '@utils/addresses'
-import { buybackFilter, getBuybacks } from '@utils/buybacks'
+import { buybackFilter, getBuybacks, getBuybacksThisMonth } from '@utils/buybacks'
 
 const minOgnToAlert = 50_000
 
@@ -28,27 +28,42 @@ createProcessor({
   },
   process: async (ctx) => {
     const buybackArray = await getBuybacks(ctx, 1)
-    for (const { valueFormatted, tokenOutName, tokenOutValueFormatted, tokenOutPriceFormatted, log } of buybackArray) {
+    for (const {
+      valueFormatted,
+      tokenOutName,
+      tokenOutValueFormatted,
+      tokenOutPriceFormatted,
+      tokenOutPrice,
+      log,
+    } of buybackArray) {
+      const buybacksThisMonth = await getBuybacksThisMonth(log.block.timestamp, {
+        transactionHash: log.transactionHash,
+        ognBoughtUSD: tokenOutPrice,
+      })
       const message = tokenOutName
         ? `
 🚨 New OGN Buyback:
 
 ${valueFormatted} $OGN bought back from the market with ${tokenOutValueFormatted} $${tokenOutName} (${tokenOutPriceFormatted})
 
+📊 Buybacks this month: ${buybacksThisMonth}
+
 OGN from buybacks is distributed to xOGN stakers.
 
-Stake OGN here ⬇️
-https://app.originprotocol.com/#/ogn/staking
+TXN Details ⬇️
+https://etherscan.io/tx/${log.transactionHash}
 `.trim()
         : `
 🚨 New OGN Buyback:
 
 ${valueFormatted} $OGN bought back from the market.
 
+📊 Buybacks this month: ${buybacksThisMonth}
+
 OGN from buybacks is distributed to xOGN stakers.
 
-Stake OGN here ⬇️
-https://app.originprotocol.com/#/ogn/staking
+TXN Details ⬇️
+https://etherscan.io/tx/${log.transactionHash}
 `.trim()
 
       notifyDiscord({
@@ -110,7 +125,7 @@ https://app.originprotocol.com/#/ogn/staking
   ],
 })
 
-async function calculateYieldData(ctx: Context, block: Block) {
+const calculateYieldData = async (ctx: Context, block: Block) => {
   const fixedRewardSourceContract = new fixedRateRewardsSourceAbi.Contract(
     ctx,
     block.header,

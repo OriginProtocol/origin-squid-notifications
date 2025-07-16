@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+import { gql } from 'graphql-request'
 import { compact } from 'lodash'
 import { formatUnits } from 'viem'
 
@@ -7,6 +9,7 @@ import { Context, logFilter } from '@originprotocol/squid-utils'
 import { OGN_ADDRESS, OGN_REWARDS_SOURCE_ADDRESS, XOGN_ADDRESS, buybacks } from './addresses'
 import { getAddressName } from './addresses/names'
 import { convertToUsd } from './pricing'
+import { squid } from './subsquid'
 
 export const buybackFilter = logFilter({
   address: [OGN_ADDRESS],
@@ -77,4 +80,54 @@ export const getBuybacks = async (ctx: Context, minimumDollarValue: number = 0) 
     }
   }
   return results
+}
+
+gql`
+  query BuybacksThisMonth($timestampGte: DateTime!, $timestampLt: DateTime!, $excludeTxHash: String!) {
+    ognBuybacks(
+      limit: 1000
+      where: { timestamp_gte: $timestampGte, timestamp_lt: $timestampLt, txHash_not_eq: $excludeTxHash }
+    ) {
+      timestamp
+      ognBought
+      ognBoughtUSD
+      txHash
+    }
+  }
+`
+
+/**
+ * @returns The total USD value of buybacks this month as a formatted string
+ */
+export const getBuybacksThisMonth = async (
+  timestamp: number,
+  alertingTx: { transactionHash: string; ognBoughtUSD: number },
+) => {
+  try {
+    // Calculate date one month ago
+    const timestampGte = dayjs(timestamp).startOf('month').toISOString()
+    const timestampLt = dayjs(timestamp).endOf('month').toISOString()
+
+    // Use the generated SDK function (will be available after codegen)
+    const response = await squid.BuybacksThisMonth({
+      timestampGte,
+      timestampLt,
+      excludeTxHash: alertingTx.transactionHash,
+    })
+
+    // Sum up the USD value of buybacks
+    const totalBuybacksUSD = response.ognBuybacks.reduce((sum: number, buyback) => {
+      return sum + (buyback.ognBoughtUSD || 0)
+    }, alertingTx.ognBoughtUSD)
+
+    // Format as currency
+    return totalBuybacksUSD.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+    })
+  } catch (error) {
+    console.error('Error fetching buybacks this month:', error)
+    return '$0'
+  }
 }
