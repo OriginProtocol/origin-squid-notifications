@@ -48,7 +48,7 @@ ${valueFormatted} $OGN bought back from the market with ${tokenOutValueFormatted
 
 📊 Buybacks this month: ${buybacksThisMonth}
 
-OGN from buybacks is distributed to xOGN stakers.
+OGN from buybacks is distributed to OGN stakers.
 
 TXN Details ⬇️
 https://etherscan.io/tx/${log.transactionHash}
@@ -60,7 +60,7 @@ ${valueFormatted} $OGN bought back from the market.
 
 📊 Buybacks this month: ${buybacksThisMonth}
 
-OGN from buybacks is distributed to xOGN stakers.
+OGN from buybacks is distributed to OGN stakers.
 
 TXN Details ⬇️
 https://etherscan.io/tx/${log.transactionHash}

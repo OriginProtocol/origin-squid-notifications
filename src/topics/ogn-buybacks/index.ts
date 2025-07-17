@@ -36,7 +36,7 @@ createProcessor({
 
 ${valueFormatted} $OGN bought back from the market with ${tokenOutValueFormatted} $${tokenOutName} (${tokenOutPriceFormatted})
 
-OGN from buybacks is distributed to xOGN stakers.
+OGN from buybacks is distributed to OGN stakers.
 
 📊 Buybacks this month: ${buybacksThisMonth}
 
@@ -48,7 +48,7 @@ https://app.originprotocol.com/#/ogn/staking
 
 ${valueFormatted} $OGN bought back from the market.
 
-OGN from buybacks is distributed to xOGN stakers.
+OGN from buybacks is distributed to OGN stakers.
 
 📊 Buybacks this month: ${buybacksThisMonth}
 
