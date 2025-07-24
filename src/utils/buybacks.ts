@@ -96,17 +96,15 @@ gql`
   }
 `
 
-/**
- * @returns The total USD value of buybacks this month as a formatted string
- */
-export const getBuybacksThisMonth = async (
-  timestamp: number,
-  alertingTx: { transactionHash: string; ognBoughtUSD: number },
-) => {
-  // Calculate date one month ago
-  const timestampGte = dayjs(timestamp).startOf('month').toISOString()
-  const timestampLt = dayjs(timestamp).endOf('month').toISOString()
-
+export const getBuybackSumForTimePeriod = async ({
+  timestampGte,
+  timestampLt,
+  alertingTx,
+}: {
+  timestampGte: string
+  timestampLt: string
+  alertingTx: { transactionHash: string; ognBoughtUSD: number }
+}) => {
   // Use the generated SDK function (will be available after codegen)
   const response = await squid.BuybacksThisMonth({
     timestampGte,
@@ -119,10 +117,37 @@ export const getBuybacksThisMonth = async (
     return sum + (buyback.ognBoughtUSD || 0)
   }, alertingTx.ognBoughtUSD)
 
-  // Format as currency
-  return totalBuybacksUSD.toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
+  return {
+    buybacksUSD: totalBuybacksUSD,
+    buybacksUSDFormatted: totalBuybacksUSD.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+    }),
+  }
+}
+
+export const getBuybacksSinceBuybackReboot = async (alertingTx: { transactionHash: string; ognBoughtUSD: number }) => {
+  const timestampGte = dayjs('2025-06-30T00:00:00Z').toISOString()
+  const timestampLt = dayjs().endOf('month').toISOString()
+
+  return getBuybackSumForTimePeriod({
+    timestampGte,
+    timestampLt,
+    alertingTx,
+  })
+}
+
+export const getBuybacksThisPastMonth = async (
+  timestamp: number,
+  alertingTx: { transactionHash: string; ognBoughtUSD: number },
+) => {
+  const timestampGte = dayjs(timestamp).subtract(1, 'month').toISOString()
+  const timestampLt = dayjs(timestamp).add(1, 'minute').toISOString()
+
+  return getBuybackSumForTimePeriod({
+    timestampGte,
+    timestampLt,
+    alertingTx,
   })
 }
