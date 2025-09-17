@@ -10,3 +10,8 @@
 
 .env
 .yarn.lock
+package-lock.json
+
+# pnpm
+.pnpm-store/
+.pnpm-debug.log*

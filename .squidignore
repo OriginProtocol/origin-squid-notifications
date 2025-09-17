@@ -1,7 +1,9 @@
 /.git
-/node_modules
+/.idea
+/.claude
+/builds
 /lib
-/dump
+/node_modules
 /*Versions.json
 npm-debug.log
 .pnpm-debug.log*
@@ -10,5 +12,3 @@ npm-debug.log
 .DS_Store
 
 .env
-/.idea
-neo-ai.png
