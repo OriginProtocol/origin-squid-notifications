@@ -108,9 +108,6 @@ ${amountFormatted} $OGN has just been locked for ${months} month(s).
 
 ${yieldData ? `Earn ${(yieldData.xOgnApyPercentage * 100).toFixed(2)}% APY by staking OGN.\n` : ''}
 Staking rewards are 100% funded by protocol revenue buybacks — not inflation.
-
-Stake OGN here ⬇️
-https://app.originprotocol.com/#/ogn/staking
           `
           notifyDiscord({
             sortId: params.log.id + '-ogn-alerts',
