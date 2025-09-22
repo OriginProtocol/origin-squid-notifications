@@ -1,4 +1,4 @@
-import { EmbedBuilder } from 'discord.js'
+import { APIEmbed } from 'discord.js'
 
 import { transactionLink } from '../../../utils/links'
 import { Severity, Topic, severityColors } from '../../const'
@@ -31,16 +31,17 @@ export const renderDiscordEmbed = (params: {
   fields?: { name: string; value: string; inline?: boolean }[]
 }) => {
   params.severity = params.severity ?? 'low'
-  const embed = new EmbedBuilder()
-    .setColor(severityColors[params.severity])
-    .setTitle(params.title)
-    .setURL(params.titleUrl)
+  const embed: APIEmbed = {
+    color: severityColors[params.severity],
+    title: params.title,
+    url: params.titleUrl,
+  }
 
   if (params.description) {
-    embed.setDescription(params.description)
+    embed.description = params.description
   }
   if (params.fields && params.fields?.length > 0) {
-    embed.addFields(...params.fields)
+    embed.fields = params.fields
   }
   const msg: DiscordOptions = {
     sortId: params.sortId,

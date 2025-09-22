@@ -1,4 +1,4 @@
-import { EmbedBuilder, WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
+import { APIEmbed, WebhookClient, WebhookMessageCreateOptions } from 'discord.js'
 import { sortBy } from 'lodash'
 
 import { Severity, Topic, severityEmojis, topicThumbnails } from './const'
@@ -39,7 +39,7 @@ export interface DiscordOptions {
   sortId: string
   title?: string
   description?: string
-  embeds?: EmbedBuilder[]
+  embeds?: APIEmbed[]
   files?: WebhookMessageCreateOptions['files']
   severity?: Severity
   topic: Topic
