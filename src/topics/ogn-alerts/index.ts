@@ -100,11 +100,20 @@ createEventProcessor({
             console.error(err)
             return undefined
           })
-          const months = Math.ceil(dayjs(Number(end) * 1000).diff(dayjs(), 'month', true))
+          const startDate = dayjs()
+          const endDate = dayjs(Number(end) * 1000)
+          const months = Math.round(endDate.diff(startDate, 'month', true))
+          let durationString: string
+          if (months < 2) {
+            const days = Math.ceil(endDate.diff(startDate, 'day', true))
+            durationString = `${days} day(s)`
+          } else {
+            durationString = `${months} month(s)`
+          }
           const message = `
 🚨 New OGN Stake:
 
-${amountFormatted} $OGN has just been locked for ${months} month(s).
+${amountFormatted} $OGN has just been locked for ${durationString}.
 
 ${yieldData ? `Earn ${(yieldData.xOgnApyPercentage * 100).toFixed(2)}% APY by staking OGN.\n` : ''}
 Staking rewards are 100% funded by protocol revenue buybacks — not inflation.
