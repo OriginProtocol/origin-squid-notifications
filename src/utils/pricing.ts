@@ -6,6 +6,7 @@ import { withCache } from './withCache'
 const registry = {
   ETH_USD: '0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419',
   OGN_USD: '0x91d7aed72bf772a0da30199b925acb866acd3d9e', // On Base
+  CVX_USD: '0xd962fc30a72a84ce50161031391756bf2876af5d',
 }
 
 const client = createPublicClient({
@@ -46,6 +47,15 @@ async function fetchPrice(
     })
     // Chainlink OGN/USD feed returns 8 decimals
     return Number(ognPrice) / 1e8
+  }
+  if (token === 'CVX') {
+    const cvxPrice = await client.readContract({
+      address: registry.CVX_USD as `0x${string}`,
+      abi: chainlinkAbi,
+      functionName: 'latestAnswer',
+    })
+    // Chainlink OGN/USD feed returns 8 decimals
+    return Number(cvxPrice) / 1e8
   }
 
   throw new Error(`Unknown token: ${token}`)

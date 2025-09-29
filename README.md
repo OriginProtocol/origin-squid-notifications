@@ -7,14 +7,15 @@ This squid is strictly for creating notifications which will feed into Discord o
 This squid is deployed to subsquid cloud. It contains:
 
 - 1 Processor
-    - The processor triggers the notifications.
+  - The processor triggers the notifications.
 - 1 Database
-    - The database is hardly used and should rarely if not ever be updated.
+  - The database is hardly used and should rarely if not ever be updated.
 
 > [!NOTE]
 > Alerts which are based on metric thresholds should likely be created in Grafana using data from `origin-squid`.
 >
 > Ideal notifications for this project:
+>
 > - Governance Proposal Activity
 > - Mints & Burns
 > - Buyback swaps
@@ -23,36 +24,50 @@ This squid is deployed to subsquid cloud. It contains:
 > - Events
 > - Trace activity
 
+### Package Manager
+
+This project uses **pnpm** for dependency management with enhanced security settings. Make sure you have pnpm installed:
+
+```shell
+npm install -g pnpm
+```
+
 ### Frequent Commands
+
+#### Install dependencies
+
+```shell
+pnpm install
+```
 
 #### Start processing from the latest block
 
 ```shell
-npm run process
+pnpm run process
 ```
 
 #### Start processing from block number 123456
 
 ```shell
-BLOCK_FROM=123456 npm run process
+BLOCK_FROM=123456 pnpm run process
 ```
 
 #### Resume processing from where you last stopped
 
 ```shell
-npm run resume
+pnpm run resume
 ```
 
 #### Generate ABIs
 
 ```shell
-npm run generate-abis
+pnpm run generate-abis
 ```
 
 #### Generate Digest
 
 ```shell
-npm run digest
+pnpm run digest
 ```
 
 #### Deploy

@@ -1,5 +1,3 @@
-import { HexColorString } from 'discord.js'
-
 import { plumeAddresses } from '@utils/addresses/addresses-plume'
 import { sonicAddresses } from '@utils/addresses/addresses-sonic'
 
@@ -39,13 +37,13 @@ export const severityEmojis: Record<Severity, string> = {
   highlight: '🥳',
 }
 
-export const severityColors: Record<Severity, HexColorString> = {
-  low: '#0099ff',
-  medium: '#edb50d',
-  high: '#d62c1d',
-  critical: '#bc3bff',
-  broken: '#ff4638',
-  highlight: '#1285FF',
+export const severityColors: Record<Severity, number> = {
+  low: 0x0099ff,
+  medium: 0xedb50d,
+  high: 0xd62c1d,
+  critical: 0xbc3bff,
+  broken: 0xff4638,
+  highlight: 0x1285ff,
 }
 
 export const topicThumbnails: Record<Topic, string> = {

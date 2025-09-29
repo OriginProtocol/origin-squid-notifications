@@ -1,5 +1,5 @@
 /**
- * Run commands like `BLOCK_FROM=18102886 PROCESSOR=Trace yarn process` to filter down what processors will be run.
+ * Run commands like `BLOCK_FROM=18102886 PROCESSOR=Trace pnpm process` to filter down what processors will be run.
  */
 import fs from 'node:fs'
 

@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { MessageFlags } from 'discord.js'
 import { pick } from 'lodash'
 import { createEventProcessor } from 'templates/event'
@@ -123,7 +124,7 @@ createEventProcessor({
       events: pick(exponentialStakingAbi.events, ['Stake']),
       renderers: {
         Stake: async (params) => {
-          const { amount } = exponentialStakingAbi.events.Stake.decode(params.log)
+          const { amount, end } = exponentialStakingAbi.events.Stake.decode(params.log)
           const amountNumber = Number(formatUnits(amount, 18))
           const amountFormatted = amountNumber.toLocaleString('en-US', {
             maximumFractionDigits: 0,
@@ -137,15 +138,22 @@ createEventProcessor({
             maximumFractionDigits: 2,
           })}%`
 
+          const startDate = dayjs()
+          const endDate = dayjs(Number(end) * 1000)
+          const months = Math.round(endDate.diff(startDate, 'month', true))
+          let durationString: string
+          if (months < 2) {
+            const days = Math.ceil(endDate.diff(startDate, 'day', true))
+            durationString = `${days} day(s)`
+          } else {
+            durationString = `${months} month(s)`
+          }
           const message = `
 🔒 ${amountFormatted} $OGN has just been staked. 
 
 OGN staking APY is now at ${ognStakingApyFormatted}
 
 Staking rewards are 100% funded by protocol revenue buybacks — not inflation.
-
-Stake OGN here ⬇️
-https://app.originprotocol.com/#/ogn/staking
           `
 
           notifyDiscord({

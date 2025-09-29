@@ -5,13 +5,13 @@
 - Node.js *(wrote using v20)*
 - Docker
 - Copy `dev.env` to `.env` and fill in the empty values
-- Run `npm ci` to install dependencies
+- Run `pnpm install` to install dependencies
 
 ## Local execution
 
 ```shell
 # Build the code, spin-up docker-compose, and start processing
-npm run process
+pnpm run process
 ```
 
 ## Adding notifications
@@ -25,19 +25,19 @@ Notifications are triggered through `processors` located at: [src/processors](sr
 If the ABI you require does not exist:
 
 1. Add ABI JSON to `abi/`
-2. Run `npm run generate-abis`
+2. Run `pnpm run generate-abis`
     - The ABI will be created within `src/abi/`
 
-## `npm run process` examples
+## `pnpm run process` examples
 
 ```shell
 # Start processing at a specific block
-BLOCK_FROM=12345678 npm run process
+BLOCK_FROM=12345678 pnpm run process
 ```
 
 ```shell
 # Start processors matching a certain name
-PROCESSOR=Burn npm run process
+PROCESSOR=Burn pnpm run process
 ```
 
 ## Filtering examples
