@@ -12,8 +12,9 @@ import { XOGN_ADDRESS } from '@utils/addresses'
 import { buybackFilter, getBuybacks, getBuybacksThisPastMonth } from '@utils/buybacks'
 import { getStakingData } from '@utils/staking'
 
-const minUsdToBuybackAlert = 1_000
+const minUsdToBuybackAlert = 5_000
 const minOgnToStakeAlert = 50_000
+const milestoneAmount = 25_000
 
 // Buybacks
 createProcessor({
@@ -85,8 +86,8 @@ https://etherscan.io/tx/${log.transactionHash}
       })
 
       // Milestone alert
-      if ((buybacksUSD / 50_000) ^ ((buybacksUSD - tokenOutPrice) / 50_000) ^ 0) {
-        const milestoneFormatted = (((buybacksUSD / 50_000) ^ 0) * 50_000).toLocaleString('en-US', {
+      if ((buybacksUSD / milestoneAmount) ^ ((buybacksUSD - tokenOutPrice) / milestoneAmount) ^ 0) {
+        const milestoneFormatted = (((buybacksUSD / milestoneAmount) ^ 0) * milestoneAmount).toLocaleString('en-US', {
           maximumFractionDigits: 0,
         })
 
