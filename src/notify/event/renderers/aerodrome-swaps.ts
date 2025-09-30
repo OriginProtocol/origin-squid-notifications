@@ -10,7 +10,6 @@ import { getAddressesPyName } from '../../../utils/addresses/names'
 import { formatAmount, formatChange } from '../../../utils/formatAmount'
 import { transactionLink } from '../../../utils/links'
 import { discordIconOrName, notifyTargets } from '../../const'
-import { notifyOncall } from '../../oncall'
 import { registerEventRenderer } from '../event'
 import { defaultEventRenderer } from './default'
 import { renderDiscordEmbed } from './utils'
@@ -114,7 +113,7 @@ registerEventRenderer(aeroCLPoolAbi.events.Swap.topic, async (params) => {
       tickHealth = ':fire:'
       params.severity = 'high'
       params.notifyTarget = notifyTargets.Engineering
-      notifyOncall(sortId, { message: 'A swap occurred outside of our desired tick of -1.', params })
+      // notifyOncall(sortId, { message: 'A swap occurred outside of our desired tick of -1.', params })
     }
   }
 
