@@ -111,7 +111,7 @@ registerEventRenderer(aeroCLPoolAbi.events.Swap.topic, async (params) => {
       tickHealth = ':white_check_mark:'
     } else {
       tickHealth = ':fire:'
-      params.severity = 'high'
+      params.severity = 'medium'
       params.notifyTarget = notifyTargets.Engineering
       // notifyOncall(sortId, { message: 'A swap occurred outside of our desired tick of -1.', params })
     }
