@@ -9,7 +9,7 @@ import { mainnet } from 'viem/chains'
 import * as exponentialStakingAbi from '@abi/exponential-staking'
 import { notifyDiscord } from '@notify/discord'
 import { XOGN_ADDRESS } from '@utils/addresses'
-import { buybackFilter, getBuybacks, getBuybacksThisPastMonth } from '@utils/buybacks'
+import { buybackFilter, getBuybacks, getBuybacksSinceBuybackReboot, getBuybacksThisPastMonth } from '@utils/buybacks'
 import { getStakingData } from '@utils/staking'
 
 const minUsdToBuybackAlert = 5_000
@@ -36,6 +36,10 @@ createProcessor({
       log,
     } of buybackArray) {
       const { buybacksUSD, buybacksUSDFormatted } = await getBuybacksThisPastMonth(log.block.timestamp, {
+        transactionHash: log.transactionHash,
+        ognBoughtUSD: tokenOutPrice,
+      })
+      const { buybacksUSD: buybacksUSDSinceReboot } = await getBuybacksSinceBuybackReboot({
         transactionHash: log.transactionHash,
         ognBoughtUSD: tokenOutPrice,
       })
@@ -86,10 +90,17 @@ https://etherscan.io/tx/${log.transactionHash}
       })
 
       // Milestone alert
-      if ((buybacksUSD / milestoneAmount) ^ ((buybacksUSD - tokenOutPrice) / milestoneAmount) ^ 0) {
-        const milestoneFormatted = (((buybacksUSD / milestoneAmount) ^ 0) * milestoneAmount).toLocaleString('en-US', {
-          maximumFractionDigits: 0,
-        })
+      if (
+        (buybacksUSDSinceReboot / milestoneAmount) ^
+        ((buybacksUSDSinceReboot - tokenOutPrice) / milestoneAmount) ^
+        0
+      ) {
+        const milestoneFormatted = (((buybacksUSDSinceReboot / milestoneAmount) ^ 0) * milestoneAmount).toLocaleString(
+          'en-US',
+          {
+            maximumFractionDigits: 0,
+          },
+        )
 
         const cumulativeMessage = `
 🚨 We just hit $${milestoneFormatted} of OGN bought back since June 30, 2025. 
