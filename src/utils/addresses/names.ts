@@ -6,6 +6,7 @@ import { chainState } from '@utils/chainState'
 
 import {
   DAI_ADDRESS,
+  EETH_ADDRESS,
   FRXETH_ADDRESS,
   OETH_DRIPPER_ADDRESS,
   OETH_ETH_AMO_METAPOOL,
@@ -189,6 +190,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undef
     [FRXETH_ADDRESS]: 'frxETH',
     [RETH_ADDRESS]: 'rETH',
     [STETH_ADDRESS]: 'stETH',
+    [EETH_ADDRESS]: 'eETH',
 
     [OETH_STRATEGY_BALANCER_ADDRESS]: 'OETH Balancer rETH Strategy',
     [OETH_MORPHO_AAVE_ADDRESS]: 'OETH Morpho Aave Strategy',
