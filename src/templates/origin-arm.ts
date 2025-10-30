@@ -25,7 +25,7 @@ export const createOriginArmProcessor = ({
   chainId: number
   address: string
   capManagerAddress: string
-  zapperAddress: string
+  zapperAddress?: string
   topic: Topic
 }) => {
   const highPriorityEvents: (keyof typeof originArmAbi.events)[] = [

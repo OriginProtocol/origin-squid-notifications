@@ -40,6 +40,13 @@ export const buybacks = {
   operator: '0xbb077e716a5f1f1b63ed5244ebff5214e50fec8c',
 }
 
+export const arms: Record<string, { address: string; capManager: string; zapper?: string }> = {
+  ['ARM-WS-OS']: {
+    address: '0x2f872623d1e1af5835b08b0e49aad2d81d649d30',
+    capManager: '0x38b654d7859dab79935c9cf99267392c06d254cf',
+  },
+}
+
 export const sonicAddresses = {
   buybacks,
   sfc: '0xfc00face00000000000000000000000000000000',
@@ -50,6 +57,7 @@ export const sonicAddresses = {
         ...Object.values(omit(OS, 'initializeBlock', 'strategies')),
         ...Object.values(OS.strategies).map((a) => a?.address.toLowerCase()),
         ...Object.values(sonicOrigin),
+        ...Object.values(arms).map((a) => Object.values(a)),
       ]
         .flat()
         .map((a) => a?.toLowerCase()),
@@ -57,5 +65,6 @@ export const sonicAddresses = {
   ),
   contracts: sonicContracts,
   OS,
+  arms,
   multisig,
 } as const

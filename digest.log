@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-7/1/2025, 12:28:29 PM
+10/30/2025, 1:27:34 PM
 =========================================
 Loading processor: arm.ts
 Loading processor: governance
@@ -14,6 +14,42 @@ Loading processor: prime-eth.ts
 Loading processor: superoethb
 Loading processor: superoethp
 Loading processor: xogn
+=========================================
+name:    Origin Ether.fi ARM
+topic:   ARM
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xfb0a3cf9b019bfd8827443d131b235b3e0fc58d2
+    topic0: 
+      - AdminChanged | 0x7e644d79
+      - CapManagerUpdated | 0xb8fd9afc
+      - FeeCollectorUpdated | 0xe5693914
+      - FeeUpdated | 0x8c4d35e5
+      - Initialized | 0xc7f505b2
+      - OperatorChanged | 0x4721129e
+    severity: high
+  - 
+    address: 
+      - 0xfb0a3cf9b019bfd8827443d131b235b3e0fc58d2
+    topic0: 
+      - Approval | 0x8c5be1e5
+      - ClaimLidoWithdrawals | 0xb7700a52
+      - CrossPriceUpdated | 0x6f938e86
+      - Deposit | 0x90890809
+      - FeeCollected | 0x06c5efef
+      - RedeemClaimed | 0x36dd2c9b
+      - RedeemRequested | 0xc04c86cf
+      - RequestLidoWithdrawals | 0x3fdbeb02
+      - TraderateChanged | 0xa2136948
+    severity: low
+  - 
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x000000000000000000000000fb0a3cf9b019bfd8827443d131b235b3e0fc58d2
+    severity: low
 =========================================
 name:    Origin Lido ARM
 topic:   ARM
@@ -49,6 +85,42 @@ events:
       - Transfer | 0xddf252ad
     topic2: 
       - 0x00000000000000000000000085b78aca6deae198fbf201c82daf6ca21942acc6
+    severity: low
+=========================================
+name:    Origin OS ARM
+topic:   ARM
+chainId: 146
+events: 
+  - 
+    address: 
+      - 0x2f872623d1e1af5835b08b0e49aad2d81d649d30
+    topic0: 
+      - AdminChanged | 0x7e644d79
+      - CapManagerUpdated | 0xb8fd9afc
+      - FeeCollectorUpdated | 0xe5693914
+      - FeeUpdated | 0x8c4d35e5
+      - Initialized | 0xc7f505b2
+      - OperatorChanged | 0x4721129e
+    severity: high
+  - 
+    address: 
+      - 0x2f872623d1e1af5835b08b0e49aad2d81d649d30
+    topic0: 
+      - Approval | 0x8c5be1e5
+      - ClaimLidoWithdrawals | 0xb7700a52
+      - CrossPriceUpdated | 0x6f938e86
+      - Deposit | 0x90890809
+      - FeeCollected | 0x06c5efef
+      - RedeemClaimed | 0x36dd2c9b
+      - RedeemRequested | 0xc04c86cf
+      - RequestLidoWithdrawals | 0x3fdbeb02
+      - TraderateChanged | 0xa2136948
+    severity: low
+  - 
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000002f872623d1e1af5835b08b0e49aad2d81d649d30
     severity: low
 =========================================
 name:    Mainnet Multisig
@@ -152,6 +224,9 @@ events:
       - 0x9c354503c38481a7a7a51629142963f98ecc12d0 (OGV)
       - 0x0c4576ca1c365868e162554af8e385dc3e7c66d9 (veOGV)
       - 0x3cdd07c16614059e66344a7b579dab4f9516c0b6 (OUSD Governance (old))
+      - 0xfb0a3cf9b019bfd8827443d131b235b3e0fc58d2
+      - 0xf2a18f7330141ec737eb73a0a5ea8e4d7e9be7ec
+      - 0xe11edbd5ae4fa434af7f8d7f03da1742996e7ab2
       - 0x85b78aca6deae198fbf201c82daf6ca21942acc6
       - 0xf54ebff575f699d281645c6f14fe427dffe629cf
       - 0x01f30b7358ba51f637d1aa05d9b4a60f76dad680
@@ -199,6 +274,8 @@ events:
       - 0x9f0df7799f6fdad409300080cff680f5a23df4b1 (Wrapped OS)
       - 0xe25a2b256ffb3ad73678d5e80de8d2f6022fab21 (OS Zapper)
       - 0x31a91336414d3b955e494e7d485a6b06b55fc8fb
+      - 0x2f872623d1e1af5835b08b0e49aad2d81d649d30
+      - 0x38b654d7859dab79935c9cf99267392c06d254cf
     topic0: 
       - GovernorshipTransferred | 0xc7c0c772
       - PendingGovernorshipTransfer | 0xa39cc5eb
