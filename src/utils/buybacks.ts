@@ -127,9 +127,13 @@ export const getBuybackSumForTimePeriod = async ({
   }
 }
 
-export const getBuybacksSinceBuybackReboot = async (alertingTx: { transactionHash: string; ognBoughtUSD: number }) => {
+export const getBuybacksSinceBuybackReboot = async (alertingTx: {
+  timestamp: number
+  transactionHash: string
+  ognBoughtUSD: number
+}) => {
   const timestampGte = dayjs('2025-06-30T00:00:00Z').toISOString()
-  const timestampLt = dayjs().endOf('month').toISOString()
+  const timestampLt = dayjs(alertingTx.timestamp).toISOString()
 
   return getBuybackSumForTimePeriod({
     timestampGte,

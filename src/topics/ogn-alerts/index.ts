@@ -26,8 +26,9 @@ createProcessor({
     p.addLog(buybackFilter.value)
   },
   process: async (ctx) => {
-    const buybackArray = await getBuybacks(ctx, minUsdToBuybackAlert)
+    const buybackArray = await getBuybacks(ctx)
     for (const {
+      valueNumber,
       valueFormatted,
       tokenOutName,
       tokenOutValueFormatted,
@@ -40,6 +41,7 @@ createProcessor({
         ognBoughtUSD: tokenOutPrice,
       })
       const { buybacksUSD: buybacksUSDSinceReboot } = await getBuybacksSinceBuybackReboot({
+        timestamp: log.block.timestamp,
         transactionHash: log.transactionHash,
         ognBoughtUSD: tokenOutPrice,
       })
@@ -49,8 +51,10 @@ createProcessor({
       })}%`
       const via =
         log.transaction?.to?.toLowerCase() === '0x9008d19f58aabd9ed0d60971565aa8510560ab41' ? 'via @CoWSwap' : ''
-      const message = tokenOutName
-        ? `
+
+      if (valueNumber > minUsdToBuybackAlert) {
+        const message = tokenOutName
+          ? `
 🚨 OGN Buyback Executed
 
 Bought: ${valueFormatted} $OGN ${via}
@@ -66,7 +70,7 @@ OGN staking APY is now at ${ognStakingApyFormatted}
 TXN Details ⬇️
 https://etherscan.io/tx/${log.transactionHash}
 `
-        : `
+          : `
 🚨 OGN Buyback Executed
 
 Bought: ${valueFormatted} $OGN ${via}
@@ -81,13 +85,14 @@ TXN Details ⬇️
 https://etherscan.io/tx/${log.transactionHash}
 `
 
-      notifyDiscord({
-        sortId: log.id + '-ogn-alerts-buyback',
-        description: message,
-        topic: 'OGN Alerts',
-        severity: 'low',
-        flags: MessageFlags.SuppressEmbeds,
-      })
+        notifyDiscord({
+          sortId: log.id + '-ogn-alerts-buyback',
+          description: message,
+          topic: 'OGN Alerts',
+          severity: 'low',
+          flags: MessageFlags.SuppressEmbeds,
+        })
+      }
 
       // Milestone alert
       if (
