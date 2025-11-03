@@ -11,16 +11,18 @@ import * as otokenDripperAbi from '../../abi/otoken-dripper'
 import * as otokenHarvesterAbi from '../../abi/otoken-harvester'
 import * as otokenPriceOracleAbi from '../../abi/otoken-price-oracle'
 import * as otokenVaultAbi from '../../abi/otoken-vault'
+import * as strategyCompoundStakingSSVAbi from '../../abi/strategy-compound-staking-ssv'
 import * as strategyMorphoAaveAbi from '../../abi/strategy-morpho-aave'
 import * as strategyNativeStakingAbi from '../../abi/strategy-native-staking'
 import * as wotokenAbi from '../../abi/wotoken'
 import {
   OETH_ADDRESS,
   OETH_BUYBACK,
+  OETH_COMPOUND_STAKING_SSV_STRATEGIES,
   OETH_DRIPPER_ADDRESS,
   OETH_ETH_AMO_METAPOOL,
   OETH_HARVESTER_ADDRESS,
-  OETH_NATIVE_STRATEGY_ADDRESSES,
+  OETH_NATIVE_STRATEGIES,
   OETH_VAULT_ADDRESS,
   OGN_ADDRESS,
   OGN_GOVERNANCE_ADDRESS,
@@ -56,9 +58,16 @@ export const ognABIs: Record<string, any> = {
  * Active OETH Strategy ABIs
  */
 export const oethStrategyABIs: Record<string, any> = {
-  ...OETH_NATIVE_STRATEGY_ADDRESSES.reduce(
-    (map, address) => {
-      map[address] = strategyNativeStakingAbi
+  ...OETH_NATIVE_STRATEGIES.reduce(
+    (map, strategy) => {
+      map[strategy.address] = strategyNativeStakingAbi
+      return map
+    },
+    {} as Record<string, any>,
+  ),
+  ...OETH_COMPOUND_STAKING_SSV_STRATEGIES.reduce(
+    (map, strategy) => {
+      map[strategy.address] = strategyCompoundStakingSSVAbi
       return map
     },
     {} as Record<string, any>,

@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-10/30/2025, 1:34:11 PM
+11/3/2025, 10:16:31 AM
 =========================================
 Loading processor: arm.ts
 Loading processor: governance
@@ -202,6 +202,7 @@ events:
       - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
       - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
       - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
+      - 0xaf04828ed923216c77dc22a2fc8e077fdadaa87d (OETH Compound Staking SSV Strategy 1)
       - 0x1827f9ea98e0bf96550b2fc20f7233277fcd7e63 (OETH/ETH Curve AMO Strategy)
       - 0x3ff8654d633d4ea0fae24c52aec73b4a20d0d0e5 (FraxETH Strategy)
       - 0xc1fc9e5ec3058921ea5025d703cbe31764756319 (OETH Morpho Aave Strategy)
@@ -588,6 +589,51 @@ events:
       - SwapRouterUpdated | 0x36db479a
       - TreasuryManagerUpdated | 0xd16d2cf2
 =========================================
+name:    OETH Compound Staking SSV - Suicide Refund Received
+topic:   OETH
+chainId: 1
+traces: 
+  - 
+    traceParams: 
+      - 
+        type: 
+          - suicide
+        suicideRefundAddress: 
+          - 0xaf04828ed923216c77dc22a2fc8e077fdadaa87d (OETH Compound Staking SSV Strategy 1)
+    topic:        OETH
+    severity:     high
+    notifyTarget: 
+      email: 
+        - engineering@originprotocol.com
+      discordMentions: 
+        - <@&997340701551513762>
+=========================================
+name:    OETH Compound Staking SSV Strategy
+topic:   OETH
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xaf04828ed923216c77dc22a2fc8e077fdadaa87d (OETH Compound Staking SSV Strategy 1)
+    topic0: 
+      - BalancesSnapped | 0xb7523e03
+      - BalancesVerified | 0xed252833
+      - Deposit | 0x5548c837
+      - DepositVerified | 0xae0e4f72
+      - ETHStaked | 0xaca97428
+      - FirstDepositReset | 0xce77f85e
+      - HarvesterAddressesUpdated | 0xe48386b8
+      - RegistratorChanged | 0x83f29c79
+      - RewardTokenAddressesUpdated | 0x04c0b964
+      - RewardTokenCollected | 0xf6c07a06
+      - SSVValidatorRegistered | 0x50837f89
+      - SSVValidatorRemoved | 0x63d54ea4
+      - Unpaused | 0x5db9ee0a
+      - ValidatorInvalid | 0xb8318df5
+      - ValidatorVerified | 0x8142f136
+      - ValidatorWithdraw | 0x8dd83105
+      - Withdrawal | 0x2717ead6
+=========================================
 name:    OETH Contract
 topic:   OETH
 chainId: 1
@@ -644,6 +690,7 @@ traces:
           - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
           - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
           - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
+          - 0xaf04828ed923216c77dc22a2fc8e077fdadaa87d (OETH Compound Staking SSV Strategy 1)
           - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
         error:    true
       - 
@@ -661,6 +708,7 @@ traces:
           - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
           - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
           - 0xe98538a0e8c2871c2482e1be8cc6bd9f8e8ffd63 (OETH Native Staking Strategy 3)
+          - 0xaf04828ed923216c77dc22a2fc8e077fdadaa87d (OETH Compound Staking SSV Strategy 1)
           - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
         error:  true
     topic:       OETH

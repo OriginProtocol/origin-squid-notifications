@@ -8,11 +8,12 @@ import {
   DAI_ADDRESS,
   EETH_ADDRESS,
   FRXETH_ADDRESS,
+  OETH_COMPOUND_STAKING_SSV_STRATEGIES,
   OETH_DRIPPER_ADDRESS,
   OETH_ETH_AMO_METAPOOL,
   OETH_HARVESTER_ADDRESS,
   OETH_MORPHO_AAVE_ADDRESS,
-  OETH_NATIVE_STRATEGY_ADDRESSES,
+  OETH_NATIVE_STRATEGIES,
   OETH_STRATEGY_BALANCER_ADDRESS,
   OETH_ZAPPER_ADDRESS,
   OGN_GOVERNANCE_ADDRESS,
@@ -194,9 +195,16 @@ export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undef
 
     [OETH_STRATEGY_BALANCER_ADDRESS]: 'OETH Balancer rETH Strategy',
     [OETH_MORPHO_AAVE_ADDRESS]: 'OETH Morpho Aave Strategy',
-    ...OETH_NATIVE_STRATEGY_ADDRESSES.reduce(
-      (map, address, i) => {
-        map[address] = `OETH Native Staking Strategy ${i + 1}`
+    ...OETH_NATIVE_STRATEGIES.reduce(
+      (map, strategy, index) => {
+        map[strategy.address] = `OETH Native Staking Strategy ${index + 1}`
+        return map
+      },
+      {} as Record<string, string>,
+    ),
+    ...OETH_COMPOUND_STAKING_SSV_STRATEGIES.reduce(
+      (map, strategy, index) => {
+        map[strategy.address] = `OETH Compound Staking SSV Strategy ${index + 1}`
         return map
       },
       {} as Record<string, string>,
