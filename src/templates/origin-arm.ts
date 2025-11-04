@@ -17,6 +17,8 @@ export const createOriginArmProcessor = ({
   name,
   chainId,
   address,
+  symbol0,
+  symbol1,
   capManagerAddress,
   zapperAddress,
   topic,
@@ -24,6 +26,8 @@ export const createOriginArmProcessor = ({
   name: string
   chainId: number
   address: string
+  symbol0: string
+  symbol1: string
   capManagerAddress: string
   zapperAddress?: string
   topic: Topic
@@ -66,13 +70,13 @@ export const createOriginArmProcessor = ({
                 {
                   name: `${formatAmount(10n ** 72n / traderateData.traderate0, 36, {
                     maximumFractionDigits: 8,
-                  })} stETH/WETH`,
+                  })} ${symbol1}/${symbol0}`,
                   value: 'Sell Price',
                 },
                 {
                   name: `${formatAmount(traderateData.traderate1, 36, {
                     maximumFractionDigits: 8,
-                  })} stETH/WETH`,
+                  })} ${symbol1}/${symbol0}`,
                   value: 'Buy Price',
                 },
               ],
