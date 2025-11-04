@@ -12,6 +12,8 @@ createOriginArmProcessor({
   address: addresses.arms['ARM-WETH-stETH'].address,
   symbol0: 'WETH',
   symbol1: 'stETH',
+  token0: addresses.tokens.WETH,
+  token1: addresses.tokens.stETH,
   capManagerAddress: addresses.arms['ARM-WETH-stETH'].capManager,
   zapperAddress: addresses.arms['ARM-WETH-stETH'].zapper,
 })
@@ -23,6 +25,8 @@ createOriginArmProcessor({
   address: addresses.arms['ARM-WETH-eETH'].address,
   symbol0: 'WETH',
   symbol1: 'eETH',
+  token0: addresses.tokens.WETH,
+  token1: addresses.tokens.eETH,
   capManagerAddress: addresses.arms['ARM-WETH-eETH'].capManager,
   zapperAddress: addresses.arms['ARM-WETH-eETH'].zapper,
 })
@@ -32,8 +36,11 @@ createOriginArmProcessor({
   topic: 'ARM',
   chainId: sonic.id,
   address: sonicAddresses.arms['ARM-WS-OS'].address,
+  token0: sonicAddresses.tokens.wS,
+  token1: sonicAddresses.tokens.OS,
   symbol0: 'WS',
   symbol1: 'OS',
   capManagerAddress: sonicAddresses.arms['ARM-WS-OS'].capManager,
   zapperAddress: sonicAddresses.arms['ARM-WS-OS'].zapper,
+  minimumSwapAmount: 10n ** 18n * 1000n, // 1000 S
 })

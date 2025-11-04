@@ -4,11 +4,11 @@ import { logFilter } from '@originprotocol/squid-utils'
 import { cloudflareKV } from '@utils/cloudflare-kv'
 
 import * as erc20Abi from '../abi/erc20'
+import * as originEtherfiArmAbi from '../abi/origin-etherfi-arm'
 import * as originArmAbi from '../abi/origin-lido-arm'
 import { Topic, discordIconOrName } from '../notify/const'
 import { EventRendererParams } from '../notify/event'
 import { renderDiscordEmbed, renderEventDiscordEmbed } from '../notify/event/renderers/utils'
-import { addresses } from '../utils/addresses'
 import { formatAmount } from '../utils/formatAmount'
 import { transactionLink } from '../utils/links'
 import { createEventProcessor } from './event'
@@ -19,18 +19,24 @@ export const createOriginArmProcessor = ({
   address,
   symbol0,
   symbol1,
+  token0,
+  token1,
   capManagerAddress,
   zapperAddress,
   topic,
+  minimumSwapAmount,
 }: {
   name: string
   chainId: number
   address: string
   symbol0: string
   symbol1: string
+  token0: string
+  token1: string
   capManagerAddress: string
   zapperAddress?: string
   topic: Topic
+  minimumSwapAmount?: bigint
 }) => {
   const highPriorityEvents: (keyof typeof originArmAbi.events)[] = [
     'AdminChanged',
@@ -61,8 +67,42 @@ export const createOriginArmProcessor = ({
       {
         address: [address],
         severity: 'low',
-        events: omit(originArmAbi.events, [...highPriorityEvents, 'Transfer']),
+        events: omit(
+          {
+            ...originArmAbi.events,
+            Allocated: originEtherfiArmAbi.events.Allocated,
+            ARMBufferUpdated: originEtherfiArmAbi.events.ARMBufferUpdated,
+          },
+          [...highPriorityEvents, 'Transfer'],
+        ),
         renderers: {
+          Allocated: (value: EventRendererParams) => {
+            const allocatedData = originEtherfiArmAbi.events.Allocated.decode(value.log)
+            renderEventDiscordEmbed(value, {
+              description: `[${allocatedData.market}](https://etherscan.io/address/${allocatedData.market})`,
+              fields: [
+                {
+                  name: 'Market',
+                  value: allocatedData.market,
+                },
+                {
+                  name: formatAmount(allocatedData.assets, 18, { maximumFractionDigits: 4 }),
+                  value: 'Allocated',
+                },
+              ],
+            })
+          },
+          ARMBufferUpdated: (value: EventRendererParams) => {
+            const armBufferData = originEtherfiArmAbi.events.ARMBufferUpdated.decode(value.log)
+            renderEventDiscordEmbed(value, {
+              fields: [
+                {
+                  name: formatAmount(armBufferData.armBuffer, 18, { maximumFractionDigits: 4 }),
+                  value: 'ARM Buffer',
+                },
+              ],
+            })
+          },
           TraderateChanged: (value: EventRendererParams) => {
             const traderateData = originArmAbi.events.TraderateChanged.decode(value.log)
             renderEventDiscordEmbed(value, {
@@ -166,8 +206,18 @@ export const createOriginArmProcessor = ({
                 armSources[transferInData.from.toLowerCase()] ??
                 discordIconOrName(transferInData.from) ??
                 transferInData.from
+              if (
+                minimumSwapAmount &&
+                (transferInData.value < minimumSwapAmount || transferOutData.value < minimumSwapAmount)
+              ) {
+                // Minimum swap amount not met.
+                return
+              }
               const configLimit = await cloudflareKV.getOrSet('origin-arm-swap-limit', 0).then((limit) => BigInt(limit))
-              if (transferInData.value < configLimit && transferOutData.value < configLimit) return
+              if (transferInData.value < configLimit && transferOutData.value < configLimit) {
+                // Cloudflare configured limit not met.
+                return
+              }
               renderDiscordEmbed({
                 sortId: `${value.log.block.height}:${value.log.transactionIndex}:${value.log.logIndex}`,
                 topic: value.topic,
@@ -188,7 +238,7 @@ export const createOriginArmProcessor = ({
                   },
                   {
                     name: formatAmount(
-                      transferIn.address === addresses.tokens.stETH
+                      transferIn.address === token1
                         ? Number(transferOutData.value) / Number(transferInData.value)
                         : Number(transferInData.value) / Number(transferOutData.value),
                       18,
@@ -223,10 +273,3 @@ const armSources: Record<string, string | undefined> = {
   '0xe08d97e151473a848c3d9ca3f323cb720472d015': 'MEV Bot (c0ffeebabe.eth)',
   '0x70bf6634ee8cb27d04478f184b9b8bb13e5f4710': '0x',
 }
-
-// Special Requests
-/*
-    I'd like a change to the `Origin ARM Rates Updated` event:
-    Rename `traderate0` to `sell price` and invert the price so it's in stETH/WETH, not WETH/stETH
-    Rename `traderate1` to `buy price`. It is already in stETH/WETH.
-*/
