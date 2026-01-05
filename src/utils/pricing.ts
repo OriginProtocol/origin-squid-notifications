@@ -24,12 +24,12 @@ const chainlinkAbi = parseAbi(['function latestAnswer() external view returns (i
  * Internal function to fetch token prices from Chainlink feeds
  */
 async function fetchPrice(
-  token: 'OGN' | 'OETH' | 'superOETHb' | 'superOETHp' | 'OUSD' | 'WETH' | 'USDC',
+  token: 'OGN' | 'OETH' | 'superOETHb' | 'OUSD' | 'WETH' | 'USDC',
 ): Promise<number> {
   if (token === 'OUSD' || token === 'USDC') return 1
 
   // ETH derivatives should use ETH price
-  if (token === 'OETH' || token === 'superOETHb' || token === 'superOETHp' || token === 'WETH') {
+  if (token === 'OETH' || token === 'superOETHb' || token === 'WETH') {
     const ethPrice = await client.readContract({
       address: registry.ETH_USD as `0x${string}`,
       abi: chainlinkAbi,

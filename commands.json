@@ -89,16 +89,6 @@
       "cmd": ["node", "lib/main-sonic.js"],
       "hidden": true
     },
-    "process:plume": {
-      "description": "Load .env and start the squid plume processor",
-      "deps": ["build"],
-      "cmd": ["node", "--require=dotenv/config", "lib/main-plume.js"]
-    },
-    "process:plume:prod": {
-      "description": "Start the squid plume processor",
-      "cmd": ["node", "lib/main-plume.js"],
-      "hidden": true
-    },
     "check-updates": {
       "cmd": ["pnpx", "npm-check-updates", "--filter=/subsquid/", "--upgrade"],
       "hidden": true

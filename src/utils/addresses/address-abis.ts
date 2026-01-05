@@ -39,7 +39,6 @@ import {
   strategies,
 } from './addresses'
 import { baseAddresses } from './addresses-base'
-import { plumeAddresses } from './addresses-plume'
 import { sonicAddresses } from './addresses-sonic'
 
 /**
@@ -119,18 +118,6 @@ export const oethBaseABIs: Record<string, any> = {
   [baseAddresses.multisig['2/8']]: multisigAbi,
   [baseAddresses.multisig['multichain-guardian']]: multisigAbi,
   [baseAddresses.multisig.reservoir]: multisigAbi,
-}
-
-/**
- * Active Super OETH Base ABIs
- */
-export const oethPlumeABIs: Record<string, any> = {
-  [plumeAddresses.superOETHp.address]: otokenAbi,
-  [plumeAddresses.superOETHp.wrapped]: wotokenAbi,
-  [plumeAddresses.superOETHp.vault]: otokenVaultAbi,
-  [plumeAddresses.superOETHp.oracleRouter]: otokenPriceOracleAbi,
-  [plumeAddresses.superOETHp.dripper]: otokenDripperAbi,
-  [plumeAddresses.multisig['5/8']]: multisigAbi,
 }
 
 /**

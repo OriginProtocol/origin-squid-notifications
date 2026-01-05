@@ -22,7 +22,6 @@ governance/
 ├── index.ts       # Exports from all chain-specific files + shared logic
 ├── mainnet.ts     # Mainnet governance processors
 ├── base.ts        # Base chain governance processors
-├── plume.ts       # Plume chain governance processors
 └── os.ts          # Origin Story governance (existing file)
 ```
 
@@ -59,16 +58,6 @@ ousd/
 └── error-tracing.ts        # Error monitoring
 ```
 
-#### Example: `superoethp/`
-
-```
-superoethp/
-├── index.ts           # Exports from all component files
-├── core-contracts.ts  # Token, vault, burns (Plume chain)
-├── strategies.ts      # Bridged WOETH strategy
-└── error-tracing.ts   # Error monitoring
-```
-
 #### Example: `os/`
 
 ```
@@ -85,7 +74,7 @@ os/
 
 When processors differ significantly by blockchain:
 
-- `mainnet.ts`, `base.ts`, `plume.ts`, `sonic.ts`
+- `mainnet.ts`, `base.ts`, `sonic.ts`
 - All processors in each file use the same `chainId`
 - Same `topic` and often same `notifyTarget`
 
@@ -122,7 +111,7 @@ Consider splitting when:
 
 - Use `kebab-case` for filenames
 - Be descriptive: `aerodrome-pools.ts` not `pools.ts`
-- Chain names: `mainnet.ts`, `base.ts`, `plume.ts`
+- Chain names: `mainnet.ts`, `base.ts`, `sonic.ts`
 
 ### Index File Pattern
 
@@ -155,11 +144,10 @@ Common patterns:
 
 ### ✅ Fully Organized Topics:
 
-- **Governance** → Chain-specific organization (mainnet, base, plume, os)
+- **Governance** → Chain-specific organization (mainnet, base, os)
 - **SuperOETHb** → Component-based (core-contracts, strategies, aerodrome, error-tracing)
 - **OETH** → Component-based (core-contracts, strategies, curve-governance, error-tracing)
 - **OUSD** → Component-based (core-contracts, strategies, external-governance, error-tracing)
-- **SuperOETHp** → Component-based (core-contracts, strategies, error-tracing)
 - **OS** → Component-based (core-contracts, strategies, error-tracing)
 
 ### 📝 Single-File Topics (Appropriate Size):

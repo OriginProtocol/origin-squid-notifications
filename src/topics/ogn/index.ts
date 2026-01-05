@@ -5,7 +5,7 @@ import { createEventProcessor } from 'templates/event'
 import { createFixedRateRewardsSourceProcessor } from 'templates/fixed-rate-rewards-source'
 import { createOTokenCurvePoolBoosterProcessor } from 'templates/otoken-curve-pool-booster'
 import { createTraceErrorProcessor } from 'templates/trace-errors'
-import { base, mainnet, plumeMainnet, sonic } from 'viem/chains'
+import { base, mainnet, sonic } from 'viem/chains'
 
 import { discordIconOrName, notifyTargets } from '@notify/const'
 import { renderDiscordEmbed } from '@notify/event/renderers/utils'
@@ -48,12 +48,6 @@ createOTokenCurvePoolBoosterProcessor({
 createOTokenCurvePoolBoosterProcessor({
   name: 'Curve Pool Booster',
   chainId: sonic.id,
-  topic: 'OGN',
-})
-
-createOTokenCurvePoolBoosterProcessor({
-  name: 'Curve Pool Booster',
-  chainId: plumeMainnet.id,
   topic: 'OGN',
 })
 

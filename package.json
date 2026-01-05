@@ -11,11 +11,9 @@
     "process": "sqd setup && sqd process",
     "process:base": "sqd setup && sqd process:base",
     "process:sonic": "sqd setup && sqd process:sonic",
-    "process:plume": "sqd setup && sqd process:plume",
     "resume": "sqd process",
     "resume:base": "sqd process:base",
     "resume:sonic": "sqd process:sonic",
-    "resume:plume": "sqd process:plume",
     "digest": "ts-node src/digest > digest.log"
   },
   "dependencies": {
