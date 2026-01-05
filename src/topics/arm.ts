@@ -44,3 +44,16 @@ createOriginArmProcessor({
   zapperAddress: sonicAddresses.arms['ARM-WS-OS'].zapper,
   minimumSwapAmount: 10n ** 18n * 1000n, // 1000 S
 })
+
+createOriginArmProcessor({
+  name: 'Origin Ethena ARM',
+  topic: 'ARM',
+  chainId: 1,
+  address: addresses.arms['ARM-USDe-sUSDe'].address,
+  symbol0: 'USDe',
+  symbol1: 'sUSDe',
+  token0: addresses.tokens.USDe,
+  token1: addresses.tokens.sUSDe,
+  capManagerAddress: addresses.arms['ARM-USDe-sUSDe'].capManager,
+  zapperAddress: addresses.arms['ARM-USDe-sUSDe'].zapper,
+})

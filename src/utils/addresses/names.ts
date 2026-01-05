@@ -192,6 +192,12 @@ export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undef
     [RETH_ADDRESS]: 'rETH',
     [STETH_ADDRESS]: 'stETH',
     [EETH_ADDRESS]: 'eETH',
+    [addresses.tokens.USDe]: 'USDe',
+    [addresses.tokens.sUSDe]: 'sUSDe',
+
+    // ARM Contracts
+    [addresses.arms['ARM-USDe-sUSDe'].address]: 'Origin Ethena ARM',
+    [addresses.arms['ARM-USDe-sUSDe'].capManager]: 'Ethena ARM Cap Manager',
 
     [OETH_STRATEGY_BALANCER_ADDRESS]: 'OETH Balancer rETH Strategy',
     [OETH_MORPHO_AAVE_ADDRESS]: 'OETH Morpho Aave Strategy',

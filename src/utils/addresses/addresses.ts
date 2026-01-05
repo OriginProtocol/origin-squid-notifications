@@ -12,6 +12,8 @@ export const USDT_ADDRESS = '0xdac17f958d2ee523a2206206994597c13d831ec7'
 export const USDC_ADDRESS = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'
 export const LUSD_ADDRESS = '0x5f98805a4e8be255a32880fdec7f6728c6568ba0'
 export const USDS_ADDRESS = '0xdc035d45d973e3ec169d2276ddab16f1e407384f'
+export const USDE_ADDRESS = '0x4c9edd5852cd905f086c759e8383e09bff1e68b3'
+export const SUSDE_ADDRESS = '0x9d39a5de30e57443bff2a8307a4256c8797a3497'
 
 // ETH Stables
 export const WETH_ADDRESS = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
@@ -136,6 +138,10 @@ export const tokens = {
 
   // Non-stable
   BAL: BAL_ADDRESS,
+
+  // Ethena
+  USDe: USDE_ADDRESS,
+  sUSDe: SUSDE_ADDRESS,
 } as const
 export type TokenSymbol = keyof typeof tokens
 export type TokenAddress = (typeof tokens)[TokenSymbol]
@@ -215,7 +221,7 @@ export const ogn = {
   ogvMigrator: OGV_OGN_MIGRATOR_ADDRESS,
 }
 
-export const arms: Record<string, { address: string; capManager: string; zapper: string }> = {
+export const arms: Record<string, { address: string; capManager: string; zapper?: string }> = {
   ['ARM-WETH-eETH']: {
     address: '0xfb0a3cf9b019bfd8827443d131b235b3e0fc58d2',
     capManager: '0xf2a18f7330141ec737eb73a0a5ea8e4d7e9be7ec',
@@ -225,6 +231,11 @@ export const arms: Record<string, { address: string; capManager: string; zapper:
     address: '0x85b78aca6deae198fbf201c82daf6ca21942acc6',
     capManager: '0xf54ebff575f699d281645c6f14fe427dffe629cf',
     zapper: '0x01f30b7358ba51f637d1aa05d9b4a60f76dad680',
+  },
+  ['ARM-USDe-sUSDe']: {
+    address: '0xceda2d856238aa0d12f6329de20b9115f07c366d',
+    capManager: '0x687afb5a52a15122fd5fc54a8b52cfd58346fb0c',
+    zapper: undefined,
   },
 }
 
@@ -274,6 +285,7 @@ export const addresses = {
       ...Object.values(arms).map((a) => Object.values(a)),
     ]
       .flat()
+      .filter((a): a is string => typeof a === 'string')
       .map((a) => a.toLowerCase()),
   ),
   originBase: uniq([...Object.values(oeth_base)]),

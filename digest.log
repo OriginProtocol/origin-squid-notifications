@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-1/5/2026, 11:08:12 AM
+1/5/2026, 11:41:33 AM
 =========================================
 Loading processor: arm.ts
 Loading processor: governance
@@ -14,6 +14,44 @@ Loading processor: prime-eth.ts
 Loading processor: superoethb
 Loading processor: superoethp
 Loading processor: xogn
+=========================================
+name:    Origin Ethena ARM
+topic:   ARM
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xceda2d856238aa0d12f6329de20b9115f07c366d (Origin Ethena ARM)
+    topic0: 
+      - AdminChanged | 0x7e644d79
+      - CapManagerUpdated | 0xb8fd9afc
+      - FeeCollectorUpdated | 0xe5693914
+      - FeeUpdated | 0x8c4d35e5
+      - Initialized | 0xc7f505b2
+      - OperatorChanged | 0x4721129e
+    severity: high
+  - 
+    address: 
+      - 0xceda2d856238aa0d12f6329de20b9115f07c366d (Origin Ethena ARM)
+    topic0: 
+      - Approval | 0x8c5be1e5
+      - ClaimLidoWithdrawals | 0xb7700a52
+      - CrossPriceUpdated | 0x6f938e86
+      - Deposit | 0x90890809
+      - FeeCollected | 0x06c5efef
+      - RedeemClaimed | 0x36dd2c9b
+      - RedeemRequested | 0xc04c86cf
+      - RequestLidoWithdrawals | 0x3fdbeb02
+      - TraderateChanged | 0xa2136948
+      - Allocated | 0x8de94c51
+      - ARMBufferUpdated | 0x29128dbc
+    severity: low
+  - 
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x000000000000000000000000ceda2d856238aa0d12f6329de20b9115f07c366d
+    severity: low
 =========================================
 name:    Origin Ether.fi ARM
 topic:   ARM
@@ -238,6 +276,8 @@ events:
       - 0x85b78aca6deae198fbf201c82daf6ca21942acc6
       - 0xf54ebff575f699d281645c6f14fe427dffe629cf
       - 0x01f30b7358ba51f637d1aa05d9b4a60f76dad680
+      - 0xceda2d856238aa0d12f6329de20b9115f07c366d (Origin Ethena ARM)
+      - 0x687afb5a52a15122fd5fc54a8b52cfd58346fb0c (Ethena ARM Cap Manager)
     topic0: 
       - GovernorshipTransferred | 0xc7c0c772
       - PendingGovernorshipTransfer | 0xa39cc5eb
