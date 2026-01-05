@@ -108,3 +108,16 @@ createEventProcessor({
     },
   ],
 })
+
+// Morpho V2 Strategy
+createEventProcessor({
+  name: 'OUSD Morpho V2 Strategy',
+  chainId: 1,
+  topic: 'OUSD',
+  tracks: [
+    {
+      address: [strategies.ousd.MorphoV2Strategy],
+      events: omit(strategyGenericAbi.events, [...Object.keys(governedUpgradeabilityProxy.events)]),
+    },
+  ],
+})

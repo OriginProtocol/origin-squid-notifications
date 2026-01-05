@@ -220,6 +220,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undef
     [addresses.strategies.ousd.GauntletPrimeUSDCStrategy]: 'OUSD Gauntlet Prime USDC Strategy',
     [addresses.strategies.ousd.SkySavingsRateStrategy]: 'OUSD Sky Savings Rate Strategy',
     [addresses.strategies.ousd.OUSDCurveAMOStrategy]: 'OUSD Curve AMO Strategy',
+    [addresses.strategies.ousd.MorphoV2Strategy]: 'OUSD Morpho V2 Strategy',
 
     // OETH Contracts
     [OETH]: 'OETH',
