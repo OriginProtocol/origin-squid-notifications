@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-1/5/2026, 11:56:38 AM
+1/5/2026, 9:35:24 PM
 =========================================
 Loading processor: arm.ts
 Loading processor: governance
@@ -58,7 +58,7 @@ chainId: 1
 events: 
   - 
     address: 
-      - 0xfb0a3cf9b019bfd8827443d131b235b3e0fc58d2
+      - 0xfb0a3cf9b019bfd8827443d131b235b3e0fc58d2 (EtherFi ARM)
     topic0: 
       - AdminChanged | 0x7e644d79
       - CapManagerUpdated | 0xb8fd9afc
@@ -69,7 +69,7 @@ events:
     severity: high
   - 
     address: 
-      - 0xfb0a3cf9b019bfd8827443d131b235b3e0fc58d2
+      - 0xfb0a3cf9b019bfd8827443d131b235b3e0fc58d2 (EtherFi ARM)
     topic0: 
       - Approval | 0x8c5be1e5
       - ClaimLidoWithdrawals | 0xb7700a52
@@ -96,7 +96,7 @@ chainId: 1
 events: 
   - 
     address: 
-      - 0x85b78aca6deae198fbf201c82daf6ca21942acc6
+      - 0x85b78aca6deae198fbf201c82daf6ca21942acc6 (Lido ARM)
     topic0: 
       - AdminChanged | 0x7e644d79
       - CapManagerUpdated | 0xb8fd9afc
@@ -107,7 +107,7 @@ events:
     severity: high
   - 
     address: 
-      - 0x85b78aca6deae198fbf201c82daf6ca21942acc6
+      - 0x85b78aca6deae198fbf201c82daf6ca21942acc6 (Lido ARM)
     topic0: 
       - Approval | 0x8c5be1e5
       - ClaimLidoWithdrawals | 0xb7700a52
@@ -240,7 +240,7 @@ events:
       - 0xdcee70654261af21c44c093c300ed3bb97b78192 (WOETH)
       - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
       - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
-      - 0x9858e47bcbbe6fbac040519b02d7cd4b2c470c66 (OETH Zapper)
+      - 0xda0485c1e74a7ef690e99d8286c243942edaa07b (OETH Zapper)
       - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
       - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
       - 0x4685db8bf2df743c861d71e6cfb5347222992076 (OETH Native Staking Strategy 2)
@@ -269,14 +269,27 @@ events:
       - 0x9c354503c38481a7a7a51629142963f98ecc12d0 (OGV)
       - 0x0c4576ca1c365868e162554af8e385dc3e7c66d9 (veOGV)
       - 0x3cdd07c16614059e66344a7b579dab4f9516c0b6 (OUSD Governance (old))
-      - 0xfb0a3cf9b019bfd8827443d131b235b3e0fc58d2
-      - 0xf2a18f7330141ec737eb73a0a5ea8e4d7e9be7ec
-      - 0xe11edbd5ae4fa434af7f8d7f03da1742996e7ab2
-      - 0x85b78aca6deae198fbf201c82daf6ca21942acc6
-      - 0xf54ebff575f699d281645c6f14fe427dffe629cf
-      - 0x01f30b7358ba51f637d1aa05d9b4a60f76dad680
+      - 0xfb0a3cf9b019bfd8827443d131b235b3e0fc58d2 (EtherFi ARM)
+      - 0xf2a18f7330141ec737eb73a0a5ea8e4d7e9be7ec (EtherFi ARM Cap Manager)
+      - 0xe11edbd5ae4fa434af7f8d7f03da1742996e7ab2 (EtherFi ARM Zapper)
+      - 0x8cf42b82fffa3e7714d62a2ca223acbec1eef095 (EtherFi ARM Morpho Strategy)
+      - 0x85b78aca6deae198fbf201c82daf6ca21942acc6 (Lido ARM)
+      - 0xf54ebff575f699d281645c6f14fe427dffe629cf (Lido ARM Cap Manager)
+      - 0x01f30b7358ba51f637d1aa05d9b4a60f76dad680 (Lido ARM Zapper)
+      - 0x29c4bb7b1ebcc53e8cbd16480b5bae52c69806d3 (Lido ARM Morpho Strategy)
       - 0xceda2d856238aa0d12f6329de20b9115f07c366d (Origin Ethena ARM)
       - 0x687afb5a52a15122fd5fc54a8b52cfd58346fb0c (Ethena ARM Cap Manager)
+      - 0x0dc20109ea012f050beda184844c1ed5ec6da33a (Ethena ARM AAVE Strategy)
+      - 0x39878253374355dbcc15c86458f084fb6f2d6de7 (ARM Operator (Ethena/EtherFi))
+      - 0x4b91827516f79d6f6a1f292ed99671663b09169a (ARM Operator (Origin OETH))
+      - 0xedf495f92c2ebdee8b797e9c503aa7a3302a9c88 (OETH Compounding Staking Strategy View)
+      - 0xc4444c5d9e7c1a5a0a01c5e4b11692d589dcaf22 (OETH Beacon Proofs)
+      - 0xfee31c09fa5e9cdbc1f80c90b42b58640be91ddf (OETH Native Staking Fee Accumulator 2)
+      - 0x49674fbce040d95366604d1db3392e9bdea14d48 (OETH Native Staking Fee Accumulator 3)
+      - 0x6d416e576eecbb9f897856a7c86007905274ed04 (OETH Harvester Simple)
+      - 0xe3b3b4fc77505ecfaacf6dd21619a8cc12fcc501 (OETH Fixed Rate Dripper)
+      - 0xba0e352ab5c13861c26e4e773e7a833c3a223fe6 (OETH Curve WETH AMO Strategy)
+      - 0x6bac785889a4127db0e0cefee88e0a9f1aaf3cc7 (Origin OETH ARM)
     topic0: 
       - GovernorshipTransferred | 0xc7c0c772
       - PendingGovernorshipTransfer | 0xa39cc5eb
@@ -314,12 +327,14 @@ events:
       - 0xb1e25689d55734fd3fffc939c4c3eb52dff8a794 (OS)
       - 0x5b72992e9cde8c07ce7c8217eb014ec7fd281f03 (OS Dripper)
       - 0xe68e0c66950a7e02335fc9f44daa05d115c4e88b (OS Price Oracle)
-      - 0x0000000000000000000000000000000000000000
+      - 0x7b0383b31c7662e3f6b6e9c743bc87b93c1f4498 (OS Harvester)
       - 0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186 (OS Vault)
       - 0x4bc73050916e6d1738286d8863f8fdcffaa879f8 (OS Vault Admin)
       - 0x06f172e6852085eca886b7f9fd8f7b21db3d2c40 (OS Vault Value Checker)
       - 0x9f0df7799f6fdad409300080cff680f5a23df4b1 (Wrapped OS)
       - 0xe25a2b256ffb3ad73678d5e80de8d2f6022fab21 (OS Zapper)
+      - 0x596b0401479f6dfe1caf8c12838311fee742b95c (OS Sonic Staking Strategy)
+      - 0xbe19cc5654e30daf04ad3b5e06213d70f4e882ee (OS SwapX AMO Strategy)
       - 0x31a91336414d3b955e494e7d485a6b06b55fc8fb
       - 0x2f872623d1e1af5835b08b0e49aad2d81d649d30
       - 0x38b654d7859dab79935c9cf99267392c06d254cf
@@ -477,6 +492,7 @@ events:
       - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
       - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
       - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
+      - 0xe96eb1eda83d18cbac224233319fa5071464e1b9 (wOETH Exchange Rate Oracle (Chainlink))
       - 0x02f2c609950e90934ce99e58b4d7326ad0d7f8d6 (Super OETH Dripper)
       - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
       - 0x80c864704dd06c3693ed5179190786ee38acf835 (Super OETH - Bridged WOETH Strategy)
@@ -652,6 +668,7 @@ traces:
           - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
           - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
           - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH Buyback)
+          - 0x703118c4cbcccbf2ab31913e0f8075fbbb15f563 (OETH/ETH Price Feed (Chainlink))
           - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
           - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/8)
           - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
@@ -670,6 +687,7 @@ traces:
           - 0x0d017afa83eace9f10a8ec5b6e13941664a6785c (OETH Harvester)
           - 0xc0f42f73b8f01849a2dd99753524d4ba14317eb3 (OETH Dripper)
           - 0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2 (OETH Buyback)
+          - 0x703118c4cbcccbf2ab31913e0f8075fbbb15f563 (OETH/ETH Price Feed (Chainlink))
           - 0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3d899 (Mainnet Multisig 5/8)
           - 0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc (Mainnet Multisig 2/8)
           - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
@@ -801,10 +819,22 @@ chainId: 1
 events: 
   - 
     address: 
-      - 0x9858e47bcbbe6fbac040519b02d7cd4b2c470c66 (OETH Zapper)
+      - 0xda0485c1e74a7ef690e99d8286c243942edaa07b (OETH Zapper)
     topic0: 
       - Zap | 0x9d0b99c2
     severity: low
+=========================================
+name:    OETH/ETH Price Feed
+topic:   OETH
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x703118c4cbcccbf2ab31913e0f8075fbbb15f563 (OETH/ETH Price Feed (Chainlink))
+    topic0: 
+      - OwnershipTransferRequested | 0xed8889f5
+      - OwnershipTransferred | 0x8be0079c
+    severity: high
 =========================================
 name:    WOETH Burn
 topic:   OETH
@@ -932,6 +962,47 @@ events:
       - RewardCollected | 0x9026b1dc
     severity: low
 =========================================
+name:    Pool Booster Factory Curve
+topic:   OGN
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x9f4308cdfa4d02c045bc8bd82864013b62d516bb (Pool Booster Factory (Curve))
+      - 0x8a8809d67e3193486dcf94ad023978cbceed1723 (Pool Booster Factory (OUSD Curve))
+    topic0: 
+      - CurvePoolBoosterPlainCreated | 0x29517452
+      - GovernorshipTransferred | 0xc7c0c772
+      - PendingGovernorshipTransfer | 0xa39cc5eb
+      - StrategistUpdated | 0x869e0abd
+    severity: medium
+=========================================
+name:    Pool Booster Factory Merkl
+topic:   OGN
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0x0fc66355b681503efee7741bd848080d809fd6db (Pool Booster Factory (Merkl))
+    topic0: 
+      - GovernorshipTransferred | 0xc7c0c772
+      - MerklDistributorUpdated | 0x1a0e4b3b
+      - PendingGovernorshipTransfer | 0xa39cc5eb
+    severity: medium
+=========================================
+name:    Pool Booster Registry
+topic:   OGN
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xaa8af8db4b6a827b51786334d26349eb03569731 (Pool Booster Central Registry)
+    topic0: 
+      - GovernorshipTransferred | 0xc7c0c772
+      - PendingGovernorshipTransfer | 0xa39cc5eb
+      - Upgraded | 0xbc7cd75a
+    severity: high
+=========================================
 name:    Curve Pool Booster
 topic:   OGN
 chainId: 146
@@ -951,6 +1022,32 @@ events:
       - CampaignCreated | 0xfe76983a
       - CampaignClosed | 0x5e6eb33a
       - FeeCollected | 0x06c5efef
+=========================================
+name:    Pool Booster Factory Merkl (Base)
+topic:   OGN
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x1adb902ece465ca681c66187627a622a631a0a63 (Pool Booster Factory Merkl (Base))
+    topic0: 
+      - GovernorshipTransferred | 0xc7c0c772
+      - MerklDistributorUpdated | 0x1a0e4b3b
+      - PendingGovernorshipTransfer | 0xa39cc5eb
+    severity: medium
+=========================================
+name:    Pool Booster Registry (Base)
+topic:   OGN
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0x157f0b239d7f83d153e6c95f8ad9d341694376e3 (Pool Booster Central Registry (Base))
+    topic0: 
+      - GovernorshipTransferred | 0xc7c0c772
+      - PendingGovernorshipTransfer | 0xa39cc5eb
+      - Upgraded | 0xbc7cd75a
+    severity: high
 =========================================
 name:    OGN Alerts
 topic:   OGN Alerts
@@ -1505,6 +1602,7 @@ traces:
           - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
           - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
           - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
+          - 0xe96eb1eda83d18cbac224233319fa5071464e1b9 (wOETH Exchange Rate Oracle (Chainlink))
           - 0x02f2c609950e90934ce99e58b4d7326ad0d7f8d6 (Super OETH Dripper)
           - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
           - 0x28bce2ee5775b652d92bb7c2891a89f036619703 (Base Multisig 2/8)
@@ -1519,6 +1617,7 @@ traces:
           - 0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6 (wsuperOETHb)
           - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
           - 0xc72bda59e382be10bb5d71abd01ecc65aa16fd83 (Super OETH Base Price Oracle)
+          - 0xe96eb1eda83d18cbac224233319fa5071464e1b9 (wOETH Exchange Rate Oracle (Chainlink))
           - 0x02f2c609950e90934ce99e58b4d7326ad0d7f8d6 (Super OETH Dripper)
           - 0x92a19381444a001d62ce67baff066fa1111d7202 (Base Multisig 5/8)
           - 0x28bce2ee5775b652d92bb7c2891a89f036619703 (Base Multisig 2/8)
@@ -1671,6 +1770,18 @@ events:
     topic0: 
       - Zap | 0x9d0b99c2
     severity: low
+=========================================
+name:    wOETH Exchange Rate Oracle (Base)
+topic:   superOETHb
+chainId: 8453
+events: 
+  - 
+    address: 
+      - 0xe96eb1eda83d18cbac224233319fa5071464e1b9 (wOETH Exchange Rate Oracle (Chainlink))
+    topic0: 
+      - OwnershipTransferRequested | 0xed8889f5
+      - OwnershipTransferred | 0x8be0079c
+    severity: high
 =========================================
 name:    wsuperOETHb Burn
 topic:   superOETHb
