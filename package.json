@@ -14,7 +14,9 @@
     "resume": "sqd process",
     "resume:base": "sqd process:base",
     "resume:sonic": "sqd process:sonic",
-    "digest": "ts-node src/digest > digest.log"
+    "digest": "ts-node src/digest > digest.log",
+    "registry": "ts-node scripts/scrape-registry",
+    "fetch-abi": "ts-node scripts/fetch-abi"
   },
   "dependencies": {
     "@originprotocol/squid-utils": "github:OriginProtocol/squid-utils#main",
