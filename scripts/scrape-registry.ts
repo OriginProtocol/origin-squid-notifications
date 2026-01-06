@@ -4,6 +4,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 
 import { originABIs, oethBaseABIs, poolBoosterBaseABIs, sonicABIs } from '../src/utils/addresses/address-abis'
+import { arms, armOperators, OETH_WETH_ARM } from '../src/utils/addresses/addresses'
 
 const GITHUB_API_BASE = 'https://api.github.com/repos/OriginProtocol/origin-docs/contents'
 const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/OriginProtocol/origin-docs/refs/heads/en'
@@ -30,6 +31,16 @@ function getEventTrackedAddresses(): Set<string> {
 
   // Sonic contracts with ABIs
   Object.keys(sonicABIs).forEach((addr) => tracked.add(addr.toLowerCase()))
+
+  // ARM contracts (tracked via templates, not ABI mappings)
+  Object.values(arms).forEach((arm) => {
+    tracked.add(arm.address.toLowerCase())
+    tracked.add(arm.capManager.toLowerCase())
+    if (arm.zapper) tracked.add(arm.zapper.toLowerCase())
+    if (arm.morphoStrategy) tracked.add(arm.morphoStrategy.toLowerCase())
+  })
+  Object.values(armOperators).forEach((addr) => tracked.add(addr.toLowerCase()))
+  tracked.add(OETH_WETH_ARM.toLowerCase()) // Legacy ARM
 
   return tracked
 }
