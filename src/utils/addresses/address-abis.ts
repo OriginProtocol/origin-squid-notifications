@@ -4,7 +4,12 @@ import * as exponentialStakingAbi from '../../abi/exponential-staking'
 import * as fixedRateRewardsSourceAbi from '../../abi/fixed-rate-rewards-source'
 import * as governanceAbi from '../../abi/governance'
 import * as multisigAbi from '../../abi/multisig'
+import * as oethEthPriceFeedAbi from '../../abi/oeth-eth-price-feed'
 import * as ogvOgnMigratorAbi from '../../abi/ogv-ogn-migrator'
+import * as poolBoosterCentralRegistryAbi from '../../abi/pool-booster-central-registry'
+import * as poolBoosterFactoryCurveAbi from '../../abi/pool-booster-factory-curve'
+import * as poolBoosterFactoryMerklAbi from '../../abi/pool-booster-factory-merkl'
+import * as woethExchangeRateOracleAbi from '../../abi/woeth-exchange-rate-oracle'
 import * as otokenAbi from '../../abi/otoken'
 import * as otokenBuybackAbi from '../../abi/otoken-buyback'
 import * as otokenDripperAbi from '../../abi/otoken-dripper'
@@ -21,6 +26,7 @@ import {
   OETH_COMPOUND_STAKING_SSV_STRATEGIES,
   OETH_DRIPPER_ADDRESS,
   OETH_ETH_AMO_METAPOOL,
+  OETH_ETH_PRICE_FEED,
   OETH_HARVESTER_ADDRESS,
   OETH_NATIVE_STRATEGIES,
   OETH_VAULT_ADDRESS,
@@ -100,6 +106,7 @@ export const oethABIs: Record<string, any> = {
   [OETH_HARVESTER_ADDRESS]: otokenHarvesterAbi,
   [OETH_DRIPPER_ADDRESS]: otokenDripperAbi,
   [OETH_BUYBACK]: otokenBuybackAbi,
+  [OETH_ETH_PRICE_FEED]: oethEthPriceFeedAbi,
   [addresses.multisig['5/8']]: multisigAbi,
   [addresses.multisig['2/8']]: multisigAbi,
   ...oethStrategyABIs,
@@ -113,6 +120,7 @@ export const oethBaseABIs: Record<string, any> = {
   [baseAddresses.superOETHb.wrapped]: wotokenAbi,
   [baseAddresses.superOETHb.vault]: otokenVaultAbi,
   [baseAddresses.superOETHb.oracleRouter]: otokenPriceOracleAbi,
+  [baseAddresses.superOETHb.woethExchangeRateOracle]: woethExchangeRateOracleAbi,
   [baseAddresses.superOETHb.dripper]: otokenDripperAbi,
   [baseAddresses.multisig['5/8']]: multisigAbi,
   [baseAddresses.multisig['2/8']]: multisigAbi,
@@ -154,6 +162,24 @@ export const ousdABIs: Record<string, any> = {
 }
 
 /**
+ * Pool Booster ABIs (Ethereum mainnet)
+ */
+export const poolBoosterABIs: Record<string, any> = {
+  [addresses.poolBoosters.centralRegistry]: poolBoosterCentralRegistryAbi,
+  [addresses.poolBoosters.factoryMerkl]: poolBoosterFactoryMerklAbi,
+  [addresses.poolBoosters.factoryCurve]: poolBoosterFactoryCurveAbi,
+  [addresses.poolBoosters.ousdFactoryCurve]: poolBoosterFactoryCurveAbi,
+}
+
+/**
+ * Pool Booster ABIs (Base)
+ */
+export const poolBoosterBaseABIs: Record<string, any> = {
+  [baseAddresses.poolBoosters.centralRegistry]: poolBoosterCentralRegistryAbi,
+  [baseAddresses.poolBoosters.factoryMerkl]: poolBoosterFactoryMerklAbi,
+}
+
+/**
  * Active Origin ABIs
  */
 export const originABIs: Record<string, unknown> = {
@@ -161,4 +187,5 @@ export const originABIs: Record<string, unknown> = {
   ...oethABIs,
   ...ousdABIs,
   ...sonicABIs,
+  ...poolBoosterABIs,
 }

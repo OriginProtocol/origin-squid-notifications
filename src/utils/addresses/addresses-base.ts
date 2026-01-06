@@ -5,6 +5,7 @@ const superOETHb = {
   wrapped: '0x7fcd174e80f264448ebee8c88a7c4476aaf58ea6',
   vault: '0x98a0cbef61bd2d21435f433be4cd42b56b38cc93',
   oracleRouter: '0xc72bda59e382be10bb5d71abd01ecc65aa16fd83',
+  woethExchangeRateOracle: '0xe96eb1eda83d18cbac224233319fa5071464e1b9',
   dripper: '0x02f2c609950e90934ce99e58b4d7326ad0d7f8d6',
   strategies: {
     bridgedWOETH: '0x80c864704dd06c3693ed5179190786ee38acf835',
@@ -156,5 +157,9 @@ export const baseAddresses = {
     factoryRegistry: '0x5c3f18f06cc09ca1910767a34a20f771039e37c0',
     slipstreamNft: '0x827922686190790b37229fd06084350e74485b72',
     pools: aerodromePools,
+  },
+  poolBoosters: {
+    centralRegistry: '0x157f0b239d7f83d153e6c95f8ad9d341694376e3',
+    factoryMerkl: '0x1adb902ece465ca681c66187627a622a631a0a63',
   },
 } as const

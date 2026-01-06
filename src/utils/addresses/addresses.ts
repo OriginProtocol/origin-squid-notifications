@@ -49,6 +49,20 @@ export const GOVERNANCE_ADMIN_MULTISIG = '0xbe2ab3d3d8f6a32b96414ebbd865dbd276d3
 export const GOVERNANCE_GUARDIAN_MULTISIG = '0xf14bbdf064e3f67f51cd9bd646ae3716ad938fdc'
 
 export const LEGACY_OGN_STAKING = '0x501804b374ef06fa9c427476147ac09f1551b9a0'
+export const LEGACY_OGN_STAKING_IMPLEMENTATION = '0x8cd68a1e0b79150455c5498882d5d5d3df2dde08'
+
+// OUSD Legacy Contracts
+export const OUSD_ORACLE_ROUTER = '0x36cfb852d3b84afb3909bcf4ea0dbe8c82ee1c3c'
+export const OUSD_FLIPPER = '0xcecad69d7d4ed6d52efcfa028af8732f27e08f70'
+export const OUSD_COMPENSATION = '0x9c94df9d594ba1eb94430c006c269c314b1a8281'
+export const OUSD_OLD_VAULT = '0x277e80f3e14e7fb3fc40a9d6184088e0241034bd'
+export const OUSD_OLD_BUYBACK_1 = '0x77314eb392b2be47c014cde0706908b3307ad6a9'
+export const OUSD_OLD_BUYBACK_2 = '0x6c5cdfb47150efc52072cb93eea1e0f123529748'
+
+// OUSD Deprecated Strategies
+export const OUSD_COMPOUND_STRATEGY_DEPRECATED = '0x9c459eeb3fa179a40329b81c1635525e9a0ef094'
+export const OUSD_CONVEX_STRATEGY_DEPRECATED = '0xea2ef2e2e5a749d4a66b41db9ad85a38aa264cb3'
+export const OUSD_LUSD_STRATEGY_DEPRECATED = '0x7a192dd9cc4ea9bdedec9992df74f1da55e60a19'
 
 // OUSD Related
 export const OUSD_ADDRESS = '0x2a8e1e676ec238d8a992307b495b45b3feaa5e86'
@@ -63,7 +77,7 @@ export const OUSD_VAULT_ERC20_ADDRESSES = [DAI_ADDRESS, USDC_ADDRESS, USDT_ADDRE
 export const OETH_ADDRESS = '0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3'
 export const OETH_VAULT_ADDRESS = '0x39254033945aa2e4809cc2977e7087bee48bd7ab'
 export const OETH_HARVESTER_ADDRESS = `0x0d017afa83eace9f10a8ec5b6e13941664a6785c`
-export const OETH_ZAPPER_ADDRESS = '0x9858e47bcbbe6fbac040519b02d7cd4b2c470c66'
+export const OETH_ZAPPER_ADDRESS = '0xda0485c1e74a7ef690e99d8286c243942edaa07b'
 export const OETH_DRIPPER_ADDRESS = '0xc0f42f73b8f01849a2dd99753524d4ba14317eb3'
 export const OETH_BUYBACK = '0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2'
 export const WOETH_ADDRESS = '0xdcee70654261af21c44c093c300ed3bb97b78192'
@@ -82,6 +96,17 @@ export const OETH_NATIVE_STRATEGIES = [
 export const OETH_COMPOUND_STAKING_SSV_STRATEGIES = [
   { address: '0xaf04828ed923216c77dc22a2fc8e077fdadaa87d', from: 23667476 },
 ]
+export const OETH_COMPOUND_STAKING_STRATEGY_VIEW = '0xedf495f92c2ebdee8b797e9c503aa7a3302a9c88'
+export const OETH_BEACON_PROOFS = '0xc4444c5d9e7c1a5a0a01c5e4b11692d589dcaf22'
+export const OETH_NATIVE_STAKING_FEE_ACCUMULATORS = [
+  { address: '0xfee31c09fa5e9cdbc1f80c90b42b58640be91ddf', strategy: 2 }, // Second
+  { address: '0x49674fbce040d95366604d1db3392e9bdea14d48', strategy: 3 }, // Third
+]
+export const OETH_HARVESTER_SIMPLE = '0x6d416e576eecbb9f897856a7c86007905274ed04'
+export const OETH_FIXED_RATE_DRIPPER = '0xe3b3b4fc77505ecfaacf6dd21619a8cc12fcc501'
+export const OETH_CURVE_WETH_AMO_STRATEGY = '0xba0e352ab5c13861c26e4e773e7a833c3a223fe6'
+export const OETH_WETH_ARM = '0x6bac785889a4127db0e0cefee88e0a9f1aaf3cc7'
+export const OETH_ETH_PRICE_FEED = '0x703118c4cbcccbf2ab31913e0f8075fbbb15f563'
 export const OETH_VAULT_ERC20_ADDRESSES = [WETH_ADDRESS, STETH_ADDRESS, RETH_ADDRESS, FRXETH_ADDRESS]
 
 // superOETHb
@@ -221,22 +246,30 @@ export const ogn = {
   ogvMigrator: OGV_OGN_MIGRATOR_ADDRESS,
 }
 
-export const arms: Record<string, { address: string; capManager: string; zapper?: string }> = {
+export const arms: Record<string, { address: string; capManager: string; zapper?: string; morphoStrategy?: string }> = {
   ['ARM-WETH-eETH']: {
     address: '0xfb0a3cf9b019bfd8827443d131b235b3e0fc58d2',
     capManager: '0xf2a18f7330141ec737eb73a0a5ea8e4d7e9be7ec',
     zapper: '0xe11edbd5ae4fa434af7f8d7f03da1742996e7ab2',
+    morphoStrategy: '0x8cf42b82fffa3e7714d62a2ca223acbec1eef095',
   },
   ['ARM-WETH-stETH']: {
     address: '0x85b78aca6deae198fbf201c82daf6ca21942acc6',
     capManager: '0xf54ebff575f699d281645c6f14fe427dffe629cf',
     zapper: '0x01f30b7358ba51f637d1aa05d9b4a60f76dad680',
+    morphoStrategy: '0x29c4bb7b1ebcc53e8cbd16480b5bae52c69806d3',
   },
   ['ARM-USDe-sUSDe']: {
     address: '0xceda2d856238aa0d12f6329de20b9115f07c366d',
     capManager: '0x687afb5a52a15122fd5fc54a8b52cfd58346fb0c',
     zapper: undefined,
+    morphoStrategy: '0x0dc20109ea012f050beda184844c1ed5ec6da33a',
   },
+}
+
+export const armOperators = {
+  ethenaEtherfi: '0x39878253374355dbcc15c86458f084fb6f2d6de7',
+  originOETH: '0x4b91827516f79d6f6a1f292ed99671663b09169a',
 }
 
 export const COMPOUND_GOVERNANCE_ALPHA = '0xc0da01a04c3f3e0be433606045bb7017a7323e38'
@@ -263,6 +296,14 @@ export const buybacks = {
   legacyOperator: '0xfd6c58850cacf9ccf6e8aee479bfb4df14a362d2',
 }
 
+// Pool Booster Contracts
+export const poolBoosters = {
+  centralRegistry: '0xaa8af8db4b6a827b51786334d26349eb03569731',
+  factoryMerkl: '0x0fc66355b681503efee7741bd848080d809fd6db',
+  factoryCurve: '0x9f4308cdfa4d02c045bc8bd82864013b62d516bb',
+  ousdFactoryCurve: '0x8a8809d67e3193486dcf94ad023978cbceed1723',
+}
+
 export const addresses = {
   buybacks,
   multisig,
@@ -273,7 +314,9 @@ export const addresses = {
   ogv,
   ogn,
   arms,
+  armOperators,
   compound,
+  poolBoosters,
   origin: uniq(
     [
       ...Object.values(ogn),
@@ -283,6 +326,14 @@ export const addresses = {
       ...Object.values(strategies.ousd),
       ...Object.values(ogv),
       ...Object.values(arms).map((a) => Object.values(a)),
+      ...Object.values(armOperators),
+      OETH_COMPOUND_STAKING_STRATEGY_VIEW,
+      OETH_BEACON_PROOFS,
+      ...OETH_NATIVE_STAKING_FEE_ACCUMULATORS.map((a) => a.address),
+      OETH_HARVESTER_SIMPLE,
+      OETH_FIXED_RATE_DRIPPER,
+      OETH_CURVE_WETH_AMO_STRATEGY,
+      OETH_WETH_ARM,
     ]
       .flat()
       .filter((a): a is string => typeof a === 'string')
