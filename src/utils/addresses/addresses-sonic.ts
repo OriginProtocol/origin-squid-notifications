@@ -5,13 +5,16 @@ const OS = {
   address: '0xb1e25689d55734fd3fffc939c4c3eb52dff8a794',
   dripper: '0x5b72992e9cde8c07ce7c8217eb014ec7fd281f03',
   oracleRouter: '0xe68e0c66950a7e02335fc9f44daa05d115c4e88b',
-  harvester: '0x0000000000000000000000000000000000000000',
+  harvester: '0x7b0383b31c7662e3f6b6e9c743bc87b93c1f4498',
   vault: '0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186',
   vaultAdmin: '0x4bc73050916e6d1738286d8863f8fdcffaa879f8',
   vaultValueChecker: '0x06f172e6852085eca886b7f9fd8f7b21db3d2c40',
   wrapped: '0x9f0df7799f6fdad409300080cff680f5a23df4b1',
   zapper: '0xe25a2b256ffb3ad73678d5e80de8d2f6022fab21',
-  strategies: [] as { from: number; address: string }[],
+  strategies: {
+    sonicStaking: '0x596b0401479f6dfe1caf8c12838311fee742b95c',
+    swapXAMO: '0xbe19cc5654e30daf04ad3b5e06213d70f4e882ee',
+  },
 } as const
 
 export const sonicTokens = {
@@ -55,7 +58,7 @@ export const sonicAddresses = {
     uniq(
       [
         ...Object.values(omit(OS, 'initializeBlock', 'strategies')),
-        ...Object.values(OS.strategies).map((a) => a?.address.toLowerCase()),
+        ...Object.values(OS.strategies),
         ...Object.values(sonicOrigin),
         ...Object.values(arms).map((a) => Object.values(a)),
       ]
