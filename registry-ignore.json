@@ -1,0 +1,45 @@
+{
+  "description": "Contracts to ignore in registry comparison (third-party, examples, etc.)",
+  "ignored": [
+    {
+      "address": "0x77789bb87eadfc429440209f7d28ed55ac15f17a",
+      "reason": "Unstaker example contract"
+    },
+    {
+      "address": "0x9d39a5de30e57443bff2a8307a4256c8797a3497",
+      "reason": "Ethena Staked USDe (third-party)"
+    },
+    {
+      "address": "0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2",
+      "reason": "AAVE USDe pool (third-party)"
+    },
+    {
+      "address": "0xdadef1ffbfeaab4f68a9fd181395f68b4e4e7ae0",
+      "reason": "EtherFi Redemption Manager (third-party)"
+    },
+    {
+      "address": "0x7d5706f6ef3f89b3951e23e557cdfbc3239d4e2c",
+      "reason": "EtherFi Withdraw NFT (third-party)"
+    },
+    {
+      "address": "0x308861a430be4cce5502d0a12724771fc6daf216",
+      "reason": "EtherFi Withdrawal Queue (third-party)"
+    },
+    {
+      "address": "0x4881ef0bf6d2365d3dd6499ccd7532bcdbce0658",
+      "reason": "Morpho Vault: Gauntlet LRT (third-party)"
+    },
+    {
+      "address": "0x889edc2edab5f40e902b864ad4d7ade8e412f9b1",
+      "reason": "Lido Withdrawal Queue (third-party)"
+    },
+    {
+      "address": "0x9a8bc3b04b7f3d87cfc09ba407dced575f2d61d8",
+      "reason": "Morpho Vault: MEV Capital (third-party)"
+    },
+    {
+      "address": "0xbb077e716a5f1f1b63ed5244ebff5214e50fec8c",
+      "reason": "ARM Fee Collector (no events)"
+    }
+  ]
+}

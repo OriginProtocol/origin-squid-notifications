@@ -10,12 +10,30 @@ const GITHUB_API_BASE = 'https://api.github.com/repos/OriginProtocol/origin-docs
 const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/OriginProtocol/origin-docs/refs/heads/en'
 const REGISTRY_PATH = 'registry/contracts'
 const BRANCH = 'en'
+const IGNORE_FILE = path.join(__dirname, '..', 'registry-ignore.json')
 
 interface Contract {
   name: string
   address: string
   chain: string
   registry: string
+}
+
+interface IgnoreConfig {
+  description: string
+  ignored: { address: string; reason: string }[]
+}
+
+// Load ignored addresses from config
+function getIgnoredAddresses(): Map<string, string> {
+  const ignored = new Map<string, string>()
+  if (fs.existsSync(IGNORE_FILE)) {
+    const config: IgnoreConfig = JSON.parse(fs.readFileSync(IGNORE_FILE, 'utf-8'))
+    config.ignored.forEach((entry) => {
+      ignored.set(entry.address.toLowerCase(), entry.reason)
+    })
+  }
+  return ignored
 }
 
 // Get all addresses that have event tracking (ABIs defined)
@@ -244,8 +262,10 @@ async function main() {
   console.log('\nReading tracking data...')
   const proxyTrackedAddresses = getProxyTrackedAddresses()
   const eventTrackedAddresses = getEventTrackedAddresses()
+  const ignoredAddresses = getIgnoredAddresses()
   console.log(`  Proxy/Governance tracked: ${proxyTrackedAddresses.size} addresses`)
   console.log(`  Event tracked (with ABIs): ${eventTrackedAddresses.size} addresses`)
+  console.log(`  Ignored contracts: ${ignoredAddresses.size} addresses`)
 
   // Generate markdown output
   let markdown = '# Origin Protocol Contract Registry\n\n'
@@ -256,9 +276,12 @@ async function main() {
   markdown += '- **Events**: Contract has specific event handlers with ABIs defined\n\n'
   markdown += 'Data source: https://github.com/OriginProtocol/origin-docs/tree/en/registry/contracts\n\n'
 
+  // Filter out ignored contracts
+  const filteredContracts = allContracts.filter((c) => !ignoredAddresses.has(c.address))
+
   // Group by registry
   const byRegistry = new Map<string, Contract[]>()
-  for (const contract of allContracts) {
+  for (const contract of filteredContracts) {
     const existing = byRegistry.get(contract.registry) || []
     existing.push(contract)
     byRegistry.set(contract.registry, existing)
@@ -287,7 +310,7 @@ async function main() {
   }
 
   // Summary section
-  const uniqueContracts = new Set(allContracts.map((c) => c.address))
+  const uniqueContracts = new Set(filteredContracts.map((c) => c.address))
   const proxyCount = [...uniqueContracts].filter((addr) => proxyTrackedAddresses.has(addr)).length
   const eventsCount = [...uniqueContracts].filter((addr) => eventTrackedAddresses.has(addr)).length
   const fullyTrackedCount = [...uniqueContracts].filter(
@@ -299,6 +322,7 @@ async function main() {
 
   markdown += '## Summary\n\n'
   markdown += `- **Total contracts in registry:** ${uniqueContracts.size}\n`
+  markdown += `- **Ignored contracts:** ${ignoredAddresses.size}\n`
   markdown += `- **Proxy tracked only:** ${proxyCount - fullyTrackedCount}\n`
   markdown += `- **Event tracked only:** ${eventsCount - fullyTrackedCount}\n`
   markdown += `- **Fully tracked (both):** ${fullyTrackedCount}\n`
@@ -311,7 +335,7 @@ async function main() {
   markdown += '|----------|----------|-------|--------|\n'
 
   const needsEventsSeen = new Set<string>()
-  for (const contract of allContracts) {
+  for (const contract of filteredContracts) {
     if (needsEventsSeen.has(contract.address)) continue
     if (!proxyTrackedAddresses.has(contract.address)) continue
     if (eventTrackedAddresses.has(contract.address)) continue
@@ -331,7 +355,7 @@ async function main() {
   markdown += '|----------|----------|-------|--------|\n'
 
   const untrackedSeen = new Set<string>()
-  for (const contract of allContracts) {
+  for (const contract of filteredContracts) {
     if (untrackedSeen.has(contract.address)) continue
     if (proxyTrackedAddresses.has(contract.address)) continue
     if (eventTrackedAddresses.has(contract.address)) continue
@@ -354,6 +378,7 @@ async function main() {
   needsEventsSeen.clear()
   for (const contract of allContracts) {
     if (needsEventsSeen.has(contract.address)) continue
+    if (ignoredAddresses.has(contract.address)) continue
     if (!proxyTrackedAddresses.has(contract.address)) continue
     if (eventTrackedAddresses.has(contract.address)) continue
     needsEventsSeen.add(contract.address)
@@ -367,6 +392,7 @@ async function main() {
   untrackedSeen.clear()
   for (const contract of allContracts) {
     if (untrackedSeen.has(contract.address)) continue
+    if (ignoredAddresses.has(contract.address)) continue
     if (proxyTrackedAddresses.has(contract.address)) continue
     if (eventTrackedAddresses.has(contract.address)) continue
     untrackedSeen.add(contract.address)
