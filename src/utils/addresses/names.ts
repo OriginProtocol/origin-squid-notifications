@@ -219,6 +219,7 @@ export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undef
     [addresses.arms['ARM-WETH-stETH'].capManager]: 'Lido ARM Cap Manager',
     [addresses.arms['ARM-WETH-stETH'].zapper!]: 'Lido ARM Zapper',
     [addresses.arms['ARM-WETH-stETH'].morphoStrategy!]: 'Lido ARM Morpho Strategy',
+    [addresses.arms['ARM-WETH-stETH'].pendleSy!]: 'Lido ARM Pendle SY',
     [addresses.armOperators.ethenaEtherfi]: 'ARM Operator (Ethena/EtherFi)',
     [addresses.armOperators.originOETH]: 'ARM Operator (Origin OETH)',
 

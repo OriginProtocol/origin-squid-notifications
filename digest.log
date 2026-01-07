@@ -1,5 +1,5 @@
 # Origin Squid Notifications - Digest
-1/6/2026, 10:52:51 AM
+1/6/2026, 4:11:46 PM
 =========================================
 Loading processor: arm.ts
 Loading processor: governance
@@ -13,6 +13,23 @@ Loading processor: ousd
 Loading processor: prime-eth.ts
 Loading processor: superoethb
 Loading processor: xogn
+=========================================
+name:    Lido ARM Pendle SY
+topic:   ARM
+chainId: 1
+events: 
+  - 
+    address: 
+      - 0xbcae2eb1cc47f137d8b2d351b0e0ea8dda4c6184 (Lido ARM Pendle SY)
+    topic0: 
+      - ClaimRewards | 0x2193aa20
+      - Deposit | 0x5fe47ed6
+      - Initialized | 0xc7f505b2
+      - OwnershipTransferred | 0x8be0079c
+      - Paused | 0x62e78cea
+      - Redeem | 0xaee47cdf
+      - Unpaused | 0x5db9ee0a
+    severity: medium
 =========================================
 name:    Origin Ethena ARM
 topic:   ARM
@@ -277,6 +294,7 @@ events:
       - 0xf54ebff575f699d281645c6f14fe427dffe629cf (Lido ARM Cap Manager)
       - 0x01f30b7358ba51f637d1aa05d9b4a60f76dad680 (Lido ARM Zapper)
       - 0x29c4bb7b1ebcc53e8cbd16480b5bae52c69806d3 (Lido ARM Morpho Strategy)
+      - 0xbcae2eb1cc47f137d8b2d351b0e0ea8dda4c6184 (Lido ARM Pendle SY)
       - 0xceda2d856238aa0d12f6329de20b9115f07c366d (Origin Ethena ARM)
       - 0x687afb5a52a15122fd5fc54a8b52cfd58346fb0c (Ethena ARM Cap Manager)
       - 0x0dc20109ea012f050beda184844c1ed5ec6da33a (Ethena ARM AAVE Strategy)

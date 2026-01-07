@@ -1,9 +1,12 @@
-import { sonic } from 'viem/chains'
+import { omit } from 'lodash'
+import { mainnet, sonic } from 'viem/chains'
 
 import { sonicAddresses } from '@utils/addresses/addresses-sonic'
 
 import { createOriginArmProcessor } from '../templates/origin-arm'
+import { createEventProcessor } from '../templates/event'
 import { addresses } from '../utils/addresses'
+import * as pendleArmSyAbi from '../abi/pendle-arm-sy'
 
 createOriginArmProcessor({
   name: 'Origin Lido ARM',
@@ -56,4 +59,18 @@ createOriginArmProcessor({
   token1: addresses.tokens.sUSDe,
   capManagerAddress: addresses.arms['ARM-USDe-sUSDe'].capManager,
   zapperAddress: addresses.arms['ARM-USDe-sUSDe'].zapper,
+})
+
+// Lido ARM Pendle SY Token
+createEventProcessor({
+  name: 'Lido ARM Pendle SY',
+  chainId: mainnet.id,
+  topic: 'ARM',
+  tracks: [
+    {
+      address: [addresses.arms['ARM-WETH-stETH'].pendleSy!],
+      events: omit(pendleArmSyAbi.events, ['Transfer', 'Approval']),
+      severity: 'medium',
+    },
+  ],
 })

@@ -38,6 +38,7 @@ function getEventTrackedAddresses(): Set<string> {
     tracked.add(arm.capManager.toLowerCase())
     if (arm.zapper) tracked.add(arm.zapper.toLowerCase())
     if (arm.morphoStrategy) tracked.add(arm.morphoStrategy.toLowerCase())
+    if (arm.pendleSy) tracked.add(arm.pendleSy.toLowerCase())
   })
   Object.values(armOperators).forEach((addr) => tracked.add(addr.toLowerCase()))
   tracked.add(OETH_WETH_ARM.toLowerCase()) // Legacy ARM

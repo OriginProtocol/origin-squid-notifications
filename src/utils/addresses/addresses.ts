@@ -246,7 +246,10 @@ export const ogn = {
   ogvMigrator: OGV_OGN_MIGRATOR_ADDRESS,
 }
 
-export const arms: Record<string, { address: string; capManager: string; zapper?: string; morphoStrategy?: string }> = {
+export const arms: Record<
+  string,
+  { address: string; capManager: string; zapper?: string; morphoStrategy?: string; pendleSy?: string }
+> = {
   ['ARM-WETH-eETH']: {
     address: '0xfb0a3cf9b019bfd8827443d131b235b3e0fc58d2',
     capManager: '0xf2a18f7330141ec737eb73a0a5ea8e4d7e9be7ec',
@@ -258,6 +261,7 @@ export const arms: Record<string, { address: string; capManager: string; zapper?
     capManager: '0xf54ebff575f699d281645c6f14fe427dffe629cf',
     zapper: '0x01f30b7358ba51f637d1aa05d9b4a60f76dad680',
     morphoStrategy: '0x29c4bb7b1ebcc53e8cbd16480b5bae52c69806d3',
+    pendleSy: '0xbcae2eb1cc47f137d8b2d351b0e0ea8dda4c6184',
   },
   ['ARM-USDe-sUSDe']: {
     address: '0xceda2d856238aa0d12f6329de20b9115f07c366d',

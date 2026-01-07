@@ -1,6 +1,6 @@
 # Origin Protocol Contract Registry
 
-Generated: 2026-01-06T18:57:33.267Z
+Generated: 2026-01-06T23:29:33.140Z
 
 This file compares contracts from the [Origin Protocol registry](https://docs.originprotocol.com/registry/contracts) against our tracking.
 
@@ -130,8 +130,8 @@ Data source: https://github.com/OriginProtocol/origin-docs/tree/en/registry/cont
 | Zapper | Ethereum | `0x01f30b7358ba51f637d1aa05d9b4a60f76dad680` | ✅ | ✅ |
 | Lido Withdrawal Queue | Ethereum | `0x889edc2edab5f40e902b864ad4d7ade8e412f9b1` | ❌ | ❌ |
 | Morpho Vault: MEV Capital | Ethereum | `0x9a8bc3b04b7f3d87cfc09ba407dced575f2d61d8` | ❌ | ❌ |
-| Pendle ARM SY token | Ethereum | `0xbcae2eb1cc47f137d8b2d351b0e0ea8dda4c6184` | ❌ | ❌ |
-| Owner | Ethereum | `0x35918cde7233f2dd33fa41ae3cb6ae0e42e0e69f` | ✅ | ❌ |
+| Pendle ARM SY token | Ethereum | `0xbcae2eb1cc47f137d8b2d351b0e0ea8dda4c6184` | ❌ | ✅ |
+| Owner | Ethereum | `0x35918cde7233f2dd33fa41ae3cb6ae0e42e0e69f` | ✅ | ✅ |
 | Operator | Ethereum | `0x39878253374355dbcc15c86458f084fb6f2d6de7` | ✅ | ✅ |
 | Fee Collector | Ethereum | `0x4ff1b9d9ba8558f5eafcec096318ea0d8b541971` | ✅ | ✅ |
 
@@ -140,16 +140,16 @@ Data source: https://github.com/OriginProtocol/origin-docs/tree/en/registry/cont
 | Contract | Chain | Address | Proxy | Events |
 |----------|-------|---------|:-----:|:------:|
 | Origin ARM | Ethereum | `0x6bac785889a4127db0e0cefee88e0a9f1aaf3cc7` | ✅ | ✅ |
-| Owner | Ethereum | `0x35918cde7233f2dd33fa41ae3cb6ae0e42e0e69f` | ✅ | ❌ |
+| Owner | Ethereum | `0x35918cde7233f2dd33fa41ae3cb6ae0e42e0e69f` | ✅ | ✅ |
 | Operator | Ethereum | `0x4b91827516f79d6f6a1f292ed99671663b09169a` | ✅ | ✅ |
 
 ## Summary
 
 - **Total contracts in registry:** 83
-- **Proxy tracked only:** 20
-- **Event tracked only:** 0
-- **Fully tracked (both):** 37
-- **Not tracked at all:** 26
+- **Proxy tracked only:** 19
+- **Event tracked only:** 1
+- **Fully tracked (both):** 38
+- **Not tracked at all:** 25
 
 ## Contracts Needing Event Tracking
 
@@ -176,7 +176,6 @@ These contracts have proxy monitoring but no specific event handlers:
 | Ousd | Curve USDC AMO Strategy | Ethereum | `0x26a02ec47acc2a3442b757f45e0a82b8e993ce11` |
 | Ousd | Morpho V2 Strategy | Ethereum | `0x3643cafa6ef3dd7fcc2adad1cabf708075afff6e` |
 | Ousd | Morpho Gauntlet Prime USDC Strategy | Ethereum | `0x2b8f37893ee713a4e9ff0ceb79f27539f20a32a1` |
-| Lido Steth Weth | Owner | Ethereum | `0x35918cde7233f2dd33fa41ae3cb6ae0e42e0e69f` |
 
 ## Completely Untracked Contracts
 
@@ -209,4 +208,3 @@ These contracts have no tracking at all:
 | Etherfi Eeth Weth | Morpho Vault: Gauntlet LRT | Ethereum | `0x4881ef0bf6d2365d3dd6499ccd7532bcdbce0658` |
 | Lido Steth Weth | Lido Withdrawal Queue | Ethereum | `0x889edc2edab5f40e902b864ad4d7ade8e412f9b1` |
 | Lido Steth Weth | Morpho Vault: MEV Capital | Ethereum | `0x9a8bc3b04b7f3d87cfc09ba407dced575f2d61d8` |
-| Lido Steth Weth | Pendle ARM SY token | Ethereum | `0xbcae2eb1cc47f137d8b2d351b0e0ea8dda4c6184` |
