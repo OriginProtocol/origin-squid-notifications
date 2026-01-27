@@ -120,6 +120,7 @@ import {
   OUSD_METASTRAT,
   OUSD_VAULT,
 } from './strategies-py'
+import { EXTERNAL_ADDR_TO_NAME } from './external-names'
 
 export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undefined>> = {
   [mainnet.id]: {
@@ -363,11 +364,13 @@ export const getAddressesPyName = (address?: string): string | undefined =>
   address
     ? CONTRACT_ADDR_TO_NAME[chainState.current?.id ?? mainnet.id]?.[address.toLowerCase()] ??
       CONTRACT_ADDR_TO_NAME[base.id]?.[address.toLowerCase()] ??
-      CONTRACT_ADDR_TO_NAME[sonic.id]?.[address.toLowerCase()]
+      CONTRACT_ADDR_TO_NAME[sonic.id]?.[address.toLowerCase()] ??
+      EXTERNAL_ADDR_TO_NAME[address.toLowerCase()]
     : undefined
 
 export const getAddressName = (address: string): string =>
   CONTRACT_ADDR_TO_NAME[chainState.current?.id ?? mainnet.id]?.[address.toLowerCase()] ??
   CONTRACT_ADDR_TO_NAME[base.id]?.[address.toLowerCase()] ??
   CONTRACT_ADDR_TO_NAME[sonic.id]?.[address.toLowerCase()] ??
+  EXTERNAL_ADDR_TO_NAME[address.toLowerCase()] ??
   address
