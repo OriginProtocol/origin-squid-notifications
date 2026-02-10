@@ -72,5 +72,4 @@ export const processLokiQueue = async () => {
     })
   }
   console.log(`Queued ${entries.length} entries to Loki`)
-  process.exit(0)
 }
