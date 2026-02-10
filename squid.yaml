@@ -35,6 +35,9 @@ deploy:
     - CLOUDFLARE_ACCOUNT_ID
     - CLOUDFLARE_NAMESPACE_ID
     - CLOUDFLARE_KV_KEY
+    - LOKI_URL
+    - LOKI_USER
+    - LOKI_API_KEY
   processor:
     - name: mainnet-processor
       cmd: ['sqd', 'process:prod']
