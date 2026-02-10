@@ -60,10 +60,11 @@ export const processLokiQueue = async () => {
     const payload = Object.fromEntries(
       Object.entries(entry.entry).map(([k, v]) => [k, typeof v === 'bigint' ? v.toString() : v]),
     )
+    const sanitized = JSON.parse(
+      JSON.stringify(payload, (_key, value) => (typeof value === 'bigint' ? value.toString() : value)),
+    )
     logger.info({
-      message: JSON.stringify(payload, (_key, value) =>
-        typeof value === 'bigint' ? value.toString() : value,
-      ),
+      ...sanitized,
       labels: {
         app: 'origin-squid-notifications',
         service_name: 'origin-squid-notifications',
