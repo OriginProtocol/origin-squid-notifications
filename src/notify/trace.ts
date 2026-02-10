@@ -6,6 +6,7 @@ import { transactionLink } from '../utils/links'
 import { md } from '../utils/md'
 import { NotifyTarget, Severity, Topic } from './const'
 import { notifyDiscord } from './discord'
+import { notifyLoki } from './loki'
 import { notifyOncall } from './oncall'
 
 const uniqueTracesFired = new Set<string>()
@@ -75,6 +76,38 @@ export const notifyForTrace = async ({
         }
       : undefined,
     mentions: notifyTarget?.discordMentions,
+  })
+  notifyLoki({
+    timestamp: trace.block.timestamp,
+    sortId: id,
+    labels: {
+      topic,
+      severity,
+      chain: String(ctx.chain.id),
+      notification_type: 'trace',
+      notification_name: functionName,
+      address: to ?? trace.transaction?.to ?? '',
+      address_name: toName ?? getAddressesPyName(trace.transaction?.to),
+    },
+    entry: {
+      timestamp: new Date(trace.block.timestamp).toISOString(),
+      product: topic,
+      severity,
+      chain: ctx.chain.id,
+      notification_type: 'trace',
+      processor_name: name,
+      function_name: functionName,
+      from,
+      from_name: fromName,
+      to,
+      to_name: toName,
+      block: trace.block.height,
+      tx_hash: trace.transaction?.hash,
+      tx_index: trace.transactionIndex,
+      trace_address: trace.traceAddress,
+      error: trace.error,
+      function_data: functionData,
+    },
   })
   if (severity === 'high' || severity === 'critical') {
     notifyOncall(id, {

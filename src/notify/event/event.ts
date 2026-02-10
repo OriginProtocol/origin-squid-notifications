@@ -1,9 +1,11 @@
 import { Block, Context, Log, useProcessorState } from '@originprotocol/squid-utils'
 import { AbiEvent } from '@subsquid/evm-abi'
 import { Codec } from '@subsquid/evm-codec'
+import { getAddressesPyName } from '@utils/addresses/names'
 import { transactionLink } from '@utils/links'
 
 import { NotifyTarget, Severity, Topic } from '../const'
+import { notifyLoki } from '../loki'
 import { notifyOncall } from '../oncall'
 import { renderDiscordEmbed } from './renderers/utils'
 
@@ -79,6 +81,36 @@ export const notifyForEvent = async (params: {
     if (renderer) {
       await renderer(params)
     }
+    const sortId = `${params.log.block.height}:${params.log.transactionIndex}:${params.log.logIndex}`
+    notifyLoki({
+      timestamp: params.log.block.timestamp,
+      sortId,
+      labels: {
+        topic: params.topic,
+        severity: params.severity ?? 'low',
+        chain: String(params.ctx.chain.id),
+        notification_type: 'event',
+        notification_name: params.eventName,
+        address: params.log.address,
+        address_name: getAddressesPyName(params.log.address),
+      },
+      entry: {
+        timestamp: new Date(params.log.block.timestamp).toISOString(),
+        product: params.topic,
+        severity: params.severity ?? 'low',
+        chain: params.ctx.chain.id,
+        notification_type: 'event',
+        processor_name: params.name,
+        event_name: params.eventName,
+        contract_address: params.log.address,
+        contract_name: getAddressesPyName(params.log.address),
+        block: params.log.block.height,
+        tx_hash: params.log.transactionHash,
+        tx_index: params.log.transactionIndex,
+        log_index: params.log.logIndex,
+        decoded_data: params.event.decode(params.log),
+      },
+    })
     if (params.severity === 'high' || params.severity === 'critical') {
       notifyOncall(params.log.id, {
         topic: params.topic,
