@@ -27,10 +27,8 @@ const logger = lokiUrl
       transports: [
         new LokiTransport({
           host: lokiUrl,
-          labels: { app: 'origin-squid-notifications' },
           json: true,
           basicAuth: lokiUser && lokiApiKey ? `${lokiUser}:${lokiApiKey}` : undefined,
-          format: winston.format.json(),
           replaceTimestamp: true,
           onConnectionError: (err: unknown) => console.error('Loki connection error:', err),
           batching: true,
@@ -66,7 +64,6 @@ export const processLokiQueue = async () => {
     logger.info({
       ...sanitized,
       labels: {
-        app: 'origin-squid-notifications',
         service_name: 'origin-squid-notifications',
         ...entry.labels,
       },
