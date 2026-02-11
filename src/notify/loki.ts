@@ -29,6 +29,7 @@ const logger = lokiUrl
           host: lokiUrl,
           json: true,
           basicAuth: lokiUser && lokiApiKey ? `${lokiUser}:${lokiApiKey}` : undefined,
+          format: winston.format.json(),
           replaceTimestamp: true,
           onConnectionError: (err: unknown) => console.error('Loki connection error:', err),
           batching: true,
@@ -61,8 +62,7 @@ export const processLokiQueue = async () => {
     const sanitized = JSON.parse(
       JSON.stringify(payload, (_key, value) => (typeof value === 'bigint' ? value.toString() : value)),
     )
-    logger.info({
-      ...sanitized,
+    logger.info(sanitized, {
       labels: {
         service_name: 'origin-squid-notifications',
         ...entry.labels,
