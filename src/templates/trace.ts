@@ -65,9 +65,10 @@ export const createTraceProcessor = ({
             if (trace.error) {
               input.severity = 'broken'
             }
-            if (!excludeFilter || !excludeFilter(input)) {
-              await notifyForTrace(input)
+            if (excludeFilter) {
+              input.discordExcludeFilter = excludeFilter
             }
+            await notifyForTrace(input)
           }
         }
       }

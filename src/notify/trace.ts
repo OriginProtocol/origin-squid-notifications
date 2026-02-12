@@ -20,18 +20,21 @@ export interface NotifyForTraceInput {
   functionData?: unknown
   trace: Trace
   notifyTarget?: NotifyTarget
+  discordExcludeFilter?: (input: NotifyForTraceInput) => boolean
 }
 
-export const notifyForTrace = async ({
-  ctx,
-  topic,
-  severity = 'low',
-  name,
-  functionName,
-  functionData,
-  trace,
-  notifyTarget,
-}: NotifyForTraceInput) => {
+export const notifyForTrace = async (input: NotifyForTraceInput) => {
+  const {
+    ctx,
+    topic,
+    severity = 'low',
+    name,
+    functionName,
+    functionData,
+    trace,
+    notifyTarget,
+    discordExcludeFilter,
+  } = input
   let from = trace.type === 'call' ? trace.action.from : undefined
   let to = trace.type === 'call' ? trace.action.to : undefined
   let fromName = getAddressesPyName(from)
@@ -44,39 +47,9 @@ export const notifyForTrace = async ({
     else uniqueTracesFired.add(uniqueTracesFiredId)
   }
   const id = `${trace.block.height}:${trace.transactionIndex}:${JSON.stringify(trace.traceAddress)}`
-  console.log('Sending notification', { id, topic, severity, name, functionName, functionData, trace })
 
-  notifyDiscord({
-    sortId: id,
-    topic,
-    severity,
-    title: `${name ?? topic} - ${functionName ?? trace.type}`,
-    description: md.code(
-      formatJson({
-        'Block - Time': `${trace.block.height} - ${new Date(trace.block.timestamp).toISOString()}`,
-        ...(trace.type !== 'suicide'
-          ? {
-              From: `${from}${fromName ? ` (${fromName})` : ''}`,
-              To: `${to}${toName ? ` (${toName})` : ''}`,
-            }
-          : {
-              Address: trace.action.address,
-              'Refund Address': trace.action.refundAddress,
-              Balance: trace.action.balance,
-            }),
-        Transaction: trace.transaction?.hash,
-        Error: trace.error,
-        Function: functionName,
-        'Function Data': functionData,
-      }),
-    ),
-    links: trace.transaction?.hash
-      ? {
-          tx: transactionLink(trace.transaction?.hash, ctx.chain),
-        }
-      : undefined,
-    mentions: notifyTarget?.discordMentions,
-  })
+  const excludeFromDiscord = discordExcludeFilter && discordExcludeFilter(input)
+
   notifyLoki({
     timestamp: trace.block.timestamp,
     sortId: id,
@@ -108,6 +81,41 @@ export const notifyForTrace = async ({
       error: trace.error,
       function_data: functionData,
     },
+  })
+
+  if (excludeFromDiscord) return
+
+  console.log('Sending notification', { id, topic, severity, name, functionName, functionData, trace })
+  notifyDiscord({
+    sortId: id,
+    topic,
+    severity,
+    title: `${name ?? topic} - ${functionName ?? trace.type}`,
+    description: md.code(
+      formatJson({
+        'Block - Time': `${trace.block.height} - ${new Date(trace.block.timestamp).toISOString()}`,
+        ...(trace.type !== 'suicide'
+          ? {
+              From: `${from}${fromName ? ` (${fromName})` : ''}`,
+              To: `${to}${toName ? ` (${toName})` : ''}`,
+            }
+          : {
+              Address: trace.action.address,
+              'Refund Address': trace.action.refundAddress,
+              Balance: trace.action.balance,
+            }),
+        Transaction: trace.transaction?.hash,
+        Error: trace.error,
+        Function: functionName,
+        'Function Data': functionData,
+      }),
+    ),
+    links: trace.transaction?.hash
+      ? {
+          tx: transactionLink(trace.transaction?.hash, ctx.chain),
+        }
+      : undefined,
+    mentions: notifyTarget?.discordMentions,
   })
   if (severity === 'high' || severity === 'critical') {
     notifyOncall(id, {
