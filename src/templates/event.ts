@@ -1,5 +1,5 @@
 import { renderDiscordEmbed } from '@notify/event/renderers/utils'
-import { Context, LogFilter, logFilter } from '@originprotocol/squid-utils'
+import { Context, Log, LogFilter, logFilter } from '@originprotocol/squid-utils'
 import { event } from '@subsquid/evm-abi'
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
 import { getAddressName } from '@utils/addresses/names'
@@ -9,6 +9,7 @@ import { NotifyTarget, Severity, Topic } from '../notify/const'
 import { EventRenderer, notifyForEvent } from '../notify/event'
 import { createProcessor } from '../topics'
 
+export type CustomFilter = (ctx: Context, log: Log) => Promise<{ include: boolean; topic?: Topic }> | { include: boolean; topic?: Topic }
 export type EventProcessorParams = Parameters<typeof createEventProcessor>[0]
 export const createEventProcessor = ({
   name,
@@ -29,6 +30,7 @@ export const createEventProcessor = ({
     notifyTarget?: NotifyTarget
     renderers?: Record<string, EventRenderer>
     additionalFilters?: LogFilter[]
+    customFilter?: CustomFilter
   }[]
 }) => {
   const trackData = tracks.map((track) => {
@@ -73,11 +75,17 @@ export const createEventProcessor = ({
           for (const {
             filter,
             entries,
-            track: { severity, notifyTarget, renderers },
+            track: { severity, notifyTarget, renderers, customFilter },
           } of trackData) {
             if (filter.matches(log)) {
               const entry = entries.find(([, e]) => e.topic === log.topics[0])
               if (entry) {
+                let effectiveTopic = topic
+                if (customFilter) {
+                  const result = await customFilter(ctx, log)
+                  if (!result.include) continue
+                  if (result.topic) effectiveTopic = result.topic
+                }
                 const [eventName, event] = entry
                 await notifyForEvent({
                   ctx,
@@ -86,7 +94,7 @@ export const createEventProcessor = ({
                   block,
                   log,
                   event,
-                  topic,
+                  topic: effectiveTopic,
                   severity,
                   notifyTarget,
                   renderer: renderers?.[eventName] ?? renderers?.['default'],
@@ -94,7 +102,7 @@ export const createEventProcessor = ({
                   console.error('Error notifying for event', eventName, e)
                   return renderDiscordEmbed({
                     sortId: `${log.block.height}:${log.transactionIndex}:${log.logIndex}`,
-                    topic,
+                    topic: effectiveTopic,
                     severity,
                     title: `${getAddressName(log.address)} - ${eventName}`,
                     titleUrl: transactionLink(log.transactionHash, ctx.chain),
