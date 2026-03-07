@@ -1,6 +1,56 @@
-type Notification @entity {
+type EventRecord @entity {
   id: ID!
   timestamp: DateTime! @index
   blockNumber: Int! @index
-  message: String!
+  blockHash: String!
+  chainId: Int! @index
+  contractAddress: String! @index
+  topic0: String! @index
+  topic1: String @index
+  topic2: String @index
+  topic3: String @index
+  data: String
+  txHash: String! @index
+  txFrom: String! @index
+  txTo: String @index
+  txIndex: Int!
+  logIndex: Int!
+  decodedData: JSON
+}
+
+type AbiData @entity {
+  id: ID!              # topic0 (events) or sighash (functions)
+  type: String! @index # "event" | "function"
+  name: String!        # "Transfer", "approve"
+  signature: String    # "Transfer(address,address,uint256)"
+}
+
+type TraceRecord @entity {
+  id: ID!
+  timestamp: DateTime! @index
+  blockNumber: Int! @index
+  blockHash: String!
+  chainId: Int! @index
+  txHash: String @index
+  txIndex: Int
+  txSuccess: Boolean
+  type: String! @index
+  callType: String @index
+  fromAddress: String @index
+  toAddress: String @index
+  value: String
+  gas: BigInt
+  gasUsed: BigInt
+  input: String
+  output: String
+  sighash: String @index
+  traceAddress: [Int!]!
+  subtraces: Int!
+  success: Boolean
+  error: String
+  revertReason: String
+  createdAddress: String @index
+  refundAddress: String
+  decodedInput: JSON
+  decodedOutput: JSON
 }
