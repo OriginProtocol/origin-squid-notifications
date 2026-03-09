@@ -1,5 +1,5 @@
-module.exports = class Data1772912506508 {
-    name = 'Data1772912506508'
+module.exports = class Data1773087929456 {
+    name = 'Data1773087929456'
 
     async up(db) {
         await db.query(`CREATE TABLE "event_record" ("id" character varying NOT NULL, "timestamp" TIMESTAMP WITH TIME ZONE NOT NULL, "block_number" integer NOT NULL, "block_hash" text NOT NULL, "chain_id" integer NOT NULL, "contract_address" text NOT NULL, "topic0" text NOT NULL, "topic1" text, "topic2" text, "topic3" text, "data" text, "tx_hash" text NOT NULL, "tx_from" text NOT NULL, "tx_to" text, "tx_index" integer NOT NULL, "log_index" integer NOT NULL, "decoded_data" jsonb, CONSTRAINT "PK_805d227b0543adfd96c6236a4a7" PRIMARY KEY ("id"))`)
@@ -16,6 +16,13 @@ module.exports = class Data1772912506508 {
         await db.query(`CREATE INDEX "IDX_5221c219ebc79b252f55cea792" ON "event_record" ("tx_to") `)
         await db.query(`CREATE TABLE "abi_data" ("id" character varying NOT NULL, "type" text NOT NULL, "name" text NOT NULL, "signature" text, CONSTRAINT "PK_717bb0a65a92e8aaabbc116eaab" PRIMARY KEY ("id"))`)
         await db.query(`CREATE INDEX "IDX_dade8f6ca7069274a27c81bbff" ON "abi_data" ("type") `)
+        await db.query(`CREATE TABLE "notification_log" ("id" character varying NOT NULL, "record_id" text NOT NULL, "record_type" text NOT NULL, "processor" text, "notified_at" TIMESTAMP WITH TIME ZONE NOT NULL, "chain_id" integer NOT NULL, "block_number" integer NOT NULL, CONSTRAINT "PK_6f761cfbbd064e0f326960877d6" PRIMARY KEY ("id"))`)
+        await db.query(`CREATE INDEX "IDX_cb54d7a6095f259697732ae9ea" ON "notification_log" ("record_id") `)
+        await db.query(`CREATE INDEX "IDX_89f4a2cf876a230bdc2f675b18" ON "notification_log" ("record_type") `)
+        await db.query(`CREATE INDEX "IDX_8d44f271a0b2452dfb93f0f570" ON "notification_log" ("processor") `)
+        await db.query(`CREATE INDEX "IDX_50cb332a82aac8a74bac7509f9" ON "notification_log" ("notified_at") `)
+        await db.query(`CREATE INDEX "IDX_4a9a6b3913089fb8f97975afba" ON "notification_log" ("chain_id") `)
+        await db.query(`CREATE INDEX "IDX_de3e0b2659f67d281edda9ee95" ON "notification_log" ("block_number") `)
         await db.query(`CREATE TABLE "trace_record" ("id" character varying NOT NULL, "timestamp" TIMESTAMP WITH TIME ZONE NOT NULL, "block_number" integer NOT NULL, "block_hash" text NOT NULL, "chain_id" integer NOT NULL, "tx_hash" text, "tx_index" integer, "tx_success" boolean, "type" text NOT NULL, "call_type" text, "from_address" text, "to_address" text, "value" text, "gas" numeric, "gas_used" numeric, "input" text, "output" text, "sighash" text, "trace_address" integer array NOT NULL, "subtraces" integer NOT NULL, "success" boolean, "error" text, "revert_reason" text, "created_address" text, "refund_address" text, "decoded_input" jsonb, "decoded_output" jsonb, CONSTRAINT "PK_e9b949045cf29aa0ce95252c7d5" PRIMARY KEY ("id"))`)
         await db.query(`CREATE INDEX "IDX_54b4607669c075b2971b9eeb4e" ON "trace_record" ("timestamp") `)
         await db.query(`CREATE INDEX "IDX_dcfbb23c2ffcebcf85dcd8f97e" ON "trace_record" ("block_number") `)
@@ -44,6 +51,13 @@ module.exports = class Data1772912506508 {
         await db.query(`DROP INDEX "public"."IDX_5221c219ebc79b252f55cea792"`)
         await db.query(`DROP TABLE "abi_data"`)
         await db.query(`DROP INDEX "public"."IDX_dade8f6ca7069274a27c81bbff"`)
+        await db.query(`DROP TABLE "notification_log"`)
+        await db.query(`DROP INDEX "public"."IDX_cb54d7a6095f259697732ae9ea"`)
+        await db.query(`DROP INDEX "public"."IDX_89f4a2cf876a230bdc2f675b18"`)
+        await db.query(`DROP INDEX "public"."IDX_8d44f271a0b2452dfb93f0f570"`)
+        await db.query(`DROP INDEX "public"."IDX_50cb332a82aac8a74bac7509f9"`)
+        await db.query(`DROP INDEX "public"."IDX_4a9a6b3913089fb8f97975afba"`)
+        await db.query(`DROP INDEX "public"."IDX_de3e0b2659f67d281edda9ee95"`)
         await db.query(`DROP TABLE "trace_record"`)
         await db.query(`DROP INDEX "public"."IDX_54b4607669c075b2971b9eeb4e"`)
         await db.query(`DROP INDEX "public"."IDX_dcfbb23c2ffcebcf85dcd8f97e"`)

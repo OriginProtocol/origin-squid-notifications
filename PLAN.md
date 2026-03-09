@@ -1,5 +1,58 @@
 # Plan: Persistent Alert Data & Configurable Filtering
 
+## Checklist
+
+### Phase 1: Squid DB — Event & Trace Tables
+- [x] Design EventRecord schema (modeled after Dune `ethereum.logs` + decoded data)
+- [x] Design TraceRecord schema (modeled after Dune `ethereum.traces` + decoded data)
+- [x] Design AbiData lookup table (event/function name + signature by topic0/sighash)
+- [x] Update `schema.graphql` with EventRecord, TraceRecord, AbiData entities
+- [x] Generate TypeORM models (`sqd codegen`)
+- [x] Generate DB migration (`sqd migration:generate`)
+- [x] Update `DEFAULT_FIELDS` in `batch-processor-fields.ts` for new trace/tx fields
+- [x] Create ABI registry (`src/utils/abi-registry.ts`) — auto-loads all ABIs, indexes by topic0/sighash
+- [x] Create persistence processor (`src/processors/persistence.ts`) — upserts all logs/traces to DB
+- [x] Wire persistence processor into all 3 main entry points (main.ts, main-base.ts, main-sonic.ts)
+- [x] Add `sqd serve` command to `commands.json` for GraphQL API
+- [x] Identify backfill start blocks (Jan 1 2025: mainnet 21525891, base 24450127, sonic 2118322)
+- [x] Test local processing with backfill blocks
+- [x] Verify data in DB via `sqd serve` GraphQL API
+
+### Phase 2: Notification Deduplication Tracking
+- [x] Add NotificationLog entity to schema
+- [x] Generate models + migration
+- [x] Implement DB-backed dedup (`checkAndLogNotification` in `src/notify/notification-log.ts`)
+- [x] Wire dedup into `notifyForEvent` and `notifyForTrace`
+- [x] Remove `uniqueEventsFired` / `uniqueTracesFired` in-memory Sets
+- [ ] Remove `eventState` per-batch dedup (kept for now — serves as rate limiter)
+- [x] Test reprocessing safety
+
+### Phase 3: Alert Config DB
+- [ ] Create separate Postgres instance
+- [ ] Design and create `alert_rule` table
+- [ ] Design and create `contract_info` table (optional)
+- [ ] Add `ALERT_CONFIG_DB_URL` to squid secrets
+- [ ] Implement config loading at startup
+- [ ] Implement periodic config refresh
+
+### Phase 4: Config-Driven Alerting
+- [ ] Implement alert rule matching against EventRecord/TraceRecord
+- [ ] Implement data_filters evaluation on decoded data
+- [ ] Wire into notification pipeline (shadow mode alongside hardcoded logic)
+- [ ] Generic Discord embed renderer for config-driven alerts
+
+### Phase 5: Historical Backfill & Reprocessing
+- [ ] Implement BACKFILL mode (persist only, no notifications)
+- [ ] Run backfill for mainnet/base/sonic from Jan 1 2025
+- [ ] Query-based retroactive alerting tool/script
+
+### Phase 6: Transition
+- [ ] Validate config-driven alerts match existing behavior
+- [ ] Disable hardcoded notification logic
+- [ ] Clean up legacy filtering code
+
+---
+
 ## Problem Statement
 
 Currently, all notification data is fire-and-forget: events and traces are processed, sent to Discord/Loki/oncall, and not persisted to any queryable store. The existing `Notification` model/table is defined but never written to. People want:

@@ -25,6 +25,16 @@ type AbiData @entity {
   signature: String    # "Transfer(address,address,uint256)"
 }
 
+type NotificationLog @entity {
+  id: ID!                          # {recordType}:{recordId}
+  recordId: String! @index         # EventRecord.id or TraceRecord.id
+  recordType: String! @index       # "event" | "trace"
+  processor: String @index         # Processor name that triggered it
+  notifiedAt: DateTime! @index
+  chainId: Int! @index
+  blockNumber: Int! @index
+}
+
 type TraceRecord @entity {
   id: ID!
   timestamp: DateTime! @index

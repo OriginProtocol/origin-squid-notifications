@@ -7,9 +7,8 @@ import { md } from '../utils/md'
 import { NotifyTarget, Severity, Topic } from './const'
 import { notifyDiscord } from './discord'
 import { notifyLoki } from './loki'
+import { checkAndLogNotification } from './notification-log'
 import { notifyOncall } from './oncall'
-
-const uniqueTracesFired = new Set<string>()
 
 export interface NotifyForTraceInput {
   ctx: Context
@@ -40,12 +39,17 @@ export const notifyForTrace = async (input: NotifyForTraceInput) => {
   let fromName = getAddressesPyName(from)
   let toName = getAddressesPyName(to)
 
-  if (process.env.BLOCK_FROM) {
-    const uniqueTracesFiredId =
-      trace.type === 'call' ? trace.action.sighash : trace.transaction?.hash ?? trace.block.hash
-    if (uniqueTracesFired.has(uniqueTracesFiredId) || uniqueTracesFired.size > 5) return
-    else uniqueTracesFired.add(uniqueTracesFiredId)
-  }
+  const recordId = `${ctx.chain.id}:${trace.block.height}:${trace.transactionIndex}:${JSON.stringify(trace.traceAddress)}`
+  const isDuplicate = await checkAndLogNotification({
+    ctx,
+    recordId,
+    recordType: 'trace',
+    processor: name,
+    chainId: ctx.chain.id,
+    blockNumber: trace.block.height,
+  })
+  if (isDuplicate) return
+
   const id = `${trace.block.height}:${trace.transactionIndex}:${JSON.stringify(trace.traceAddress)}`
 
   const excludeFromDiscord = discordExcludeFilter && discordExcludeFilter(input)

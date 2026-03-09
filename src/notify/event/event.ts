@@ -6,10 +6,9 @@ import { transactionLink } from '@utils/links'
 
 import { NotifyTarget, Severity, Topic } from '../const'
 import { notifyLoki } from '../loki'
+import { checkAndLogNotification } from '../notification-log'
 import { notifyOncall } from '../oncall'
 import { renderDiscordEmbed } from './renderers/utils'
-
-const uniqueEventsFired = new Set<string>()
 export type EventRendererParams = Parameters<typeof notifyForEvent>[0]
 export type EventRenderer = (params: EventRendererParams) => Promise<void> | void
 const eventRenderers = new Map<string, (params: Parameters<typeof notifyForEvent>[0]) => Promise<void>>()
@@ -69,10 +68,16 @@ export const notifyForEvent = async (params: {
   notifyTarget?: NotifyTarget
   renderer?: EventRenderer
 }) => {
-  if (process.env.BLOCK_FROM && process.env.RESTRICT_NOTIFICATIONS !== 'false') {
-    if (uniqueEventsFired.has(params.log.topics[0])) return
-    else uniqueEventsFired.add(params.log.topics[0])
-  }
+  const recordId = `${params.ctx.chain.id}:${params.log.block.height}:${params.log.transactionIndex}:${params.log.logIndex}`
+  const isDuplicate = await checkAndLogNotification({
+    ctx: params.ctx,
+    recordId,
+    recordType: 'event',
+    processor: params.name,
+    chainId: params.ctx.chain.id,
+    blockNumber: params.log.block.height,
+  })
+  if (isDuplicate) return
 
   const sortId = `${params.log.block.height}:${params.log.transactionIndex}:${params.log.logIndex}`
   notifyLoki({
