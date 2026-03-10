@@ -8,7 +8,6 @@ import { discordIconOrName } from '@notify/const'
 import { renderEventDiscordEmbed } from '@notify/event/renderers/utils'
 import { baseAddresses } from '@utils/addresses/addresses-base'
 import { formatAmount } from '@utils/formatAmount'
-import { meetsLimit } from '@utils/limits'
 
 import * as erc20ABI from '../../abi/erc20'
 import * as oethZapperAbi from '../../abi/oeth-zapper'
@@ -40,10 +39,8 @@ createEventProcessor({
       events: oethZapperAbi.events,
       severity: 'low',
       renderers: {
-        Zap: async (params) => {
+        Zap: (params) => {
           const data = oethZapperAbi.events.Zap.decode(params.log)
-          if ((await meetsLimit('otoken', 'mint', baseAddresses.superOETHb.address, data.amount)) === false) return
-
           renderEventDiscordEmbed(params, {
             description: `[${data.minter}](https://basescan.org/address/${data.minter})`,
             fields: [

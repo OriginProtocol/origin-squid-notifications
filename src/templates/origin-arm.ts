@@ -1,7 +1,6 @@
 import { omit, pick } from 'lodash'
 
 import { logFilter } from '@originprotocol/squid-utils'
-import { cloudflareKV } from '@utils/cloudflare-kv'
 
 import * as erc20Abi from '../abi/erc20'
 import * as originEtherfiArmAbi from '../abi/origin-etherfi-arm'
@@ -208,11 +207,6 @@ export const createOriginArmProcessor = ({
                 (transferInData.value < minimumSwapAmount || transferOutData.value < minimumSwapAmount)
               ) {
                 // Minimum swap amount not met.
-                return
-              }
-              const configLimit = await cloudflareKV.getOrSet('origin-arm-swap-limit', 0).then((limit) => BigInt(limit))
-              if (transferInData.value < configLimit && transferOutData.value < configLimit) {
-                // Cloudflare configured limit not met.
                 return
               }
               renderDiscordEmbed({
