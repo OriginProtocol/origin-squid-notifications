@@ -54,7 +54,8 @@ export const createEventProcessor = ({
     chainId,
     events: trackData.map((d) => ({
       address: d.filter.value.address,
-      topic0: d.filter.value.topic0?.map((topic0, i) => `${d.entries[i][0]} | ${topic0.slice(0, 10)}`),
+      topic0: d.filter.value.topic0,
+      eventName: d.entries.map(([name]) => name),
       topic1: d.filter.value.topic1,
       topic2: d.filter.value.topic2,
       topic3: d.filter.value.topic3,
