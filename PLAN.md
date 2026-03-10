@@ -28,18 +28,21 @@
 - [x] Test reprocessing safety
 
 ### Phase 3: Alert Config DB
+- [x] Design `alert_rule` table with AND/OR filter expression support (`src/alert-config/migration.sql`)
+- [x] Design `contract_info` table (`src/alert-config/migration.sql`)
+- [x] Define TypeScript types for AlertRule, FilterExpression, ContractInfo (`src/alert-config/types.ts`)
+- [x] Implement filter evaluator with comparison operators (`src/alert-config/evaluate-filter.ts`)
+- [x] Implement config loader with connection pooling and 5-min cache refresh (`src/alert-config/config-loader.ts`)
+- [x] Implement rule matching functions (`findMatchingEventRules`, `findMatchingTraceRules`)
 - [ ] Create separate Postgres instance
-- [ ] Design and create `alert_rule` table
-- [ ] Design and create `contract_info` table (optional)
+- [ ] Run migration.sql against it
 - [ ] Add `ALERT_CONFIG_DB_URL` to squid secrets
-- [ ] Implement config loading at startup
-- [ ] Implement periodic config refresh
+- [ ] Populate initial alert rules mirroring current hardcoded behavior
 
 ### Phase 4: Config-Driven Alerting
-- [ ] Implement alert rule matching against EventRecord/TraceRecord
-- [ ] Implement data_filters evaluation on decoded data
-- [ ] Wire into notification pipeline (shadow mode alongside hardcoded logic)
+- [ ] Wire rule matching + filter evaluation into notification pipeline
 - [ ] Generic Discord embed renderer for config-driven alerts
+- [ ] Shadow mode: log what config rules would do alongside hardcoded logic
 
 ### Phase 5: Historical Backfill & Reprocessing
 - [ ] Implement BACKFILL mode (persist only, no notifications)
