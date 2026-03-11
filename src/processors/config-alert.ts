@@ -157,7 +157,7 @@ export const createConfigAlertProcessor = async (chainId: number) => {
  * All event filters include transaction: true, transactionLogs: true to match
  * the behavior of createEventProcessor.
  */
-function buildSubscriptions(rules: AlertRule[]) {
+export function buildSubscriptions(rules: AlertRule[]) {
   const lf: ReturnType<typeof logFilter>[] = []
   const tf: ReturnType<typeof traceFilter>[] = []
 

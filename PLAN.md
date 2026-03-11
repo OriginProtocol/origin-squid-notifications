@@ -59,11 +59,11 @@
 - [ ] Remove `eventState` per-batch dedup (Phase 2 leftover — still serves as rate limiter)
 
 ### Phase 7: Alert Rule Backfill Script
-- [ ] Create `src/backfill.ts` — runs Subsquid processor for a specific rule to backfill EventRecord/TraceRecord
-- [ ] Parse `--rule <id>` and `--from <block>` from CLI args
-- [ ] Load rule from alert config DB, build subscriptions (reuse `buildSubscriptions` from config-alert.ts)
-- [ ] Call `run()` with `stateSchema: 'backfill'` and persistence processor only
-- [ ] Add `pnpm run backfill` script to package.json
+- [x] Create `src/backfill.ts` — runs Subsquid processor for a specific rule to backfill EventRecord/TraceRecord
+- [x] Parse `--rule <id>` and `--from <block>` from CLI args
+- [x] Load rule from alert config DB, build subscriptions (reuse `buildSubscriptions` from config-alert.ts)
+- [x] Call `run()` with `stateSchema: 'backfill'` and persistence processor only
+- [x] Add `pnpm run backfill` script to package.json
 
 ### Phase 8: Database-Backed ABI Storage
 - [ ] Add `abi` table to `src/alert-config/migration.sql`
