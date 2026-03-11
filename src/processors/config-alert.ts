@@ -22,20 +22,10 @@ import { abiRegistry } from '../utils/abi-registry'
  * Create a config-alert processor for a given chain.
  * Must be awaited — loads rules from DB before constructing the processor
  * so that subscriptions are available at setup() time.
- *
- * @param excludeDisplayNames - Display names of processors that are handled
- *   by code-driven processors with custom logic. Rules matching these names
- *   are excluded so there's no overlap.
  */
-export const createConfigAlertProcessor = async (
-  chainId: number,
-  excludeDisplayNames: string[] = [],
-) => {
+export const createConfigAlertProcessor = async (chainId: number) => {
   const rules = await getAlertRules()
-  const excludeSet = new Set(excludeDisplayNames)
-  const chainRules = rules.filter(
-    (r) => r.chainId === chainId && !excludeSet.has(r.displayName ?? ''),
-  )
+  const chainRules = rules.filter((r) => r.chainId === chainId)
 
   const { logFilters, traceFilters } = buildSubscriptions(chainRules)
 

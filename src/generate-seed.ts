@@ -36,7 +36,12 @@ const slugify = (name: string, chainId: number, suffix?: string): string => {
 const COLUMNS =
   'id, chain_id, match_type, addresses, topic0s, topic1s, topic2s, topic3s, sighashes, trace_type, call_from, call_to, suicide_refund_address, trace_error, data_filters, topic, severity, notify_targets, display_name'
 
+// Processors with custom process() logic — handled by code, not DB rules
+const CODE_DRIVEN_PROCESSORS = ['OGN Alerts', 'OGN Buybacks']
+
 load().then((processors) => {
+  // Exclude code-driven processors — their rules don't belong in the DB
+  processors = processors.filter((p) => !CODE_DRIVEN_PROCESSORS.includes(p.name ?? ''))
   const lines: string[] = []
   lines.push('-- Seed data for alert config DB')
   lines.push('-- Generated from current ABI registry and notification processors')

@@ -6,7 +6,10 @@ import { getAddressesPyName } from '@utils/addresses/names'
 import { formatJson } from '@utils/formatJson'
 
 import { getAlertRules } from './alert-config'
-import './env'
+import './env';
+import { load } from './topics';
+import { abiRegistry } from './utils/abi-registry';
+
 
 const { Pool } = pg
 
@@ -19,6 +22,9 @@ const main = async () => {
 
   // getAlertRules handles DB creation, migration, and seeding
   const alertRules = await getAlertRules()
+
+  // Load code-driven processors (OGN Alerts, OGN Buybacks) not in the DB
+  const codeProcessors = await load()
 
   // Separate connection for event_signature lookup
   const pool = new Pool({ connectionString: url })
@@ -76,6 +82,9 @@ const main = async () => {
       return name ? `${a} (${name})` : a
     })
 
+  // Build display entries from DB rules
+  const displayEntries: { name: string; topic: string; chainId: number; display: any }[] = []
+
   for (const [, ruleGroup] of groups) {
     const first = ruleGroup[0]
     const processor: any = {
@@ -115,8 +124,6 @@ const main = async () => {
     if (traceRules.length > 0) {
       // Group trace rules back into traceParams arrays to match code digest format
       processor.traces = []
-      // Trace rules from the same processor group may represent separate traceParams
-      // entries. We reconstruct the traceParams structure.
       const trace: any = { traceParams: [] as any[] }
       for (const rule of traceRules) {
         const tp: any = {}
@@ -126,7 +133,6 @@ const main = async () => {
         if (rule.suicideRefundAddress) tp.suicideRefundAddress = resolveAddresses(rule.suicideRefundAddress)
         if (rule.traceError != null) tp.error = rule.traceError
         trace.traceParams.push(tp)
-        // Use last rule's routing info
         trace.topic = rule.topic
         trace.severity = rule.severity
         if (rule.notifyTargets) trace.notifyTarget = rule.notifyTargets
@@ -134,8 +140,49 @@ const main = async () => {
       processor.traces.push(trace)
     }
 
+    displayEntries.push({
+      name: processor.name,
+      topic: processor.topic,
+      chainId: processor.chainId,
+      display: processor,
+    })
+  }
+
+  // Add code-driven processors (not in DB) — same cleanup as digest.ts
+  for (const p of codeProcessors) {
+    if (p.events) {
+      for (const track of p.events) {
+        const t = track as any
+        if (t.topic0 && Array.isArray(t.topic0)) {
+          t.topic0 = t.topic0.map((hash: string) => {
+            if (!hash.startsWith('0x')) return hash
+            const info = abiRegistry.getEventInfo(hash)
+            return info ? `${info.name} | ${hash.slice(0, 10)}` : hash.slice(0, 10)
+          })
+        }
+        delete t.eventName
+        delete t.transaction
+        delete t.transactionLogs
+      }
+    }
+    displayEntries.push({
+      name: p.name ?? p.topic,
+      topic: p.topic,
+      chainId: p.chainId,
+      display: p,
+    })
+  }
+
+  // Sort all entries to match digest.ts ordering
+  displayEntries.sort((a, b) => {
+    if (a.topic !== b.topic) return a.topic > b.topic ? 1 : -1
+    if (a.chainId !== b.chainId) return a.chainId - b.chainId
+    return a.name > b.name ? 1 : a.name < b.name ? -1 : 0
+  })
+
+  for (const entry of displayEntries) {
     console.log('=========================================')
-    console.log(formatJson(processor))
+    console.log(formatJson(entry.display))
   }
 
   await pool.end()

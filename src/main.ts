@@ -14,18 +14,13 @@ import { load } from './topics'
 const from = 21_540_000
 process.env.BLOCK_FROM = from.toString()
 
-// Processors with fully custom process() logic that config-alert can't replicate.
-const CUSTOM_PROCESSOR_NAMES = ['OGN Alerts', 'OGN Buybacks']
-
 const start = async () => {
-  // Load custom code-driven processors that config-alert can't replace
+  // Load code-driven processors with custom process() logic
   const processors = await load()
-  const customProcessors = processors.filter(
-    (p) => p.chainId === mainnet.id && CUSTOM_PROCESSOR_NAMES.includes(p.name ?? ''),
-  )
+  const customProcessors = processors.filter((p) => p.chainId === mainnet.id)
 
-  // Config-alert handles all other rules from the DB
-  const configAlert = await createConfigAlertProcessor(mainnet.id, CUSTOM_PROCESSOR_NAMES)
+  // Config-alert handles all DB-driven rules
+  const configAlert = await createConfigAlertProcessor(mainnet.id)
 
   run({
     fromNow: true,
