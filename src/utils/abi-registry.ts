@@ -72,7 +72,7 @@ export const abiRegistry = new AbiRegistry()
 // Auto-register all known ABIs from the abi directory at load time
 const abiDir = path.join(__dirname, '..', 'abi')
 try {
-  const files = fs.readdirSync(abiDir).filter((f) => f.endsWith('.js'))
+  const files = fs.readdirSync(abiDir).filter((f) => f.endsWith('.js') || f.endsWith('.ts'))
   for (const file of files) {
     try {
       // eslint-disable-next-line @typescript-eslint/no-require-imports

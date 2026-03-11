@@ -7,17 +7,19 @@ import { processOncallQueue } from '@notify/oncall'
 import { run } from '@originprotocol/squid-utils'
 import { DEFAULT_FIELDS } from '@utils/batch-processor-fields'
 
+import { createConfigAlertProcessor } from './processors/config-alert'
 import { persistenceProcessor } from './processors/persistence'
-import { load } from './topics'
 
 const from = 23_800_000
 process.env.BLOCK_FROM = from.toString()
 
-load().then((processors) => {
+const start = async () => {
+  const configAlert = await createConfigAlertProcessor(base.id)
+
   run({
     fromNow: true,
     chainId: base.id,
-    processors: [...processors.filter((p) => p.chainId === base.id), persistenceProcessor],
+    processors: [configAlert, persistenceProcessor],
     stateSchema: 'base',
     postValidation: async (ctx) => {
       // await processDiscordQueue()
@@ -28,4 +30,6 @@ load().then((processors) => {
   }).catch((err) => {
     throw err
   })
-})
+}
+
+start()

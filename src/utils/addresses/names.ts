@@ -1,4 +1,4 @@
-import { AAVE_GOVERNANCE_ADDRESS } from 'topics/ousd'
+const AAVE_GOVERNANCE_ADDRESS = '0x9aee0b04504cef83a65ac3f0e838d0593bcb2bc7'
 import { base, mainnet, sonic } from 'viem/chains'
 
 import { chainState } from '@utils/chainState'

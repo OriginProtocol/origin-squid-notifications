@@ -77,6 +77,13 @@ export interface AlertRule {
   topic3s: string[] | null       // third indexed param
   sighashes: string[] | null     // function selectors
 
+  // Trace-specific matching (null = any, ignored for event rules)
+  traceType: string[] | null     // 'call', 'create', 'suicide', 'reward'
+  callFrom: string[] | null      // caller addresses
+  callTo: string[] | null        // callee addresses
+  suicideRefundAddress: string[] | null
+  traceError: boolean | null     // true = only failed traces
+
   // Conditions on decoded data
   dataFilters: FilterExpression | null
 

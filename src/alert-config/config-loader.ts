@@ -73,12 +73,24 @@ const ensureMigrated = async (): Promise<void> => {
   await p.query(migrationSql)
   console.log('Alert config: migration complete')
 
-  // Run seed
+  // Run seed (split into individual statements to avoid pg query size limits)
   const seedPath = path.resolve(__dirname, 'seed-rules.sql')
   const seedSql = fs.existsSync(seedPath)
     ? fs.readFileSync(seedPath, 'utf-8')
     : fs.readFileSync(path.resolve(__dirname, '..', '..', 'src', 'alert-config', 'seed-rules.sql'), 'utf-8')
-  await p.query(seedSql)
+  const statements = seedSql
+    .split(';\n')
+    .map((s) =>
+      s
+        .split('\n')
+        .filter((line) => !line.trimStart().startsWith('--'))
+        .join('\n')
+        .trim(),
+    )
+    .filter((s) => s.length > 0)
+  for (const stmt of statements) {
+    await p.query(stmt)
+  }
   console.log('Alert config: seed rules loaded')
 }
 
@@ -96,6 +108,11 @@ const loadRules = async (): Promise<AlertRule[]> => {
       topic2s: row.topic2s,
       topic3s: row.topic3s,
       sighashes: row.sighashes,
+      traceType: row.trace_type,
+      callFrom: row.call_from,
+      callTo: row.call_to,
+      suicideRefundAddress: row.suicide_refund_address,
+      traceError: row.trace_error,
       dataFilters: row.data_filters as FilterExpression | null,
       topic: row.topic as Topic,
       severity: row.severity as Severity, // DB enum guarantees valid value

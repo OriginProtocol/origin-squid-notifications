@@ -125,6 +125,47 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
+-- ─── ABI Signatures ──────────────────────────────────────────────────────────
+-- Populated from src/abi/ files. Rules can only reference known signatures.
+
+CREATE TABLE event_signature (
+  topic0          TEXT PRIMARY KEY CHECK (is_topic_hash(topic0)),
+  name            TEXT NOT NULL,
+  full_sig        TEXT NOT NULL
+);
+
+CREATE TABLE function_signature (
+  sighash         TEXT PRIMARY KEY CHECK (is_sighash(sighash)),
+  name            TEXT NOT NULL,
+  full_sig        TEXT NOT NULL
+);
+
+-- Helper: validate all topic0s in an array exist in event_signature
+CREATE OR REPLACE FUNCTION array_all_known_events(arr TEXT[]) RETURNS BOOLEAN AS $$
+DECLARE
+  elem TEXT;
+BEGIN
+  IF arr IS NULL THEN RETURN TRUE; END IF;
+  FOREACH elem IN ARRAY arr LOOP
+    IF NOT EXISTS (SELECT 1 FROM event_signature WHERE topic0 = elem) THEN RETURN FALSE; END IF;
+  END LOOP;
+  RETURN TRUE;
+END;
+$$ LANGUAGE plpgsql STABLE;
+
+-- Helper: validate all sighashes in an array exist in function_signature
+CREATE OR REPLACE FUNCTION array_all_known_functions(arr TEXT[]) RETURNS BOOLEAN AS $$
+DECLARE
+  elem TEXT;
+BEGIN
+  IF arr IS NULL THEN RETURN TRUE; END IF;
+  FOREACH elem IN ARRAY arr LOOP
+    IF NOT EXISTS (SELECT 1 FROM function_signature WHERE sighash = elem) THEN RETURN FALSE; END IF;
+  END LOOP;
+  RETURN TRUE;
+END;
+$$ LANGUAGE plpgsql STABLE;
+
 -- ─── Alert Rule ───────────────────────────────────────────────────────────────
 
 CREATE TABLE alert_rule (
@@ -137,11 +178,18 @@ CREATE TABLE alert_rule (
 
   -- Matching criteria (NULL = any)
   addresses       TEXT[] CHECK (array_all_match(addresses, 'address')),
-  topic0s         TEXT[] CHECK (array_all_match(topic0s, 'topic_hash')),
+  topic0s         TEXT[] CHECK (array_all_match(topic0s, 'topic_hash') AND array_all_known_events(topic0s)),
   topic1s         TEXT[] CHECK (array_all_match(topic1s, 'topic_hash')),
   topic2s         TEXT[] CHECK (array_all_match(topic2s, 'topic_hash')),
   topic3s         TEXT[] CHECK (array_all_match(topic3s, 'topic_hash')),
-  sighashes       TEXT[] CHECK (array_all_match(sighashes, 'sighash')),
+  sighashes       TEXT[] CHECK (array_all_match(sighashes, 'sighash') AND array_all_known_functions(sighashes)),
+
+  -- Trace-specific matching criteria (NULL = any, ignored for event rules)
+  trace_type      TEXT[],                 -- 'call', 'create', 'suicide', 'reward'
+  call_from       TEXT[] CHECK (array_all_match(call_from, 'address')),
+  call_to         TEXT[] CHECK (array_all_match(call_to, 'address')),
+  suicide_refund_address TEXT[] CHECK (array_all_match(suicide_refund_address, 'address')),
+  trace_error     BOOLEAN,               -- true = only failed traces, NULL = any
 
   -- Conditions on decoded data — evaluated after matching.
   -- Supports AND/OR trees with comparison operators.
@@ -166,6 +214,9 @@ CREATE TABLE alert_rule (
   ),
   CONSTRAINT trace_fields_only CHECK (
     match_type = 'event' OR (topic0s IS NULL AND topic1s IS NULL AND topic2s IS NULL AND topic3s IS NULL)
+  ),
+  CONSTRAINT event_trace_fields CHECK (
+    match_type = 'trace' OR (trace_type IS NULL AND call_from IS NULL AND call_to IS NULL AND suicide_refund_address IS NULL AND trace_error IS NULL)
   )
 );
 
