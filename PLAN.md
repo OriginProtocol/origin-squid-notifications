@@ -34,25 +34,48 @@
 - [x] Implement filter evaluator with comparison operators (`src/alert-config/evaluate-filter.ts`)
 - [x] Implement config loader with connection pooling and 5-min cache refresh (`src/alert-config/config-loader.ts`)
 - [x] Implement rule matching functions (`findMatchingEventRules`, `findMatchingTraceRules`)
+- [x] Generate seed data (`src/alert-config/seed-rules.sql`) from code-driven processors
 - [ ] Create separate Postgres instance
 - [ ] Run migration.sql against it
 - [ ] Add `ALERT_CONFIG_DB_URL` to squid secrets
-- [ ] Populate initial alert rules mirroring current hardcoded behavior
+- [ ] Seed initial alert rules
 
 ### Phase 4: Config-Driven Alerting
-- [ ] Wire rule matching + filter evaluation into notification pipeline
-- [ ] Generic Discord embed renderer for config-driven alerts
-- [ ] Shadow mode: log what config rules would do alongside hardcoded logic
+- [x] Build `config-alert.ts` processor — loads DB rules, builds subscriptions, matches events/traces
+- [x] Wire rule matching + filter evaluation into notification pipeline (calls `notifyForEvent`/`notifyForTrace`)
+- [x] Generic Discord embed renderer for config-driven alerts
+- [x] Config-alert is primary processor on all chains (Base/Sonic: sole processor; mainnet: alongside OGN custom processors)
 
 ### Phase 5: Historical Backfill & Reprocessing
-- [ ] Implement BACKFILL mode (persist only, no notifications)
+- [ ] ~~Implement BACKFILL mode (persist only, no notifications)~~ → replaced by Phase 7 backfill script
 - [ ] Run backfill for mainnet/base/sonic from Jan 1 2025
-- [ ] Query-based retroactive alerting tool/script
+- [ ] ~~Query-based retroactive alerting tool/script~~ → replaced by Phase 7 backfill script
 
 ### Phase 6: Transition
-- [ ] Validate config-driven alerts match existing behavior
-- [ ] Disable hardcoded notification logic
-- [ ] Clean up legacy filtering code
+- [x] Delete hardcoded topic processors replaced by config-alert (arm, governance, oeth, ogn, os, ousd, prime-eth, superoethb, xogn)
+- [x] Delete unused template factories (burn, chainlink-keeper, governance, origin-arm, otoken, etc.)
+- [x] Keep OGN Alerts + OGN Buybacks as code-driven processors (custom `process()` logic)
+- [x] Exclude code-driven processors from DB seed (`generate-seed.ts`)
+- [ ] Remove `eventState` per-batch dedup (Phase 2 leftover — still serves as rate limiter)
+
+### Phase 7: Alert Rule Backfill Script
+- [ ] Create `src/backfill.ts` — runs Subsquid processor for a specific rule to backfill EventRecord/TraceRecord
+- [ ] Parse `--rule <id>` and `--from <block>` from CLI args
+- [ ] Load rule from alert config DB, build subscriptions (reuse `buildSubscriptions` from config-alert.ts)
+- [ ] Call `run()` with `stateSchema: 'backfill'` and persistence processor only
+- [ ] Add `pnpm run backfill` script to package.json
+
+### Phase 8: Database-Backed ABI Storage
+- [ ] Add `abi` table to `src/alert-config/migration.sql`
+- [ ] Create `src/generate-abi-seed.ts` to produce `seed-abis.sql` from `abi/*.json`
+- [ ] Generate `src/alert-config/seed-abis.sql`
+- [ ] Rewrite `src/utils/abi-registry.ts` to load from DB + decode via viem
+- [ ] Make registry initialization async, wire into main entry points
+- [ ] Implement decode wrappers (viem output → subsquid-compatible shape)
+- [ ] Auto-populate `event_signature`/`function_signature` from loaded ABIs
+- [ ] Verify decoding parity (subsquid vs viem) on sample data
+- [ ] Update CLAUDE.md with new ABI workflow
+
 
 ---
 
@@ -545,6 +568,181 @@ BACKFILL=true BLOCK_FROM=1000000 pnpm run process:sonic    # sonic
 - [ ] Do we want a simple admin UI for the alert config DB, or is raw SQL sufficient initially?
 - [ ] Should `contract_info` replace `addresses/names.ts` completely, or coexist?
 - [ ] For the data_filters expression language — is the simple comparison-based format sufficient, or do we need OR logic, nested conditions, etc.?
+
+---
+
+## Phase 7: Alert Rule Backfill Script
+
+### Problem
+
+When a new alert rule is added, the live processor only evaluates it against future blocks. Historical events/traces that match the rule are already persisted in `EventRecord`/`TraceRecord` by the persistence processor, but no one has evaluated alert rules against them.
+
+### Approach
+
+Reuses the existing Subsquid `run()` framework and persistence processor — no custom archive querying. The script:
+
+1. Loads the target alert rule from the alert config DB
+2. Builds `logFilter`/`traceFilter` subscriptions from the rule (same as `config-alert.ts` does)
+3. Creates a processor with those subscriptions + the persistence processor's `process()` logic
+4. Calls `run()` with a **separate `stateSchema`** (e.g. `'backfill'`) so it doesn't interfere with the live processor's cursor
+5. Sets `BLOCK_FROM` to the specified start block
+
+The processor framework handles all archive querying, batching, and data formatting — we get the same `Context` with the same block/log/trace structure the live processor uses.
+
+### Usage
+
+```shell
+# Backfill events for a specific rule from a given block
+pnpm run backfill -- --rule oeth-vault-mint --from 21525891
+```
+
+### Key points
+
+- **Reuses `run()`**: Same Subsquid processor framework, same archive gateway, same `Context` shape
+- **Reuses persistence processor**: Same decode + upsert logic for EventRecord/TraceRecord
+- **Separate state schema**: `'backfill'` schema has its own cursor — doesn't touch the live processor's progress
+- **Upserts**: If some records already exist, they get updated, not duplicated
+- **Can run alongside the live processor**: Different state schema means no conflicts
+- **No notifications**: Only the persistence processor runs, not config-alert
+
+### Checklist
+
+- [ ] Create `src/backfill.ts`
+- [ ] Parse `--rule <id>` and `--from <block>` from CLI args
+- [ ] Load rule from alert config DB
+- [ ] Build logFilter/traceFilter from rule (reuse `buildSubscriptions` from config-alert.ts)
+- [ ] Create a processor with rule subscriptions + persistence process() logic
+- [ ] Call `run()` with `stateSchema: 'backfill'`, `fromNow: false`
+- [ ] Add `pnpm run backfill` script to package.json
+
+---
+
+## Phase 8: Database-Backed ABI Storage
+
+### Problem
+
+ABIs are currently stored as JSON files in `abi/`, compiled to TypeScript via `pnpm run generate-abis` (uses `@subsquid/evm-typegen`), and loaded at import time from `src/abi/`. This has several drawbacks:
+- Adding/removing ABIs requires a code change, codegen step, and redeploy
+- The compiled TypeScript files are tightly coupled to subsquid's codec library
+- An admin UI would need filesystem access to manage ABIs
+
+### Goal
+
+Store ABIs in the alert config database and use **viem** (already a dependency) for runtime decoding. The `abiRegistry` interface stays the same — consumers don't need to change — but ABIs are loaded from DB instead of filesystem.
+
+### What Changes
+
+| Component | Before | After |
+|-----------|--------|-------|
+| ABI storage | `abi/*.json` → `src/abi/*.ts` (codegen) | `abi` table in alert config DB |
+| ABI loading | `require()` compiled TS at import | DB query at startup, cached |
+| Event decoding | `@subsquid/evm-abi` AbiEvent.decode() | viem `decodeEventLog()` |
+| Function decoding | `@subsquid/evm-abi` AbiFunction.decode()/decodeResult() | viem `decodeFunctionData()` / `decodeFunctionResult()` |
+| Selector computation | Pre-computed in codegen | viem `toEventSelector()` / `toFunctionSelector()` |
+
+### What Stays the Same
+
+- **`abiRegistry` API**: `getEvent()`, `getFunction()`, `getEventInfo()`, `getFunctionInfo()`, `getAllEntries()` — same signatures, same return shape
+- **Direct `@abi/` imports in code-driven processors**: OGN Alerts, OGN Buybacks, and governance renderer import compiled subsquid ABIs directly (`@abi/exponential-staking`, `@abi/erc20`, etc.). These keep working — the compiled files remain for code-driven processors that need type-safe access. The DB-backed registry is for dynamic/config-driven usage only.
+- **`persistence.ts` and `config-alert.ts`**: They call `abiRegistry.getEvent(topic0).decode(log)` etc. — the wrapper adapts viem's output to match.
+
+### Checklist
+
+#### Step 1: Create `abi` table in migration.sql
+- [ ] Add `abi` table: `name TEXT PK`, `abi_json JSONB NOT NULL`, `created_at TIMESTAMPTZ`
+- [ ] Drop the FK constraints on `alert_rule.topic0s` → `event_signature` and `alert_rule.sighashes` → `function_signature` (signatures will be derived from ABIs)
+- [ ] Keep `event_signature` and `function_signature` tables as derived views/caches (auto-populated from `abi` table via trigger or at load time)
+
+#### Step 2: Generate ABI seed SQL
+- [ ] Create script `src/generate-abi-seed.ts` that reads all 49 `abi/*.json` files
+- [ ] Output INSERT statements: `INSERT INTO abi (name, abi_json) VALUES ('erc20', '[...]'::jsonb) ON CONFLICT DO NOTHING;`
+- [ ] Add `pnpm run generate-abi-seed` script to package.json
+- [ ] Generate initial `src/alert-config/seed-abis.sql`
+
+#### Step 3: Replace ABI registry internals
+- [ ] Rewrite `src/utils/abi-registry.ts`:
+  - Load ABIs from DB via `ALERT_CONFIG_DB_URL` at startup (same pool as alert config)
+  - Parse each ABI JSON, compute topic0/sighash using viem's `toEventSelector()`/`toFunctionSelector()`
+  - Build lookup maps: `topic0 → { abi, abiItem, name, signature }`, `sighash → { abi, abiItem, name, signature }`
+  - Implement decode wrappers that call viem and return the same shape as subsquid decoders
+- [ ] Make `abiRegistry` initialization async (it currently runs synchronously at import time)
+  - Add `await abiRegistry.initialize()` call in main entry points before processor setup
+  - Or: lazy-init on first use with a Promise
+- [ ] Ensure `getEvent(topic0).decode(log)` returns same shape as subsquid's `AbiEvent.decode()`
+  - subsquid returns: `{ field1: value1, field2: value2, ... }` (named object)
+  - viem `decodeEventLog` returns: `{ eventName, args: { field1, field2, ... } }` — wrapper extracts `.args`
+- [ ] Ensure `getFunction(sighash).decode(input)` returns same shape
+  - subsquid returns: `{ param1: value1, param2: value2, ... }` (named object)
+  - viem `decodeFunctionData` returns: `{ functionName, args }` — wrapper extracts `args` as named object
+- [ ] Ensure `getFunction(sighash).decodeResult(output)` works
+  - viem `decodeFunctionResult` returns the decoded return value(s)
+- [ ] Populate `event_signature` and `function_signature` tables from loaded ABIs (replaces seed data)
+
+#### Step 4: Verify decoding parity
+- [ ] Write test script that decodes sample events/traces with both subsquid and viem
+- [ ] Compare outputs for: BigInt handling, address casing, struct/tuple decoding, array params
+- [ ] Known differences to handle:
+  - viem returns checksummed addresses; subsquid returns lowercase
+  - viem BigInt vs subsquid BigInt — should be compatible
+  - Indexed event params: viem includes them in args; subsquid includes them too
+- [ ] Run against live data: process a few blocks and compare decoded output
+
+#### Step 5: Clean up (after verification)
+- [ ] Remove `pnpm run generate-abis` from workflow (no longer needed for config-driven alerts)
+- [ ] Keep `abi/*.json` files as source-of-truth for seed generation
+- [ ] Keep `src/abi/*.ts` compiled files for code-driven processors (OGN Alerts, Buybacks, governance renderer)
+- [ ] Update CLAUDE.md to reflect new ABI workflow
+
+### Database Schema
+
+```sql
+-- In migration.sql (alert config DB)
+CREATE TABLE abi (
+  name            TEXT PRIMARY KEY,
+  abi_json        JSONB NOT NULL,
+  created_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+```
+
+The `event_signature` and `function_signature` tables remain but become derived data:
+- On ABI load, the registry computes all selectors and populates these tables
+- This keeps the FK constraints on `alert_rule` working
+- Admin UI can upload a whole ABI file; selectors are auto-extracted
+
+### viem Decoding API
+
+```typescript
+import { decodeEventLog, decodeFunctionData, decodeFunctionResult,
+         toEventSelector, toFunctionSelector } from 'viem'
+
+// Compute selectors from ABI items
+const topic0 = toEventSelector(abiItem)     // '0xddf252...'
+const sighash = toFunctionSelector(abiItem) // '0xa9059cbb'
+
+// Decode event log
+const decoded = decodeEventLog({ abi, data: log.data, topics: log.topics })
+// → { eventName: 'Transfer', args: { from: '0x...', to: '0x...', value: 1000n } }
+
+// Decode function input
+const decoded = decodeFunctionData({ abi, data: trace.action.input })
+// → { functionName: 'transfer', args: { _to: '0x...', _value: 1000n } }
+
+// Decode function output
+const decoded = decodeFunctionResult({ abi, data: trace.result.output, functionName: 'balanceOf' })
+// → 1000n (or named object for multiple returns)
+```
+
+### Impact on Consumers
+
+| Consumer | Change needed? | Details |
+|----------|---------------|---------|
+| `config-alert.ts` | No | Uses `abiRegistry.getEvent(topic0).decode(log)` — wrapper handles it |
+| `persistence.ts` | No | Same API: `getEvent()`, `getFunction()`, `.decode()`, `.decodeResult()` |
+| `digest-db.ts` | No | Uses `abiRegistry.getEventInfo()` — same API |
+| `generate-seed.ts` | No | Uses `abiRegistry.getAllEntries()` — same API |
+| `ogn-alerts/index.ts` | No | Direct `@abi/exponential-staking` import — compiled TS stays |
+| `buybacks.ts` | No | Direct `@abi/erc20` import — compiled TS stays |
+| `governance.ts` | No | Direct `@abi/*` imports — compiled TS stays |
 
 ---
 
