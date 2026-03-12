@@ -80,9 +80,15 @@
 - [ ] Update CLAUDE.md with new ABI workflow
 
 ### Phase 9: Contract Name Resolution from Railway DB
-- [ ] At boot, load contract address-to-name mappings from the Railway database
+- [x] At boot, load wallet labels from Railway DB (`loadWalletLabels`)
 - [ ] Replace hardcoded `CONTRACT_ADDR_TO_NAME` in `src/utils/addresses/names.ts` with DB-driven lookup
 - [ ] Keep `names.ts` as fallback for addresses not in the DB
+
+### Phase 10: DB-Driven Topics & Webhook Configuration
+- [ ] Move Discord webhook URLs into the alert_config DB (new `topic_config` table with name, webhook_url, thumbnail_url)
+- [ ] Create `WebhookClient` instances dynamically from DB at startup
+- [ ] Change `Topic` type from union to `string` throughout the codebase
+- [ ] Allow adding new notification channels without code changes or env var updates
 
 ---
 
