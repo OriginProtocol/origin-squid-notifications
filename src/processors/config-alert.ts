@@ -25,7 +25,16 @@ import { abiRegistry } from '../utils/abi-registry'
  */
 export const createConfigAlertProcessor = async (chainId: number) => {
   const rules = await getAlertRules()
-  const chainRules = rules.filter((r) => r.chainId === chainId)
+  let chainRules = rules.filter((r) => r.chainId === chainId)
+
+  // ALERT env var filters rules by display name or id (substring match)
+  if (process.env.ALERT) {
+    const filter = process.env.ALERT.toLowerCase()
+    chainRules = chainRules.filter(
+      (r) => r.id.toLowerCase().includes(filter) || (r.displayName && r.displayName.toLowerCase().includes(filter)),
+    )
+    console.log(`ConfigAlert: ALERT="${process.env.ALERT}" filtered to ${chainRules.length} rules`)
+  }
 
   const { logFilters, traceFilters } = buildSubscriptions(chainRules)
 

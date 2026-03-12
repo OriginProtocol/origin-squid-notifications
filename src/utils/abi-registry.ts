@@ -62,6 +62,12 @@ function formatEventSignature(item: ViemAbiEvent): string {
   return `${item.name}(${params})`
 }
 
+/** Signature including indexed-ness, used for dedup (same types but different indexed params are different variants) */
+function eventDedupeKey(item: ViemAbiEvent): string {
+  const params = item.inputs.map((i) => `${i.type}${i.indexed ? ':indexed' : ''}`).join(',')
+  return `${item.name}(${params})`
+}
+
 function formatFunctionSignature(item: ViemAbiFunction): string {
   const params = item.inputs.map((i) => i.type).join(',')
   return `${item.name}(${params})`
@@ -157,9 +163,9 @@ class AbiRegistry {
         const entries = this.viemEvents.get(topic0)
         const entry = makeEventEntry(abi, item as ViemAbiEvent)
         if (entries) {
-          // Only add if this is a genuinely different signature (different indexed params, etc.)
-          const sig = entry.signature
-          if (!entries.some((e) => e.signature === sig)) {
+          // Only add if this is a genuinely different variant (different indexed params, etc.)
+          const dedupKey = eventDedupeKey(item as ViemAbiEvent)
+          if (!entries.some((e) => eventDedupeKey(e.abiItem) === dedupKey)) {
             entries.push(entry)
           }
         } else {
