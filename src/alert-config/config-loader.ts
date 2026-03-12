@@ -138,16 +138,22 @@ export const getAlertRules = async (): Promise<AlertRule[]> => {
 
 /**
  * Refresh alert rules periodically. Changes take effect without redeploy.
+ * First load must succeed or the process exits — we can't run without rules.
  */
 const refreshRulesIfStale = async (): Promise<void> => {
   if (Date.now() - lastRuleRefresh < REFRESH_INTERVAL_MS) return
   if (!process.env.ALERT_CONFIG_DB_URL) return
+  const isFirstLoad = lastRuleRefresh === 0
   try {
     cachedRules = await loadRules()
     lastRuleRefresh = Date.now()
     console.log(`Alert config: loaded ${cachedRules.length} rules`)
   } catch (err) {
-    console.error('Failed to load alert rules:', err)
+    if (isFirstLoad) {
+      console.error('FATAL: Failed to load alert rules on startup:', err)
+      process.exit(1)
+    }
+    console.error('Failed to refresh alert rules (using cached):', err)
   }
 }
 

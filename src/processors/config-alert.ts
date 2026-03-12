@@ -87,10 +87,12 @@ export const createConfigAlertProcessor = async (chainId: number) => {
 
             // Find the ABI event for notification
             const abiEvent = abiRegistry.getEvent(topic0)
-            if (!abiEvent) continue
-
             const eventInfo = abiRegistry.getEventInfo(topic0)
             const eventName = eventInfo?.name ?? topic0.slice(0, 10)
+
+            if (!abiEvent) {
+              console.warn(`ConfigAlert: No ABI for topic0 ${topic0} (rule ${rule.id}), sending raw notification`)
+            }
 
             await notifyForEvent({
               ctx,
@@ -98,12 +100,10 @@ export const createConfigAlertProcessor = async (chainId: number) => {
               eventName,
               block,
               log,
-              event: abiEvent,
+              event: abiEvent ?? { topic: topic0, decode: () => undefined },
               topic: rule.topic,
               severity: rule.severity === 'low' ? undefined : rule.severity,
               notifyTarget: rule.notifyTargets ?? undefined,
-            }).catch((e) => {
-              console.error('ConfigAlert: Error notifying for event', eventName, e)
             })
           }
         }

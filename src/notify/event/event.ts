@@ -64,8 +64,10 @@ export const registerDiscordRenderer = <const T extends EventArgs>(
 export const useEventState = (ctx: Context) => {
   const state = useProcessorState(ctx, 'eventState', {
     eventsHandled: new Set<string>(),
-    isEventHandled: (log: Log) => state.eventsHandled.has(log.topics[0]),
-    markEventHandled: (log: Log) => state.eventsHandled.add(log.topics[0]),
+    isEventHandled: (log: Log) =>
+      state.eventsHandled.has(`${log.block.height}:${log.transactionIndex}:${log.logIndex}`),
+    markEventHandled: (log: Log) =>
+      state.eventsHandled.add(`${log.block.height}:${log.transactionIndex}:${log.logIndex}`),
   })[0]
   return state
 }

@@ -60,7 +60,7 @@ export const sendMessage = async (topic: Topic, message: WebhookMessageCreateOpt
     await clients[topic]?.send(message)
   } catch (err) {
     if (retries > 0) {
-      await sendMessage(topic, message, retries - 1)
+      return await sendMessage(topic, message, retries - 1)
     }
     throw err
   }
