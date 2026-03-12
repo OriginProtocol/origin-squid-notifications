@@ -134,47 +134,6 @@ CREATE TABLE abi (
   created_at      TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
--- ─── ABI Signatures ──────────────────────────────────────────────────────────
--- Derived from abi table. Rules can only reference known signatures.
-
-CREATE TABLE event_signature (
-  topic0          TEXT PRIMARY KEY CHECK (is_topic_hash(topic0)),
-  name            TEXT NOT NULL,
-  full_sig        TEXT NOT NULL
-);
-
-CREATE TABLE function_signature (
-  sighash         TEXT PRIMARY KEY CHECK (is_sighash(sighash)),
-  name            TEXT NOT NULL,
-  full_sig        TEXT NOT NULL
-);
-
--- Helper: validate all topic0s in an array exist in event_signature
-CREATE OR REPLACE FUNCTION array_all_known_events(arr TEXT[]) RETURNS BOOLEAN AS $$
-DECLARE
-  elem TEXT;
-BEGIN
-  IF arr IS NULL THEN RETURN TRUE; END IF;
-  FOREACH elem IN ARRAY arr LOOP
-    IF NOT EXISTS (SELECT 1 FROM event_signature WHERE topic0 = elem) THEN RETURN FALSE; END IF;
-  END LOOP;
-  RETURN TRUE;
-END;
-$$ LANGUAGE plpgsql STABLE;
-
--- Helper: validate all sighashes in an array exist in function_signature
-CREATE OR REPLACE FUNCTION array_all_known_functions(arr TEXT[]) RETURNS BOOLEAN AS $$
-DECLARE
-  elem TEXT;
-BEGIN
-  IF arr IS NULL THEN RETURN TRUE; END IF;
-  FOREACH elem IN ARRAY arr LOOP
-    IF NOT EXISTS (SELECT 1 FROM function_signature WHERE sighash = elem) THEN RETURN FALSE; END IF;
-  END LOOP;
-  RETURN TRUE;
-END;
-$$ LANGUAGE plpgsql STABLE;
-
 -- ─── Alert Rule ───────────────────────────────────────────────────────────────
 
 CREATE TABLE alert_rule (
@@ -187,11 +146,11 @@ CREATE TABLE alert_rule (
 
   -- Matching criteria (NULL = any)
   addresses       TEXT[] CHECK (array_all_match(addresses, 'address')),
-  topic0s         TEXT[] CHECK (array_all_match(topic0s, 'topic_hash') AND array_all_known_events(topic0s)),
+  topic0s         TEXT[] CHECK (array_all_match(topic0s, 'topic_hash')),
   topic1s         TEXT[] CHECK (array_all_match(topic1s, 'topic_hash')),
   topic2s         TEXT[] CHECK (array_all_match(topic2s, 'topic_hash')),
   topic3s         TEXT[] CHECK (array_all_match(topic3s, 'topic_hash')),
-  sighashes       TEXT[] CHECK (array_all_match(sighashes, 'sighash') AND array_all_known_functions(sighashes)),
+  sighashes       TEXT[] CHECK (array_all_match(sighashes, 'sighash')),
 
   -- Trace-specific matching criteria (NULL = any, ignored for event rules)
   trace_type      TEXT[],                 -- 'call', 'create', 'suicide', 'reward'
@@ -246,15 +205,3 @@ CREATE TRIGGER alert_rule_updated_at
   BEFORE UPDATE ON alert_rule
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
--- ─── Contract Info ────────────────────────────────────────────────────────────
-
-CREATE TABLE contract_info (
-  address         TEXT NOT NULL CHECK (is_address(address)),
-  chain_id        INTEGER NOT NULL REFERENCES chain(id),
-  name            TEXT NOT NULL,
-  product         TEXT REFERENCES topic(name),
-  tags            TEXT[],
-  PRIMARY KEY (address, chain_id)
-);
-
-CREATE INDEX idx_contract_info_product ON contract_info (product);

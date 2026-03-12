@@ -73,10 +73,16 @@
 - [x] Make registry initialization async, wire into main entry points
 - [x] Implement decode wrappers (viem output → subsquid-compatible shape)
 - [x] Seed ABI data into local alert_config DB and verify loading
-- [x] Auto-populate `event_signature`/`function_signature` from loaded ABIs
+- [x] ~~Auto-populate `event_signature`/`function_signature` from loaded ABIs~~ → removed these tables (redundant with `abi` table)
+- [x] Remove `event_signature`/`function_signature` tables and `contract_info` table from schema
+- [x] ABI registry fallback decoding: tries all ABI variants for a given selector before failing
 - [ ] Verify decoding parity on live data (process a few blocks)
 - [ ] Update CLAUDE.md with new ABI workflow
 
+### Phase 9: Contract Name Resolution from Railway DB
+- [ ] At boot, load contract address-to-name mappings from the Railway database
+- [ ] Replace hardcoded `CONTRACT_ADDR_TO_NAME` in `src/utils/addresses/names.ts` with DB-driven lookup
+- [ ] Keep `names.ts` as fallback for addresses not in the DB
 
 ---
 

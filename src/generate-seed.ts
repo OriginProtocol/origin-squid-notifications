@@ -50,27 +50,6 @@ load().then((processors) => {
   lines.push('BEGIN;')
   lines.push('')
 
-  // ─── ABI Signatures ──────────────────────────────────────────────────────────
-  const entries = abiRegistry.getAllEntries()
-  const events = entries.filter((e) => e.type === 'event')
-  const functions = entries.filter((e) => e.type === 'function')
-
-  lines.push(`-- ─── Event Signatures (${events.length}) ─────────────────────────────────────────`)
-  for (const e of events.sort((a, b) => a.name.localeCompare(b.name))) {
-    lines.push(
-      `INSERT INTO event_signature (topic0, name, full_sig) VALUES ('${e.id}', '${escapeStr(e.name)}', '${escapeStr(e.signature)}') ON CONFLICT (topic0) DO NOTHING;`,
-    )
-  }
-  lines.push('')
-
-  lines.push(`-- ─── Function Signatures (${functions.length}) ───────────────────────────────────`)
-  for (const f of functions.sort((a, b) => a.name.localeCompare(b.name))) {
-    lines.push(
-      `INSERT INTO function_signature (sighash, name, full_sig) VALUES ('${f.id}', '${escapeStr(f.name)}', '${escapeStr(f.signature)}') ON CONFLICT (sighash) DO NOTHING;`,
-    )
-  }
-  lines.push('')
-
   // Track generated IDs to detect duplicates
   const generatedIds = new Set<string>()
 

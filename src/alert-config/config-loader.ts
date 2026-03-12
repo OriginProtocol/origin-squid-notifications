@@ -6,15 +6,13 @@ import pg from 'pg'
 
 import type { Severity, Topic } from '@notify/const'
 
-import type { AlertRule, ContractInfo, FilterExpression } from './types'
+import type { AlertRule, FilterExpression } from './types'
 
 const { Client, Pool } = pg
 
 let pool: InstanceType<typeof Pool> | null = null
 let cachedRules: AlertRule[] = []
-let cachedContracts: Map<string, ContractInfo> = new Map() // key: `${address}:${chainId}`
 let lastRuleRefresh = 0
-let lastContractRefresh = 0
 
 const REFRESH_INTERVAL_MS = 5 * 60 * 1000 // 5 minutes
 
@@ -129,21 +127,6 @@ const loadRules = async (): Promise<AlertRule[]> => {
   )
 }
 
-const loadContracts = async (): Promise<Map<string, ContractInfo>> => {
-  const { rows } = await getPool().query('SELECT * FROM contract_info')
-  const map = new Map<string, ContractInfo>()
-  for (const row of rows as any[]) {
-    map.set(`${row.address.toLowerCase()}:${row.chain_id}`, {
-      address: row.address,
-      chainId: row.chain_id,
-      name: row.name,
-      product: row.product,
-      tags: row.tags,
-    })
-  }
-  return map
-}
-
 /**
  * Get all enabled alert rules. Refreshes every 5 minutes.
  */
@@ -151,15 +134,6 @@ export const getAlertRules = async (): Promise<AlertRule[]> => {
   if (!process.env.ALERT_CONFIG_DB_URL) return []
   await refreshRulesIfStale()
   return cachedRules
-}
-
-/**
- * Get contract info by address and chain ID. Refreshes periodically.
- */
-export const getContractInfo = async (address: string, chainId: number): Promise<ContractInfo | undefined> => {
-  if (!process.env.ALERT_CONFIG_DB_URL) return undefined
-  await refreshContractsIfStale()
-  return cachedContracts.get(`${address.toLowerCase()}:${chainId}`)
 }
 
 /**
@@ -174,21 +148,6 @@ const refreshRulesIfStale = async (): Promise<void> => {
     console.log(`Alert config: loaded ${cachedRules.length} rules`)
   } catch (err) {
     console.error('Failed to load alert rules:', err)
-  }
-}
-
-/**
- * Refresh contract info periodically (display names, safe to update live).
- */
-const refreshContractsIfStale = async (): Promise<void> => {
-  if (Date.now() - lastContractRefresh < REFRESH_INTERVAL_MS) return
-  if (!process.env.ALERT_CONFIG_DB_URL) return
-  try {
-    cachedContracts = await loadContracts()
-    lastContractRefresh = Date.now()
-    console.log(`Alert config: refreshed ${cachedContracts.size} contracts`)
-  } catch (err) {
-    console.error('Failed to refresh contract info:', err)
   }
 }
 

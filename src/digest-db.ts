@@ -1,5 +1,3 @@
-// @ts-expect-error pg has no type declarations in this project
-import pg from 'pg'
 import 'tsconfig-paths/register'
 
 import { getAddressesPyName } from '@utils/addresses/names'
@@ -9,9 +7,6 @@ import { getAlertRules, initAlertConfigDb } from './alert-config'
 import './env';
 import { load } from './topics';
 import { abiRegistry } from './utils/abi-registry';
-
-
-const { Pool } = pg
 
 const main = async () => {
   const url = process.env.ALERT_CONFIG_DB_URL
@@ -30,12 +25,10 @@ const main = async () => {
   // Load code-driven processors (OGN Alerts, OGN Buybacks) not in the DB
   const codeProcessors = await load()
 
-  // Separate connection for event_signature lookup
-  const pool = new Pool({ connectionString: url })
-  const sigRows = (await pool.query('SELECT topic0, name FROM event_signature')).rows
+  // Build event name lookup from ABI registry
   const sigMap = new Map<string, string>()
-  for (const row of sigRows) {
-    sigMap.set(row.topic0, row.name)
+  for (const entry of abiRegistry.getAllEntries()) {
+    if (entry.type === 'event') sigMap.set(entry.id, entry.name)
   }
 
   console.log('# Origin Squid Notifications - DB Digest')
@@ -189,7 +182,6 @@ const main = async () => {
     console.log(formatJson(entry.display))
   }
 
-  await pool.end()
   process.exit(0)
 }
 

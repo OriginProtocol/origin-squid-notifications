@@ -142,22 +142,6 @@ class AbiRegistry {
       const eventCount = this.viemEvents.size
       const variantCount = Array.from(this.viemEvents.values()).reduce((n, arr) => n + arr.length, 0)
       console.log(`ABI registry: loaded ${rows.length} ABIs from DB (${eventCount} event selectors, ${variantCount} event variants, ${this.viemFunctions.size} functions)`)
-
-      // Auto-populate event_signature and function_signature tables
-      for (const [topic0, entries] of this.viemEvents) {
-        const entry = entries[0]
-        await pool.query(
-          `INSERT INTO event_signature (topic0, name, full_sig) VALUES ($1, $2, $3) ON CONFLICT (topic0) DO NOTHING`,
-          [topic0, entry.name, entry.signature],
-        )
-      }
-      for (const [sighash, entries] of this.viemFunctions) {
-        const entry = entries[0]
-        await pool.query(
-          `INSERT INTO function_signature (sighash, name, full_sig) VALUES ($1, $2, $3) ON CONFLICT (sighash) DO NOTHING`,
-          [sighash, entry.name, entry.signature],
-        )
-      }
     } finally {
       await pool.end()
     }
