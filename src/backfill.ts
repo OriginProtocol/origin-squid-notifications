@@ -36,9 +36,13 @@ const STATE_SCHEMA = 'backfill'
 const main = async () => {
   const { run } = await import('@originprotocol/squid-utils')
   const { DEFAULT_FIELDS } = await import('@utils/batch-processor-fields')
-  const { getAlertRules } = await import('./alert-config')
+  const { abiRegistry } = await import('@utils/abi-registry')
+  const { initAlertConfigDb, getAlertRules } = await import('./alert-config')
   const { buildSubscriptions } = await import('./processors/config-alert')
   const { persistenceProcessor } = await import('./processors/persistence')
+
+  await initAlertConfigDb()
+  await abiRegistry.loadFromDb()
 
   // Drop previous backfill state so we always start fresh
   const pg = require('pg')

@@ -9,12 +9,17 @@ import { registerEventRenderer } from '../event'
 export const defaultEventRenderer = registerEventRenderer(
   'default',
   async ({ ctx, topic, severity = 'low', name, eventName, event, log, notifyTarget }) => {
-    const data = event.decode(log)
+    let data: any
+    try {
+      data = event.decode(log)
+    } catch {
+      // Decoding can fail on topic/signature mismatches
+    }
     let addressName = getAddressesPyName(log.address)
     let links: Record<string, string> = {
       tx: transactionLink(log.transactionHash, ctx.chain),
     }
-    if ('proposalId' in data && log.address === OGN_GOVERNANCE_ADDRESS) {
+    if (data && 'proposalId' in data && log.address === OGN_GOVERNANCE_ADDRESS) {
       links.proposal = `https://originprotocol.eth.limo/#/more/1:${OGN_GOVERNANCE_ADDRESS}:${data.proposalId}`
     }
     return notifyDiscord({

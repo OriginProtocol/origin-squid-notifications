@@ -11,7 +11,6 @@ import type { AlertRule, ContractInfo, FilterExpression } from './types'
 const { Client, Pool } = pg
 
 let pool: InstanceType<typeof Pool> | null = null
-let migrationDone = false
 let cachedRules: AlertRule[] = []
 let cachedContracts: Map<string, ContractInfo> = new Map() // key: `${address}:${chainId}`
 let lastRuleRefresh = 0
@@ -28,13 +27,33 @@ const getPool = (): InstanceType<typeof Pool> => {
   return pool
 }
 
+function readSqlFile(filename: string): string {
+  const localPath = path.resolve(__dirname, filename)
+  if (fs.existsSync(localPath)) return fs.readFileSync(localPath, 'utf-8')
+  return fs.readFileSync(path.resolve(__dirname, '..', '..', 'src', 'alert-config', filename), 'utf-8')
+}
+
+function splitStatements(sql: string): string[] {
+  return sql
+    .split(';\n')
+    .map((s) =>
+      s
+        .split('\n')
+        .filter((line) => !line.trimStart().startsWith('--'))
+        .join('\n')
+        .trim(),
+    )
+    .filter((s) => s.length > 0)
+}
+
 /**
- * Auto-create the alert_config database and run migration + seed
- * when ALERT_CONFIG_DB_MIGRATION=true.
+ * Initialize the alert config database.
+ * Creates the database if needed, runs migration, and seeds data.
+ * Call once at startup before using any other alert-config functions.
+ * Only runs when ALERT_CONFIG_DB_MIGRATION=true.
  */
-const ensureMigrated = async (): Promise<void> => {
-  if (migrationDone || process.env.ALERT_CONFIG_DB_MIGRATION !== 'true') return
-  migrationDone = true
+export const initAlertConfigDb = async (): Promise<void> => {
+  if (process.env.ALERT_CONFIG_DB_MIGRATION !== 'true') return
 
   const url = process.env.ALERT_CONFIG_DB_URL
   if (!url) return
@@ -65,33 +84,20 @@ const ensureMigrated = async (): Promise<void> => {
   if (rows.length > 0) return // Already migrated
 
   // Run migration
-  const migrationPath = path.resolve(__dirname, 'migration.sql')
-  // Try source dir first (ts-node), then compiled dir (lib/)
-  const migrationSql = fs.existsSync(migrationPath)
-    ? fs.readFileSync(migrationPath, 'utf-8')
-    : fs.readFileSync(path.resolve(__dirname, '..', '..', 'src', 'alert-config', 'migration.sql'), 'utf-8')
-  await p.query(migrationSql)
+  await p.query(readSqlFile('migration.sql'))
   console.log('Alert config: migration complete')
 
-  // Run seed (split into individual statements to avoid pg query size limits)
-  const seedPath = path.resolve(__dirname, 'seed-rules.sql')
-  const seedSql = fs.existsSync(seedPath)
-    ? fs.readFileSync(seedPath, 'utf-8')
-    : fs.readFileSync(path.resolve(__dirname, '..', '..', 'src', 'alert-config', 'seed-rules.sql'), 'utf-8')
-  const statements = seedSql
-    .split(';\n')
-    .map((s) =>
-      s
-        .split('\n')
-        .filter((line) => !line.trimStart().startsWith('--'))
-        .join('\n')
-        .trim(),
-    )
-    .filter((s) => s.length > 0)
-  for (const stmt of statements) {
+  // Seed rules
+  for (const stmt of splitStatements(readSqlFile('seed-rules.sql'))) {
     await p.query(stmt)
   }
   console.log('Alert config: seed rules loaded')
+
+  // Seed ABIs
+  for (const stmt of splitStatements(readSqlFile('seed-abis.sql'))) {
+    await p.query(stmt)
+  }
+  console.log('Alert config: ABI seed loaded')
 }
 
 const loadRules = async (): Promise<AlertRule[]> => {
@@ -163,7 +169,6 @@ const refreshRulesIfStale = async (): Promise<void> => {
   if (Date.now() - lastRuleRefresh < REFRESH_INTERVAL_MS) return
   if (!process.env.ALERT_CONFIG_DB_URL) return
   try {
-    await ensureMigrated()
     cachedRules = await loadRules()
     lastRuleRefresh = Date.now()
     console.log(`Alert config: loaded ${cachedRules.length} rules`)
@@ -179,7 +184,6 @@ const refreshContractsIfStale = async (): Promise<void> => {
   if (Date.now() - lastContractRefresh < REFRESH_INTERVAL_MS) return
   if (!process.env.ALERT_CONFIG_DB_URL) return
   try {
-    await ensureMigrated()
     cachedContracts = await loadContracts()
     lastContractRefresh = Date.now()
     console.log(`Alert config: refreshed ${cachedContracts.size} contracts`)

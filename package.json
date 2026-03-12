@@ -17,6 +17,7 @@
     "digest": "ts-node src/digest > digest.log",
     "digest-db": "ts-node src/digest-db > digest-db.log",
     "generate-seed": "ts-node src/generate-seed > src/alert-config/seed-rules.sql",
+    "generate-abi-seed": "ts-node src/generate-abi-seed > src/alert-config/seed-abis.sql",
     "registry": "ts-node scripts/scrape-registry",
     "fetch-abi": "ts-node scripts/fetch-abi",
     "backfill": "ts-node src/backfill"

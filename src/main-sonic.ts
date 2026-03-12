@@ -7,6 +7,9 @@ import { processOncallQueue } from '@notify/oncall'
 import { run } from '@originprotocol/squid-utils'
 import { DEFAULT_FIELDS } from '@utils/batch-processor-fields'
 
+import { abiRegistry } from '@utils/abi-registry'
+
+import { initAlertConfigDb } from './alert-config'
 import { createConfigAlertProcessor } from './processors/config-alert'
 import { persistenceProcessor } from './processors/persistence'
 
@@ -14,6 +17,8 @@ const from = 2_000_000
 process.env.BLOCK_FROM = from.toString()
 
 const start = async () => {
+  await initAlertConfigDb()
+  await abiRegistry.loadFromDb()
   const configAlert = await createConfigAlertProcessor(sonic.id)
 
   run({

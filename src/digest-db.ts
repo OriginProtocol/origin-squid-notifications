@@ -5,7 +5,7 @@ import 'tsconfig-paths/register'
 import { getAddressesPyName } from '@utils/addresses/names'
 import { formatJson } from '@utils/formatJson'
 
-import { getAlertRules } from './alert-config'
+import { getAlertRules, initAlertConfigDb } from './alert-config'
 import './env';
 import { load } from './topics';
 import { abiRegistry } from './utils/abi-registry';
@@ -19,6 +19,10 @@ const main = async () => {
     console.error('ALERT_CONFIG_DB_URL is required')
     process.exit(1)
   }
+
+  // Initialize alert config DB (migrate/seed if needed), then load ABIs
+  await initAlertConfigDb()
+  await abiRegistry.loadFromDb()
 
   // getAlertRules handles DB creation, migration, and seeding
   const alertRules = await getAlertRules()

@@ -66,14 +66,15 @@
 - [x] Add `pnpm run backfill` script to package.json
 
 ### Phase 8: Database-Backed ABI Storage
-- [ ] Add `abi` table to `src/alert-config/migration.sql`
-- [ ] Create `src/generate-abi-seed.ts` to produce `seed-abis.sql` from `abi/*.json`
-- [ ] Generate `src/alert-config/seed-abis.sql`
-- [ ] Rewrite `src/utils/abi-registry.ts` to load from DB + decode via viem
-- [ ] Make registry initialization async, wire into main entry points
-- [ ] Implement decode wrappers (viem output → subsquid-compatible shape)
-- [ ] Auto-populate `event_signature`/`function_signature` from loaded ABIs
-- [ ] Verify decoding parity (subsquid vs viem) on sample data
+- [x] Add `abi` table to `src/alert-config/migration.sql`
+- [x] Create `src/generate-abi-seed.ts` to produce `seed-abis.sql` from `abi/*.json`
+- [x] Generate `src/alert-config/seed-abis.sql`
+- [x] Rewrite `src/utils/abi-registry.ts` to load from DB + decode via viem
+- [x] Make registry initialization async, wire into main entry points
+- [x] Implement decode wrappers (viem output → subsquid-compatible shape)
+- [x] Seed ABI data into local alert_config DB and verify loading
+- [x] Auto-populate `event_signature`/`function_signature` from loaded ABIs
+- [ ] Verify decoding parity on live data (process a few blocks)
 - [ ] Update CLAUDE.md with new ABI workflow
 
 

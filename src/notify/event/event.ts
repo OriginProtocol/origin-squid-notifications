@@ -1,6 +1,20 @@
 import { Block, Context, Log, useProcessorState } from '@originprotocol/squid-utils'
-import { AbiEvent } from '@subsquid/evm-abi'
+import type { AbiEvent } from '@subsquid/evm-abi'
 import { Codec } from '@subsquid/evm-codec'
+
+/** Minimal interface for event decoding — works with both subsquid AbiEvent and viem wrappers */
+interface EventDecoder {
+  topic: string
+  decode: (log: { topics: string[]; data: string }) => any
+}
+function safeDecodeEvent(event: EventDecoder, log: { topics: string[]; data: string }): any {
+  try {
+    return event.decode(log)
+  } catch {
+    return undefined
+  }
+}
+
 import { getAddressesPyName } from '@utils/addresses/names'
 import { transactionLink } from '@utils/links'
 
@@ -62,7 +76,7 @@ export const notifyForEvent = async (params: {
   severity?: Severity
   name?: string
   eventName: string
-  event: AbiEvent<any>
+  event: EventDecoder
   block: Block
   log: Log
   notifyTarget?: NotifyTarget
@@ -106,7 +120,7 @@ export const notifyForEvent = async (params: {
       tx_hash: params.log.transactionHash,
       tx_index: params.log.transactionIndex,
       log_index: params.log.logIndex,
-      decoded_data: params.event.decode(params.log),
+      decoded_data: safeDecodeEvent(params.event, params.log),
     },
   })
 
@@ -125,7 +139,7 @@ export const notifyForEvent = async (params: {
         name: params.name,
         eventName: params.eventName,
         log: params.log,
-        data: params.event.decode(params.log),
+        data: safeDecodeEvent(params.event, params.log),
       })
     }
   }

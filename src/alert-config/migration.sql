@@ -125,8 +125,17 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
+-- ─── ABI Storage ─────────────────────────────────────────────────────────────
+-- Stores full contract ABIs. Event/function signatures are derived from these.
+
+CREATE TABLE abi (
+  name            TEXT PRIMARY KEY,
+  abi_json        JSONB NOT NULL,
+  created_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
 -- ─── ABI Signatures ──────────────────────────────────────────────────────────
--- Populated from src/abi/ files. Rules can only reference known signatures.
+-- Derived from abi table. Rules can only reference known signatures.
 
 CREATE TABLE event_signature (
   topic0          TEXT PRIMARY KEY CHECK (is_topic_hash(topic0)),
