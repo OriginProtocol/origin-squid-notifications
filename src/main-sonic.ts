@@ -8,6 +8,7 @@ import { run } from '@originprotocol/squid-utils'
 import { DEFAULT_FIELDS } from '@utils/batch-processor-fields'
 
 import { abiRegistry } from '@utils/abi-registry'
+import { loadWalletLabels } from '@utils/addresses/names'
 
 import { initAlertConfigDb } from './alert-config'
 import { createConfigAlertProcessor } from './processors/config-alert'
@@ -19,6 +20,7 @@ process.env.BLOCK_FROM = from.toString()
 const start = async () => {
   await initAlertConfigDb()
   await abiRegistry.loadFromDb()
+  await loadWalletLabels()
   const configAlert = await createConfigAlertProcessor(sonic.id)
 
   run({
