@@ -16,8 +16,9 @@ export const checkAndLogNotification = async (params: {
   blockNumber: number
 }): Promise<boolean> => {
   const id = `${params.recordType}:${params.recordId}`
-  const existing = await params.ctx.store.get(NotificationLog, id)
-  if (existing) return true
+  // WARNING: Disabled this because we won't be doing any reprocessing for now.
+  // const existing = await params.ctx.store.get(NotificationLog, id)
+  // if (existing) return true
 
   await params.ctx.store.upsert(
     new NotificationLog({
