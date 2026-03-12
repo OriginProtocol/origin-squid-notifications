@@ -1,18 +1,22 @@
-import 'tsconfig-paths/register'
-import { base } from 'viem/chains'
+import 'tsconfig-paths/register';
+import { base } from 'viem/chains';
 
-import { processDiscordQueue } from '@notify/discord'
-import { processLokiQueue } from '@notify/loki'
-import { processOncallQueue } from '@notify/oncall'
-import { run } from '@originprotocol/squid-utils'
-import { DEFAULT_FIELDS } from '@utils/batch-processor-fields'
 
-import { abiRegistry } from '@utils/abi-registry'
-import { loadWalletLabels } from '@utils/addresses/names'
 
-import { initAlertConfigDb } from './alert-config'
-import { createConfigAlertProcessor } from './processors/config-alert'
-import { persistenceProcessor } from './processors/persistence'
+import { processDiscordQueue } from '@notify/discord';
+import { processLokiQueue } from '@notify/loki';
+import { processOncallQueue } from '@notify/oncall';
+import { run } from '@originprotocol/squid-utils';
+import { abiRegistry } from '@utils/abi-registry';
+import { loadWalletLabels } from '@utils/addresses/names';
+import { DEFAULT_FIELDS } from '@utils/batch-processor-fields';
+
+
+
+import { initAlertConfigDb } from './alert-config';
+import { createConfigAlertProcessor } from './processors/config-alert';
+import { persistenceProcessor } from './processors/persistence';
+
 
 const from = 23_800_000
 process.env.BLOCK_FROM = from.toString()
@@ -28,11 +32,11 @@ const start = async () => {
     chainId: base.id,
     processors: [configAlert, persistenceProcessor],
     stateSchema: 'base',
-    postValidation: async (ctx) => {
-      // await processDiscordQueue()
-      // await processOncallQueue()
-      // await processLokiQueue()
-    },
+    // postValidation: async (ctx) => {
+    //   await processDiscordQueue()
+    //   await processOncallQueue()
+    //   await processLokiQueue()
+    // },
     fields: DEFAULT_FIELDS,
   }).catch((err) => {
     throw err

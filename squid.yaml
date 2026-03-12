@@ -1,6 +1,6 @@
 manifestVersion: subsquid.io/v0.1
 name: origin-squid-notifications
-version: 1
+version: 2
 description: 'Origin Protocol 🦑 - Notifications'
 build:
 deploy:
@@ -20,6 +20,8 @@ deploy:
     - RPC_BASE_ENV
     - RPC_SONIC_ENDPOINT
     - RPC_SONIC_ENV
+    - ALERT_CONFIG_DB_URL
+    - RAILWAY_DATABASE_URL
     - DISCORD_WEBHOOK_URL_OGN
     - DISCORD_WEBHOOK_URL_OGN_ALERTS
     - DISCORD_WEBHOOK_URL_OGN_BUYBACKS
@@ -48,5 +50,5 @@ scale:
   dedicated: true
   addons:
     postgres:
-      storage: 5G
+      storage: 10G
       profile: small
