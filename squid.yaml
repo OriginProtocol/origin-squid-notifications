@@ -46,6 +46,20 @@ deploy:
         RPC_ENV_BASE: RPC_BASE_HTTP
     - name: sonic-processor
       cmd: ['sqd', 'process:sonic:prod']
+  api:
+    cmd:
+      - npx
+      - squid-graphql-server
+      - '--dumb-cache'
+      - in-memory
+      - '--dumb-cache-ttl'
+      - '1000'
+      - '--dumb-cache-size'
+      - '100'
+      - '--dumb-cache-max-age'
+      - '1000'
+      - '--max-response-size'
+      - '1000000'
 scale:
   dedicated: true
   addons:
