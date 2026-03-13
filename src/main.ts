@@ -40,7 +40,7 @@ const start = async () => {
     processors: [...customProcessors, configAlert, persistenceProcessor],
     stateSchema: 'mainnet',
     postValidation: async (ctx) => {
-      await processDiscordQueue()
+      // await processDiscordQueue()
       // await processOncallQueue()
       // await processLokiQueue()
     },

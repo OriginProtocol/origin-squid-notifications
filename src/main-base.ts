@@ -33,7 +33,7 @@ const start = async () => {
     processors: [configAlert, persistenceProcessor],
     stateSchema: 'base',
     postValidation: async (ctx) => {
-      await processDiscordQueue()
+      // await processDiscordQueue()
       // await processOncallQueue()
       // await processLokiQueue()
     },
