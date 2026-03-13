@@ -1,6 +1,6 @@
 manifestVersion: subsquid.io/v0.1
 name: origin-squid-notifications
-version: 2
+version: 999
 description: 'Origin Protocol 🦑 - Notifications'
 build:
 deploy:
