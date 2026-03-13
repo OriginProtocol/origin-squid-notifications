@@ -126,7 +126,7 @@ Use the admin UI (`../alert-config-admin`) or insert directly into the `alert_ru
 - `addresses` — contract addresses to watch (NULL = any)
 - `topic0s` — event signatures to match (NULL = any)
 - `sighashes` — function selectors for traces (NULL = any)
-- `data_filters` — optional JSONB filter on decoded data
+- `data_filters` — optional JSONB filter on decoded data (notification-only — all data is always persisted regardless of filters)
 - `topic` — Discord channel (OETH, OUSD, ARM, etc.)
 - `severity` — low, medium, high, critical, broken, highlight
 

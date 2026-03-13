@@ -32,11 +32,11 @@ const start = async () => {
     chainId: sonic.id,
     processors: [configAlert, persistenceProcessor],
     stateSchema: 'sonic',
-    // postValidation: async (ctx) => {
-    //   await processDiscordQueue()
-    //   await processOncallQueue()
-    //   await processLokiQueue()
-    // },
+    postValidation: async (ctx) => {
+      await processDiscordQueue()
+      // await processOncallQueue()
+      // await processLokiQueue()
+    },
     fields: DEFAULT_FIELDS,
   }).catch((err) => {
     throw err

@@ -159,7 +159,8 @@ CREATE TABLE alert_rule (
   suicide_refund_address TEXT[] CHECK (array_all_match(suicide_refund_address, 'address')),
   trace_error     BOOLEAN,               -- true = only failed traces, NULL = any
 
-  -- Conditions on decoded data — evaluated after matching.
+  -- Conditions on decoded data — controls NOTIFICATIONS ONLY.
+  -- All on-chain data is always persisted regardless of these filters.
   -- Supports AND/OR trees with comparison operators.
   data_filters    JSONB CHECK (is_valid_filter(data_filters)),
 
