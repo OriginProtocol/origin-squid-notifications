@@ -5,6 +5,7 @@ import { evaluateFilter, findMatchingEventRules, findMatchingTraceRules, getAler
 import type { AlertRule } from '../alert-config'
 import { notifyForEvent } from '../notify/event'
 import { notifyForTrace } from '../notify/trace'
+import { registerLogFilter, registerTraceFilter } from './persistence-filters'
 import { abiRegistry } from '../utils/abi-registry'
 
 /**
@@ -37,6 +38,9 @@ export const createConfigAlertProcessor = async (chainId: number) => {
   }
 
   const { logFilters, traceFilters } = buildSubscriptions(chainRules)
+
+  for (const f of logFilters) registerLogFilter(f)
+  for (const f of traceFilters) registerTraceFilter(f)
 
   console.log(
     `ConfigAlert: ${chainRules.length} rules for chain ${chainId} (${logFilters.length} log filters, ${traceFilters.length} trace filters)`,
@@ -163,8 +167,7 @@ export const createConfigAlertProcessor = async (chainId: number) => {
 /**
  * Build logFilter/traceFilter subscriptions from alert rules.
  * Each event rule becomes a logFilter; each trace rule becomes a traceFilter.
- * All event filters include transaction: true, transactionLogs: true to match
- * the behavior of createEventProcessor.
+ * All event filters include transaction: true for access to tx metadata.
  */
 export function buildSubscriptions(rules: AlertRule[]) {
   const lf: ReturnType<typeof logFilter>[] = []
@@ -180,7 +183,6 @@ export function buildSubscriptions(rules: AlertRule[]) {
           topic2: rule.topic2s ?? undefined,
           topic3: rule.topic3s ?? undefined,
           transaction: true,
-          transactionLogs: true,
         }),
       )
     } else if (rule.matchType === 'trace') {

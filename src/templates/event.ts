@@ -7,6 +7,7 @@ import { transactionLink } from '@utils/links'
 
 import { NotifyTarget, Severity, Topic } from '../notify/const'
 import { EventRenderer, notifyForEvent } from '../notify/event'
+import { registerLogFilter } from '../processors/persistence-filters'
 import { createProcessor } from '../topics'
 
 export type CustomFilter = (
@@ -46,8 +47,9 @@ export const createEventProcessor = ({
       topic2,
       topic3,
       transaction: true,
-      transactionLogs: true,
     })
+    registerLogFilter(filter)
+    for (const af of additionalFilters ?? []) registerLogFilter(af)
     return { track, filter, entries, additionalFilters }
   })
 
