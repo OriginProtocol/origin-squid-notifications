@@ -8,9 +8,9 @@ import { abiRegistry } from '../utils/abi-registry'
 export const persistenceProcessor = defineProcessor({
   name: 'Persistence',
   initialize: async (ctx: Context) => {
-    const entries = abiRegistry.getAllEntries().map(
-      (e) => new AbiData({ id: e.id, type: e.type, name: e.name, signature: e.signature }),
-    )
+    const entries = abiRegistry
+      .getAllEntries()
+      .map((e) => new AbiData({ id: e.id, type: e.type, name: e.name, signature: e.signature }))
     if (entries.length > 0) {
       await ctx.store.upsert(entries)
       console.log(`AbiData: upserted ${entries.length} entries`)

@@ -1060,30 +1060,6 @@ VALUES (
   'Chainlink Keeper'
 ) ON CONFLICT (id) DO NOTHING;
 
--- Curve Pool Booster (chain 1)
-INSERT INTO alert_rule (id, chain_id, match_type, addresses, topic0s, topic1s, topic2s, topic3s, sighashes, trace_type, call_from, call_to, suicide_refund_address, trace_error, data_filters, topic, severity, notify_targets, display_name)
-VALUES (
-  'curve-pool-booster',
-  1,
-  'event'::match_type,
-  NULL,
-  ARRAY['0xfe76983af97e70cb1d5a3f3b21250c6bd2b5b9216dd3829a1cdab060e17ab15b', '0x5e6eb33a418de5dbbc17f989f7ae362cdfbb1748c5d603137c767027a354edbc', '0x06c5efeff5c320943d265dc4e5f1af95ad523555ce0c1957e367dda5514572df'],
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  'OGN',
-  'low'::severity_level,
-  NULL,
-  'Curve Pool Booster'
-) ON CONFLICT (id) DO NOTHING;
-
 -- OGN Burn (chain 1)
 INSERT INTO alert_rule (id, chain_id, match_type, addresses, topic0s, topic1s, topic2s, topic3s, sighashes, trace_type, call_from, call_to, suicide_refund_address, trace_error, data_filters, topic, severity, notify_targets, display_name)
 VALUES (
@@ -1322,54 +1298,6 @@ VALUES (
   'high'::severity_level,
   NULL,
   'Pool Booster Registry'
-) ON CONFLICT (id) DO NOTHING;
-
--- Curve Pool Booster (chain 146)
-INSERT INTO alert_rule (id, chain_id, match_type, addresses, topic0s, topic1s, topic2s, topic3s, sighashes, trace_type, call_from, call_to, suicide_refund_address, trace_error, data_filters, topic, severity, notify_targets, display_name)
-VALUES (
-  'curve-pool-booster-sonic',
-  146,
-  'event'::match_type,
-  NULL,
-  ARRAY['0xfe76983af97e70cb1d5a3f3b21250c6bd2b5b9216dd3829a1cdab060e17ab15b', '0x5e6eb33a418de5dbbc17f989f7ae362cdfbb1748c5d603137c767027a354edbc', '0x06c5efeff5c320943d265dc4e5f1af95ad523555ce0c1957e367dda5514572df'],
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  'OGN',
-  'low'::severity_level,
-  NULL,
-  'Curve Pool Booster'
-) ON CONFLICT (id) DO NOTHING;
-
--- Curve Pool Booster (chain 8453)
-INSERT INTO alert_rule (id, chain_id, match_type, addresses, topic0s, topic1s, topic2s, topic3s, sighashes, trace_type, call_from, call_to, suicide_refund_address, trace_error, data_filters, topic, severity, notify_targets, display_name)
-VALUES (
-  'curve-pool-booster-base',
-  8453,
-  'event'::match_type,
-  NULL,
-  ARRAY['0xfe76983af97e70cb1d5a3f3b21250c6bd2b5b9216dd3829a1cdab060e17ab15b', '0x5e6eb33a418de5dbbc17f989f7ae362cdfbb1748c5d603137c767027a354edbc', '0x06c5efeff5c320943d265dc4e5f1af95ad523555ce0c1957e367dda5514572df'],
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  'OGN',
-  'low'::severity_level,
-  NULL,
-  'Curve Pool Booster'
 ) ON CONFLICT (id) DO NOTHING;
 
 -- Pool Booster Factory Merkl (Base) (chain 8453)

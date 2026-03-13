@@ -1,7 +1,5 @@
 import fs from 'node:fs'
 import path from 'node:path'
-
-import { AbiEvent, AbiFunction } from '@subsquid/evm-abi'
 import {
   type Abi,
   type AbiEvent as ViemAbiEvent,
@@ -12,6 +10,8 @@ import {
   toEventSelector,
   toFunctionSelector,
 } from 'viem'
+
+import { AbiEvent, AbiFunction } from '@subsquid/evm-abi'
 
 type AbiEventLike = AbiEvent<any>
 type AbiFunctionLike = AbiFunction<any, any>
@@ -41,7 +41,13 @@ function lowercaseAddresses(obj: unknown): unknown {
   if (typeof obj === 'string') {
     return /^0x[0-9a-fA-F]{40}$/.test(obj) ? obj.toLowerCase() : obj
   }
-  if (typeof obj === 'bigint' || typeof obj === 'number' || typeof obj === 'boolean' || obj === null || obj === undefined) {
+  if (
+    typeof obj === 'bigint' ||
+    typeof obj === 'number' ||
+    typeof obj === 'boolean' ||
+    obj === null ||
+    obj === undefined
+  ) {
     return obj
   }
   if (Array.isArray(obj)) {
@@ -147,7 +153,9 @@ class AbiRegistry {
       }
       const eventCount = this.viemEvents.size
       const variantCount = Array.from(this.viemEvents.values()).reduce((n, arr) => n + arr.length, 0)
-      console.log(`ABI registry: loaded ${rows.length} ABIs from DB (${eventCount} event selectors, ${variantCount} event variants, ${this.viemFunctions.size} functions)`)
+      console.log(
+        `ABI registry: loaded ${rows.length} ABIs from DB (${eventCount} event selectors, ${variantCount} event variants, ${this.viemFunctions.size} functions)`,
+      )
     } finally {
       await pool.end()
     }
@@ -171,7 +179,7 @@ class AbiRegistry {
         } else {
           this.viemEvents.set(topic0, [entry])
         }
-      } else if ((item.type === 'function') && 'name' in item) {
+      } else if (item.type === 'function' && 'name' in item) {
         const sighash = toFunctionSelector(item as ViemAbiFunction)
         const entries = this.viemFunctions.get(sighash)
         const entry = makeFunctionEntry(abi, item as ViemAbiFunction)
@@ -241,7 +249,9 @@ class AbiRegistry {
   /**
    * Get a function decoder by sighash. Tries all registered ABI variants.
    */
-  getFunction(sighash: string): { decode: (input: string) => any; decodeResult: (output: string) => any; sighash: string } | undefined {
+  getFunction(
+    sighash: string,
+  ): { decode: (input: string) => any; decodeResult: (output: string) => any; sighash: string } | undefined {
     const viemEntries = this.viemFunctions.get(sighash)
     if (viemEntries) {
       return {

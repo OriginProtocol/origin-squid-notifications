@@ -1,4 +1,3 @@
-const AAVE_GOVERNANCE_ADDRESS = '0x9aee0b04504cef83a65ac3f0e838d0593bcb2bc7'
 import { base, mainnet, sonic } from 'viem/chains'
 
 import { chainState } from '@utils/chainState'
@@ -31,7 +30,6 @@ import {
   OUSD_OLD_BUYBACK_1,
   OUSD_OLD_VAULT,
   OUSD_ORACLE_ROUTER,
-  poolBoosters,
   PRIME_ETH_LRT_DEPOSIT_POOL,
   RETH_ADDRESS,
   STETH_ADDRESS,
@@ -41,9 +39,11 @@ import {
   XOGN_ADDRESS,
   YNLSDE_ADDRESS,
   addresses,
+  poolBoosters,
 } from './addresses'
 import { baseAddresses } from './addresses-base'
 import { sonicAddresses } from './addresses-sonic'
+import { EXTERNAL_ADDR_TO_NAME } from './external-names'
 import {
   CDAI,
   CHAINLINK_KEEPER_REGISTRY,
@@ -120,7 +120,8 @@ import {
   OUSD_METASTRAT,
   OUSD_VAULT,
 } from './strategies-py'
-import { EXTERNAL_ADDR_TO_NAME } from './external-names'
+
+const AAVE_GOVERNANCE_ADDRESS = '0x9aee0b04504cef83a65ac3f0e838d0593bcb2bc7'
 
 export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undefined>> = {
   [mainnet.id]: {

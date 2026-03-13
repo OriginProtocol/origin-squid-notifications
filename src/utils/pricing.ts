@@ -23,9 +23,7 @@ const chainlinkAbi = parseAbi(['function latestAnswer() external view returns (i
 /**
  * Internal function to fetch token prices from Chainlink feeds
  */
-async function fetchPrice(
-  token: 'OGN' | 'OETH' | 'superOETHb' | 'OUSD' | 'WETH' | 'USDC',
-): Promise<number> {
+async function fetchPrice(token: 'OGN' | 'OETH' | 'superOETHb' | 'OUSD' | 'WETH' | 'USDC'): Promise<number> {
   if (token === 'OUSD' || token === 'USDC') return 1
 
   // ETH derivatives should use ETH price

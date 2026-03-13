@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 import path from 'node:path'
-
 // @ts-expect-error pg has no type declarations in this project
 import pg from 'pg'
 
@@ -76,9 +75,7 @@ export const initAlertConfigDb = async (): Promise<void> => {
 
   // Check if schema already exists
   const p = getPool()
-  const { rows } = await p.query(
-    "SELECT 1 FROM information_schema.tables WHERE table_name = 'alert_rule'",
-  )
+  const { rows } = await p.query("SELECT 1 FROM information_schema.tables WHERE table_name = 'alert_rule'")
   if (rows.length > 0) return // Already migrated
 
   // Run migration

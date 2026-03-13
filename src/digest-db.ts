@@ -4,9 +4,9 @@ import { getAddressesPyName } from '@utils/addresses/names'
 import { formatJson } from '@utils/formatJson'
 
 import { getAlertRules, initAlertConfigDb } from './alert-config'
-import './env';
-import { load } from './topics';
-import { abiRegistry } from './utils/abi-registry';
+import './env'
+import { load } from './topics'
+import { abiRegistry } from './utils/abi-registry'
 
 const main = async () => {
   const url = process.env.ALERT_CONFIG_DB_URL

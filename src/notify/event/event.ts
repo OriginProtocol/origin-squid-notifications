@@ -1,6 +1,14 @@
 import { Block, Context, Log, useProcessorState } from '@originprotocol/squid-utils'
 import type { AbiEvent } from '@subsquid/evm-abi'
 import { Codec } from '@subsquid/evm-codec'
+import { getAddressesPyName } from '@utils/addresses/names'
+import { transactionLink } from '@utils/links'
+
+import { NotifyTarget, Severity, Topic } from '../const'
+import { notifyLoki } from '../loki'
+import { checkAndLogNotification } from '../notification-log'
+import { notifyOncall } from '../oncall'
+import { renderDiscordEmbed } from './renderers/utils'
 
 /** Minimal interface for event decoding — works with both subsquid AbiEvent and viem wrappers */
 interface EventDecoder {
@@ -15,14 +23,6 @@ function safeDecodeEvent(event: EventDecoder, log: { topics: string[]; data: str
   }
 }
 
-import { getAddressesPyName } from '@utils/addresses/names'
-import { transactionLink } from '@utils/links'
-
-import { NotifyTarget, Severity, Topic } from '../const'
-import { notifyLoki } from '../loki'
-import { checkAndLogNotification } from '../notification-log'
-import { notifyOncall } from '../oncall'
-import { renderDiscordEmbed } from './renderers/utils'
 export type EventRendererParams = Parameters<typeof notifyForEvent>[0]
 export type EventRenderer = (params: EventRendererParams) => Promise<void> | void
 const eventRenderers = new Map<string, (params: Parameters<typeof notifyForEvent>[0]) => Promise<void>>()

@@ -38,7 +38,9 @@ export const notifyForTrace = async (input: NotifyForTraceInput) => {
   let fromName = getAddressesPyName(from)
   let toName = getAddressesPyName(to)
 
-  const recordId = `${ctx.chain.id}:${trace.block.height}:${trace.transactionIndex}:${JSON.stringify(trace.traceAddress)}`
+  const recordId = `${ctx.chain.id}:${trace.block.height}:${trace.transactionIndex}:${JSON.stringify(
+    trace.traceAddress,
+  )}`
   const isDuplicate = await checkAndLogNotification({
     ctx,
     recordId,

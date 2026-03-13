@@ -60,7 +60,12 @@ export function formatValue(value: unknown, key?: string, chain?: Chain): string
   if (Array.isArray(value)) {
     if (value.length === 0) return '_empty_'
     if (value.length <= 4) return value.map((v) => formatValue(v, key, chain)).join(', ')
-    return value.slice(0, 3).map((v) => formatValue(v, key, chain)).join(', ') + ` (+${value.length - 3} more)`
+    return (
+      value
+        .slice(0, 3)
+        .map((v) => formatValue(v, key, chain))
+        .join(', ') + ` (+${value.length - 3} more)`
+    )
   }
 
   // Number

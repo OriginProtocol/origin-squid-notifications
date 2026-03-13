@@ -1,7 +1,7 @@
 import 'tsconfig-paths/register'
 
-import './env'
 import { DATA_FILTERS } from './alert-config/data-filters'
+import './env'
 import { load } from './topics'
 import { abiRegistry } from './utils/abi-registry'
 
@@ -112,11 +112,7 @@ load().then((processors) => {
         for (let j = 0; j < track.traceParams.length; j++) {
           const tp = track.traceParams[j] as any
           const traceSuffix =
-            track.traceParams.length > 1
-              ? `trace-${j + 1}`
-              : p.traces.length > 1
-                ? `trace-${i + 1}`
-                : 'trace'
+            track.traceParams.length > 1 ? `trace-${j + 1}` : p.traces.length > 1 ? `trace-${i + 1}` : 'trace'
           let id = slugify(p.name ?? p.topic, p.chainId, traceSuffix)
 
           if (generatedIds.has(id)) {

@@ -45,12 +45,23 @@ import type { NotifyTarget, Severity, Topic } from '@notify/const'
 //     ]
 //   }
 
-export type ComparisonOp = 'eq' | 'neq' | 'gt' | 'gte' | 'lt' | 'lte' | 'contains' | 'startsWith' | 'endsWith' | 'in' | 'notIn'
+export type ComparisonOp =
+  | 'eq'
+  | 'neq'
+  | 'gt'
+  | 'gte'
+  | 'lt'
+  | 'lte'
+  | 'contains'
+  | 'startsWith'
+  | 'endsWith'
+  | 'in'
+  | 'notIn'
 
 export interface FieldCondition {
-  field: string       // dot-path into decoded data, e.g. "amount", "from", "args.value"
+  field: string // dot-path into decoded data, e.g. "amount", "from", "args.value"
   op: ComparisonOp
-  value: string | string[]  // string[] for "in" / "notIn" operators
+  value: string | string[] // string[] for "in" / "notIn" operators
 }
 
 export interface GroupCondition {
@@ -71,18 +82,18 @@ export interface AlertRule {
 
   // Matching criteria (null/undefined = match any)
   addresses: string[] | null
-  topic0s: string[] | null       // event signature hashes
-  topic1s: string[] | null       // first indexed param
-  topic2s: string[] | null       // second indexed param
-  topic3s: string[] | null       // third indexed param
-  sighashes: string[] | null     // function selectors
+  topic0s: string[] | null // event signature hashes
+  topic1s: string[] | null // first indexed param
+  topic2s: string[] | null // second indexed param
+  topic3s: string[] | null // third indexed param
+  sighashes: string[] | null // function selectors
 
   // Trace-specific matching (null = any, ignored for event rules)
-  traceType: string[] | null     // 'call', 'create', 'suicide', 'reward'
-  callFrom: string[] | null      // caller addresses
-  callTo: string[] | null        // callee addresses
+  traceType: string[] | null // 'call', 'create', 'suicide', 'reward'
+  callFrom: string[] | null // caller addresses
+  callTo: string[] | null // callee addresses
   suicideRefundAddress: string[] | null
-  traceError: boolean | null     // true = only failed traces
+  traceError: boolean | null // true = only failed traces
 
   // Conditions on decoded data
   dataFilters: FilterExpression | null

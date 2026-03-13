@@ -16,7 +16,10 @@ export const checkAndLogNotification = async (params: {
   blockNumber: number
 }): Promise<boolean> => {
   const id = `${params.recordType}:${params.recordId}`
-  // WARNING: Disabled this because we won't be doing any reprocessing for now.
+  // DB dedup check disabled — the processor only runs forward in time and blocks
+  // are processed sequentially, so the same event is never encountered twice.
+  // In-memory eventState handles within-batch dedup. Re-enable if we ever add
+  // block range reprocessing.
   // const existing = await params.ctx.store.get(NotificationLog, id)
   // if (existing) return true
 

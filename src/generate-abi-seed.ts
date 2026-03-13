@@ -4,7 +4,10 @@ import path from 'node:path'
 const escapeStr = (s: string) => s.replace(/'/g, "''")
 
 const abiDir = path.resolve(__dirname, '..', 'abi')
-const files = fs.readdirSync(abiDir).filter((f) => f.endsWith('.json')).sort()
+const files = fs
+  .readdirSync(abiDir)
+  .filter((f) => f.endsWith('.json'))
+  .sort()
 
 const lines: string[] = []
 lines.push('-- ABI seed data for alert config DB')
@@ -19,7 +22,11 @@ for (const file of files) {
   const raw = fs.readFileSync(path.join(abiDir, file), 'utf-8')
   // Parse and re-stringify to compact the JSON
   const json = JSON.stringify(JSON.parse(raw))
-  lines.push(`INSERT INTO abi (name, abi_json) VALUES ('${escapeStr(name)}', '${escapeStr(json)}'::jsonb) ON CONFLICT (name) DO UPDATE SET abi_json = EXCLUDED.abi_json;`)
+  lines.push(
+    `INSERT INTO abi (name, abi_json) VALUES ('${escapeStr(name)}', '${escapeStr(
+      json,
+    )}'::jsonb) ON CONFLICT (name) DO UPDATE SET abi_json = EXCLUDED.abi_json;`,
+  )
 }
 
 lines.push('')

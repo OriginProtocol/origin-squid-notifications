@@ -9,7 +9,10 @@ import { NotifyTarget, Severity, Topic } from '../notify/const'
 import { EventRenderer, notifyForEvent } from '../notify/event'
 import { createProcessor } from '../topics'
 
-export type CustomFilter = (ctx: Context, log: Log) => Promise<{ include: boolean; topic?: Topic }> | { include: boolean; topic?: Topic }
+export type CustomFilter = (
+  ctx: Context,
+  log: Log,
+) => Promise<{ include: boolean; topic?: Topic }> | { include: boolean; topic?: Topic }
 export type EventProcessorParams = Parameters<typeof createEventProcessor>[0]
 export const createEventProcessor = ({
   name,

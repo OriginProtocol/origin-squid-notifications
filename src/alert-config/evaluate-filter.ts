@@ -45,9 +45,7 @@ const evaluateFieldCondition = (condition: FieldCondition, data: unknown): boole
     case 'in':
       return Array.isArray(condition.value) && condition.value.some((v) => fieldStr.toLowerCase() === v.toLowerCase())
     case 'notIn':
-      return (
-        Array.isArray(condition.value) && !condition.value.some((v) => fieldStr.toLowerCase() === v.toLowerCase())
-      )
+      return Array.isArray(condition.value) && !condition.value.some((v) => fieldStr.toLowerCase() === v.toLowerCase())
     default:
       return false
   }
