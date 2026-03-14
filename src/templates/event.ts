@@ -48,7 +48,7 @@ export const createEventProcessor = ({
       topic3,
       transaction: true,
     })
-    registerLogFilter(filter)
+    registerLogFilter(filter, track.customFilter)
     for (const af of additionalFilters ?? []) registerLogFilter(af)
     return { track, filter, entries, additionalFilters }
   })
