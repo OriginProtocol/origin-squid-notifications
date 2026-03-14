@@ -4,7 +4,7 @@ import { AbiData } from '../model'
 import { EventRecord } from '../model'
 import { TraceRecord } from '../model'
 import { abiRegistry } from '../utils/abi-registry'
-import { matchesAnyLogFilter, matchesAnyTraceFilter } from './persistence-filters'
+import { matchesAnyLogFilterAsync, matchesAnyTraceFilter } from './persistence-filters'
 
 export const persistenceProcessor = defineProcessor({
   name: 'Persistence',
@@ -27,7 +27,7 @@ export const persistenceProcessor = defineProcessor({
       const blockHash = block.header.hash
 
       for (const log of block.logs) {
-        if (!matchesAnyLogFilter(log)) continue
+        if (!(await matchesAnyLogFilterAsync(ctx, log))) continue
         const id = `${ctx.chain.id}:${blockNumber}:${log.transactionIndex}:${log.logIndex}`
         const topic0 = log.topics[0]
         if (!topic0) continue
