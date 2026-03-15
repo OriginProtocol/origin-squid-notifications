@@ -1,10 +1,10 @@
-import * as p from '@subsquid/evm-codec'
 import { ContractBase, event, viewFun } from '@subsquid/evm-abi'
+import * as p from '@subsquid/evm-codec'
 
 import * as erc20Abi from '../../../abi/erc20'
 import { addresses, arms } from '../../../utils/addresses'
-import { getAddressesPyName } from '../../../utils/addresses/names'
 import { sonicAddresses } from '../../../utils/addresses/addresses-sonic'
+import { getAddressesPyName } from '../../../utils/addresses/names'
 import { formatAmount } from '../../../utils/formatAmount'
 import { explorerUrl } from '../../format'
 import { registerEventRenderer } from '../event'
@@ -18,8 +18,8 @@ const TraderateChanged = event(
 )
 
 const armFunctions = {
-  traderate0: viewFun('0xde2dee3e', 'traderate0()', {}, p.uint256),
-  traderate1: viewFun('0x259e0b3f', 'traderate1()', {}, p.uint256),
+  traderate0: viewFun('0x45059a6b', 'traderate0()', {}, p.uint256),
+  traderate1: viewFun('0xcf1de5d8', 'traderate1()', {}, p.uint256),
 }
 
 class ArmContract extends ContractBase {
@@ -115,7 +115,9 @@ registerEventRenderer(TraderateChanged.topic, async (params) => {
   renderEventDiscordEmbed(params, {
     fields: [
       {
-        name: `${formatAmount(10n ** 72n / data.traderate0, 36, { maximumFractionDigits: 8 })} ${arm.symbol1}/${arm.symbol0}`,
+        name: `${formatAmount(10n ** 72n / data.traderate0, 36, { maximumFractionDigits: 8 })} ${arm.symbol1}/${
+          arm.symbol0
+        }`,
         value: 'Sell Price',
       },
       {
@@ -150,7 +152,9 @@ registerEventRenderer(erc20Abi.events.Transfer.topic, async (params) => {
 
   // Source address from topic1 (the `from` field)
   const fromAddress = params.log.topics[1] ? ('0x' + params.log.topics[1].slice(26)).toLowerCase() : undefined
-  const sourceName = fromAddress ? getAddressesPyName(fromAddress) ?? `${fromAddress.slice(0, 6)}...${fromAddress.slice(-4)}` : undefined
+  const sourceName = fromAddress
+    ? getAddressesPyName(fromAddress) ?? `${fromAddress.slice(0, 6)}...${fromAddress.slice(-4)}`
+    : undefined
 
   const fields: { name: string; value: string; inline?: boolean }[] = [
     {
