@@ -47,8 +47,8 @@ interface ArmConfig {
   symbol1: string
   token0: string
   token1: string
-  // ERC4626 vault token whose rate needs converting (e.g. sUSDe)
-  // When set, rates are adjusted by the vault's convertToAssets rate
+  // ERC4626 vault token (e.g. sUSDe). When set, traderates are raw spread rates
+  // and the vault's convertToAssets rate must be applied for output estimation.
   vaultToken?: string
 }
 
@@ -95,7 +95,7 @@ registerArm({
 // Cache traderates per ARM address
 const traderateCache = new Map<string, { traderate0: bigint; traderate1: bigint }>()
 
-// Cache vault exchange rate (e.g. sUSDe → USDe)
+// Cache vault exchange rate (e.g. sUSDe → USDe via convertToAssets)
 const vaultRateCache = new Map<string, bigint>()
 const ONE = 10n ** 18n
 
@@ -116,8 +116,8 @@ async function getVaultRate(ctx: RendererCtx, block: RendererBlock, vaultToken: 
 }
 
 async function getTraderates(
-  ctx: Parameters<Parameters<typeof registerEventRenderer>[1]>[0]['ctx'],
-  block: Parameters<Parameters<typeof registerEventRenderer>[1]>[0]['log']['block'],
+  ctx: RendererCtx,
+  block: RendererBlock,
   armAddress: string,
 ): Promise<{ traderate0: bigint; traderate1: bigint } | undefined> {
   const cached = traderateCache.get(armAddress)
@@ -133,7 +133,7 @@ async function getTraderates(
   }
 }
 
-// TraderateChanged renderer
+// TraderateChanged renderer — shows raw ARM spread rates
 registerEventRenderer(TraderateChanged.topic, async (params) => {
   const arm = armConfigs.get(params.log.address.toLowerCase())
   if (!arm) return defaultEventRenderer(params)
@@ -146,18 +146,9 @@ registerEventRenderer(TraderateChanged.topic, async (params) => {
     traderate1: data.traderate1,
   })
 
-  // For vault tokens (e.g. sUSDe), adjust rates to show USDe-equivalent value
-  let sellRate = 10n ** 72n / data.traderate0 // 1e36 precision
-  let buyRate = data.traderate1 // 1e36 precision
-  let rateLabel = `${arm.symbol1}/${arm.symbol0}`
-
-  if (arm.vaultToken) {
-    const vaultRate = await getVaultRate(params.ctx, params.log.block, arm.vaultToken)
-    // Multiply by vault rate to convert sUSDe amounts to USDe-equivalent
-    sellRate = (sellRate * vaultRate) / ONE
-    buyRate = (buyRate * vaultRate) / ONE
-    rateLabel = `${arm.symbol0}/${arm.symbol0}` // e.g. USDe/USDe
-  }
+  const sellRate = 10n ** 72n / data.traderate0 // 1e36 precision
+  const buyRate = data.traderate1 // 1e36 precision
+  const rateLabel = `${arm.symbol1}/${arm.symbol0}`
 
   renderEventDiscordEmbed(params, {
     fields: [
@@ -210,32 +201,36 @@ registerEventRenderer(erc20Abi.events.Transfer.topic, async (params) => {
   ]
 
   if (rates) {
-    // traderate0 is inverted: sell price = 1e72 / traderate0 (in 1e36 precision)
-    // traderate1 is direct: buy price = traderate1 (in 1e36 precision)
+    // Traderates are raw spread rates (~1.0). For vault tokens (e.g. sUSDe),
+    // the ARM contract applies the vault conversion internally during swaps,
+    // so we must apply it here too for output estimation.
+    //
+    // traderate0: for 1 token0 from trader, how many token1 the pool sends (raw)
+    // traderate1: for 1 token1 from trader, how many token0 the pool sends (raw)
     let outAmount: bigint
-    let rate: number
-    if (isToken0In) {
-      // Selling token0 → receive token1 at sell price
-      const sellRate = 10n ** 72n / rates.traderate0
-      outAmount = (data.value * sellRate) / 10n ** 36n
-      rate = Number(sellRate) / 1e36
-    } else {
-      // Selling token1 → receive token0 at buy price
-      outAmount = rates.traderate1 > 0n ? (data.value * 10n ** 36n) / rates.traderate1 : 0n
-      rate = Number(rates.traderate1) / 1e36
-    }
 
-    // For vault tokens, convert output to underlying-equivalent for rate display
-    if (arm.vaultToken) {
-      const vaultRate = await getVaultRate(params.ctx, params.log.block, arm.vaultToken)
-      if (isToken0In) {
-        // Output is in vault token (sUSDe), convert to USDe-equivalent for rate
-        rate = (rate * Number(vaultRate)) / 1e18
-      } else {
-        // Input is vault token (sUSDe), adjust rate
-        rate = (rate * 1e18) / Number(vaultRate)
+    if (isToken0In) {
+      // token0 → token1: outAmount = inAmount * traderate0 / 1e36
+      // For vault: actual token1 out = raw output / vaultRate (fewer vault tokens)
+      outAmount = (data.value * rates.traderate0) / 10n ** 36n
+      if (arm.vaultToken) {
+        const vaultRate = await getVaultRate(params.ctx, params.log.block, arm.vaultToken)
+        outAmount = (outAmount * ONE) / vaultRate
+      }
+    } else {
+      // token1 → token0: outAmount = inAmount * traderate1 / 1e36
+      // For vault: actual token0 out = inAmount * vaultRate * traderate1 / 1e36 / 1e18
+      outAmount = (data.value * rates.traderate1) / 10n ** 36n
+      if (arm.vaultToken) {
+        const vaultRate = await getVaultRate(params.ctx, params.log.block, arm.vaultToken)
+        outAmount = (outAmount * vaultRate) / ONE
       }
     }
+
+    // Rate = token0/token1, derived from actual in/out amounts
+    const rate = isToken0In
+      ? Number(data.value) / Number(outAmount)
+      : Number(outAmount) / Number(data.value)
 
     fields.push({
       name: formatAmount(outAmount, 18, { maximumFractionDigits: 6 }),
