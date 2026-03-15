@@ -22,6 +22,10 @@ const armFunctions = {
   traderate1: viewFun('0xcf1de5d8', 'traderate1()', {}, p.uint256),
 }
 
+const erc4626Functions = {
+  convertToAssets: viewFun('0x07a2d13a', 'convertToAssets(uint256)', { shares: p.uint256 }, p.uint256),
+}
+
 class ArmContract extends ContractBase {
   traderate0() {
     return this.eth_call(armFunctions.traderate0, {})
@@ -31,12 +35,21 @@ class ArmContract extends ContractBase {
   }
 }
 
+class ERC4626Contract extends ContractBase {
+  convertToAssets(shares: bigint) {
+    return this.eth_call(erc4626Functions.convertToAssets, { shares })
+  }
+}
+
 interface ArmConfig {
   address: string
   symbol0: string
   symbol1: string
   token0: string
   token1: string
+  // ERC4626 vault token whose rate needs converting (e.g. sUSDe)
+  // When set, rates are adjusted by the vault's convertToAssets rate
+  vaultToken?: string
 }
 
 // Build lookup from ARM contract address to config
@@ -68,6 +81,7 @@ registerArm({
   symbol1: 'sUSDe',
   token0: addresses.tokens.USDe,
   token1: addresses.tokens.sUSDe,
+  vaultToken: addresses.tokens.sUSDe,
 })
 
 registerArm({
@@ -80,6 +94,26 @@ registerArm({
 
 // Cache traderates per ARM address
 const traderateCache = new Map<string, { traderate0: bigint; traderate1: bigint }>()
+
+// Cache vault exchange rate (e.g. sUSDe → USDe)
+const vaultRateCache = new Map<string, bigint>()
+const ONE = 10n ** 18n
+
+type RendererCtx = Parameters<Parameters<typeof registerEventRenderer>[1]>[0]['ctx']
+type RendererBlock = Parameters<Parameters<typeof registerEventRenderer>[1]>[0]['log']['block']
+
+async function getVaultRate(ctx: RendererCtx, block: RendererBlock, vaultToken: string): Promise<bigint> {
+  const cached = vaultRateCache.get(vaultToken)
+  if (cached) return cached
+  try {
+    const contract = new ERC4626Contract(ctx, block, vaultToken)
+    const rate = await contract.convertToAssets(ONE)
+    vaultRateCache.set(vaultToken, rate)
+    return rate
+  } catch {
+    return ONE // Fallback: assume 1:1
+  }
+}
 
 async function getTraderates(
   ctx: Parameters<Parameters<typeof registerEventRenderer>[1]>[0]['ctx'],
@@ -112,16 +146,27 @@ registerEventRenderer(TraderateChanged.topic, async (params) => {
     traderate1: data.traderate1,
   })
 
+  // For vault tokens (e.g. sUSDe), adjust rates to show USDe-equivalent value
+  let sellRate = 10n ** 72n / data.traderate0 // 1e36 precision
+  let buyRate = data.traderate1 // 1e36 precision
+  let rateLabel = `${arm.symbol1}/${arm.symbol0}`
+
+  if (arm.vaultToken) {
+    const vaultRate = await getVaultRate(params.ctx, params.log.block, arm.vaultToken)
+    // Multiply by vault rate to convert sUSDe amounts to USDe-equivalent
+    sellRate = (sellRate * vaultRate) / ONE
+    buyRate = (buyRate * vaultRate) / ONE
+    rateLabel = `${arm.symbol0}/${arm.symbol0}` // e.g. USDe/USDe
+  }
+
   renderEventDiscordEmbed(params, {
     fields: [
       {
-        name: `${formatAmount(10n ** 72n / data.traderate0, 36, { maximumFractionDigits: 8 })} ${arm.symbol1}/${
-          arm.symbol0
-        }`,
+        name: `${formatAmount(sellRate, 36, { maximumFractionDigits: 8 })} ${rateLabel}`,
         value: 'Sell Price',
       },
       {
-        name: `${formatAmount(data.traderate1, 36, { maximumFractionDigits: 8 })} ${arm.symbol1}/${arm.symbol0}`,
+        name: `${formatAmount(buyRate, 36, { maximumFractionDigits: 8 })} ${rateLabel}`,
         value: 'Buy Price',
       },
     ],
@@ -178,6 +223,18 @@ registerEventRenderer(erc20Abi.events.Transfer.topic, async (params) => {
       // Selling token1 → receive token0 at buy price
       outAmount = rates.traderate1 > 0n ? (data.value * 10n ** 36n) / rates.traderate1 : 0n
       rate = Number(rates.traderate1) / 1e36
+    }
+
+    // For vault tokens, convert output to underlying-equivalent for rate display
+    if (arm.vaultToken) {
+      const vaultRate = await getVaultRate(params.ctx, params.log.block, arm.vaultToken)
+      if (isToken0In) {
+        // Output is in vault token (sUSDe), convert to USDe-equivalent for rate
+        rate = (rate * Number(vaultRate)) / 1e18
+      } else {
+        // Input is vault token (sUSDe), adjust rate
+        rate = (rate * 1e18) / Number(vaultRate)
+      }
     }
 
     fields.push({
