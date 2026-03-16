@@ -210,9 +210,9 @@ registerEventRenderer(erc20Abi.events.Transfer.topic, async (params) => {
     let outAmount: bigint
 
     if (isToken0In) {
-      // token0 → token1: outAmount = inAmount * traderate0 / 1e36
-      // For vault: actual token1 out = raw output / vaultRate (fewer vault tokens)
-      outAmount = (data.value * rates.traderate0) / 10n ** 36n
+      // token0 → token1: traderate0 is a price (token0/token1), so divide
+      // For vault: further divide by vaultRate (fewer vault tokens per unit)
+      outAmount = (data.value * 10n ** 36n) / rates.traderate0
       if (arm.vaultToken) {
         const vaultRate = await getVaultRate(params.ctx, params.log.block, arm.vaultToken)
         outAmount = (outAmount * ONE) / vaultRate
