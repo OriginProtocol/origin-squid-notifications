@@ -16,9 +16,9 @@ load().then((processors) => {
     processors: processors.filter((p) => p.chainId === mainnet.id),
     stateSchema: 'mainnet',
     postValidation: async (ctx) => {
-      await processDiscordQueue()
-      await processOncallQueue()
-      await processLokiQueue()
+      // await processDiscordQueue()
+      // await processOncallQueue()
+      // await processLokiQueue()
     },
     fields: DEFAULT_FIELDS,
   }).catch((err) => {
