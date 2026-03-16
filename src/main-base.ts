@@ -38,8 +38,8 @@ const start = async () => {
     stateSchema: 'base',
     postValidation: async (ctx) => {
       await processDiscordQueue()
-      // await processOncallQueue()
-      // await processLokiQueue()
+      await processOncallQueue()
+      await processLokiQueue()
     },
     fields: DEFAULT_FIELDS,
   }).catch((err) => {

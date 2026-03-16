@@ -41,8 +41,8 @@ const start = async () => {
     stateSchema: 'mainnet',
     postValidation: async (ctx) => {
       await processDiscordQueue()
-      // await processOncallQueue()
-      // await processLokiQueue()
+      await processOncallQueue()
+      await processLokiQueue()
     },
     fields: DEFAULT_FIELDS,
   }).catch((err) => {

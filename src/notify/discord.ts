@@ -3,19 +3,18 @@ import { sortBy } from 'lodash'
 
 import { Severity, Topic, severityEmojis, topicThumbnails } from './const'
 
-const testUrl = process.env['DISCORD_WEBHOOK_URL_TEST']
 const webhookUrls: Record<Topic, string> = {
-  Governance: testUrl ?? process.env['DISCORD_WEBHOOK_URL_GOVERNANCE'] ?? '',
-  OGN: testUrl ?? process.env['DISCORD_WEBHOOK_URL_OGN'] ?? '',
-  'OGN Alerts': testUrl ?? process.env['DISCORD_WEBHOOK_URL_OGN_ALERTS'] ?? '',
-  'OGN Buybacks': testUrl ?? process.env['DISCORD_WEBHOOK_URL_OGN_BUYBACKS'] ?? '',
-  OETH: testUrl ?? process.env['DISCORD_WEBHOOK_URL_OETH'] ?? '',
-  superOETHb: testUrl ?? process.env['DISCORD_WEBHOOK_URL_SUPER_OETH_B'] ?? '',
-  OUSD: testUrl ?? process.env['DISCORD_WEBHOOK_URL_OUSD'] ?? '',
-  xOGN: testUrl ?? process.env['DISCORD_WEBHOOK_URL_XOGN'] ?? '',
-  primeETH: testUrl ?? process.env['DISCORD_WEBHOOK_URL_PRIME_ETH'] ?? '',
-  ARM: testUrl ?? process.env['DISCORD_WEBHOOK_URL_ARM'] ?? '',
-  OS: testUrl ?? process.env['DISCORD_WEBHOOK_URL_OS'] ?? '',
+  Governance: process.env['DISCORD_WEBHOOK_URL_GOVERNANCE'] ?? '',
+  OGN: process.env['DISCORD_WEBHOOK_URL_OGN'] ?? '',
+  'OGN Alerts': process.env['DISCORD_WEBHOOK_URL_OGN_ALERTS'] ?? '',
+  'OGN Buybacks': process.env['DISCORD_WEBHOOK_URL_OGN_BUYBACKS'] ?? '',
+  OETH: process.env['DISCORD_WEBHOOK_URL_OETH'] ?? '',
+  superOETHb: process.env['DISCORD_WEBHOOK_URL_SUPER_OETH_B'] ?? '',
+  OUSD: process.env['DISCORD_WEBHOOK_URL_OUSD'] ?? '',
+  xOGN: process.env['DISCORD_WEBHOOK_URL_XOGN'] ?? '',
+  primeETH: process.env['DISCORD_WEBHOOK_URL_PRIME_ETH'] ?? '',
+  ARM: process.env['DISCORD_WEBHOOK_URL_ARM'] ?? '',
+  OS: process.env['DISCORD_WEBHOOK_URL_OS'] ?? '',
 }
 
 const clients: Record<Topic, WebhookClient | undefined> = {
