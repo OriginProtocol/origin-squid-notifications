@@ -103,6 +103,9 @@ export interface AlertRule {
   severity: Severity
   notifyTargets: NotifyTarget | null
 
+  // Subscription options
+  transactionLogs: boolean
+
   // Display
   displayName: string | null
   description: string | null

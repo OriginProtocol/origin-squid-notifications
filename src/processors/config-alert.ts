@@ -183,6 +183,7 @@ export function buildSubscriptions(rules: AlertRule[]) {
           topic2: rule.topic2s ?? undefined,
           topic3: rule.topic3s ?? undefined,
           transaction: true,
+          transactionLogs: rule.transactionLogs || undefined,
         }),
       )
     } else if (rule.matchType === 'trace') {

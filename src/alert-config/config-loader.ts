@@ -118,6 +118,7 @@ const loadRules = async (): Promise<AlertRule[]> => {
       topic: row.topic as Topic,
       severity: row.severity as Severity, // DB enum guarantees valid value
       notifyTargets: row.notify_targets,
+      transactionLogs: row.transaction_logs ?? false,
       displayName: row.display_name,
       description: row.description,
     }),

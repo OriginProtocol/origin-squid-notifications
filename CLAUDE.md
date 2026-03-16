@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a Subsquid-based notification system for Origin Protocol. It monitors blockchain events and traces across Ethereum mainnet, Base, and Sonic chains, persists them to a database, and sends notifications to Discord webhooks based on configurable alert rules stored in a separate Postgres database.
 
+## User Interaction
+
+You are encouraged to ask the user questions in order to save time and effort.
+
 ## Common Commands
 
 ```shell

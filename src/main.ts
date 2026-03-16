@@ -19,7 +19,7 @@ import { persistenceProcessor } from './processors/persistence';
 import { load } from './topics';
 
 
-const from = 21_540_000
+const from = Number(process.env.BLOCK_FROM) || 21_540_000
 process.env.BLOCK_FROM = from.toString()
 
 const start = async () => {

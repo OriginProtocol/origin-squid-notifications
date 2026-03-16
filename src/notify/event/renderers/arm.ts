@@ -1,4 +1,4 @@
-import { ContractBase, event, viewFun } from '@subsquid/evm-abi'
+import { event } from '@subsquid/evm-abi'
 import * as p from '@subsquid/evm-codec'
 
 import * as erc20Abi from '../../../abi/erc20'
@@ -6,6 +6,7 @@ import { addresses, arms } from '../../../utils/addresses'
 import { sonicAddresses } from '../../../utils/addresses/addresses-sonic'
 import { getAddressesPyName } from '../../../utils/addresses/names'
 import { formatAmount } from '../../../utils/formatAmount'
+import { discordIconOrName } from '../../const'
 import { explorerUrl } from '../../format'
 import { registerEventRenderer } from '../event'
 import { defaultEventRenderer } from './default'
@@ -17,39 +18,12 @@ const TraderateChanged = event(
   { traderate0: p.uint256, traderate1: p.uint256 },
 )
 
-const armFunctions = {
-  traderate0: viewFun('0x45059a6b', 'traderate0()', {}, p.uint256),
-  traderate1: viewFun('0xcf1de5d8', 'traderate1()', {}, p.uint256),
-}
-
-const erc4626Functions = {
-  convertToAssets: viewFun('0x07a2d13a', 'convertToAssets(uint256)', { shares: p.uint256 }, p.uint256),
-}
-
-class ArmContract extends ContractBase {
-  traderate0() {
-    return this.eth_call(armFunctions.traderate0, {})
-  }
-  traderate1() {
-    return this.eth_call(armFunctions.traderate1, {})
-  }
-}
-
-class ERC4626Contract extends ContractBase {
-  convertToAssets(shares: bigint) {
-    return this.eth_call(erc4626Functions.convertToAssets, { shares })
-  }
-}
-
 interface ArmConfig {
   address: string
   symbol0: string
   symbol1: string
   token0: string
   token1: string
-  // ERC4626 vault token (e.g. sUSDe). When set, traderates are raw spread rates
-  // and the vault's convertToAssets rate must be applied for output estimation.
-  vaultToken?: string
 }
 
 // Build lookup from ARM contract address to config
@@ -81,7 +55,6 @@ registerArm({
   symbol1: 'sUSDe',
   token0: addresses.tokens.USDe,
   token1: addresses.tokens.sUSDe,
-  vaultToken: addresses.tokens.sUSDe,
 })
 
 registerArm({
@@ -92,59 +65,12 @@ registerArm({
   token1: sonicAddresses.tokens.OS,
 })
 
-// Cache traderates per ARM address
-const traderateCache = new Map<string, { traderate0: bigint; traderate1: bigint }>()
-
-// Cache vault exchange rate (e.g. sUSDe → USDe via convertToAssets)
-const vaultRateCache = new Map<string, bigint>()
-const ONE = 10n ** 18n
-
-type RendererCtx = Parameters<Parameters<typeof registerEventRenderer>[1]>[0]['ctx']
-type RendererBlock = Parameters<Parameters<typeof registerEventRenderer>[1]>[0]['log']['block']
-
-async function getVaultRate(ctx: RendererCtx, block: RendererBlock, vaultToken: string): Promise<bigint> {
-  const cached = vaultRateCache.get(vaultToken)
-  if (cached) return cached
-  try {
-    const contract = new ERC4626Contract(ctx, block, vaultToken)
-    const rate = await contract.convertToAssets(ONE)
-    vaultRateCache.set(vaultToken, rate)
-    return rate
-  } catch {
-    return ONE // Fallback: assume 1:1
-  }
-}
-
-async function getTraderates(
-  ctx: RendererCtx,
-  block: RendererBlock,
-  armAddress: string,
-): Promise<{ traderate0: bigint; traderate1: bigint } | undefined> {
-  const cached = traderateCache.get(armAddress)
-  if (cached) return cached
-  try {
-    const contract = new ArmContract(ctx, block, armAddress)
-    const [traderate0, traderate1] = await Promise.all([contract.traderate0(), contract.traderate1()])
-    const rates = { traderate0, traderate1 }
-    traderateCache.set(armAddress, rates)
-    return rates
-  } catch {
-    return undefined
-  }
-}
-
 // TraderateChanged renderer — shows raw ARM spread rates
 registerEventRenderer(TraderateChanged.topic, async (params) => {
   const arm = armConfigs.get(params.log.address.toLowerCase())
   if (!arm) return defaultEventRenderer(params)
 
   const data = TraderateChanged.decode(params.log)
-
-  // Cache for swap calculations
-  traderateCache.set(params.log.address.toLowerCase(), {
-    traderate0: data.traderate0,
-    traderate1: data.traderate1,
-  })
 
   const sellRate = 10n ** 72n / data.traderate0 // 1e36 precision
   const buyRate = data.traderate1 // 1e36 precision
@@ -164,7 +90,9 @@ registerEventRenderer(TraderateChanged.topic, async (params) => {
   })
 })
 
-// Transfer renderer — renders ARM swaps, falls back to default for non-ARM transfers
+// Transfer renderer — renders ARM swaps using actual transaction logs.
+// Requires transactionLogs: true on the alert rule to access sibling logs.
+// Falls back to default for non-ARM transfers or deposits/withdrawals.
 registerEventRenderer(erc20Abi.events.Transfer.topic, async (params) => {
   // Check if topic2 (the `to` address) is a known ARM
   const topic2 = params.log.topics[2]
@@ -174,75 +102,44 @@ registerEventRenderer(erc20Abi.events.Transfer.topic, async (params) => {
   const arm = armConfigs.get(toAddress)
   if (!arm) return defaultEventRenderer(params)
 
-  const data = erc20Abi.events.Transfer.decode(params.log)
-  const tokenAddress = params.log.address.toLowerCase()
-  const isToken0In = tokenAddress === arm.token0.toLowerCase()
-  const isToken1In = tokenAddress === arm.token1.toLowerCase()
-  if (!isToken0In && !isToken1In) return defaultEventRenderer(params)
+  // Need transaction logs to find the counterpart transfer
+  const txLogs = params.log.transaction?.logs
+  if (!txLogs) return defaultEventRenderer(params)
 
-  const inSymbol = isToken0In ? arm.symbol0 : arm.symbol1
-  const outSymbol = isToken0In ? arm.symbol1 : arm.symbol0
+  // Find the transfer IN (to ARM) and transfer OUT (from ARM) in this transaction
+  const transferInLog = txLogs.find(
+    (l) => l.topics[0] === erc20Abi.events.Transfer.topic && l.topics[2] && ('0x' + l.topics[2].slice(26)).toLowerCase() === arm.address.toLowerCase(),
+  )
+  const transferOutLog = txLogs.find(
+    (l) => l.topics[0] === erc20Abi.events.Transfer.topic && l.topics[1] && ('0x' + l.topics[1].slice(26)).toLowerCase() === arm.address.toLowerCase(),
+  )
 
-  const rates = await getTraderates(params.ctx, params.log.block, toAddress)
+  // If we don't have both in and out, it's a deposit/withdrawal — not a swap
+  if (!transferInLog || !transferOutLog) return
+
+  // Only render once per swap (on the inbound transfer)
+  if (params.log.logIndex !== transferInLog.logIndex) return
+
+  const transferInData = erc20Abi.events.Transfer.decode(transferInLog)
+  const transferOutData = erc20Abi.events.Transfer.decode(transferOutLog)
+
   const explorer = explorerUrl(params.ctx.chain)
 
-  // Source address from topic1 (the `from` field)
-  const fromAddress = params.log.topics[1] ? ('0x' + params.log.topics[1].slice(26)).toLowerCase() : undefined
-  const sourceName = fromAddress
-    ? getAddressesPyName(fromAddress) ?? `${fromAddress.slice(0, 6)}...${fromAddress.slice(-4)}`
-    : undefined
+  // Source address from the inbound transfer's `from` field
+  const fromAddress = transferInData.from.toLowerCase()
+  const sourceName =
+    getAddressesPyName(fromAddress) ?? discordIconOrName(fromAddress) ?? `${fromAddress.slice(0, 6)}...${fromAddress.slice(-4)}`
 
-  const fields: { name: string; value: string; inline?: boolean }[] = [
-    {
-      name: formatAmount(data.value, 18, { maximumFractionDigits: 6 }),
-      value: `${inSymbol} in`,
-      inline: true,
-    },
-  ]
+  const inTokenAddress = transferInLog.address.toLowerCase()
+  const outTokenAddress = transferOutLog.address.toLowerCase()
+  const inSymbol = discordIconOrName(inTokenAddress) ?? (inTokenAddress === arm.token0.toLowerCase() ? arm.symbol0 : arm.symbol1)
+  const outSymbol = discordIconOrName(outTokenAddress) ?? (outTokenAddress === arm.token0.toLowerCase() ? arm.symbol0 : arm.symbol1)
 
-  if (rates) {
-    // Traderates are raw spread rates (~1.0). For vault tokens (e.g. sUSDe),
-    // the ARM contract applies the vault conversion internally during swaps,
-    // so we must apply it here too for output estimation.
-    //
-    // traderate0: for 1 token0 from trader, how many token1 the pool sends (raw)
-    // traderate1: for 1 token1 from trader, how many token0 the pool sends (raw)
-    let outAmount: bigint
-
-    if (isToken0In) {
-      // token0 → token1: traderate0 is a price (token0/token1), so divide
-      // For vault: further divide by vaultRate (fewer vault tokens per unit)
-      outAmount = (data.value * 10n ** 36n) / rates.traderate0
-      if (arm.vaultToken) {
-        const vaultRate = await getVaultRate(params.ctx, params.log.block, arm.vaultToken)
-        outAmount = (outAmount * ONE) / vaultRate
-      }
-    } else {
-      // token1 → token0: outAmount = inAmount * traderate1 / 1e36
-      // For vault: actual token0 out = inAmount * vaultRate * traderate1 / 1e36 / 1e18
-      outAmount = (data.value * rates.traderate1) / 10n ** 36n
-      if (arm.vaultToken) {
-        const vaultRate = await getVaultRate(params.ctx, params.log.block, arm.vaultToken)
-        outAmount = (outAmount * vaultRate) / ONE
-      }
-    }
-
-    // Rate = token0/token1, derived from actual in/out amounts
-    const rate = isToken0In
-      ? Number(data.value) / Number(outAmount)
-      : Number(outAmount) / Number(data.value)
-
-    fields.push({
-      name: formatAmount(outAmount, 18, { maximumFractionDigits: 6 }),
-      value: `${outSymbol} out`,
-      inline: true,
-    })
-    fields.push({
-      name: rate.toLocaleString('en-US', { maximumFractionDigits: 6 }),
-      value: 'Rate',
-      inline: true,
-    })
-  }
+  // Rate = token0/token1, matching original renderer behavior
+  const isToken0In = inTokenAddress === arm.token0.toLowerCase()
+  const rate = isToken0In
+    ? Number(transferInData.value) / Number(transferOutData.value)
+    : Number(transferOutData.value) / Number(transferInData.value)
 
   renderDiscordEmbed({
     sortId: `${params.log.block.height}:${params.log.transactionIndex}:${params.log.logIndex}`,
@@ -250,7 +147,23 @@ registerEventRenderer(erc20Abi.events.Transfer.topic, async (params) => {
     severity: params.severity,
     title: `${params.name} - Swap`,
     titleUrl: `${explorer}/tx/${params.log.transactionHash}`,
-    description: sourceName ? `Source: [${sourceName}](${explorer}/address/${fromAddress})` : undefined,
-    fields,
+    description: `Source: [${sourceName}](${explorer}/address/${fromAddress})`,
+    fields: [
+      {
+        name: formatAmount(transferInData.value, 18, { maximumFractionDigits: 6 }),
+        value: `${inSymbol} in`,
+        inline: true,
+      },
+      {
+        name: formatAmount(transferOutData.value, 18, { maximumFractionDigits: 6 }),
+        value: `${outSymbol} out`,
+        inline: true,
+      },
+      {
+        name: rate.toLocaleString('en-US', { maximumFractionDigits: 6 }),
+        value: 'Rate',
+        inline: true,
+      },
+    ],
   })
 })
