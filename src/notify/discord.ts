@@ -92,6 +92,8 @@ export const notifyDiscord = ({
 
   if (title) {
     content = `### ${severityEmojis[severity]}   ${title}${linkString}${mentionString}`
+  } else if (mentionString) {
+    content = mentionString.trimStart()
   }
   if (description) {
     content += `\n${description}`
