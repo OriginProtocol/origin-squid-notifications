@@ -211,16 +211,18 @@ export function buildSubscriptions(rules: AlertRule[]) {
  * This function checks callFrom, callTo, traceType, suicideRefundAddress, and traceError.
  */
 function matchesTraceRule(rule: AlertRule, trace: Trace): boolean {
-  if (rule.traceType && !rule.traceType.includes(trace.type)) return false
+  if (rule.traceType?.length && !rule.traceType.includes(trace.type)) return false
 
   if (trace.type === 'call') {
-    if (rule.callFrom && !rule.callFrom.some((a) => a.toLowerCase() === trace.action.from.toLowerCase())) return false
-    if (rule.callTo && !rule.callTo.some((a) => a.toLowerCase() === trace.action.to.toLowerCase())) return false
+    if (rule.callFrom?.length && !rule.callFrom.some((a) => a.toLowerCase() === trace.action.from.toLowerCase()))
+      return false
+    if (rule.callTo?.length && !rule.callTo.some((a) => a.toLowerCase() === trace.action.to.toLowerCase()))
+      return false
   }
 
   if (trace.type === 'suicide') {
     if (
-      rule.suicideRefundAddress &&
+      rule.suicideRefundAddress?.length &&
       !rule.suicideRefundAddress.some((a) => a.toLowerCase() === trace.action.refundAddress.toLowerCase())
     )
       return false

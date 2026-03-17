@@ -169,11 +169,15 @@ export const findMatchingEventRules = (
   return cachedRules.filter((rule) => {
     if (rule.chainId !== chainId) return false
     if (rule.matchType !== 'event') return false
-    if (rule.addresses && !rule.addresses.some((a) => a.toLowerCase() === contractAddress.toLowerCase())) return false
-    if (rule.topic0s && !rule.topic0s.some((t) => t.toLowerCase() === topic0.toLowerCase())) return false
-    if (rule.topic1s && (!topic1 || !rule.topic1s.some((t) => t.toLowerCase() === topic1.toLowerCase()))) return false
-    if (rule.topic2s && (!topic2 || !rule.topic2s.some((t) => t.toLowerCase() === topic2.toLowerCase()))) return false
-    if (rule.topic3s && (!topic3 || !rule.topic3s.some((t) => t.toLowerCase() === topic3.toLowerCase()))) return false
+    if (rule.addresses?.length && !rule.addresses.some((a) => a.toLowerCase() === contractAddress.toLowerCase()))
+      return false
+    if (rule.topic0s?.length && !rule.topic0s.some((t) => t.toLowerCase() === topic0.toLowerCase())) return false
+    if (rule.topic1s?.length && (!topic1 || !rule.topic1s.some((t) => t.toLowerCase() === topic1.toLowerCase())))
+      return false
+    if (rule.topic2s?.length && (!topic2 || !rule.topic2s.some((t) => t.toLowerCase() === topic2.toLowerCase())))
+      return false
+    if (rule.topic3s?.length && (!topic3 || !rule.topic3s.some((t) => t.toLowerCase() === topic3.toLowerCase())))
+      return false
     return true
   })
 }
@@ -189,9 +193,9 @@ export const findMatchingTraceRules = (
   return cachedRules.filter((rule) => {
     if (rule.chainId !== chainId) return false
     if (rule.matchType !== 'trace') return false
-    if (rule.addresses && toAddress && !rule.addresses.some((a) => a.toLowerCase() === toAddress.toLowerCase()))
+    if (rule.addresses?.length && toAddress && !rule.addresses.some((a) => a.toLowerCase() === toAddress.toLowerCase()))
       return false
-    if (rule.sighashes && sighash && !rule.sighashes.some((s) => s.toLowerCase() === sighash.toLowerCase()))
+    if (rule.sighashes?.length && sighash && !rule.sighashes.some((s) => s.toLowerCase() === sighash.toLowerCase()))
       return false
     return true
   })
