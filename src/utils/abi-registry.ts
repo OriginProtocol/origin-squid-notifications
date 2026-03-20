@@ -284,6 +284,20 @@ class AbiRegistry {
   }
 
   /**
+   * Get the raw viem ABI event item by topic0.
+   */
+  getEventAbiItem(topic0: string): ViemAbiEvent | undefined {
+    return this.viemEvents.get(topic0)?.[0]?.abiItem
+  }
+
+  /**
+   * Get the raw viem ABI function item by sighash.
+   */
+  getFunctionAbiItem(sighash: string): ViemAbiFunction | undefined {
+    return this.viemFunctions.get(sighash)?.[0]?.abiItem
+  }
+
+  /**
    * Get event metadata (name + signature) by topic0.
    */
   getEventInfo(topic0: string): { name: string; signature: string } | undefined {

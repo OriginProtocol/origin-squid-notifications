@@ -2,6 +2,7 @@ import { APIEmbed, WebhookClient, WebhookMessageCreateOptions } from 'discord.js
 import { sortBy } from 'lodash'
 
 import { Severity, Topic, severityEmojis, topicThumbnails } from './const'
+import { getNotificationRuntimeContext } from './runtime'
 
 const webhookUrls: Record<Topic, string> = {
   Governance: process.env['DISCORD_WEBHOOK_URL_GOVERNANCE'] ?? '',
@@ -31,7 +32,12 @@ const clients: Record<Topic, WebhookClient | undefined> = {
   OS: new WebhookClient({ url: webhookUrls.OS }),
 }
 
+const testWebhookUrl = process.env['DISCORD_WEBHOOK_URL_TEST'] ?? ''
+const testClient = testWebhookUrl ? new WebhookClient({ url: testWebhookUrl }) : undefined
+
 let messageQueue: Map<string, { topic: Topic; data: WebhookMessageCreateOptions }> = new Map()
+
+export const hasQueuedDiscordMessage = (sortId: string): boolean => messageQueue.has(sortId)
 
 export interface DiscordOptions {
   sortId: string
@@ -66,6 +72,28 @@ export const sendMessage = async (topic: Topic, message: WebhookMessageCreateOpt
   }
 }
 
+export const sendTestMessage = async (
+  topic: Topic,
+  message: WebhookMessageCreateOptions,
+  retries = 3,
+): Promise<void> => {
+  if (!testClient) {
+    throw new Error('DISCORD_WEBHOOK_URL_TEST is not configured')
+  }
+  try {
+    await testClient.send({
+      ...message,
+      username: `${topic} (test)`,
+      avatarURL: topic ? topicThumbnails[topic] : undefined,
+    })
+  } catch (err) {
+    if (retries > 0) {
+      return await sendTestMessage(topic, message, retries - 1)
+    }
+    throw err
+  }
+}
+
 export const notifyDiscord = ({
   sortId,
   title,
@@ -78,6 +106,7 @@ export const notifyDiscord = ({
   mentions,
   flags,
 }: DiscordOptions) => {
+  const runtime = getNotificationRuntimeContext()
   let content = ''
   const linkString = links
     ? '   |   ' +
@@ -111,6 +140,12 @@ export const notifyDiscord = ({
     embeds,
     flags,
   }
+
+  if (runtime.mode === 'test') {
+    void sendTestMessage(topic, payload)
+    return
+  }
+
   if (messageQueue.has(sortId)) {
     console.error(`Duplicate message received: ${sortId}`)
     console.log('Current payload:', payload)

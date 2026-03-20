@@ -12,6 +12,7 @@ INSERT INTO chain VALUES (1, 'mainnet'), (8453, 'base'), (146, 'sonic');
 -- Valid notification topics (maps to Discord webhooks)
 CREATE TYPE severity_level AS ENUM ('low', 'medium', 'high', 'critical', 'broken', 'highlight');
 CREATE TYPE match_type AS ENUM ('event', 'trace');
+CREATE TYPE renderer_type AS ENUM ('default', 'template');
 
 -- Valid topics — add rows here as new products launch
 CREATE TABLE topic (
@@ -134,6 +135,33 @@ CREATE TABLE abi (
   created_at      TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
+-- ─── Renderer ────────────────────────────────────────────────────────────────
+-- Additive template renderer overrides for specific contract + selector matches.
+
+CREATE TABLE renderer (
+  id                TEXT PRIMARY KEY CHECK (is_slug(id)),
+  name              TEXT NOT NULL,
+  mode              renderer_type NOT NULL DEFAULT 'template',
+  chain_id          INTEGER REFERENCES chain(id),
+  match_type        match_type NOT NULL,
+  contract_addresses TEXT[] CHECK (array_all_match(contract_addresses, 'address')),
+  topic0            TEXT CHECK (topic0 IS NULL OR is_topic_hash(topic0)),
+  sighash           TEXT CHECK (sighash IS NULL OR is_sighash(sighash)),
+  config_json       JSONB NOT NULL DEFAULT '{}'::jsonb,
+  created_at        TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at        TIMESTAMPTZ NOT NULL DEFAULT now(),
+
+  CONSTRAINT renderer_selector_fields CHECK (
+    (match_type = 'event' AND sighash IS NULL) OR
+    (match_type = 'trace' AND topic0 IS NULL)
+  )
+);
+
+CREATE INDEX idx_renderer_chain_id ON renderer (chain_id);
+CREATE INDEX idx_renderer_match_type ON renderer (match_type);
+CREATE INDEX idx_renderer_topic0 ON renderer (topic0);
+CREATE INDEX idx_renderer_sighash ON renderer (sighash);
+
 -- ─── Alert Rule ───────────────────────────────────────────────────────────────
 
 CREATE TABLE alert_rule (
@@ -206,3 +234,6 @@ CREATE TRIGGER alert_rule_updated_at
   BEFORE UPDATE ON alert_rule
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
+CREATE TRIGGER renderer_updated_at
+  BEFORE UPDATE ON renderer
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at();
