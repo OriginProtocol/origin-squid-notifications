@@ -111,6 +111,38 @@ export interface AlertRule {
   description: string | null
 }
 
+export type RendererMode = 'default' | 'template'
+
+export type TemplateFieldFormat = 'auto' | 'address' | 'txHash' | 'timestamp' | 'raw'
+
+export interface TemplateRendererField {
+  id: string
+  label: string
+  path: string
+  inline?: boolean
+  format?: TemplateFieldFormat
+  hideIfEmpty?: boolean
+}
+
+export interface TemplateRendererConfig {
+  titleTemplate?: string
+  descriptionTemplate?: string
+  fields?: TemplateRendererField[]
+}
+
+export interface RendererRecord {
+  id: string
+  name: string
+  mode: RendererMode
+  chainId: number | null
+  matchType: 'event' | 'trace'
+  abiNames: string[] | null
+  contractAddresses: string[] | null
+  topic0: string | null
+  sighash: string | null
+  configJson: TemplateRendererConfig | Record<string, unknown> | null
+}
+
 // ─── Contract Info ────────────────────────────────────────────────────────────
 
 export interface ContractInfo {

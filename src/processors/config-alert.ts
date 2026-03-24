@@ -1,9 +1,18 @@
 import { Context, Trace, defineProcessor, logFilter, traceFilter } from '@originprotocol/squid-utils'
 import { EvmBatchProcessor } from '@subsquid/evm-processor'
 
-import { evaluateFilter, findMatchingEventRules, findMatchingTraceRules, getAlertRules } from '../alert-config'
-import type { AlertRule } from '../alert-config'
-import { notifyForEvent } from '../notify/event'
+import {
+  evaluateFilter,
+  findMatchingEventRules,
+  findMatchingRenderer,
+  findMatchingTraceRules,
+  getAlertRules,
+} from '../alert-config'
+import type { AlertRule, RendererRecord } from '../alert-config'
+import { hasQueuedDiscordMessage } from '../notify/discord'
+import { getRegisteredEventRenderer, notifyForEvent } from '../notify/event'
+import { defaultEventRenderer } from '../notify/event/renderers/default'
+import { createEventTemplateRenderer, createTraceTemplateRenderer, isTemplateRenderer } from '../notify/template'
 import { notifyForTrace } from '../notify/trace'
 import { registerLogFilter, registerTraceFilter } from './persistence-filters'
 import { abiRegistry } from '../utils/abi-registry'
@@ -98,6 +107,13 @@ export const createConfigAlertProcessor = async (chainId: number) => {
               console.warn(`ConfigAlert: No ABI for topic0 ${topic0} (rule ${rule.id}), sending raw notification`)
             }
 
+            const matchingRenderer = findMatchingRenderer({
+              chainId: ctx.chain.id,
+              matchType: 'event',
+              contractAddress: log.address,
+              topic0,
+            })
+
             await notifyForEvent({
               ctx,
               name: rule.displayName ?? rule.topic,
@@ -108,6 +124,7 @@ export const createConfigAlertProcessor = async (chainId: number) => {
               topic: rule.topic,
               severity: rule.severity === 'low' ? undefined : rule.severity,
               notifyTarget: rule.notifyTargets ?? undefined,
+              renderer: buildEventRendererOverride(rule, matchingRenderer),
             })
           }
         }
@@ -147,6 +164,13 @@ export const createConfigAlertProcessor = async (chainId: number) => {
               severity = 'broken'
             }
 
+            const matchingRenderer = findMatchingRenderer({
+              chainId: ctx.chain.id,
+              matchType: 'trace',
+              contractAddress: toAddress,
+              sighash,
+            })
+
             await notifyForTrace({
               ctx,
               name: rule.displayName ?? rule.topic,
@@ -156,12 +180,39 @@ export const createConfigAlertProcessor = async (chainId: number) => {
               notifyTarget: rule.notifyTargets ?? undefined,
               functionName,
               functionData,
+              renderer: buildTraceRendererOverride(rule, matchingRenderer),
             })
           }
         }
       }
     },
   })
+}
+
+function buildEventRendererOverride(rule: AlertRule, renderer: RendererRecord | null) {
+  if (!renderer) return undefined
+
+  return async (params: Parameters<typeof notifyForEvent>[0]) => {
+    const sortId = `${params.log.block.height}:${params.log.transactionIndex}:${params.log.logIndex}`
+    const hardcodedRenderer = getRegisteredEventRenderer(params.event.topic)
+
+    if (hardcodedRenderer) {
+      await hardcodedRenderer(params)
+      if (hasQueuedDiscordMessage(sortId)) return
+    }
+
+    if (isTemplateRenderer(renderer)) {
+      await createEventTemplateRenderer(renderer, rule)(params)
+      return
+    }
+
+    await defaultEventRenderer(params)
+  }
+}
+
+function buildTraceRendererOverride(rule: AlertRule, renderer: RendererRecord | null) {
+  if (!renderer || !isTemplateRenderer(renderer)) return undefined
+  return createTraceTemplateRenderer(renderer, rule)
 }
 
 /**

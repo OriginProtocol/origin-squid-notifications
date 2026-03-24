@@ -1,16 +1,15 @@
-import fs from 'node:fs'
-import path from 'node:path'
 // @ts-expect-error pg has no type declarations in this project
 import pg from 'pg'
 
 import type { Severity, Topic } from '@notify/const'
 
-import type { AlertRule, FilterExpression } from './types'
+import type { AlertRule, FilterExpression, RendererRecord } from './types'
 
-const { Client, Pool } = pg
+const { Pool } = pg
 
 let pool: InstanceType<typeof Pool> | null = null
 let cachedRules: AlertRule[] = []
+let cachedRenderers: RendererRecord[] = []
 let lastRuleRefresh = 0
 
 const REFRESH_INTERVAL_MS = 5 * 60 * 1000 // 5 minutes
@@ -22,77 +21,6 @@ const getPool = (): InstanceType<typeof Pool> => {
     pool = new Pool({ connectionString: url })
   }
   return pool
-}
-
-function readSqlFile(filename: string): string {
-  const localPath = path.resolve(__dirname, filename)
-  if (fs.existsSync(localPath)) return fs.readFileSync(localPath, 'utf-8')
-  return fs.readFileSync(path.resolve(__dirname, '..', '..', 'src', 'alert-config', filename), 'utf-8')
-}
-
-function splitStatements(sql: string): string[] {
-  return sql
-    .split(';\n')
-    .map((s) =>
-      s
-        .split('\n')
-        .filter((line) => !line.trimStart().startsWith('--'))
-        .join('\n')
-        .trim(),
-    )
-    .filter((s) => s.length > 0)
-}
-
-/**
- * Initialize the alert config database.
- * Creates the database if needed, runs migration, and seeds data.
- * Call once at startup before using any other alert-config functions.
- * Only runs when ALERT_CONFIG_DB_MIGRATION=true.
- */
-export const initAlertConfigDb = async (): Promise<void> => {
-  if (process.env.ALERT_CONFIG_DB_MIGRATION !== 'true') return
-
-  const url = process.env.ALERT_CONFIG_DB_URL
-  if (!url) return
-
-  // Parse the DB name from the URL to create it if needed
-  const parsed = new URL(url)
-  const dbName = parsed.pathname.slice(1) // remove leading /
-  const adminUrl = `${parsed.protocol}//${parsed.username}:${parsed.password}@${parsed.host}/postgres`
-
-  // Create database if it doesn't exist
-  const adminClient = new Client({ connectionString: adminUrl })
-  try {
-    await adminClient.connect()
-    const { rows } = await adminClient.query('SELECT 1 FROM pg_database WHERE datname = $1', [dbName])
-    if (rows.length === 0) {
-      await adminClient.query(`CREATE DATABASE "${dbName}"`)
-      console.log(`Alert config: created database "${dbName}"`)
-    }
-  } finally {
-    await adminClient.end()
-  }
-
-  // Check if schema already exists
-  const p = getPool()
-  const { rows } = await p.query("SELECT 1 FROM information_schema.tables WHERE table_name = 'alert_rule'")
-  if (rows.length > 0) return // Already migrated
-
-  // Run migration
-  await p.query(readSqlFile('migration.sql'))
-  console.log('Alert config: migration complete')
-
-  // Seed rules
-  for (const stmt of splitStatements(readSqlFile('seed-rules.sql'))) {
-    await p.query(stmt)
-  }
-  console.log('Alert config: seed rules loaded')
-
-  // Seed ABIs
-  for (const stmt of splitStatements(readSqlFile('seed-abis.sql'))) {
-    await p.query(stmt)
-  }
-  console.log('Alert config: ABI seed loaded')
 }
 
 const loadRules = async (): Promise<AlertRule[]> => {
@@ -125,6 +53,26 @@ const loadRules = async (): Promise<AlertRule[]> => {
   )
 }
 
+const loadRenderers = async (): Promise<RendererRecord[]> => {
+  const tableCheck = await getPool().query("SELECT 1 FROM information_schema.tables WHERE table_name = 'renderer'")
+  if (tableCheck.rows.length === 0) return []
+  const { rows } = await getPool().query('SELECT * FROM renderer ORDER BY name ASC')
+  return rows.map(
+    (row: any): RendererRecord => ({
+      id: row.id,
+      name: row.name,
+      mode: row.mode,
+      chainId: row.chain_id,
+      matchType: row.match_type,
+      abiNames: row.abi_names,
+      contractAddresses: row.contract_addresses,
+      topic0: row.topic0,
+      sighash: row.sighash,
+      configJson: row.config_json ?? {},
+    }),
+  )
+}
+
 /**
  * Get all enabled alert rules. Refreshes every 5 minutes.
  */
@@ -132,6 +80,20 @@ export const getAlertRules = async (): Promise<AlertRule[]> => {
   if (!process.env.ALERT_CONFIG_DB_URL) return []
   await refreshRulesIfStale()
   return cachedRules
+}
+
+export const getRenderers = async (): Promise<RendererRecord[]> => {
+  if (!process.env.ALERT_CONFIG_DB_URL) return []
+  await refreshRulesIfStale()
+  return cachedRenderers
+}
+
+export const refreshAlertConfig = async (): Promise<void> => {
+  if (!process.env.ALERT_CONFIG_DB_URL) return
+  cachedRules = await loadRules()
+  cachedRenderers = await loadRenderers()
+  lastRuleRefresh = Date.now()
+  console.log(`Alert config: force refreshed ${cachedRules.length} rules and ${cachedRenderers.length} renderers`)
 }
 
 /**
@@ -144,8 +106,9 @@ const refreshRulesIfStale = async (): Promise<void> => {
   const isFirstLoad = lastRuleRefresh === 0
   try {
     cachedRules = await loadRules()
+    cachedRenderers = await loadRenderers()
     lastRuleRefresh = Date.now()
-    console.log(`Alert config: loaded ${cachedRules.length} rules`)
+    console.log(`Alert config: loaded ${cachedRules.length} rules and ${cachedRenderers.length} renderers`)
   } catch (err) {
     if (isFirstLoad) {
       console.error('FATAL: Failed to load alert rules on startup:', err)
@@ -153,6 +116,47 @@ const refreshRulesIfStale = async (): Promise<void> => {
     }
     console.error('Failed to refresh alert rules (using cached):', err)
   }
+}
+
+export const findMatchingRenderer = (params: {
+  chainId: number
+  matchType: 'event' | 'trace'
+  contractAddress?: string | null
+  topic0?: string | null
+  sighash?: string | null
+}): RendererRecord | null => {
+  const contractAddress = params.contractAddress?.toLowerCase() ?? null
+  const topic0 = params.topic0?.toLowerCase() ?? null
+  const sighash = params.sighash?.toLowerCase() ?? null
+
+  const candidates = cachedRenderers.filter((renderer) => {
+    if (renderer.matchType !== params.matchType) return false
+    if (renderer.chainId != null && renderer.chainId !== params.chainId) return false
+
+    if (renderer.contractAddresses?.length) {
+      if (!contractAddress) return false
+      if (!renderer.contractAddresses.some((value) => value.toLowerCase() === contractAddress)) return false
+    }
+
+    if (params.matchType === 'event' && renderer.topic0) {
+      if (!topic0 || renderer.topic0.toLowerCase() !== topic0) return false
+    }
+
+    if (params.matchType === 'trace' && renderer.sighash) {
+      if (!sighash || renderer.sighash.toLowerCase() !== sighash) return false
+    }
+
+    return true
+  })
+
+  if (candidates.length === 0) return null
+
+  const score = (renderer: RendererRecord) =>
+    (renderer.chainId != null ? 4 : 0) +
+    (renderer.contractAddresses?.length ? 2 : 0) +
+    (renderer.topic0 || renderer.sighash ? 1 : 0)
+
+  return candidates.sort((a, b) => score(b) - score(a) || a.name.localeCompare(b.name))[0] ?? null
 }
 
 /**

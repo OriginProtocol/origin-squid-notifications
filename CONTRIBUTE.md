@@ -53,6 +53,18 @@ PROCESSOR=Buyback pnpm run process
 ALERT="Lido ARM" pnpm run process
 ```
 
+## Deployment
+
+The `v3` branch auto-deploys to Subsquid Cloud. To deploy:
+
+1. Merge your feature branch into `main`
+2. Merge `main` into `v3`
+
+Manual deploy (requires updating `squid.yaml` first):
+```shell
+sqd deploy . --update     # Deploy to Subsquid Cloud (use --update to prevent gaps)
+```
+
 ## Adding human-readable address names
 
 For new contract addresses, either:
