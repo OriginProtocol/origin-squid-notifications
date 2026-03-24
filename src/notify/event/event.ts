@@ -8,6 +8,7 @@ import { NotifyTarget, Severity, Topic } from '../const'
 import { notifyLoki } from '../loki'
 import { checkAndLogNotification } from '../notification-log'
 import { notifyOncall } from '../oncall'
+import { getNotificationRuntimeContext } from '../runtime'
 import { renderDiscordEmbed } from './renderers/utils'
 
 /** Minimal interface for event decoding — works with both subsquid AbiEvent and viem wrappers */
@@ -33,6 +34,7 @@ export const registerEventRenderer = (
   eventRenderers.set(topic, fn)
   return fn
 }
+export const getRegisteredEventRenderer = (topic: string) => eventRenderers.get(topic)
 
 type EventArgs = {
   [key: string]: Codec<any> & { indexed?: boolean }
@@ -84,65 +86,73 @@ export const notifyForEvent = async (params: {
   notifyTarget?: NotifyTarget
   renderer?: EventRenderer
 }) => {
+  const runtime = getNotificationRuntimeContext()
   const recordId = `${params.ctx.chain.id}:${params.log.block.height}:${params.log.transactionIndex}:${params.log.logIndex}`
-  const isDuplicate = await checkAndLogNotification({
-    ctx: params.ctx,
-    recordId,
-    recordType: 'event',
-    processor: params.name,
-    chainId: params.ctx.chain.id,
-    blockNumber: params.log.block.height,
-  })
-  if (isDuplicate) return
+  if (!runtime.skipDedup) {
+    const isDuplicate = await checkAndLogNotification({
+      ctx: params.ctx,
+      recordId,
+      recordType: 'event',
+      processor: params.name,
+      chainId: params.ctx.chain.id,
+      blockNumber: params.log.block.height,
+    })
+    if (isDuplicate) return
+  }
 
   const sortId = `${params.log.block.height}:${params.log.transactionIndex}:${params.log.logIndex}`
-  notifyLoki({
-    timestamp: params.log.block.timestamp,
-    sortId,
-    labels: {
-      topic: params.topic,
-      severity: params.severity ?? 'low',
-      chain: String(params.ctx.chain.id),
-      notification_type: 'event',
-      notification_name: params.eventName,
-      address: params.log.address,
-      address_name: getAddressesPyName(params.log.address),
-    },
-    entry: {
-      timestamp: new Date(params.log.block.timestamp).toISOString(),
-      product: params.topic,
-      severity: params.severity ?? 'low',
-      chain: params.ctx.chain.id,
-      notification_type: 'event',
-      processor_name: params.name,
-      event_name: params.eventName,
-      contract_address: params.log.address,
-      contract_name: getAddressesPyName(params.log.address),
-      block: params.log.block.height,
-      tx_hash: params.log.transactionHash,
-      tx_index: params.log.transactionIndex,
-      log_index: params.log.logIndex,
-      decoded_data: safeDecodeEvent(params.event, params.log),
-    },
-  })
-
-  const eventState = useEventState(params.ctx)
-  if (!eventState.isEventHandled(params.log)) {
-    eventState.markEventHandled(params.log)
-    console.log('Sending notification for event', params.eventName)
-    const renderer = params.renderer ?? eventRenderers.get(params.event.topic) ?? eventRenderers.get('default')
-    if (renderer) {
-      await renderer(params)
-    }
-    if (params.severity === 'high' || params.severity === 'critical') {
-      notifyOncall(params.log.id, {
+  if (!runtime.skipLoki) {
+    notifyLoki({
+      timestamp: params.log.block.timestamp,
+      sortId,
+      labels: {
         topic: params.topic,
-        severity: params.severity,
-        name: params.name,
-        eventName: params.eventName,
-        log: params.log,
-        data: safeDecodeEvent(params.event, params.log),
-      })
-    }
+        severity: params.severity ?? 'low',
+        chain: String(params.ctx.chain.id),
+        notification_type: 'event',
+        notification_name: params.eventName,
+        address: params.log.address,
+        address_name: getAddressesPyName(params.log.address),
+      },
+      entry: {
+        timestamp: new Date(params.log.block.timestamp).toISOString(),
+        product: params.topic,
+        severity: params.severity ?? 'low',
+        chain: params.ctx.chain.id,
+        notification_type: 'event',
+        processor_name: params.name,
+        event_name: params.eventName,
+        contract_address: params.log.address,
+        contract_name: getAddressesPyName(params.log.address),
+        block: params.log.block.height,
+        tx_hash: params.log.transactionHash,
+        tx_index: params.log.transactionIndex,
+        log_index: params.log.logIndex,
+        decoded_data: safeDecodeEvent(params.event, params.log),
+      },
+    })
+  }
+
+  const shouldCheckEventState = !runtime.skipDedup
+  if (shouldCheckEventState) {
+    const eventState = useEventState(params.ctx)
+    if (eventState.isEventHandled(params.log)) return
+    eventState.markEventHandled(params.log)
+  }
+
+  console.log('Sending notification for event', params.eventName)
+  const renderer = params.renderer ?? eventRenderers.get(params.event.topic) ?? eventRenderers.get('default')
+  if (renderer) {
+    await renderer(params)
+  }
+  if (!runtime.skipOncall && (params.severity === 'high' || params.severity === 'critical')) {
+    notifyOncall(params.log.id, {
+      topic: params.topic,
+      severity: params.severity,
+      name: params.name,
+      eventName: params.eventName,
+      log: params.log,
+      data: safeDecodeEvent(params.event, params.log),
+    })
   }
 }

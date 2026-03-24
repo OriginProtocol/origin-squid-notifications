@@ -8,6 +8,7 @@ import { explorerUrl, formatAddress, formatValue } from './format'
 import { notifyLoki } from './loki'
 import { checkAndLogNotification } from './notification-log'
 import { notifyOncall } from './oncall'
+import { getNotificationRuntimeContext } from './runtime'
 
 export interface NotifyForTraceInput {
   ctx: Context
@@ -19,6 +20,7 @@ export interface NotifyForTraceInput {
   trace: Trace
   notifyTarget?: NotifyTarget
   discordExcludeFilter?: (input: NotifyForTraceInput) => boolean
+  renderer?: (input: NotifyForTraceInput) => Promise<void> | void
 }
 
 export const notifyForTrace = async (input: NotifyForTraceInput) => {
@@ -38,57 +40,75 @@ export const notifyForTrace = async (input: NotifyForTraceInput) => {
   let fromName = getAddressesPyName(from)
   let toName = getAddressesPyName(to)
 
-  const recordId = `${ctx.chain.id}:${trace.block.height}:${trace.transactionIndex}:${JSON.stringify(
-    trace.traceAddress,
-  )}`
-  const isDuplicate = await checkAndLogNotification({
-    ctx,
-    recordId,
-    recordType: 'trace',
-    processor: name,
-    chainId: ctx.chain.id,
-    blockNumber: trace.block.height,
-  })
-  if (isDuplicate) return
+  const runtime = getNotificationRuntimeContext()
+  const recordId = `${ctx.chain.id}:${trace.block.height}:${trace.transactionIndex}:${JSON.stringify(trace.traceAddress)}`
+  if (!runtime.skipDedup) {
+    const isDuplicate = await checkAndLogNotification({
+      ctx,
+      recordId,
+      recordType: 'trace',
+      processor: name,
+      chainId: ctx.chain.id,
+      blockNumber: trace.block.height,
+    })
+    if (isDuplicate) return
+  }
 
   const id = `${trace.block.height}:${trace.transactionIndex}:${JSON.stringify(trace.traceAddress)}`
 
   const excludeFromDiscord = discordExcludeFilter && discordExcludeFilter(input)
 
-  notifyLoki({
-    timestamp: trace.block.timestamp,
-    sortId: id,
-    labels: {
-      topic,
-      severity,
-      chain: String(ctx.chain.id),
-      notification_type: 'trace',
-      notification_name: functionName,
-      address: to ?? trace.transaction?.to ?? '',
-      address_name: toName ?? getAddressesPyName(trace.transaction?.to),
-    },
-    entry: {
-      timestamp: new Date(trace.block.timestamp).toISOString(),
-      product: topic,
-      severity,
-      chain: ctx.chain.id,
-      notification_type: 'trace',
-      processor_name: name,
-      function_name: functionName,
-      from,
-      from_name: fromName,
-      to,
-      to_name: toName,
-      block: trace.block.height,
-      tx_hash: trace.transaction?.hash,
-      tx_index: trace.transactionIndex,
-      trace_address: trace.traceAddress,
-      error: trace.error,
-      function_data: functionData,
-    },
-  })
+  if (!runtime.skipLoki) {
+    notifyLoki({
+      timestamp: trace.block.timestamp,
+      sortId: id,
+      labels: {
+        topic,
+        severity,
+        chain: String(ctx.chain.id),
+        notification_type: 'trace',
+        notification_name: functionName,
+        address: to ?? trace.transaction?.to ?? '',
+        address_name: toName ?? getAddressesPyName(trace.transaction?.to),
+      },
+      entry: {
+        timestamp: new Date(trace.block.timestamp).toISOString(),
+        product: topic,
+        severity,
+        chain: ctx.chain.id,
+        notification_type: 'trace',
+        processor_name: name,
+        function_name: functionName,
+        from,
+        from_name: fromName,
+        to,
+        to_name: toName,
+        block: trace.block.height,
+        tx_hash: trace.transaction?.hash,
+        tx_index: trace.transactionIndex,
+        trace_address: trace.traceAddress,
+        error: trace.error,
+        function_data: functionData,
+      },
+    })
+  }
 
   if (excludeFromDiscord) return
+
+  if (input.renderer) {
+    await input.renderer(input)
+    if (!runtime.skipOncall && (severity === 'high' || severity === 'critical')) {
+      notifyOncall(id, {
+        topic,
+        severity,
+        name,
+        trace,
+        functionName,
+        functionData,
+      })
+    }
+    return
+  }
 
   const explorer = explorerUrl(ctx.chain)
   const timestamp = new Date(trace.block.timestamp)
@@ -172,7 +192,7 @@ export const notifyForTrace = async (input: NotifyForTraceInput) => {
     ],
     mentions: notifyTarget?.discordMentions,
   })
-  if (severity === 'high' || severity === 'critical') {
+  if (!runtime.skipOncall && (severity === 'high' || severity === 'critical')) {
     notifyOncall(id, {
       topic,
       severity,

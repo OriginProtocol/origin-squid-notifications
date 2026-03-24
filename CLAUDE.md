@@ -23,6 +23,17 @@ pnpm run backfill         # Backfill EventRecord/TraceRecord for specific rules 
 pnpm run digest-db        # Output all DB-driven alert rules and code-driven processors
 pnpm run generate-seed    # Regenerate seed-rules.sql from code-driven processors
 pnpm run generate-abi-seed # Regenerate seed-abis.sql from abi/*.json files
+```
+
+### Deployment
+
+The `v3` branch auto-deploys to Subsquid Cloud. To deploy:
+
+1. Merge your feature branch into `main`
+2. Merge `main` into `v3`
+
+Manual deploy (requires updating `squid.yaml` version first):
+```shell
 sqd deploy . --update     # Deploy to Subsquid Cloud (use --update to prevent gaps)
 ```
 
