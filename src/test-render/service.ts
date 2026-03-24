@@ -51,7 +51,13 @@ type TraceRecordRow = {
   revert_reason: string | null
 }
 
-export async function sendRendererTestAlert(rendererId: string, overrideData?: Record<string, unknown>) {
+export interface TestRenderOverrides {
+  data?: Record<string, unknown>
+  title?: string
+  description?: string
+}
+
+export async function sendRendererTestAlert(rendererId: string, overrides?: TestRenderOverrides) {
   await ensureInitialized()
   await refreshAlertConfig()
   const renderers = await getRenderers()
@@ -65,13 +71,13 @@ export async function sendRendererTestAlert(rendererId: string, overrideData?: R
 
   if (renderer.matchType === 'event') {
     const record = (await loadRecentMatchingEvent(renderer)) ?? mockEventRecord(renderer)
-    await sendEventRendererTest(renderer, record, overrideData)
-    return { rendererId, matchType: 'event', recordId: record.id, txHash: record.tx_hash }
+    const data = await sendEventRendererTest(renderer, record, overrides)
+    return { rendererId, matchType: 'event', recordId: record.id, txHash: record.tx_hash, data }
   }
 
   const record = (await loadRecentMatchingTrace(renderer)) ?? mockTraceRecord(renderer)
-  await sendTraceRendererTest(renderer, record, overrideData)
-  return { rendererId, matchType: 'trace', recordId: record.id, txHash: record.tx_hash }
+  const data = await sendTraceRendererTest(renderer, record, overrides)
+  return { rendererId, matchType: 'trace', recordId: record.id, txHash: record.tx_hash, data }
 }
 
 async function loadRecentMatchingEvent(renderer: RendererRecord): Promise<EventRecordRow | null> {
@@ -138,19 +144,20 @@ async function loadRecentMatchingTrace(renderer: RendererRecord): Promise<TraceR
   return (rows[0] as TraceRecordRow | undefined) ?? null
 }
 
-async function sendEventRendererTest(renderer: RendererRecord, record: EventRecordRow, overrideData?: Record<string, unknown>) {
+async function sendEventRendererTest(renderer: RendererRecord, record: EventRecordRow, overrides?: TestRenderOverrides): Promise<Record<string, unknown> | undefined> {
   const realEvent = abiRegistry.getEvent(record.topic0)
   if (!realEvent) {
     throw new Error(`No ABI decoder found for topic0 ${record.topic0}`)
   }
-  const event = overrideData
-    ? { topic: realEvent.topic, decode: () => overrideData }
+  const eventData = overrides?.data ?? safeDecodeEvent(realEvent, record)
+  const event = overrides?.data
+    ? { topic: realEvent.topic, decode: () => overrides.data }
     : realEvent
 
   const isMock = record.id.startsWith('mock:')
   const siblings = isMock ? [record] : await loadSiblingEvents(record)
   const chain = getChain(record.chain_id)
-  const matchingRule = pickMatchingEventRule(record)
+  const matchingRule = applyRuleOverrides(pickMatchingEventRule(record), overrides)
   const transactionLogs = siblings.map((item) => ({
     id: item.id,
     address: item.contract_address,
@@ -198,11 +205,12 @@ async function sendEventRendererTest(renderer: RendererRecord, record: EventReco
       renderer: createEventTemplateRenderer(renderer, matchingRule),
     })
   })
+  return eventData as Record<string, unknown> | undefined
 }
 
-async function sendTraceRendererTest(renderer: RendererRecord, record: TraceRecordRow, overrideData?: Record<string, unknown>) {
+async function sendTraceRendererTest(renderer: RendererRecord, record: TraceRecordRow, overrides?: TestRenderOverrides): Promise<Record<string, unknown> | undefined> {
   const chain = getChain(record.chain_id)
-  const matchingRule = pickMatchingTraceRule(record)
+  const matchingRule = applyRuleOverrides(pickMatchingTraceRule(record), overrides)
   const trace = {
     type: record.type,
     action: {
@@ -228,7 +236,7 @@ async function sendTraceRendererTest(renderer: RendererRecord, record: TraceReco
   }
 
   const functionName = record.sighash ? abiRegistry.getFunctionInfo(record.sighash)?.name : undefined
-  const functionData = overrideData ?? (record.input && record.sighash ? safeDecodeFunction(record.sighash, record.input) : undefined)
+  const functionData = overrides?.data ?? (record.input && record.sighash ? safeDecodeFunction(record.sighash, record.input) : undefined)
 
   await runInTestNotificationContext(async () => {
     await notifyForTrace({
@@ -243,6 +251,18 @@ async function sendTraceRendererTest(renderer: RendererRecord, record: TraceReco
       renderer: createTraceTemplateRenderer(renderer, matchingRule),
     })
   })
+  return functionData as Record<string, unknown> | undefined
+}
+
+function safeDecodeEvent(event: { decode: (log: any) => any }, record: EventRecordRow) {
+  try {
+    return event.decode({
+      topics: [record.topic0, record.topic1, record.topic2, record.topic3].filter(Boolean),
+      data: record.data ?? '0x',
+    })
+  } catch {
+    return undefined
+  }
 }
 
 function safeDecodeFunction(sighash: string, input: string) {
@@ -252,6 +272,15 @@ function safeDecodeFunction(sighash: string, input: string) {
     return fn.decode(input)
   } catch {
     return undefined
+  }
+}
+
+function applyRuleOverrides(rule: AlertRule, overrides?: TestRenderOverrides): AlertRule {
+  if (!overrides?.title && !overrides?.description) return rule
+  return {
+    ...rule,
+    displayName: overrides.title ?? rule.displayName,
+    description: overrides.description ?? rule.description,
   }
 }
 
@@ -286,7 +315,7 @@ function pickMatchingEventRule(record: EventRecordRow): AlertRule {
       severity: 'medium',
       notifyTargets: null,
       transactionLogs: true,
-      displayName: 'Renderer Test',
+      displayName: null,
       description: null,
     }
   )
@@ -316,13 +345,31 @@ function pickMatchingTraceRule(record: TraceRecordRow): AlertRule {
       severity: 'medium',
       notifyTargets: null,
       transactionLogs: false,
-      displayName: 'Renderer Test',
+      displayName: null,
       description: null,
     }
   )
 }
 
-function mockDefaultForType(type: string): unknown {
+function mockDefaultForAbiInput(input: { type: string; components?: readonly any[] }): unknown {
+  const { type } = input
+  // Fixed-size arrays like uint256[3]
+  const fixedArrayMatch = type.match(/^(.+)\[(\d+)\]$/)
+  if (fixedArrayMatch) {
+    const innerType = fixedArrayMatch[1]
+    const length = parseInt(fixedArrayMatch[2])
+    return Array.from({ length }, () => mockDefaultForAbiInput({ type: innerType, components: input.components }))
+  }
+  // Dynamic arrays
+  if (type.endsWith('[]')) return []
+  // Tuples — recurse into components
+  if (type === 'tuple' && input.components?.length) {
+    const obj: Record<string, unknown> = {}
+    for (const comp of input.components) {
+      obj[comp.name ?? ''] = mockDefaultForAbiInput(comp)
+    }
+    return obj
+  }
   if (type === 'address') return '0x0000000000000000000000000000000000000001'
   if (type === 'bool') return true
   if (type === 'string') return 'test'
@@ -332,52 +379,45 @@ function mockDefaultForType(type: string): unknown {
     return ('0x' + '00'.repeat(n)) as `0x${string}`
   }
   if (/^u?int\d*$/.test(type)) return BigInt('1000000000000000000')
-  if (type.endsWith('[]')) return []
-  if (/^tuple/.test(type)) return {}
   return BigInt(0)
 }
 
-function mockEncodeEventLog(abiItem: ViemAbiEvent): { topics: string[]; data: string } {
-  const topics = encodeEventTopics({ abi: [abiItem], eventName: abiItem.name }) as string[]
+function safeMockEncodeEventLog(abiItem: ViemAbiEvent): { topics: string[]; data: string } {
+  try {
+    const topics = encodeEventTopics({ abi: [abiItem], eventName: abiItem.name }) as string[]
 
-  // Encode non-indexed params as data
-  const nonIndexed = abiItem.inputs.filter((i) => !i.indexed)
-  let data = '0x'
-  if (nonIndexed.length > 0) {
-    const values = nonIndexed.map((i) => mockDefaultForType(i.type))
-    data = encodeAbiParameters(
-      nonIndexed.map((i) => ({ type: i.type, name: i.name })),
-      values,
-    )
-  }
-
-  // Add indexed topic values
-  const indexed = abiItem.inputs.filter((i) => i.indexed)
-  for (const param of indexed) {
-    const val = mockDefaultForType(param.type)
-    if (param.type === 'address') {
-      topics.push('0x000000000000000000000000' + (val as string).slice(2))
-    } else if (/^u?int\d*$/.test(param.type)) {
-      topics.push('0x' + (val as bigint).toString(16).padStart(64, '0'))
-    } else {
-      topics.push('0x' + '00'.repeat(32))
+    const nonIndexed = abiItem.inputs.filter((i) => !i.indexed)
+    let data = '0x'
+    if (nonIndexed.length > 0) {
+      const values = nonIndexed.map((i) => mockDefaultForAbiInput(i))
+      data = encodeAbiParameters(nonIndexed as any, values)
     }
-  }
 
-  return { topics, data }
+    const indexed = abiItem.inputs.filter((i) => i.indexed)
+    for (const param of indexed) {
+      if (param.type === 'address') {
+        topics.push('0x0000000000000000000000000000000000000000000000000000000000000001')
+      } else {
+        topics.push('0x' + '00'.repeat(32))
+      }
+    }
+
+    return { topics, data }
+  } catch {
+    // Encoding failed — return minimal valid log
+    const topic0 = encodeEventTopics({ abi: [abiItem], eventName: abiItem.name })[0] as string
+    return { topics: [topic0], data: '0x' }
+  }
 }
 
-function mockEncodeFunctionInput(abiItem: ViemAbiFunction): string {
-  const sighash = ('0x' + Buffer.from(abiItem.name).toString('hex')).slice(0, 10) // Will be overridden
-  if (abiItem.inputs.length === 0) return sighash
-
-  const values = abiItem.inputs.map((i) => mockDefaultForType(i.type))
-  const encoded = encodeAbiParameters(
-    abiItem.inputs.map((i) => ({ type: i.type, name: i.name })),
-    values,
-  )
-  // sighash is already known from the renderer; prepend it to encoded params
-  return encoded // caller prepends sighash
+function safeMockEncodeFunctionInput(abiItem: ViemAbiFunction): string {
+  if (abiItem.inputs.length === 0) return ''
+  try {
+    const values = abiItem.inputs.map((i) => mockDefaultForAbiInput(i))
+    return encodeAbiParameters(abiItem.inputs as any, values)
+  } catch {
+    return ''
+  }
 }
 
 function mockEventRecord(renderer: RendererRecord): EventRecordRow {
@@ -390,7 +430,7 @@ function mockEventRecord(renderer: RendererRecord): EventRecordRow {
 
   const abiItem = abiRegistry.getEventAbiItem(topic0)
   if (abiItem) {
-    const encoded = mockEncodeEventLog(abiItem)
+    const encoded = safeMockEncodeEventLog(abiItem)
     topics = encoded.topics
     data = encoded.data
   }
@@ -420,7 +460,7 @@ function mockTraceRecord(renderer: RendererRecord): TraceRecordRow {
   let input = sighash ?? '0x'
   const abiItem = sighash ? abiRegistry.getFunctionAbiItem(sighash) : undefined
   if (abiItem && abiItem.inputs.length > 0) {
-    const encodedParams = mockEncodeFunctionInput(abiItem)
+    const encodedParams = safeMockEncodeFunctionInput(abiItem)
     input = sighash + encodedParams.slice(2)  // sighash + encoded params without 0x
   }
 

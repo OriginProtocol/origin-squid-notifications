@@ -1,10 +1,10 @@
 import type { AlertRule, RendererRecord, TemplateFieldFormat, TemplateRendererConfig } from '../alert-config'
 import { transactionLink } from '../utils/links'
-import { explorerUrl, formatAddress, formatValue } from './format'
+import { severityColors } from './const'
 import { notifyDiscord } from './discord'
 import type { EventRendererParams } from './event/event'
+import { formatAddress, formatValue } from './format'
 import type { NotifyForTraceInput } from './trace'
-import { severityColors } from './const'
 
 type TemplateContext = {
   decoded: Record<string, unknown>
@@ -43,11 +43,14 @@ export const createEventTemplateRenderer =
             interpolateTemplate(config.titleTemplate, { decoded, meta, rule: toRuleTemplateContext(rule) }) ??
             `${params.name ?? rule.displayName ?? rule.topic} - ${params.eventName}`,
           url: transactionLink(params.log.transactionHash, params.ctx.chain),
-          description: interpolateTemplate(config.descriptionTemplate, {
-            decoded,
-            meta,
-            rule: toRuleTemplateContext(rule),
-          }),
+          description:
+            interpolateTemplate(config.descriptionTemplate, {
+              decoded,
+              meta,
+              rule: toRuleTemplateContext(rule),
+            }) ??
+            rule.description ??
+            undefined,
           fields: buildFields(config, { decoded, meta, rule: toRuleTemplateContext(rule) }, params.ctx.chain),
         },
       ],
@@ -88,12 +91,17 @@ export const createTraceTemplateRenderer =
           title:
             interpolateTemplate(config.titleTemplate, { decoded, meta, rule: toRuleTemplateContext(rule) }) ??
             `${input.name ?? rule.displayName ?? rule.topic} - ${input.functionName ?? input.trace.type}`,
-          url: input.trace.transaction?.hash ? transactionLink(input.trace.transaction.hash, input.ctx.chain) : undefined,
-          description: interpolateTemplate(config.descriptionTemplate, {
-            decoded,
-            meta,
-            rule: toRuleTemplateContext(rule),
-          }),
+          url: input.trace.transaction?.hash
+            ? transactionLink(input.trace.transaction.hash, input.ctx.chain)
+            : undefined,
+          description:
+            interpolateTemplate(config.descriptionTemplate, {
+              decoded,
+              meta,
+              rule: toRuleTemplateContext(rule),
+            }) ??
+            rule.description ??
+            undefined,
           fields: buildFields(config, { decoded, meta, rule: toRuleTemplateContext(rule) }, input.ctx.chain),
         },
       ],
@@ -108,7 +116,11 @@ function normalizeTemplateConfig(configJson: RendererRecord['configJson']): Temp
   return {}
 }
 
-function buildFields(config: TemplateRendererConfig, context: TemplateContext, chain: EventRendererParams['ctx']['chain']) {
+function buildFields(
+  config: TemplateRendererConfig,
+  context: TemplateContext,
+  chain: EventRendererParams['ctx']['chain'],
+) {
   return (config.fields ?? [])
     .map((field) => {
       const rawValue = getPathValue(context, field.path)
@@ -123,7 +135,11 @@ function buildFields(config: TemplateRendererConfig, context: TemplateContext, c
     .slice(0, 25)
 }
 
-function formatTemplateField(value: unknown, format: TemplateFieldFormat, chain: EventRendererParams['ctx']['chain']): string {
+function formatTemplateField(
+  value: unknown,
+  format: TemplateFieldFormat,
+  chain: EventRendererParams['ctx']['chain'],
+): string {
   if (value == null) return '_null_'
   if (format === 'timestamp') {
     const timestamp = typeof value === 'number' ? value : Number(value)
@@ -145,7 +161,9 @@ function formatTemplateField(value: unknown, format: TemplateFieldFormat, chain:
 
 function interpolateTemplate(template: string | undefined, context: TemplateContext): string | undefined {
   if (!template?.trim()) return undefined
-  return template.replace(/\{\{\s*([^}]+?)\s*\}\}/g, (_match, path) => stringifyTemplateValue(getPathValue(context, path)))
+  return template.replace(/\{\{\s*([^}]+?)\s*\}\}/g, (_match, path) =>
+    stringifyTemplateValue(getPathValue(context, path)),
+  )
 }
 
 function stringifyTemplateValue(value: unknown): string {
@@ -171,10 +189,7 @@ function isEmpty(value: unknown): boolean {
   return value == null || value === '' || (Array.isArray(value) && value.length === 0)
 }
 
-function safeDecode(
-  event: EventRendererParams['event'],
-  log: EventRendererParams['log'],
-): Record<string, unknown> {
+function safeDecode(event: EventRendererParams['event'], log: EventRendererParams['log']): Record<string, unknown> {
   try {
     const decoded = event.decode(log)
     if (decoded && typeof decoded === 'object' && !Array.isArray(decoded)) {
