@@ -1,18 +1,11 @@
-# Origin Squid Notifications - Digest
-3/9/2026, 3:00:26 PM
-=========================================
-Loading processor: arm.ts
-Loading processor: governance
+ABI registry loaded: 279 events, 929 functions
+Alert config: loaded 103 rules
 Loading processor: index.ts
-Loading processor: oeth
-Loading processor: ogn
 Loading processor: ogn-alerts
 Loading processor: ogn-buybacks
-Loading processor: os
-Loading processor: ousd
-Loading processor: prime-eth.ts
-Loading processor: superoethb
-Loading processor: xogn
+# Origin Squid Notifications - DB Digest
+3/10/2026, 5:42:45 PM
+=========================================
 =========================================
 name:    Lido ARM Pendle SY
 topic:   ARM
@@ -29,7 +22,9 @@ events:
       - Paused | 0x62e78cea
       - Redeem | 0xaee47cdf
       - Unpaused | 0x5db9ee0a
-    severity: medium
+    severity:        medium
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Origin Ethena ARM
 topic:   ARM
@@ -45,7 +40,9 @@ events:
       - FeeUpdated | 0x8c4d35e5
       - Initialized | 0xc7f505b2
       - OperatorChanged | 0x4721129e
-    severity: high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
   - 
     address: 
       - 0xceda2d856238aa0d12f6329de20b9115f07c366d (Origin Ethena ARM)
@@ -61,13 +58,17 @@ events:
       - TraderateChanged | 0xa2136948
       - Allocated | 0x8de94c51
       - ARMBufferUpdated | 0x29128dbc
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
   - 
     topic0: 
       - Transfer | 0xddf252ad
     topic2: 
       - 0x000000000000000000000000ceda2d856238aa0d12f6329de20b9115f07c366d
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Origin Ether.fi ARM
 topic:   ARM
@@ -83,7 +84,9 @@ events:
       - FeeUpdated | 0x8c4d35e5
       - Initialized | 0xc7f505b2
       - OperatorChanged | 0x4721129e
-    severity: high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
   - 
     address: 
       - 0xfb0a3cf9b019bfd8827443d131b235b3e0fc58d2 (EtherFi ARM)
@@ -99,13 +102,17 @@ events:
       - TraderateChanged | 0xa2136948
       - Allocated | 0x8de94c51
       - ARMBufferUpdated | 0x29128dbc
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
   - 
     topic0: 
       - Transfer | 0xddf252ad
     topic2: 
       - 0x000000000000000000000000fb0a3cf9b019bfd8827443d131b235b3e0fc58d2
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Origin Lido ARM
 topic:   ARM
@@ -121,7 +128,9 @@ events:
       - FeeUpdated | 0x8c4d35e5
       - Initialized | 0xc7f505b2
       - OperatorChanged | 0x4721129e
-    severity: high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
   - 
     address: 
       - 0x85b78aca6deae198fbf201c82daf6ca21942acc6 (Lido ARM)
@@ -137,13 +146,17 @@ events:
       - TraderateChanged | 0xa2136948
       - Allocated | 0x8de94c51
       - ARMBufferUpdated | 0x29128dbc
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
   - 
     topic0: 
       - Transfer | 0xddf252ad
     topic2: 
       - 0x00000000000000000000000085b78aca6deae198fbf201c82daf6ca21942acc6
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Origin OS ARM
 topic:   ARM
@@ -159,7 +172,9 @@ events:
       - FeeUpdated | 0x8c4d35e5
       - Initialized | 0xc7f505b2
       - OperatorChanged | 0x4721129e
-    severity: high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
   - 
     address: 
       - 0x2f872623d1e1af5835b08b0e49aad2d81d649d30
@@ -175,13 +190,17 @@ events:
       - TraderateChanged | 0xa2136948
       - Allocated | 0x8de94c51
       - ARMBufferUpdated | 0x29128dbc
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
   - 
     topic0: 
       - Transfer | 0xddf252ad
     topic2: 
       - 0x0000000000000000000000002f872623d1e1af5835b08b0e49aad2d81d649d30
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Mainnet Multisig
 topic:   Governance
@@ -210,7 +229,9 @@ events:
       - SafeReceived | 0x3d0ce9bf
       - SafeSetup | 0x141df868
       - SignMsg | 0xe7f46750
-    severity:     medium
+    severity:        medium
+    transaction:     true
+    transactionLogs: true
     notifyTarget: 
       email: 
         - engineering@originprotocol.com
@@ -236,7 +257,9 @@ events:
       - TimelockChange | 0x08f74ea4
       - VotingDelaySet | 0xc565b045
       - VotingPeriodSet | 0x7e3f7f07
-    severity:     high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
     notifyTarget: 
       email: 
         - engineering@originprotocol.com
@@ -312,7 +335,9 @@ events:
       - GovernorshipTransferred | 0xc7c0c772
       - PendingGovernorshipTransfer | 0xa39cc5eb
       - Upgraded | 0xbc7cd75a
-    severity:     high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
     notifyTarget: 
       email: 
         - engineering@originprotocol.com
@@ -334,7 +359,9 @@ events:
       - RoleAdminChanged | 0xbd79b86f
       - RoleGranted | 0x2f878811
       - RoleRevoked | 0xf6391f5c
-    severity: high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Origin Proxy Contracts Sonic
 topic:   Governance
@@ -360,7 +387,9 @@ events:
       - GovernorshipTransferred | 0xc7c0c772
       - PendingGovernorshipTransfer | 0xa39cc5eb
       - Upgraded | 0xbc7cd75a
-    severity:     high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
     notifyTarget: 
       email: 
         - engineering@originprotocol.com
@@ -381,7 +410,9 @@ events:
       - CreatedValidator | 0x49bca1ed
       - DeactivatedValidator | 0xac4801c3
       - UpdatedSlashingRefundRatio | 0x047575f4
-    severity:     high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
     notifyTarget: 
       email: 
         - engineering@originprotocol.com
@@ -414,7 +445,9 @@ events:
       - SafeReceived | 0x3d0ce9bf
       - SafeSetup | 0x141df868
       - SignMsg | 0xe7f46750
-    severity:     medium
+    severity:        medium
+    transaction:     true
+    transactionLogs: true
     notifyTarget: 
       email: 
         - engineering@originprotocol.com
@@ -436,7 +469,9 @@ events:
       - RoleAdminChanged | 0xbd79b86f
       - RoleGranted | 0x2f878811
       - RoleRevoked | 0xf6391f5c
-    severity:     medium
+    severity:        medium
+    transaction:     true
+    transactionLogs: true
     notifyTarget: 
       email: 
         - engineering@originprotocol.com
@@ -471,7 +506,9 @@ events:
       - SafeReceived | 0x3d0ce9bf
       - SafeSetup | 0x141df868
       - SignMsg | 0xe7f46750
-    severity:     medium
+    severity:        medium
+    transaction:     true
+    transactionLogs: true
     notifyTarget: 
       email: 
         - engineering@originprotocol.com
@@ -493,7 +530,9 @@ events:
       - RoleAdminChanged | 0xbd79b86f
       - RoleGranted | 0x2f878811
       - RoleRevoked | 0xf6391f5c
-    severity:     medium
+    severity:        medium
+    transaction:     true
+    transactionLogs: true
     notifyTarget: 
       email: 
         - engineering@originprotocol.com
@@ -520,7 +559,9 @@ events:
       - GovernorshipTransferred | 0xc7c0c772
       - PendingGovernorshipTransfer | 0xa39cc5eb
       - Upgraded | 0xbc7cd75a
-    severity:     high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
     notifyTarget: 
       email: 
         - engineering@originprotocol.com
@@ -543,6 +584,9 @@ events:
       - MinimumTimeSet | 0xcb34d057
       - ScriptResult | 0x5229a5db
       - RecoverToVault | 0x596caf56
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Curve Aragon Voting (60%)
 topic:   OETH
@@ -560,6 +604,9 @@ events:
       - MinimumTimeSet | 0xcb34d057
       - ScriptResult | 0x5229a5db
       - RecoverToVault | 0x596caf56
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OETH Burn
 topic:   OETH
@@ -574,6 +621,9 @@ events:
       - 0x0000000000000000000000000000000000000000000000000000000000000000
       - 0x0000000000000000000000000000000000000000000000000000000000000001
       - 0x000000000000000000000000000000000000000000000000000000000000dead
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OETH Buyback
 topic:   OETH
@@ -589,6 +639,9 @@ events:
       - StrategistUpdated | 0x869e0abd
       - SwapRouterUpdated | 0x36db479a
       - TreasuryManagerUpdated | 0xd16d2cf2
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OETH Compound Staking SSV - Suicide Refund Received
 topic:   OETH
@@ -634,6 +687,9 @@ events:
       - ValidatorVerified | 0x8142f136
       - ValidatorWithdraw | 0x8dd83105
       - Withdrawal | 0x2717ead6
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OETH Contract
 topic:   OETH
@@ -646,6 +702,9 @@ events:
       - AccountRebasingDisabled | 0x201ace89
       - AccountRebasingEnabled | 0x19a249fa
       - TotalSupplyUpdatedHighres | 0x41645eb8
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OETH Curve AMO Strategy
 topic:   OETH
@@ -663,12 +722,17 @@ events:
       - StopRampA | 0x46e22fb3
       - CommitNewFee | 0x878eb36b
       - ApplyNewFee | 0xa8715770
+    severity:        low
+    transaction:     true
+    transactionLogs: true
   - 
     address: 
       - 0x94b17476a93b3262d87b9a326965d1e91f9c13e7 (OETH Curve AMO Metapool)
     topic0: 
       (empty array)
-    severity: high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OETH Error Trace
 topic:   OETH
@@ -767,6 +831,9 @@ events:
       - StakingMonitorChanged | 0x3329861a
       - Unpaused | 0x5db9ee0a
       - Withdrawal | 0x2717ead6
+    severity:        low
+    transaction:     true
+    transactionLogs: true
   - 
     address: 
       - 0x34edb2ee25751ee67f68a45813b22811687c0238 (OETH Native Staking Strategy 1)
@@ -776,7 +843,9 @@ events:
       - Paused | 0x62e78cea
       - PTokenAdded | 0xef6485b8
       - PTokenRemoved | 0x16b7600a
-    severity:     high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
     notifyTarget: 
       email: 
         - engineering@originprotocol.com
@@ -798,7 +867,9 @@ events:
       - AssetSupported | 0x4f1ac485
       - PriceProviderUpdated | 0xb266add5
       - TrusteeAddressChanged | 0x1e4af5ac
-    severity: high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
   - 
     address: 
       - 0x39254033945aa2e4809cc2977e7087bee48bd7ab (OETH Vault)
@@ -830,6 +901,9 @@ events:
       - WithdrawalClaimed | 0x2d43eb17
       - WithdrawalRequested | 0x38e3d972
       - YieldDistribution | 0x09516ecf
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OETH Zapper
 topic:   OETH
@@ -840,7 +914,9 @@ events:
       - 0xda0485c1e74a7ef690e99d8286c243942edaa07b (OETH Zapper)
     topic0: 
       - Zap | 0x9d0b99c2
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OETH/ETH Price Feed
 topic:   OETH
@@ -852,7 +928,9 @@ events:
     topic0: 
       - OwnershipTransferRequested | 0xed8889f5
       - OwnershipTransferred | 0x8be0079c
-    severity: high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    WOETH Burn
 topic:   OETH
@@ -867,6 +945,9 @@ events:
       - 0x0000000000000000000000000000000000000000000000000000000000000000
       - 0x0000000000000000000000000000000000000000000000000000000000000001
       - 0x000000000000000000000000000000000000000000000000000000000000dead
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Chainlink Keeper
 topic:   OGN
@@ -880,6 +961,9 @@ events:
       - UpkeepCanceled | 0x91cb3bb7
       - FundsAdded | 0xafd24114
       - FundsWithdrawn | 0xf3b5906e
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Curve Pool Booster
 topic:   OGN
@@ -890,6 +974,9 @@ events:
       - CampaignCreated | 0xfe76983a
       - CampaignClosed | 0x5e6eb33a
       - FeeCollected | 0x06c5efef
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OGN Burn
 topic:   OGN
@@ -904,6 +991,9 @@ events:
       - 0x0000000000000000000000000000000000000000000000000000000000000000
       - 0x0000000000000000000000000000000000000000000000000000000000000001
       - 0x000000000000000000000000000000000000000000000000000000000000dead
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OGN Error Trace
 topic:   OGN
@@ -944,13 +1034,17 @@ events:
     topic0: 
       - LockupsMigrated | 0xb5895e6e
       - TokenExchanged | 0x9c1f2141
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
   - 
     address: 
       - 0x95c347d6214614a780847b8aaf4f96eb84f4da6d (OGV Migrator)
     topic0: 
       - Decommissioned | 0x4bd04f34
-    severity:     high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
     notifyTarget: 
       email: 
         - engineering@originprotocol.com
@@ -967,7 +1061,9 @@ events:
     topic0: 
       - RewardsPerSecondChanged | 0xe261f91b
       - RewardsTargetChange | 0x41ad0a33
-    severity:     high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
     notifyTarget: 
       email: 
         - engineering@originprotocol.com
@@ -978,7 +1074,9 @@ events:
       - 0x7609c88e5880e934dd3a75bcfef44e31b1badb8b (OGN RewardsSource)
     topic0: 
       - RewardCollected | 0x9026b1dc
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Pool Booster Factory Curve
 topic:   OGN
@@ -993,7 +1091,9 @@ events:
       - GovernorshipTransferred | 0xc7c0c772
       - PendingGovernorshipTransfer | 0xa39cc5eb
       - StrategistUpdated | 0x869e0abd
-    severity: medium
+    severity:        medium
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Pool Booster Factory Merkl
 topic:   OGN
@@ -1006,7 +1106,9 @@ events:
       - GovernorshipTransferred | 0xc7c0c772
       - MerklDistributorUpdated | 0x1a0e4b3b
       - PendingGovernorshipTransfer | 0xa39cc5eb
-    severity: medium
+    severity:        medium
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Pool Booster Registry
 topic:   OGN
@@ -1019,7 +1121,9 @@ events:
       - GovernorshipTransferred | 0xc7c0c772
       - PendingGovernorshipTransfer | 0xa39cc5eb
       - Upgraded | 0xbc7cd75a
-    severity: high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Curve Pool Booster
 topic:   OGN
@@ -1030,6 +1134,9 @@ events:
       - CampaignCreated | 0xfe76983a
       - CampaignClosed | 0x5e6eb33a
       - FeeCollected | 0x06c5efef
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Curve Pool Booster
 topic:   OGN
@@ -1040,6 +1147,9 @@ events:
       - CampaignCreated | 0xfe76983a
       - CampaignClosed | 0x5e6eb33a
       - FeeCollected | 0x06c5efef
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Pool Booster Factory Merkl (Base)
 topic:   OGN
@@ -1052,7 +1162,9 @@ events:
       - GovernorshipTransferred | 0xc7c0c772
       - MerklDistributorUpdated | 0x1a0e4b3b
       - PendingGovernorshipTransfer | 0xa39cc5eb
-    severity: medium
+    severity:        medium
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Pool Booster Registry (Base)
 topic:   OGN
@@ -1065,7 +1177,21 @@ events:
       - GovernorshipTransferred | 0xc7c0c772
       - PendingGovernorshipTransfer | 0xa39cc5eb
       - Upgraded | 0xbc7cd75a
-    severity: high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
+=========================================
+name:    OGN Alerts
+chainId: 1
+topic:   OGN Alerts
+events: 
+  - 
+    address: 
+      - 0x8207c1ffc5b6804f6024322ccf34f29c3541ae26 (OGN)
+    topic0: 
+      - Transfer | 0xddf252ad
+    topic2: 
+      - 0x0000000000000000000000007609c88e5880e934dd3a75bcfef44e31b1badb8b
 =========================================
 name:    OGN Alerts
 topic:   OGN Alerts
@@ -1077,20 +1203,6 @@ events:
     topic0: 
       - Stake | 0x2720efa4
 =========================================
-name:    OGN Alerts
-chainId: 1
-topic:   OGN Alerts
-events: 
-  - 
-    address: 
-      - 0x8207c1ffc5b6804f6024322ccf34f29c3541ae26 (OGN)
-    topic0: 
-      - 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
-    topic2: 
-      - 0x0000000000000000000000007609c88e5880e934dd3a75bcfef44e31b1badb8b
-    transaction:     true
-    transactionLogs: true
-=========================================
 name:    OGN Buybacks
 chainId: 1
 topic:   OGN Buybacks
@@ -1099,11 +1211,9 @@ events:
     address: 
       - 0x8207c1ffc5b6804f6024322ccf34f29c3541ae26 (OGN)
     topic0: 
-      - 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+      - Transfer | 0xddf252ad
     topic2: 
       - 0x0000000000000000000000007609c88e5880e934dd3a75bcfef44e31b1badb8b
-    transaction:     true
-    transactionLogs: true
 =========================================
 name:    OS Burn
 topic:   OS
@@ -1118,6 +1228,9 @@ events:
       - 0x0000000000000000000000000000000000000000000000000000000000000000
       - 0x0000000000000000000000000000000000000000000000000000000000000001
       - 0x000000000000000000000000000000000000000000000000000000000000dead
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OS Contract
 topic:   OS
@@ -1130,6 +1243,9 @@ events:
       - AccountRebasingDisabled | 0x201ace89
       - AccountRebasingEnabled | 0x19a249fa
       - TotalSupplyUpdatedHighres | 0x41645eb8
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OS Vault
 topic:   OS
@@ -1146,7 +1262,9 @@ events:
       - AssetSupported | 0x4f1ac485
       - PriceProviderUpdated | 0xb266add5
       - TrusteeAddressChanged | 0x1e4af5ac
-    severity: high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
   - 
     address: 
       - 0xa3c0eca00d2b76b4d1f170b0ab3fdea16c180186 (OS Vault)
@@ -1178,6 +1296,9 @@ events:
       - WithdrawalClaimed | 0x2d43eb17
       - WithdrawalRequested | 0x38e3d972
       - YieldDistribution | 0x09516ecf
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OS Zapper
 topic:   OS
@@ -1188,7 +1309,9 @@ events:
       - 0xe25a2b256ffb3ad73678d5e80de8d2f6022fab21 (OS Zapper)
     topic0: 
       - Zap | 0x9d0b99c2
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Sonic Error Trace
 topic:   OS
@@ -1236,6 +1359,9 @@ events:
       - 0x0000000000000000000000000000000000000000000000000000000000000000
       - 0x0000000000000000000000000000000000000000000000000000000000000001
       - 0x000000000000000000000000000000000000000000000000000000000000dead
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Aave Governance
 topic:   OUSD
@@ -1263,7 +1389,9 @@ events:
       - VotingActivated | 0x45f1db29
       - VotingConfigUpdated | 0xa743f6cc
       - VotingPortalUpdated | 0x5e1f23fe
-    severity: medium
+    severity:        medium
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OUSD Burn
 topic:   OUSD
@@ -1278,6 +1406,9 @@ events:
       - 0x0000000000000000000000000000000000000000000000000000000000000000
       - 0x0000000000000000000000000000000000000000000000000000000000000001
       - 0x000000000000000000000000000000000000000000000000000000000000dead
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OUSD Buyback
 topic:   OUSD
@@ -1293,6 +1424,9 @@ events:
       - StrategistUpdated | 0x869e0abd
       - SwapRouterUpdated | 0x36db479a
       - TreasuryManagerUpdated | 0xd16d2cf2
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OUSD Contract
 topic:   OUSD
@@ -1305,6 +1439,9 @@ events:
       - AccountRebasingDisabled | 0x201ace89
       - AccountRebasingEnabled | 0x19a249fa
       - TotalSupplyUpdatedHighres | 0x41645eb8
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OUSD Curve AMO Strategy
 topic:   OUSD
@@ -1321,6 +1458,9 @@ events:
       - RewardTokenAddressesUpdated | 0x04c0b964
       - RewardTokenCollected | 0xf6c07a06
       - Withdrawal | 0x2717ead6
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OUSD Error Trace
 topic:   OUSD
@@ -1368,6 +1508,9 @@ events:
       - RewardTokenAddressesUpdated | 0x04c0b964
       - RewardTokenCollected | 0xf6c07a06
       - Withdrawal | 0x2717ead6
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OUSD Gauntlet Prime USDT Strategy
 topic:   OUSD
@@ -1384,6 +1527,9 @@ events:
       - RewardTokenAddressesUpdated | 0x04c0b964
       - RewardTokenCollected | 0xf6c07a06
       - Withdrawal | 0x2717ead6
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OUSD Maker Strategy
 topic:   OUSD
@@ -1400,6 +1546,9 @@ events:
       - RewardTokenAddressesUpdated | 0x04c0b964
       - RewardTokenCollected | 0xf6c07a06
       - Withdrawal | 0x2717ead6
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OUSD Meta Morpho Strategy
 topic:   OUSD
@@ -1416,6 +1565,9 @@ events:
       - RewardTokenAddressesUpdated | 0x04c0b964
       - RewardTokenCollected | 0xf6c07a06
       - Withdrawal | 0x2717ead6
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OUSD Morpho Aave Strategy
 topic:   OUSD
@@ -1432,12 +1584,17 @@ events:
       - RewardTokenAddressesUpdated | 0x04c0b964
       - RewardTokenCollected | 0xf6c07a06
       - Withdrawal | 0x2717ead6
+    severity:        low
+    transaction:     true
+    transactionLogs: true
   - 
     address: 
       - 0x79f2188ef9350a1dc11a062cca0abe90684b0197 (Morpho Aave Strategy)
     topic0: 
       - PTokenRemoved | 0x16b7600a
-    severity: high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OUSD Morpho V2 Strategy
 topic:   OUSD
@@ -1454,6 +1611,9 @@ events:
       - RewardTokenAddressesUpdated | 0x04c0b964
       - RewardTokenCollected | 0xf6c07a06
       - Withdrawal | 0x2717ead6
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OUSD Sky Savings Rate Strategy
 topic:   OUSD
@@ -1470,6 +1630,9 @@ events:
       - RewardTokenAddressesUpdated | 0x04c0b964
       - RewardTokenCollected | 0xf6c07a06
       - Withdrawal | 0x2717ead6
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OUSD Vault
 topic:   OUSD
@@ -1486,7 +1649,9 @@ events:
       - AssetSupported | 0x4f1ac485
       - PriceProviderUpdated | 0xb266add5
       - TrusteeAddressChanged | 0x1e4af5ac
-    severity: high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
   - 
     address: 
       - 0xe75d77b1865ae93c7eaa3040b038d7aa7bc02f70 (OUSD Vault)
@@ -1518,6 +1683,9 @@ events:
       - WithdrawalClaimed | 0x2d43eb17
       - WithdrawalRequested | 0x38e3d972
       - YieldDistribution | 0x09516ecf
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    WOUSD Burn
 topic:   OUSD
@@ -1532,6 +1700,9 @@ events:
       - 0x0000000000000000000000000000000000000000000000000000000000000000
       - 0x0000000000000000000000000000000000000000000000000000000000000001
       - 0x000000000000000000000000000000000000000000000000000000000000dead
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    primeETH LRT Deposit Pool
 topic:   primeETH
@@ -1554,6 +1725,9 @@ events:
       - UpdatedLRTConfig | 0x9cf19cef
       - WithdrawalClaimed | 0x8188e2b4
       - WithdrawalRequested | 0x92072c62
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Aerodrome CL Pools
 topic:   superOETHb
@@ -1566,7 +1740,9 @@ events:
       - Mint | 0x7a53080b
       - Burn | 0x0c396cd9
       - Swap | 0xc42079f9
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Aerodrome Incentives
 topic:   superOETHb
@@ -1578,7 +1754,9 @@ events:
       - 0x1f6ab4aa92aa7f95b7eff5aa507119472ad1c5d3
     topic0: 
       - NotifyReward | 0x52977ea9
-    severity: highlight
+    severity:        highlight
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Aerodrome vAMM Pools
 topic:   superOETHb
@@ -1592,7 +1770,9 @@ events:
       - Mint | 0x4c209b5f
       - Burn | 0x5d624aa9
       - Swap | 0xb3e27736
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Bridged WOETH (Base)
 topic:   superOETHb
@@ -1604,7 +1784,9 @@ events:
     topic0: 
       - Approval | 0x8c5be1e5
       - Transfer | 0xddf252ad
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    Super OETH Base Error Trace
 topic:   superOETHb
@@ -1665,7 +1847,9 @@ events:
       - RewardTokenCollected | 0xf6c07a06
       - UnderlyingAssetsUpdated | 0xab1ece05
       - Withdrawal | 0x2717ead6
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    superOETHb Bridged WOETH Strategy
 topic:   superOETHb
@@ -1684,7 +1868,9 @@ events:
       - RewardTokenCollected | 0xf6c07a06
       - WOETHPriceUpdated | 0x688768fc
       - Withdrawal | 0x2717ead6
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    superOETHb Burn
 topic:   superOETHb
@@ -1699,6 +1885,9 @@ events:
       - 0x0000000000000000000000000000000000000000000000000000000000000000
       - 0x0000000000000000000000000000000000000000000000000000000000000001
       - 0x000000000000000000000000000000000000000000000000000000000000dead
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    superOETHb Contract
 topic:   superOETHb
@@ -1711,6 +1900,9 @@ events:
       - AccountRebasingDisabled | 0x201ace89
       - AccountRebasingEnabled | 0x19a249fa
       - TotalSupplyUpdatedHighres | 0x41645eb8
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    superOETHb Curve AMO Strategy
 topic:   superOETHb
@@ -1728,7 +1920,9 @@ events:
       - RewardTokenAddressesUpdated | 0x04c0b964
       - RewardTokenCollected | 0xf6c07a06
       - Withdrawal | 0x2717ead6
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    superOETHb Vault
 topic:   superOETHb
@@ -1745,7 +1939,9 @@ events:
       - AssetSupported | 0x4f1ac485
       - PriceProviderUpdated | 0xb266add5
       - TrusteeAddressChanged | 0x1e4af5ac
-    severity: high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
   - 
     address: 
       - 0x98a0cbef61bd2d21435f433be4cd42b56b38cc93 (Super OETH Base Vault)
@@ -1777,6 +1973,9 @@ events:
       - WithdrawalClaimed | 0x2d43eb17
       - WithdrawalRequested | 0x38e3d972
       - YieldDistribution | 0x09516ecf
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    superOETHb Zapper
 topic:   superOETHb
@@ -1787,7 +1986,9 @@ events:
       - 0x3b56c09543d3068f8488ed34e6f383c3854d2bc1 (Super OETH Zapper)
     topic0: 
       - Zap | 0x9d0b99c2
-    severity: low
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    wOETH Exchange Rate Oracle (Base)
 topic:   superOETHb
@@ -1799,7 +2000,9 @@ events:
     topic0: 
       - OwnershipTransferRequested | 0xed8889f5
       - OwnershipTransferred | 0x8be0079c
-    severity: high
+    severity:        high
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    wsuperOETHb Burn
 topic:   superOETHb
@@ -1814,6 +2017,9 @@ events:
       - 0x0000000000000000000000000000000000000000000000000000000000000000
       - 0x0000000000000000000000000000000000000000000000000000000000000001
       - 0x000000000000000000000000000000000000000000000000000000000000dead
+    severity:        low
+    transaction:     true
+    transactionLogs: true
 =========================================
 name:    OGN Staking
 topic:   xOGN
@@ -1827,3 +2033,6 @@ events:
       - DelegateVotesChanged | 0xdec2bacd
       - Stake | 0x2720efa4
       - Unstake | 0x05b744e3
+    severity:        low
+    transaction:     true
+    transactionLogs: true

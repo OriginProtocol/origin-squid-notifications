@@ -55,12 +55,12 @@ export const processDiscordQueue = async () => {
   messageQueue.clear()
 }
 
-export const sendMessage = async (topic: Topic, message: WebhookMessageCreateOptions, retries = 3) => {
+export const sendMessage = async (topic: Topic, message: WebhookMessageCreateOptions, retries = 3): Promise<void> => {
   try {
     await clients[topic]?.send(message)
   } catch (err) {
     if (retries > 0) {
-      await sendMessage(topic, message, retries - 1)
+      return await sendMessage(topic, message, retries - 1)
     }
     throw err
   }
@@ -92,6 +92,8 @@ export const notifyDiscord = ({
 
   if (title) {
     content = `### ${severityEmojis[severity]}   ${title}${linkString}${mentionString}`
+  } else if (mentionString) {
+    content = mentionString.trimStart()
   }
   if (description) {
     content += `\n${description}`

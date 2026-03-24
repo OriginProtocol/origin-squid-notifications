@@ -1,4 +1,3 @@
-import { AAVE_GOVERNANCE_ADDRESS } from 'topics/ousd'
 import { base, mainnet, sonic } from 'viem/chains'
 
 import { chainState } from '@utils/chainState'
@@ -31,7 +30,6 @@ import {
   OUSD_OLD_BUYBACK_1,
   OUSD_OLD_VAULT,
   OUSD_ORACLE_ROUTER,
-  poolBoosters,
   PRIME_ETH_LRT_DEPOSIT_POOL,
   RETH_ADDRESS,
   STETH_ADDRESS,
@@ -41,9 +39,11 @@ import {
   XOGN_ADDRESS,
   YNLSDE_ADDRESS,
   addresses,
+  poolBoosters,
 } from './addresses'
 import { baseAddresses } from './addresses-base'
 import { sonicAddresses } from './addresses-sonic'
+import { EXTERNAL_ADDR_TO_NAME } from './external-names'
 import {
   CDAI,
   CHAINLINK_KEEPER_REGISTRY,
@@ -120,7 +120,8 @@ import {
   OUSD_METASTRAT,
   OUSD_VAULT,
 } from './strategies-py'
-import { EXTERNAL_ADDR_TO_NAME } from './external-names'
+
+const AAVE_GOVERNANCE_ADDRESS = '0x9aee0b04504cef83a65ac3f0e838d0593bcb2bc7'
 
 export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undefined>> = {
   [mainnet.id]: {
@@ -360,12 +361,46 @@ export const CONTRACT_ADDR_TO_NAME: Record<number, Record<string, string | undef
   },
 }
 
+// DB-loaded wallet labels (address → description), loaded at startup from Railway DB
+const walletLabels = new Map<string, string>()
+
+/**
+ * Load wallet labels from the Railway database.
+ * Call once at startup before processing begins.
+ */
+export const loadWalletLabels = async (): Promise<void> => {
+  const url = process.env.RAILWAY_DATABASE_URL
+  if (!url) {
+    console.log('Wallet labels: RAILWAY_DATABASE_URL not set, skipping')
+    return
+  }
+  try {
+    // @ts-expect-error pg has no type declarations in this project
+    const pg = await import('pg')
+    const pool = new pg.default.Pool({ connectionString: url })
+    try {
+      const { rows } = await pool.query('SELECT address, description FROM wallet_label')
+      for (const row of rows) {
+        if (row.address && row.description) {
+          walletLabels.set(row.address.toLowerCase(), row.description)
+        }
+      }
+      console.log(`Wallet labels: loaded ${walletLabels.size} labels from DB`)
+    } finally {
+      await pool.end()
+    }
+  } catch (err) {
+    console.error('Failed to load wallet labels:', err)
+  }
+}
+
 export const getAddressesPyName = (address?: string): string | undefined =>
   address
     ? CONTRACT_ADDR_TO_NAME[chainState.current?.id ?? mainnet.id]?.[address.toLowerCase()] ??
       CONTRACT_ADDR_TO_NAME[base.id]?.[address.toLowerCase()] ??
       CONTRACT_ADDR_TO_NAME[sonic.id]?.[address.toLowerCase()] ??
-      EXTERNAL_ADDR_TO_NAME[address.toLowerCase()]
+      EXTERNAL_ADDR_TO_NAME[address.toLowerCase()] ??
+      walletLabels.get(address.toLowerCase())
     : undefined
 
 export const getAddressName = (address: string): string =>
@@ -373,4 +408,5 @@ export const getAddressName = (address: string): string =>
   CONTRACT_ADDR_TO_NAME[base.id]?.[address.toLowerCase()] ??
   CONTRACT_ADDR_TO_NAME[sonic.id]?.[address.toLowerCase()] ??
   EXTERNAL_ADDR_TO_NAME[address.toLowerCase()] ??
+  walletLabels.get(address.toLowerCase()) ??
   address

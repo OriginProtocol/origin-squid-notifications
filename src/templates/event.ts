@@ -7,9 +7,13 @@ import { transactionLink } from '@utils/links'
 
 import { NotifyTarget, Severity, Topic } from '../notify/const'
 import { EventRenderer, notifyForEvent } from '../notify/event'
+import { registerLogFilter } from '../processors/persistence-filters'
 import { createProcessor } from '../topics'
 
-export type CustomFilter = (ctx: Context, log: Log) => Promise<{ include: boolean; topic?: Topic }> | { include: boolean; topic?: Topic }
+export type CustomFilter = (
+  ctx: Context,
+  log: Log,
+) => Promise<{ include: boolean; topic?: Topic }> | { include: boolean; topic?: Topic }
 export type EventProcessorParams = Parameters<typeof createEventProcessor>[0]
 export const createEventProcessor = ({
   name,
@@ -43,8 +47,9 @@ export const createEventProcessor = ({
       topic2,
       topic3,
       transaction: true,
-      transactionLogs: true,
     })
+    registerLogFilter(filter, track.customFilter)
+    for (const af of additionalFilters ?? []) registerLogFilter(af)
     return { track, filter, entries, additionalFilters }
   })
 
@@ -54,7 +59,8 @@ export const createEventProcessor = ({
     chainId,
     events: trackData.map((d) => ({
       address: d.filter.value.address,
-      topic0: d.filter.value.topic0?.map((topic0, i) => `${d.entries[i][0]} | ${topic0.slice(0, 10)}`),
+      topic0: d.filter.value.topic0,
+      eventName: d.entries.map(([name]) => name),
       topic1: d.filter.value.topic1,
       topic2: d.filter.value.topic2,
       topic3: d.filter.value.topic3,

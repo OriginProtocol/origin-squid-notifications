@@ -1,15 +1,28 @@
 import { Block, Context, Log, useProcessorState } from '@originprotocol/squid-utils'
-import { AbiEvent } from '@subsquid/evm-abi'
+import type { AbiEvent } from '@subsquid/evm-abi'
 import { Codec } from '@subsquid/evm-codec'
 import { getAddressesPyName } from '@utils/addresses/names'
 import { transactionLink } from '@utils/links'
 
 import { NotifyTarget, Severity, Topic } from '../const'
 import { notifyLoki } from '../loki'
+import { checkAndLogNotification } from '../notification-log'
 import { notifyOncall } from '../oncall'
 import { renderDiscordEmbed } from './renderers/utils'
 
-const uniqueEventsFired = new Set<string>()
+/** Minimal interface for event decoding — works with both subsquid AbiEvent and viem wrappers */
+interface EventDecoder {
+  topic: string
+  decode: (log: { topics: string[]; data: string }) => any
+}
+function safeDecodeEvent(event: EventDecoder, log: { topics: string[]; data: string }): any {
+  try {
+    return event.decode(log)
+  } catch {
+    return undefined
+  }
+}
+
 export type EventRendererParams = Parameters<typeof notifyForEvent>[0]
 export type EventRenderer = (params: EventRendererParams) => Promise<void> | void
 const eventRenderers = new Map<string, (params: Parameters<typeof notifyForEvent>[0]) => Promise<void>>()
@@ -51,8 +64,10 @@ export const registerDiscordRenderer = <const T extends EventArgs>(
 export const useEventState = (ctx: Context) => {
   const state = useProcessorState(ctx, 'eventState', {
     eventsHandled: new Set<string>(),
-    isEventHandled: (log: Log) => state.eventsHandled.has(log.topics[0]),
-    markEventHandled: (log: Log) => state.eventsHandled.add(log.topics[0]),
+    isEventHandled: (log: Log) =>
+      state.eventsHandled.has(`${log.block.height}:${log.transactionIndex}:${log.logIndex}`),
+    markEventHandled: (log: Log) =>
+      state.eventsHandled.add(`${log.block.height}:${log.transactionIndex}:${log.logIndex}`),
   })[0]
   return state
 }
@@ -63,16 +78,22 @@ export const notifyForEvent = async (params: {
   severity?: Severity
   name?: string
   eventName: string
-  event: AbiEvent<any>
+  event: EventDecoder
   block: Block
   log: Log
   notifyTarget?: NotifyTarget
   renderer?: EventRenderer
 }) => {
-  if (process.env.BLOCK_FROM && process.env.RESTRICT_NOTIFICATIONS !== 'false') {
-    if (uniqueEventsFired.has(params.log.topics[0])) return
-    else uniqueEventsFired.add(params.log.topics[0])
-  }
+  const recordId = `${params.ctx.chain.id}:${params.log.block.height}:${params.log.transactionIndex}:${params.log.logIndex}`
+  const isDuplicate = await checkAndLogNotification({
+    ctx: params.ctx,
+    recordId,
+    recordType: 'event',
+    processor: params.name,
+    chainId: params.ctx.chain.id,
+    blockNumber: params.log.block.height,
+  })
+  if (isDuplicate) return
 
   const sortId = `${params.log.block.height}:${params.log.transactionIndex}:${params.log.logIndex}`
   notifyLoki({
@@ -101,7 +122,7 @@ export const notifyForEvent = async (params: {
       tx_hash: params.log.transactionHash,
       tx_index: params.log.transactionIndex,
       log_index: params.log.logIndex,
-      decoded_data: params.event.decode(params.log),
+      decoded_data: safeDecodeEvent(params.event, params.log),
     },
   })
 
@@ -120,7 +141,7 @@ export const notifyForEvent = async (params: {
         name: params.name,
         eventName: params.eventName,
         log: params.log,
-        data: params.event.decode(params.log),
+        data: safeDecodeEvent(params.event, params.log),
       })
     }
   }

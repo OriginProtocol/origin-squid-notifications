@@ -1,6 +1,6 @@
 manifestVersion: subsquid.io/v0.1
 name: origin-squid-notifications
-version: 1
+version: 999
 description: 'Origin Protocol 🦑 - Notifications'
 build:
 deploy:
@@ -20,6 +20,9 @@ deploy:
     - RPC_BASE_ENV
     - RPC_SONIC_ENDPOINT
     - RPC_SONIC_ENV
+    - ALERT_CONFIG_DB_URL
+    - RAILWAY_DATABASE_URL
+    - DISCORD_WEBHOOK_URL_TEST
     - DISCORD_WEBHOOK_URL_OGN
     - DISCORD_WEBHOOK_URL_OGN_ALERTS
     - DISCORD_WEBHOOK_URL_OGN_BUYBACKS
@@ -32,9 +35,6 @@ deploy:
     - DISCORD_WEBHOOK_URL_OS
     - DISCORD_WEBHOOK_URL_GOVERNANCE
     - ONCALL_WEBHOOK_URL
-    - CLOUDFLARE_ACCOUNT_ID
-    - CLOUDFLARE_NAMESPACE_ID
-    - CLOUDFLARE_KV_KEY
     - LOKI_URL
     - LOKI_USER
     - LOKI_API_KEY
@@ -47,9 +47,23 @@ deploy:
         RPC_ENV_BASE: RPC_BASE_HTTP
     - name: sonic-processor
       cmd: ['sqd', 'process:sonic:prod']
+  api:
+    cmd:
+      - npx
+      - squid-graphql-server
+      - '--dumb-cache'
+      - in-memory
+      - '--dumb-cache-ttl'
+      - '1000'
+      - '--dumb-cache-size'
+      - '100'
+      - '--dumb-cache-max-age'
+      - '1000'
+      - '--max-response-size'
+      - '1000000'
 scale:
   dedicated: true
   addons:
     postgres:
-      storage: 5G
+      storage: 100G
       profile: small

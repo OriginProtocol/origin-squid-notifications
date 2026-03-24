@@ -1,32 +1,28 @@
 # Origin Subsquid - Notifications
 
-This squid is strictly for creating notifications which will feed into Discord or wherever else we need.
+This squid monitors blockchain events and traces across Ethereum mainnet, Base, and Sonic chains and sends notifications to Discord. Alert rules are stored in a config database and can be managed at runtime without redeployment.
 
 ### Composition
 
-This squid is deployed to subsquid cloud. It contains:
+Deployed to Subsquid Cloud with:
 
-- 1 Processor
-  - The processor triggers the notifications.
-- 1 Database
-  - The database is hardly used and should rarely if not ever be updated.
+- **3 Chain Processors** (mainnet, Base, Sonic) — each runs config-driven alerts + persistence
+- **2 Code-Driven Processors** — OGN Alerts and OGN Buybacks (custom logic that can't be expressed as DB rules)
+- **Squid Database** — EventRecord/TraceRecord tables for historical on-chain data
+- **Alert Config Database** — alert rules, ABIs, topic definitions (managed separately)
 
 > [!NOTE]
-> Alerts which are based on metric thresholds should likely be created in Grafana using data from `origin-squid`.
+> Alerts based on metric thresholds should be created in Grafana using data from `origin-squid`.
 >
-> Ideal notifications for this project:
->
-> - Governance Proposal Activity
-> - Mints & Burns
+> This project handles discrete on-chain event notifications:
+> - Contract events (mints, burns, deposits, withdrawals, approvals, etc.)
+> - Trace activity (function calls, failed transactions, self-destructs)
+> - Governance proposals
 > - Buyback swaps
-> - Strategist updates
-> - Strategy deposits/withdrawals
-> - Events
-> - Trace activity
 
 ### Package Manager
 
-This project uses **pnpm** for dependency management with enhanced security settings. Make sure you have pnpm installed:
+This project uses **pnpm** for dependency management:
 
 ```shell
 npm install -g pnpm
@@ -34,46 +30,32 @@ npm install -g pnpm
 
 ### Frequent Commands
 
-#### Install dependencies
-
 ```shell
-pnpm install
+pnpm install                  # Install dependencies
+pnpm run process              # Build & start mainnet processor
+pnpm run process:base         # Build & start Base chain processor
+pnpm run process:sonic        # Build & start Sonic chain processor
+pnpm run resume               # Resume without rebuild/DB setup
+pnpm run backfill             # Backfill historical data for alert rules
+pnpm run digest-db            # Output all alert rules and processors
+pnpm run generate-seed        # Regenerate seed-rules.sql from code-driven processors
+pnpm run generate-abi-seed    # Regenerate seed-abis.sql from abi/*.json files
+pnpm run prettier-fix         # Format code
 ```
 
-#### Start processing from the latest block
+#### Environment Variables
 
 ```shell
-pnpm run process
-```
-
-#### Start processing from block number 123456
-
-```shell
-BLOCK_FROM=123456 pnpm run process
-```
-
-#### Resume processing from where you last stopped
-
-```shell
-pnpm run resume
-```
-
-#### Generate ABIs
-
-```shell
-pnpm run generate-abis
-```
-
-#### Generate Digest
-
-```shell
-pnpm run digest
+BLOCK_FROM=123456 pnpm run process                    # Start from specific block
+PROCESSOR=Buyback pnpm run process                    # Filter code-driven processors
+ALERT="Lido ARM" pnpm run process                     # Filter config-driven alert rules
+ALERT_CONFIG_DB_MIGRATION=true pnpm run process       # Run DB migration on startup
 ```
 
 #### Deploy
 
 > [!NOTE]
-> We want to do update deploys to prevent gaps in processing.
+> Use `--update` deploys to prevent gaps in processing.
 
 ```shell
 sqd deploy . --update

@@ -98,6 +98,10 @@
       "deps": ["check-updates"],
       "cmd": ["pnpm", "install"]
     },
+    "serve": {
+      "description": "Start the GraphQL API server",
+      "cmd": ["squid-graphql-server"]
+    },
     "open": {
       "description": "Open a local browser window",
       "cmd": ["npx", "--yes", "opener"]

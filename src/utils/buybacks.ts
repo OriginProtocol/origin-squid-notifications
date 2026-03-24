@@ -5,6 +5,7 @@ import { formatUnits } from 'viem'
 
 import * as erc20Abi from '@abi/erc20'
 import { Context, logFilter } from '@originprotocol/squid-utils'
+import { registerLogFilter } from '@processors/persistence-filters'
 
 import { OGN_ADDRESS, OGN_REWARDS_SOURCE_ADDRESS, XOGN_ADDRESS, buybacks } from './addresses'
 import { getAddressName } from './addresses/names'
@@ -18,6 +19,7 @@ export const buybackFilter = logFilter({
   transaction: true,
   transactionLogs: true,
 })
+registerLogFilter(buybackFilter)
 
 export const getBuybacks = async (ctx: Context, minimumDollarValue: number = 0) => {
   const results = []
