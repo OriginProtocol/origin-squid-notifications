@@ -140,11 +140,12 @@ registerEventRenderer(erc20Abi.events.Transfer.topic, async (params) => {
   const inSymbol = discordIconOrName(inTokenAddress) ?? (inTokenAddress === arm.token0.toLowerCase() ? arm.symbol0 : arm.symbol1)
   const outSymbol = discordIconOrName(outTokenAddress) ?? (outTokenAddress === arm.token0.toLowerCase() ? arm.symbol0 : arm.symbol1)
 
-  // Rate = token0/token1, matching original renderer behavior
+  // Rate — always show under 1 (invert if needed, prefix with ~)
   const isToken0In = inTokenAddress === arm.token0.toLowerCase()
-  const rate = isToken0In
+  const rawRate = isToken0In
     ? Number(transferInData.value) / Number(transferOutData.value)
     : Number(transferOutData.value) / Number(transferInData.value)
+  const rate = rawRate > 1 ? 1 / rawRate : rawRate
 
   renderDiscordEmbed({
     sortId: `${params.log.block.height}:${params.log.transactionIndex}:${params.log.logIndex}`,
