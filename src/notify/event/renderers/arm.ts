@@ -2,6 +2,7 @@ import { event } from '@subsquid/evm-abi'
 import * as p from '@subsquid/evm-codec'
 
 import * as erc20Abi from '../../../abi/erc20'
+import * as ethenaArmAbi from '../../../abi/ethena-arm'
 import { addresses, arms } from '../../../utils/addresses'
 import { sonicAddresses } from '../../../utils/addresses/addresses-sonic'
 import { getAddressesPyName } from '../../../utils/addresses/names'
@@ -105,6 +106,10 @@ registerEventRenderer(erc20Abi.events.Transfer.topic, async (params) => {
   // Need transaction logs to find the counterpart transfer
   const txLogs = params.log.transaction?.logs
   if (!txLogs) return defaultEventRenderer(params)
+
+  // If there's an Allocated event in this transaction, it's not a swap
+  const hasAllocation = txLogs.some((l) => l.topics[0] === ethenaArmAbi.events.Allocated.topic)
+  if (hasAllocation) return defaultEventRenderer(params)
 
   // Find the transfer IN (to ARM) and transfer OUT (from ARM) in this transaction
   const transferInLog = txLogs.find(
