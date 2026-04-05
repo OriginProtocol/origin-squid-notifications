@@ -59,7 +59,7 @@ export const defaultEventRenderer = registerEventRenderer(
     // Governance link
     let description: string | undefined
     if (data && 'proposalId' in data && log.address === OGN_GOVERNANCE_ADDRESS) {
-      const proposalUrl = `https://originprotocol.eth.limo/#/more/1:${OGN_GOVERNANCE_ADDRESS}:${data.proposalId}`
+      const proposalUrl = `https://app.originprotocol.com/#/ogn/governance/1:${OGN_GOVERNANCE_ADDRESS}:${data.proposalId}`
       description = `[View Proposal](${proposalUrl})`
     }
 
