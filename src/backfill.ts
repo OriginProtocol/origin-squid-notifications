@@ -6,7 +6,7 @@ const chainIdx = args.indexOf('--chain')
 
 const USAGE = `Usage: pnpm run backfill -- --chain <chain-id> --from <block-number> [--rule <rule-id>]
 
-  --chain   Chain ID (1=mainnet, 8453=base, 146=sonic)
+  --chain   Chain ID (1=mainnet, 8453=base, 146=sonic, 999=hyperliquid)
   --from    Block number to start backfill from
   --rule    Optional: specific rule ID (omit to backfill all rules for the chain)`
 
@@ -19,8 +19,8 @@ const chainId = Number(args[chainIdx + 1])
 const fromBlock = Number(args[fromIdx + 1])
 const ruleId = ruleIdx !== -1 ? args[ruleIdx + 1] : undefined
 
-if (isNaN(chainId) || ![1, 8453, 146].includes(chainId)) {
-  console.error(`Invalid chain ID: ${args[chainIdx + 1]} (must be 1, 8453, or 146)`)
+if (isNaN(chainId) || ![1, 8453, 146, 999].includes(chainId)) {
+  console.error(`Invalid chain ID: ${args[chainIdx + 1]} (must be 1, 8453, 146, or 999)`)
   process.exit(1)
 }
 if (isNaN(fromBlock)) {

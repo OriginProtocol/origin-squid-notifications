@@ -3,6 +3,7 @@ import { arbitrum, base, sonic } from 'viem/chains'
 
 import { Context } from '@originprotocol/squid-utils'
 
+import { hyperliquid } from './chains'
 import { getAddressesPyName } from './addresses/names'
 
 export const transactionLink = (
@@ -19,7 +20,15 @@ export const transactionLink = (
     `&utm_source=alert_notification`
 
   const networkPath =
-    chain.id === base.id ? 'base' : chain.id === arbitrum.id ? 'arbitrum' : chain.id === sonic.id ? 'sonic' : 'mainnet'
+    chain.id === base.id
+      ? 'base'
+      : chain.id === arbitrum.id
+      ? 'arbitrum'
+      : chain.id === sonic.id
+      ? 'sonic'
+      : chain.id === hyperliquid.id
+      ? 'hyperliquid'
+      : 'mainnet'
   return `https://dashboard.tenderly.co/tx/${networkPath}/${tx}` + utmExtra
 }
 

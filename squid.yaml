@@ -20,6 +20,8 @@ deploy:
     - RPC_BASE_ENV
     - RPC_SONIC_ENDPOINT
     - RPC_SONIC_ENV
+    - RPC_HYPERLIQUID_ENDPOINT
+    - RPC_HYPERLIQUID_ENV
     - ALERT_CONFIG_DB_URL
     - RAILWAY_DATABASE_URL
     - DISCORD_WEBHOOK_URL_TEST
@@ -48,6 +50,8 @@ deploy:
         RPC_ENV_BASE: RPC_BASE_HTTP
     - name: sonic-processor
       cmd: ['sqd', 'process:sonic:prod']
+    - name: hyperliquid-processor
+      cmd: ['sqd', 'process:hyperliquid:prod']
   api:
     cmd:
       - npx
