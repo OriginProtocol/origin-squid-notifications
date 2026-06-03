@@ -13,7 +13,7 @@ importers:
     dependencies:
       '@originprotocol/squid-utils':
         specifier: github:OriginProtocol/squid-utils#main
-        version: https://codeload.github.com/OriginProtocol/squid-utils/tar.gz/27627bfc16a21cb91e332c6e283446e3bf3901db(@subsquid/big-decimal@1.0.0)(bufferutil@4.0.9)(typeorm@0.3.16(ioredis@5.7.0)(pg@8.16.3))(typescript@5.5.2)(utf-8-validate@5.0.10)
+        version: https://codeload.github.com/OriginProtocol/squid-utils/tar.gz/f52dce95f1ecfd0375a5ebff00093d8dd46eceab(@subsquid/big-decimal@1.0.0)(bufferutil@4.0.9)(typeorm@0.3.16(ioredis@5.7.0)(pg@8.16.3))(typescript@5.5.2)(utf-8-validate@5.0.10)
       '@subsquid/evm-abi':
         specifier: ^0.3.1
         version: 0.3.1
@@ -1209,8 +1209,8 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@originprotocol/squid-utils@https://codeload.github.com/OriginProtocol/squid-utils/tar.gz/27627bfc16a21cb91e332c6e283446e3bf3901db':
-    resolution: {tarball: https://codeload.github.com/OriginProtocol/squid-utils/tar.gz/27627bfc16a21cb91e332c6e283446e3bf3901db}
+  '@originprotocol/squid-utils@https://codeload.github.com/OriginProtocol/squid-utils/tar.gz/f52dce95f1ecfd0375a5ebff00093d8dd46eceab':
+    resolution: {tarball: https://codeload.github.com/OriginProtocol/squid-utils/tar.gz/f52dce95f1ecfd0375a5ebff00093d8dd46eceab}
     version: 1.0.0
 
   '@peculiar/asn1-schema@2.5.0':
@@ -5246,7 +5246,7 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.1
 
-  '@originprotocol/squid-utils@https://codeload.github.com/OriginProtocol/squid-utils/tar.gz/27627bfc16a21cb91e332c6e283446e3bf3901db(@subsquid/big-decimal@1.0.0)(bufferutil@4.0.9)(typeorm@0.3.16(ioredis@5.7.0)(pg@8.16.3))(typescript@5.5.2)(utf-8-validate@5.0.10)':
+  '@originprotocol/squid-utils@https://codeload.github.com/OriginProtocol/squid-utils/tar.gz/f52dce95f1ecfd0375a5ebff00093d8dd46eceab(@subsquid/big-decimal@1.0.0)(bufferutil@4.0.9)(typeorm@0.3.16(ioredis@5.7.0)(pg@8.16.3))(typescript@5.5.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@subsquid/archive-registry': 3.3.2
       '@subsquid/evm-abi': 1.0.0
