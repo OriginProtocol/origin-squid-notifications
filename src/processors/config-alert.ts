@@ -1,5 +1,4 @@
-import { Context, Trace, defineProcessor, logFilter, traceFilter } from '@originprotocol/squid-utils'
-import { EvmBatchProcessor } from '@subsquid/evm-processor'
+import { Context, EvmBatchProcessor, Trace, defineProcessor, logFilter, traceFilter } from '@originprotocol/squid-utils'
 
 import {
   evaluateFilter,

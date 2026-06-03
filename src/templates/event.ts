@@ -1,7 +1,6 @@
 import { renderDiscordEmbed } from '@notify/event/renderers/utils'
-import { Context, Log, LogFilter, logFilter } from '@originprotocol/squid-utils'
+import { Context, EvmBatchProcessor, Log, LogFilter, logFilter } from '@originprotocol/squid-utils'
 import { event } from '@subsquid/evm-abi'
-import { EvmBatchProcessor } from '@subsquid/evm-processor'
 import { getAddressName } from '@utils/addresses/names'
 import { transactionLink } from '@utils/links'
 
