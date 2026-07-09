@@ -14,6 +14,7 @@ export interface NotifyForTraceInput {
   ctx: Context
   topic: Topic
   severity?: Severity
+  ruleId?: string
   name?: string
   functionName?: string
   functionData?: unknown
@@ -48,6 +49,9 @@ export const notifyForTrace = async (input: NotifyForTraceInput) => {
       recordId,
       recordType: 'trace',
       processor: name,
+      severity,
+      topic,
+      ruleId: input.ruleId,
       chainId: ctx.chain.id,
       blockNumber: trace.block.height,
     })

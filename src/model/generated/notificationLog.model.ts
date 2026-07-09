@@ -22,6 +22,18 @@ export class NotificationLog {
     processor!: string | undefined | null
 
     @Index_()
+    @StringColumn_({nullable: true})
+    severity!: string | undefined | null
+
+    @Index_()
+    @StringColumn_({nullable: true})
+    topic!: string | undefined | null
+
+    @Index_()
+    @StringColumn_({nullable: true})
+    ruleId!: string | undefined | null
+
+    @Index_()
     @DateTimeColumn_({nullable: false})
     notifiedAt!: Date
 

@@ -78,6 +78,7 @@ export const notifyForEvent = async (params: {
   ctx: Context
   topic: Topic
   severity?: Severity
+  ruleId?: string
   name?: string
   eventName: string
   event: EventDecoder
@@ -94,6 +95,9 @@ export const notifyForEvent = async (params: {
       recordId,
       recordType: 'event',
       processor: params.name,
+      severity: params.severity,
+      topic: params.topic,
+      ruleId: params.ruleId,
       chainId: params.ctx.chain.id,
       blockNumber: params.log.block.height,
     })

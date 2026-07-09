@@ -30,6 +30,9 @@ type NotificationLog @entity {
   recordId: String! @index         # EventRecord.id or TraceRecord.id
   recordType: String! @index       # "event" | "trace"
   processor: String @index         # Processor name that triggered it
+  severity: String @index          # rule severity at notify time: low|medium|high|critical|broken|highlight
+  topic: String @index             # notification topic/product (OETH, ARM, Governance, …)
+  ruleId: String @index            # alert_rule.id that fired (null for code-driven processors)
   notifiedAt: DateTime! @index
   chainId: Int! @index
   blockNumber: Int! @index

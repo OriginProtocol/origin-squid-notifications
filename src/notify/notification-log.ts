@@ -12,6 +12,9 @@ export const checkAndLogNotification = async (params: {
   recordId: string
   recordType: 'event' | 'trace'
   processor?: string
+  severity?: string
+  topic?: string
+  ruleId?: string
   chainId: number
   blockNumber: number
 }): Promise<boolean> => {
@@ -29,6 +32,9 @@ export const checkAndLogNotification = async (params: {
       recordId: params.recordId,
       recordType: params.recordType,
       processor: params.processor ?? null,
+      severity: params.severity ?? null,
+      topic: params.topic ?? null,
+      ruleId: params.ruleId ?? null,
       notifiedAt: new Date(),
       chainId: params.chainId,
       blockNumber: params.blockNumber,
