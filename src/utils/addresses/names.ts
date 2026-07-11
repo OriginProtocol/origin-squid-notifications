@@ -379,7 +379,7 @@ export const loadWalletLabels = async (): Promise<void> => {
     const pg = await import('pg')
     const pool = new pg.default.Pool({ connectionString: url })
     try {
-      const { rows } = await pool.query('SELECT address, description FROM wallet_label')
+      const { rows } = await pool.query('SELECT address, description FROM wallet_labels')
       for (const row of rows) {
         if (row.address && row.description) {
           walletLabels.set(row.address.toLowerCase(), row.description)
