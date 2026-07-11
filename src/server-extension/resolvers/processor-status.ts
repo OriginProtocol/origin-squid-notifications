@@ -3,13 +3,13 @@ import { Field, Int, ObjectType, Query, Resolver } from 'type-graphql'
 import { getSquidDbPool } from '../../test-render/db'
 
 // Schemas match the `stateSchema` values in src/main.ts, src/main-base.ts,
-// src/main-sonic.ts, src/main-hyperliquid.ts. Chain IDs match the `chainId`
-// passed to `run()` in those files.
+// src/main-sonic.ts. Chain IDs match the `chainId` passed to `run()` in those
+// files. Note: the hyperevm processor lives in the separate `origin-squid`
+// deployment (its own database), so it is not queryable via this squid's pool.
 const PROCESSORS: Array<{ schema: string; chainId: number }> = [
   { schema: 'mainnet', chainId: 1 },
   { schema: 'base', chainId: 8453 },
   { schema: 'sonic', chainId: 146 },
-  { schema: 'hyperliquid', chainId: 999 },
 ]
 
 @ObjectType()
