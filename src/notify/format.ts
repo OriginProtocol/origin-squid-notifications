@@ -93,8 +93,8 @@ function formatBigInt(value: bigint, key?: string): string {
   const abs = value < 0n ? -value : value
   const sign = value < 0n ? '-' : ''
 
-  // Traderate fields use 1e36 precision
-  if (key && key.toLowerCase().startsWith('traderate') && abs >= 10n ** 35n) {
+  // Traderate and ARM price fields (crossPrice, buyPrice, sellPrice) use 1e36 precision
+  if (key && (key.toLowerCase().startsWith('traderate') || key.toLowerCase().endsWith('price')) && abs >= 10n ** 35n) {
     const divisor = 10n ** 36n
     const whole = abs / divisor
     const frac = abs % divisor

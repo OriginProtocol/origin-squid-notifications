@@ -244,6 +244,150 @@ VALUES (
   'Origin Lido ARM'
 ) ON CONFLICT (id) DO NOTHING;
 
+-- Origin USDC ARM (chain 1) track 1
+INSERT INTO alert_rule (id, chain_id, match_type, addresses, topic0s, topic1s, topic2s, topic3s, sighashes, trace_type, call_from, call_to, suicide_refund_address, trace_error, data_filters, topic, severity, notify_targets, display_name)
+VALUES (
+  'origin-usdc-arm-1',
+  1,
+  'event'::match_type,
+  ARRAY['0x9e3a7026e5767f2d7ff5e83b0ed011005f45a170'],
+  ARRAY['0x7e644d79422f17c01e4894b5f4f588d331ebfa28653d42ae832dc59e38c9798f', '0xb8fd9afc34c38fcd13b9a3b7646482eb1fddcefb40af2c70609972816eba3208', '0xe5693914d19c789bdee50a362998c0bc8d035a835f9871da5d51152f0582c34f', '0x8c4d35e54a3f2ef1134138fd8ea3daee6a3c89e10d2665996babdf70261e2c76', '0xc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d2', '0x4721129e0e676ed6a92909bb24e853ccdd63ad72280cc2e974e38e480e0e6e54', '0x7544a75b388eb4ab5daaa0429409163b9a80e2dd0bafa8a1c0d5ae0bda352d65', '0xbc600b1f03d316c479b49930c28e328809316458d5b5dacbb7419df5f6f89647', '0x59d7b1e52008dc342c9421dadfc773114b914a65682a4e4b53cf60a970df0d77', '0x62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258', '0x5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa'],
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  'ARM',
+  'high'::severity_level,
+  NULL,
+  'Origin USDC ARM'
+) ON CONFLICT (id) DO NOTHING;
+
+-- Origin USDC ARM (chain 1) track 2
+INSERT INTO alert_rule (id, chain_id, match_type, addresses, topic0s, topic1s, topic2s, topic3s, sighashes, trace_type, call_from, call_to, suicide_refund_address, trace_error, data_filters, topic, severity, notify_targets, display_name)
+VALUES (
+  'origin-usdc-arm-2',
+  1,
+  'event'::match_type,
+  ARRAY['0x9e3a7026e5767f2d7ff5e83b0ed011005f45a170'],
+  ARRAY['0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925', '0x29128dbcf994e1ddc09cdbce01c287bb3f6b0cf4dd3c98174cadbbaf67bc22d7', '0xe9f5fe520e5763f721d470ecb21b23763a3b0b9e720070111b1b935c1107b065', '0x0538e1fc8a5bd2f2ae0c40c0a54b4208673263b92c883fe270768a5151346dfd', '0x7abb537bd346e0540bd632cc85a1ebde145775e3c31ced362761ff2fe8241cb9', '0x90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a15', '0x06c5efeff5c320943d265dc4e5f1af95ad523555ce0c1957e367dda5514572df', '0x36dd2c9b55f12509e3b5f4f4d765ddefc2776a28018b18da2335cf2ab93bb268', '0xc04c86cfd81036557541f9c68971ace59cbc9057ecab7d48874a6177ad117f4f', '0x778ebbe9f96685bd519458d016cf8c56446b9054726f7448a2faa8ccce6ab452'],
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  'ARM',
+  'low'::severity_level,
+  NULL,
+  'Origin USDC ARM'
+) ON CONFLICT (id) DO NOTHING;
+
+-- Origin USDC ARM (chain 1) track 3
+INSERT INTO alert_rule (id, chain_id, match_type, addresses, topic0s, topic1s, topic2s, topic3s, sighashes, trace_type, call_from, call_to, suicide_refund_address, trace_error, data_filters, topic, severity, notify_targets, display_name)
+VALUES (
+  'origin-usdc-arm-3',
+  1,
+  'event'::match_type,
+  NULL,
+  ARRAY['0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'],
+  NULL,
+  ARRAY['0x0000000000000000000000009e3a7026e5767f2d7ff5e83b0ed011005f45a170'],
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  '{"field":"value","op":"gte","value":"100000"}'::jsonb,
+  'ARM',
+  'low'::severity_level,
+  NULL,
+  'Origin USDC ARM'
+) ON CONFLICT (id) DO NOTHING;
+
+-- Origin WETH ARM (chain 1) track 1
+INSERT INTO alert_rule (id, chain_id, match_type, addresses, topic0s, topic1s, topic2s, topic3s, sighashes, trace_type, call_from, call_to, suicide_refund_address, trace_error, data_filters, topic, severity, notify_targets, display_name)
+VALUES (
+  'origin-weth-arm-1',
+  1,
+  'event'::match_type,
+  ARRAY['0x68025a4615407993a680102b08a23a61d11c657c'],
+  ARRAY['0x7e644d79422f17c01e4894b5f4f588d331ebfa28653d42ae832dc59e38c9798f', '0xb8fd9afc34c38fcd13b9a3b7646482eb1fddcefb40af2c70609972816eba3208', '0xe5693914d19c789bdee50a362998c0bc8d035a835f9871da5d51152f0582c34f', '0x8c4d35e54a3f2ef1134138fd8ea3daee6a3c89e10d2665996babdf70261e2c76', '0xc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d2', '0x4721129e0e676ed6a92909bb24e853ccdd63ad72280cc2e974e38e480e0e6e54', '0x7544a75b388eb4ab5daaa0429409163b9a80e2dd0bafa8a1c0d5ae0bda352d65', '0xbc600b1f03d316c479b49930c28e328809316458d5b5dacbb7419df5f6f89647', '0x59d7b1e52008dc342c9421dadfc773114b914a65682a4e4b53cf60a970df0d77', '0x62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258', '0x5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa'],
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  'ARM',
+  'high'::severity_level,
+  NULL,
+  'Origin WETH ARM'
+) ON CONFLICT (id) DO NOTHING;
+
+-- Origin WETH ARM (chain 1) track 2
+INSERT INTO alert_rule (id, chain_id, match_type, addresses, topic0s, topic1s, topic2s, topic3s, sighashes, trace_type, call_from, call_to, suicide_refund_address, trace_error, data_filters, topic, severity, notify_targets, display_name)
+VALUES (
+  'origin-weth-arm-2',
+  1,
+  'event'::match_type,
+  ARRAY['0x68025a4615407993a680102b08a23a61d11c657c'],
+  ARRAY['0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925', '0x29128dbcf994e1ddc09cdbce01c287bb3f6b0cf4dd3c98174cadbbaf67bc22d7', '0xe9f5fe520e5763f721d470ecb21b23763a3b0b9e720070111b1b935c1107b065', '0x0538e1fc8a5bd2f2ae0c40c0a54b4208673263b92c883fe270768a5151346dfd', '0x7abb537bd346e0540bd632cc85a1ebde145775e3c31ced362761ff2fe8241cb9', '0x90890809c654f11d6e72a28fa60149770a0d11ec6c92319d6ceb2bb0a4ea1a15', '0x06c5efeff5c320943d265dc4e5f1af95ad523555ce0c1957e367dda5514572df', '0x36dd2c9b55f12509e3b5f4f4d765ddefc2776a28018b18da2335cf2ab93bb268', '0xc04c86cfd81036557541f9c68971ace59cbc9057ecab7d48874a6177ad117f4f', '0x778ebbe9f96685bd519458d016cf8c56446b9054726f7448a2faa8ccce6ab452'],
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  'ARM',
+  'low'::severity_level,
+  NULL,
+  'Origin WETH ARM'
+) ON CONFLICT (id) DO NOTHING;
+
+-- Origin WETH ARM (chain 1) track 3
+INSERT INTO alert_rule (id, chain_id, match_type, addresses, topic0s, topic1s, topic2s, topic3s, sighashes, trace_type, call_from, call_to, suicide_refund_address, trace_error, data_filters, topic, severity, notify_targets, display_name)
+VALUES (
+  'origin-weth-arm-3',
+  1,
+  'event'::match_type,
+  NULL,
+  ARRAY['0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'],
+  NULL,
+  ARRAY['0x00000000000000000000000068025a4615407993a680102b08a23a61d11c657c'],
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  '{"field":"value","op":"gte","value":"100000000000000000"}'::jsonb,
+  'ARM',
+  'low'::severity_level,
+  NULL,
+  'Origin WETH ARM'
+) ON CONFLICT (id) DO NOTHING;
+
 -- Origin OS ARM (chain 146) track 1
 INSERT INTO alert_rule (id, chain_id, match_type, addresses, topic0s, topic1s, topic2s, topic3s, sighashes, trace_type, call_from, call_to, suicide_refund_address, trace_error, data_filters, topic, severity, notify_targets, display_name)
 VALUES (
