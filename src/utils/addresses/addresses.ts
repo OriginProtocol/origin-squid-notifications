@@ -275,6 +275,14 @@ export const arms: Record<
     zapper: undefined,
     morphoStrategy: '0x0dc20109ea012f050beda184844c1ed5ec6da33a',
   },
+  ['ARM-WETH']: {
+    address: '0x68025a4615407993a680102b08a23a61d11c657c',
+    capManager: '0x19d2977a1cc5a73bf5d827ace07a3be3e56bdfea',
+  },
+  ['ARM-USDC']: {
+    address: '0x9e3a7026e5767f2d7ff5e83b0ed011005f45a170',
+    capManager: '0x19b1edb2cad902f103a20a30011f125dce44f954',
+  },
 }
 
 export const armOperators = {
