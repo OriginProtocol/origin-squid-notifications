@@ -14,12 +14,15 @@ export const LUSD_ADDRESS = '0x5f98805a4e8be255a32880fdec7f6728c6568ba0'
 export const USDS_ADDRESS = '0xdc035d45d973e3ec169d2276ddab16f1e407384f'
 export const USDE_ADDRESS = '0x4c9edd5852cd905f086c759e8383e09bff1e68b3'
 export const SUSDE_ADDRESS = '0x9d39a5de30e57443bff2a8307a4256c8797a3497'
+export const USDG_ADDRESS = '0xe343167631d89b6ffc58b88d6b7fb0228795491d'
+export const PYUSD_ADDRESS = '0x6c3ea9036406852006290770bedfcaba0e23a0e8'
 
 // ETH Stables
 export const WETH_ADDRESS = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
 export const STETH_ADDRESS = '0xae7ab96520de3a18e5e111b5eaab095312d7fe84'
 export const WSTETH_ADDRESS = '0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0'
 export const EETH_ADDRESS = '0x35fa164735182de50811e8e2e824cfb9b6118ac2'
+export const WEETH_ADDRESS = '0xcd5fe23c85820f7b72d0926fc9b05b43e359b7ee'
 export const RETH_ADDRESS = '0xae78736cd615f374d3085123a210448e74fc6393'
 export const FRXETH_ADDRESS = '0x5e8422345238f34275888049021821e8e08caa1f'
 export const SFRXETH_ADDRESS = '0xac3e018457b222d93114458476f3e3416abbe38f'
@@ -155,6 +158,7 @@ export const tokens = {
   WETH: WETH_ADDRESS,
   stETH: STETH_ADDRESS,
   eETH: EETH_ADDRESS,
+  weETH: WEETH_ADDRESS,
   wstETH: WSTETH_ADDRESS,
   rETH: RETH_ADDRESS,
   frxETH: FRXETH_ADDRESS,
@@ -167,6 +171,8 @@ export const tokens = {
   // Ethena
   USDe: USDE_ADDRESS,
   sUSDe: SUSDE_ADDRESS,
+  USDG: USDG_ADDRESS,
+  PYUSD: PYUSD_ADDRESS,
 } as const
 export type TokenSymbol = keyof typeof tokens
 export type TokenAddress = (typeof tokens)[TokenSymbol]
@@ -268,6 +274,14 @@ export const arms: Record<
     capManager: '0x687afb5a52a15122fd5fc54a8b52cfd58346fb0c',
     zapper: undefined,
     morphoStrategy: '0x0dc20109ea012f050beda184844c1ed5ec6da33a',
+  },
+  ['ARM-WETH']: {
+    address: '0x68025a4615407993a680102b08a23a61d11c657c',
+    capManager: '0x19d2977a1cc5a73bf5d827ace07a3be3e56bdfea',
+  },
+  ['ARM-USDC']: {
+    address: '0x9e3a7026e5767f2d7ff5e83b0ed011005f45a170',
+    capManager: '0x19b1edb2cad902f103a20a30011f125dce44f954',
   },
 }
 
