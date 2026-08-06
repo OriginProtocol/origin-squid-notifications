@@ -9,9 +9,11 @@ export const EXTERNAL_ADDR_TO_NAME: Record<string, string> = {
   '0x8d8404f8cca4c8834ca3cab1e54887ae47724bee': '1inch',
   '0x3451b6b219478037a1ac572706627fc2bda1e812': '1inch',
   '0x6aa7a8539543210563af6cf575cc5079b194d0c8': '1inch',
+  '0x111116053f09d34a7eae8102887004445176ca11': '1inch',
 
   // KyberSwap
   '0x63242a4ea82847b20e506b63b0e2e2eff0cc6cb0': 'KyberSwap',
+  '0x8f10b468b06c6fd214b65f87778827f7d113f996': 'KyberSwap',
 
   // ParaSwap
   '0xa600910b670804230e00a100000d28000ae005c0': 'ParaSwap',
