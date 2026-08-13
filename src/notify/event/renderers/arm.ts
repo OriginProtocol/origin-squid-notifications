@@ -32,6 +32,11 @@ const MultiAssetTraderateChanged = event(
   },
 )
 
+const MAX_UINT128 = 2n ** 128n - 1n
+
+const formatLiquidity = (amount: bigint, decimals: number) =>
+  amount === MAX_UINT128 ? 'max' : formatAmount(amount, decimals, { maximumFractionDigits: 4 })
+
 interface ArmConfig {
   address: string
   symbol0: string
@@ -162,10 +167,9 @@ registerEventRenderer(MultiAssetTraderateChanged.topic, async (params) => {
         inline: true,
       },
       {
-        name: `${formatAmount(data.sellLiquidityRemaining, decimals, { maximumFractionDigits: 4 })} / ${formatAmount(
+        name: `${formatLiquidity(data.sellLiquidityRemaining, decimals)} / ${formatLiquidity(
           data.buyLiquidityRemaining,
           decimals,
-          { maximumFractionDigits: 4 },
         )}`,
         value: 'Sell / Buy Liquidity',
         inline: true,

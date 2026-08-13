@@ -7,7 +7,7 @@ CREATE TABLE chain (
   id              INTEGER PRIMARY KEY,
   name            TEXT NOT NULL UNIQUE
 );
-INSERT INTO chain VALUES (1, 'mainnet'), (8453, 'base'), (146, 'sonic');
+INSERT INTO chain VALUES (1, 'mainnet'), (8453, 'base'), (146, 'sonic'), (999, 'hyperliquid');
 
 -- Valid notification topics (maps to Discord webhooks)
 CREATE TYPE severity_level AS ENUM ('low', 'medium', 'high', 'critical', 'broken', 'highlight');

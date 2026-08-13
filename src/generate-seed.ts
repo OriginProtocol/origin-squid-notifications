@@ -30,6 +30,7 @@ const slugify = (name: string, chainId: number, suffix?: string): string => {
   if (suffix) slug += `-${suffix}`
   if (chainId === 8453) slug += '-base'
   else if (chainId === 146) slug += '-sonic'
+  else if (chainId === 999) slug += '-hyperliquid'
   return slug
 }
 

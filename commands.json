@@ -89,6 +89,16 @@
       "cmd": ["node", "lib/main-sonic.js"],
       "hidden": true
     },
+    "process:hyperliquid": {
+      "description": "Load .env and start the squid hyperliquid processor",
+      "deps": ["build"],
+      "cmd": ["node", "--require=dotenv/config", "lib/main-hyperliquid.js"]
+    },
+    "process:hyperliquid:prod": {
+      "description": "Start the squid hyperliquid processor",
+      "cmd": ["node", "lib/main-hyperliquid.js"],
+      "hidden": true
+    },
     "check-updates": {
       "cmd": ["pnpx", "npm-check-updates", "--filter=/subsquid/", "--upgrade"],
       "hidden": true

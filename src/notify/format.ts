@@ -1,6 +1,7 @@
 import { Chain } from 'viem'
 import { arbitrum, base, sonic } from 'viem/chains'
 
+import { hyperliquid } from '../utils/chains'
 import { getAddressesPyName } from '../utils/addresses/names'
 
 /**
@@ -10,6 +11,7 @@ export function explorerUrl(chain: Chain): string {
   if (chain.id === base.id) return 'https://basescan.org'
   if (chain.id === sonic.id) return 'https://sonicscan.org'
   if (chain.id === arbitrum.id) return 'https://arbiscan.io'
+  if (chain.id === hyperliquid.id) return 'https://hyperevmscan.io'
   return 'https://etherscan.io'
 }
 
