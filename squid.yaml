@@ -50,8 +50,9 @@ deploy:
         RPC_ENV_BASE: RPC_BASE_HTTP
     - name: sonic-processor
       cmd: ['sqd', 'process:sonic:prod']
-    - name: hyperliquid-processor
-      cmd: ['sqd', 'process:hyperliquid:prod']
+    # Disabled until chain 999 has alert rules — with none it crash-loops on startup.
+    # - name: hyperliquid-processor
+    #   cmd: ['sqd', 'process:hyperliquid:prod']
   api:
     cmd:
       - npx
