@@ -95,7 +95,8 @@ export const persistenceProcessor = defineProcessor({
           gasUsed = traceAny.result?.gasUsed ?? null
           input = trace.action.input
           output = traceAny.result?.output ?? null
-          sighash = trace.action.sighash
+          // `sighash` is absent on calls with less than 4 bytes of input.
+          sighash = trace.action.sighash ?? null
           callType = traceAny.action.callType ?? null
         } else if (trace.type === 'create') {
           fromAddress = traceAny.action.from ?? null

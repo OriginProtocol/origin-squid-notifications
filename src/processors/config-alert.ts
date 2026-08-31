@@ -135,7 +135,8 @@ export const createConfigAlertProcessor = async (chainId: number) => {
           if (!traceFilters.some((f) => f.matches(trace))) continue
 
           const toAddress = trace.type === 'call' ? trace.action.to : null
-          const sighash = trace.type === 'call' ? trace.action.sighash : null
+          // `sighash` is absent on calls with less than 4 bytes of input.
+          const sighash = trace.type === 'call' ? trace.action.sighash ?? null : null
 
           const matchingRules = findMatchingTraceRules(ctx.chain.id, toAddress, sighash)
 
