@@ -26,7 +26,7 @@
     "backfill": "ts-node src/backfill"
   },
   "dependencies": {
-    "@originprotocol/squid-utils": "github:OriginProtocol/squid-utils#main",
+    "@originprotocol/squid-utils": "1.0.3",
     "@subsquid/evm-abi": "^0.3.1",
     "@subsquid/evm-codec": "^0.3.0",
     "@subsquid/evm-processor": "^1.27.1",
