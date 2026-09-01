@@ -6,7 +6,7 @@ import { mainnet } from 'viem/chains';
 import { processDiscordQueue } from '@notify/discord';
 import { processLokiQueue } from '@notify/loki';
 import { processOncallQueue } from '@notify/oncall';
-import { run } from '@originprotocol/squid-utils';
+import { runPortal } from '@originprotocol/squid-utils';
 import { abiRegistry } from '@utils/abi-registry';
 import { loadWalletLabels } from '@utils/addresses/names';
 import { DEFAULT_FIELDS } from '@utils/batch-processor-fields';
@@ -34,7 +34,7 @@ const start = async () => {
   // Config-alert handles all DB-driven rules
   const configAlert = await createConfigAlertProcessor(mainnet.id)
 
-  run({
+  runPortal({
     fromNow: true,
     chainId: mainnet.id,
     processors: [...customProcessors, configAlert, persistenceProcessor],
