@@ -151,6 +151,7 @@ export const notifyForEvent = async (params: {
   }
   if (!runtime.skipOncall && (params.severity === 'high' || params.severity === 'critical')) {
     notifyOncall(params.log.id, {
+      chain: params.ctx.chain,
       topic: params.topic,
       severity: params.severity,
       name: params.name,
