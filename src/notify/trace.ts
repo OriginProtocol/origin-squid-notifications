@@ -103,6 +103,7 @@ export const notifyForTrace = async (input: NotifyForTraceInput) => {
     await input.renderer(input)
     if (!runtime.skipOncall && (severity === 'high' || severity === 'critical')) {
       notifyOncall(id, {
+        chain: ctx.chain,
         topic,
         severity,
         name,
@@ -198,6 +199,7 @@ export const notifyForTrace = async (input: NotifyForTraceInput) => {
   })
   if (!runtime.skipOncall && (severity === 'high' || severity === 'critical')) {
     notifyOncall(id, {
+      chain: ctx.chain,
       topic,
       severity,
       name,
