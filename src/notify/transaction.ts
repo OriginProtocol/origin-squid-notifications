@@ -84,6 +84,7 @@ export const notifyForTransaction = ({
   })
   if (severity === 'high' || severity === 'critical') {
     notifyOncall(id, {
+      chain: ctx.chain,
       topic,
       severity,
       name,
